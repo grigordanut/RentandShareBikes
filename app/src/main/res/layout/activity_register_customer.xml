@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".RegisterCustomer">
+
+        <TextView
+            android:id="@+id/tvRegCustomer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_regCustomer"
+            android:textAlignment="center"
+            android:textSize="22sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fNameWrapperRegCustomer"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFirstNameRegCustom"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/et_firstNameCustomer"
+                android:inputType="textPersonName"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lNameWrapperRegCustomer"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etLastNameRegCustom"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/et_lastNameCustomer"
+                android:inputType="textPersonName"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/uNameWrapperRegCustomer"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etUserNameRegCustom"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/et_userNameCustomer"
+                android:inputType="textPersonName"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fNrWrapperRegCustomer"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPhoneNrRegCustom"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/et_phoneCustomer"
+                android:inputType="number"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailWrapperRegCustomer"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmailRegCustom"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/et_emailRegCustomer"
+                android:inputType="textEmailAddress"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passWrapperRegCustomer"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:textColorHint="#000000"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassRegCustom"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/et_passRegCustomer"
+                android:inputType="textPassword"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/cPassWrapperRegCustomer"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:textColorHint="#000000"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etConfPassRegCustom"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/et_confPassRegCustomer"
+                android:inputType="textPassword"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            tools:context=".RegisterCustomer">
+
+            <Button
+                android:id="@+id/btnRegCustom"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/btn_registerCustomer"
+                android:textSize="20sp"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/btnRegCancelCustom"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/btn_cancelRegCustomer"
+                android:textSize="20sp"
+                tools:ignore="ButtonStyle" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSignInRegCustom"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="@string/btn_signInRegCustomer"
+            android:textSize="20sp"
+            tools:ignore="ButtonStyle" />
+
+
+    </LinearLayout>
+</ScrollView>

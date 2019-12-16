@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".MainActivity"
+        tools:showIn="@layout/activity_main">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="60dp"
+            android:text="@string/tv_mainPage"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="22sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            tools:context=".MainActivity"
+            tools:showIn="@layout/activity_main">
+
+            <Button
+                android:id="@+id/btnHomePage"
+                android:layout_width="180dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/btn_mainPageHome"
+                android:textAlignment="center"
+                android:textSize="22sp" />
+
+            <Button
+                android:id="@+id/btnLoginPage"
+                android:layout_width="180dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/btn_mainPageLogin"
+                android:textAlignment="center"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/ivMainPage"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:layout_marginTop="20sp"
+            android:background="@drawable/smartbike" />
+
+    </LinearLayout>
+</ScrollView>

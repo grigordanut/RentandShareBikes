@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".AddBikes">
+
+        <TextView
+            android:id="@+id/tvWelcomeAddBikes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:text="@string/tv_welcomeAddBikes"/>
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="24sp"
+            android:background="#DDDDDD"
+            android:textColor="#000000"
+            android:textAlignment="textEnd"
+            android:paddingEnd="10dp"
+            android:layout_gravity="end"
+            android:paddingRight="10dp"
+            tools:ignore="RtlSymmetry" />
+
+        <ImageView
+            android:id="@+id/imgViewAddBike"
+            android:layout_width="280dp"
+            android:layout_height="240dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:background="#f2f2f2"
+            android:src="@drawable/bikepicture"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tvOr"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:textSize="26sp"
+            android:background="#ffffff"
+            android:text="@string/tv_orSelect"
+            android:textColor="#000000"
+            android:textAlignment="center"
+            android:paddingEnd="10dp"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:paddingRight="10dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+        <ImageButton
+            android:id="@+id/btnTakePicture"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:background="@drawable/cameraimage"
+            android:textSize="24sp"
+            tools:ignore="ContentDescription" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/bikeModelWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etBikeModel"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/round_text"
+                android:hint="@string/et_bikeModel"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/bikeManufacturerWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etBikeManufacturer"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/round_text"
+                android:hint="@string/et_bikeManufacturer"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/bikePriceWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etBikePricePerDay"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/round_text"
+                android:hint="@string/et_bikePricePerDay"
+                android:inputType="number"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnSaveBike"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:textSize="24sp"
+            android:text="@string/btn_saveBike"/>
+
+    </LinearLayout>
+</ScrollView>
+
+
+

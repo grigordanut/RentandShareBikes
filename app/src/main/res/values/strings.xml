@@ -1,0 +1,89 @@
+<resources>
+    <string name="app_name">Rent and Share Bikes</string>
+    <string name="action_settings">Settings</string>
+
+    <!--    Add Bike Store-->
+    <string name="tv_addBikeStore">Add Bike Stores</string>
+    <string name="et_locationAddStore">Store Location</string>
+    <string name="et_addressAddStore">Store Address</string>
+    <string name="et_numberSlots">Number Slots</string>
+    <string name="btn_saveBikeStore">Save Bike Store</string>
+
+    <!--    Add Bikes-->
+    <string name="tv_welcomeAddBikes">Welcome to add Bikes</string>
+    <string name="tv_orSelect">Or</string>
+    <string name="et_bikeModel">Bike Model</string>
+    <string name="et_bikeManufacturer">Manufacturer</string>
+    <string name="et_bikePricePerDay">Price per day</string>
+    <string name="btn_saveBike">SAVE BIKE</string>
+
+    <!--    Admin Page-->
+    <string name="tv_adminPage">Admin Page</string>
+    <string name="btn_addBikeStore">Add Bike Store</string>
+    <string name="btn_showBikeStores">Show Bike Stores</string>
+    <string name="btn_addBikesToStore">Add Bikes to Store</string>
+    <string name="btn_showBikesList">Show Bikes List</string>
+
+    <!--    Bike Image-->
+    <string name="tv_bikeListImage">List of Bikes</string>
+
+    <!--    Bike Store Image Add Bikes-->
+    <string name="tv_bikeStoreImageAddBikes">Select the Bike Store</string>
+
+    <!--    Bike Store Image Customer-->
+    <string name="tv_bikeStoreImageCustomer">Select the Bike Store</string>
+
+    <!--    Bike Stores Image Show Store List-->
+    <string name="tv_bikeStoreImageShowStoreList">List of Bike Stores</string>
+    <string name="btn_addBikeStores">Add Bike Stores</string>
+    <string name="btn_backToAdminPage">Back Admin Page</string>
+
+    <!--    Bike Store List-->
+    <string name="tv_bikeStoresImage">Welcome</string>
+
+    <!--    Customer Page-->
+    <string name="tv_customerPage">Welcome</string>
+    <string name="btn_rentBike">Rent Bike</string>
+    <string name="btn_shareBike">Share Bike</string>
+
+    <!--    Login Customer-->
+    <string name="tv_loginCustomer">Please Enter your Log In details</string>
+    <string name="et_emailLogCustomer">Email Address</string>
+    <string name="et_passLogCustomer">Password</string>
+    <string name="tv_forgotPassCustomer">Forgotten Password</string>
+    <string name="btn_logInCustomer">Log In</string>
+    <string name="btn_cancelLogCustomer">Cancel</string>
+    <string name="btn_signUpCustomer">Sign Up</string>
+
+    <!--    Register Customer-->
+    <string name="tv_regCustomer">Please Enter your Register details</string>
+    <string name="et_firstNameCustomer">First Name</string>
+    <string name="et_lastNameCustomer">Last Name</string>
+    <string name="et_userNameCustomer">User Name</string>
+    <string name="et_phoneCustomer">Phone Number</string>
+    <string name="et_emailRegCustomer">Email Address</string>
+    <string name="et_passRegCustomer">Password</string>
+    <string name="et_confPassRegCustomer">Confirm Password</string>
+    <string name="btn_registerCustomer">Register</string>
+    <string name="btn_cancelRegCustomer">Cancel</string>
+    <string name="btn_signInRegCustomer">Sign In</string>
+
+    <!--    Reset Password-->
+
+    <!--    Main Page-->
+    <string name="tv_mainPage">Welcome to Rent and Share Bikes</string>
+    <string name="btn_mainPageHome">Home</string>
+    <string name="btn_mainPageLogin">Log In</string>
+
+    <!--    Image Bikes-->
+    <string name="tv_addBikeDate">Date: </string>
+    <string name="tv_addBikeModel">Model: </string>
+    <string name="tv_addBikeManufacturer">Factory: </string>
+    <string name="tv_addBikePrice">Price/Day: </string>
+
+    <!--    Image Bike Store-->
+    <string name="tv_storeLocation">Store Location: </string>
+    <string name="tv_storeAddress">Store Address: </string>
+    <string name="tv_numberSlots">Number Slots: </string>
+
+</resources>
