@@ -21,8 +21,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginCustomer extends AppCompatActivity {
 
-    private TextInputEditText emailLogCust;
-    private TextInputEditText passLogCust;
+    private TextInputEditText emailLogCustom;
+    private TextInputEditText passLogCustom;
     private String email_logCustom, pass_logCustom;
 
     private ProgressDialog progressDialog;
@@ -34,8 +34,8 @@ public class LoginCustomer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_customer);
 
-        emailLogCust = (TextInputEditText) findViewById(R.id.etEmailLogCustom);
-        passLogCust = (TextInputEditText) findViewById(R.id.etPassLogCustom);
+        emailLogCustom = (TextInputEditText) findViewById(R.id.etEmailLogCustom);
+        passLogCustom = (TextInputEditText) findViewById(R.id.etPassLogCustom);
 
         TextView tvForgotPass = (TextView) findViewById(R.id.tvForgotPassCustom);
         tvForgotPass.setOnClickListener(new View.OnClickListener() {
@@ -58,37 +58,36 @@ public class LoginCustomer extends AppCompatActivity {
             }
         });
 
-
         Button buttonLogInCustom = (Button)findViewById(R.id.btnLoginCustom);
         buttonLogInCustom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                email_logCustom = emailLogCust.getText().toString().trim();
-                pass_logCustom = passLogCust.getText().toString().trim();
+                email_logCustom = emailLogCustom.getText().toString().trim();
+                pass_logCustom = passLogCustom.getText().toString().trim();
 
                 if (email_logCustom.isEmpty()){
-                    emailLogCust.setError("Enter your Login Email");
-                    emailLogCust.requestFocus();
+                    emailLogCustom.setError("Enter your Login Email");
+                    emailLogCustom.requestFocus();
                 }
 
                 else if(!Patterns.EMAIL_ADDRESS.matcher(email_logCustom).matches()){
                     Toast.makeText(LoginCustomer.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
-                    emailLogCust.setError("Enter a valid Email Address");
-                    emailLogCust.requestFocus();
+                    emailLogCustom.setError("Enter a valid Email Address");
+                    emailLogCustom.requestFocus();
                 }
 
                 else if(pass_logCustom.isEmpty()){
-                    passLogCust.setError("Enter your Login Password");
-                    passLogCust.requestFocus();
+                    passLogCustom.setError("Enter your Login Password");
+                    passLogCustom.requestFocus();
                 }
 
                 else if (email_logCustom.equals("admin@gmail.com") && (pass_logCustom.equals("admin"))){
                     progressDialog.setMessage("Login Admin");
                     progressDialog.show();
                     startActivity(new Intent(LoginCustomer.this, AdminPage.class));
-                    emailLogCust.setText("");
-                    passLogCust.setText("");
+                    emailLogCustom.setText("");
+                    passLogCustom.setText("");
                     progressDialog.dismiss();
                 }
 
@@ -99,17 +98,17 @@ public class LoginCustomer extends AppCompatActivity {
                     firebaseAuth.signInWithEmailAndPassword(email_logCustom,pass_logCustom).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                //clear data
-                                emailLogCust.setText("");
-                                passLogCust.setText("");
-                                checkEmailVerification();
-                            }
+                        if (task.isSuccessful()){
+                            //clear data
+                            emailLogCustom.setText("");
+                            passLogCustom.setText("");
+                            checkEmailVerification();
+                        }
 
-                            else{
-                                progressDialog.dismiss();
-                                Toast.makeText(LoginCustomer.this, "Log in failed, you entered a wrong Email or Password", Toast.LENGTH_SHORT).show();
-                            }
+                        else{
+                            progressDialog.dismiss();
+                            Toast.makeText(LoginCustomer.this, "Log in failed, you entered a wrong Email or Password", Toast.LENGTH_SHORT).show();
+                        }
                         }
                     });
                 }
@@ -134,6 +133,5 @@ public class LoginCustomer extends AppCompatActivity {
             Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
             firebaseAuth.signOut();
         }
-
     }
 }

@@ -22,7 +22,6 @@ public class BikeStoreAdapterAddBikes extends RecyclerView.Adapter<BikeStoreAdap
         bikeStoreUploads = bikeStore_uploads;
     }
 
-
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

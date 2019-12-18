@@ -86,8 +86,6 @@ public class AddBikes extends AppCompatActivity {
         String insertDate = localDate.format(formatter);
         textViewDate.setText(insertDate);
 
-
-
         etBModel = (EditText)findViewById(R.id.etBikeModel);
         etBManufact = (EditText)findViewById(R.id.etBikeManufacturer);
         etBPrice = (EditText)findViewById(R.id.etBikePricePerDay);
@@ -213,27 +211,27 @@ public class AddBikes extends AppCompatActivity {
         final String et_BikePrice = etBPrice.getText().toString().trim();
 
         if (imageUri == null)   {
-            Toast.makeText(AddBikes.this, "Please add a  picture", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddBikes.this, "Please add a picture", Toast.LENGTH_SHORT).show();
         }
 
         else if (TextUtils.isEmpty(et_BikeModel)){
-            etBModel.setError("Please add the Name of Event");
+            etBModel.setError("Please add the Model of Bicycle");
             etBModel.requestFocus();
         }
 
         else if (TextUtils.isEmpty(et_BikeManufact)){
-            etBManufact.setError("Please add the Event Address");
+            etBManufact.setError("Please add the Manufacturer");
             etBManufact.requestFocus();
         }
 
         else if (TextUtils.isEmpty(et_BikePrice)){
-            etBPrice.setError("Please add the Event Comments ");
+            etBPrice.setError("Please add the Price/Day ");
             etBPrice.requestFocus();
         }
 
-        //Create a new Event into the Events table
+        //Add a new Bike into the Bikes table
         else{
-            progressDialog.setTitle("The Event is Uploading");
+            progressDialog.setTitle("The Bike is Uploading");
             progressDialog.show();
             StorageReference storageReference2 = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(imageUri));
             storageReference2.putFile(imageUri)
@@ -253,11 +251,11 @@ public class AddBikes extends AppCompatActivity {
                                 etBPrice.setText("");
                                 ivAddBike.setImageResource(R.drawable.bikepicture);
 
-                                Toast.makeText(AddBikes.this, "Upload successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddBikes.this, "Upload Bicycle successfully", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(AddBikes.this, AdminPage.class));
                             }
                             else{
-                                Toast.makeText(AddBikes.this, "Failed to add event!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(AddBikes.this, "Failed to add the Bike!", Toast.LENGTH_LONG).show();
                             }
                         }
                     });

@@ -68,9 +68,6 @@ public class AddBikeStore extends AppCompatActivity {
             }
 
             else {
-                //String loc_BikeStore =  locationBikeStore.getText().toString().trim();
-                //String address_BikeStore = addressBikeStore.getText().toString().trim();
-                //String number_SlotsStore = numberSlots.getText().toString();
                 String storeID = databaseReference.push().getKey();
 
                 BikeStore bike_store = new BikeStore(loc_BikeStore, address_BikeStore, number_SlotsStore);

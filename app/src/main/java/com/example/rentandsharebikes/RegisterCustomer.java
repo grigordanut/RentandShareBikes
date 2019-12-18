@@ -69,7 +69,6 @@ public class RegisterCustomer extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
                 firstName_regCustom = firstNameRegCustom.getText().toString().trim();
                 lastName_regCustom = lastNameRegCustom.getText().toString().trim();
                 userName_regCustom = userNameRegCustom.getText().toString().trim();
@@ -146,14 +145,14 @@ public class RegisterCustomer extends AppCompatActivity {
                     firebaseAuth.createUserWithEmailAndPassword(email_regCustom, pass_regCustom).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                sendEmailVerification();
-                            }
+                        if (task.isSuccessful()) {
+                            sendEmailVerification();
+                        }
 
-                            else {
-                                progressDialog.dismiss();
-                                Toast.makeText(RegisterCustomer.this, "Registration Failed, this email address was already used.", Toast.LENGTH_SHORT).show();
-                            }
+                        else {
+                            progressDialog.dismiss();
+                            Toast.makeText(RegisterCustomer.this, "Registration Failed, this email address was already used.", Toast.LENGTH_SHORT).show();
+                        }
                         }
                     });
                 }
@@ -167,18 +166,18 @@ public class RegisterCustomer extends AppCompatActivity {
             firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        sendCustomerData();
-                        progressDialog.dismiss();
-                        Toast.makeText(RegisterCustomer.this, "User Registered, Email verification was sent", Toast.LENGTH_SHORT).show();
-                        firebaseAuth.signOut();
-                        finish();
-                        startActivity(new Intent(RegisterCustomer.this, LoginCustomer.class));
-                    }
-                    else {
-                        progressDialog.dismiss();
-                        Toast.makeText(RegisterCustomer.this, "Verification email has not been sent", Toast.LENGTH_SHORT).show();
-                    }
+                if (task.isSuccessful()) {
+                    sendCustomerData();
+                    progressDialog.dismiss();
+                    Toast.makeText(RegisterCustomer.this, "User Registered, Email verification was sent", Toast.LENGTH_SHORT).show();
+                    firebaseAuth.signOut();
+                    finish();
+                    startActivity(new Intent(RegisterCustomer.this, LoginCustomer.class));
+                }
+                else {
+                    progressDialog.dismiss();
+                    Toast.makeText(RegisterCustomer.this, "Verification email has not been sent", Toast.LENGTH_SHORT).show();
+                }
                 }
             });
         }

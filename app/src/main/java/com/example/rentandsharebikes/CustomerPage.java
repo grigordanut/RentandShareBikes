@@ -48,7 +48,7 @@ public class CustomerPage extends AppCompatActivity {
             }
         });
 
-//retrieve data from database into text views
+        //retrieve data from database into text views
         databaseReference = FirebaseDatabase.getInstance().getReference("Customers");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NewApi"})

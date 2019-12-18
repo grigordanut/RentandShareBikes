@@ -54,14 +54,14 @@ public class ResetPassword extends AppCompatActivity {
                     firebaseAuth.sendPasswordResetEmail(email_ResetPass).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Toast.makeText(ResetPassword.this, "The password reset email was sent",Toast.LENGTH_SHORT).show();
-                                finish();
-                                startActivity(new Intent(ResetPassword.this, LoginCustomer.class));
-                            }
-                            else{
-                                Toast.makeText(ResetPassword.this, "Error in sending password reset email",Toast.LENGTH_SHORT).show();
-                            }
+                        if(task.isSuccessful()){
+                            Toast.makeText(ResetPassword.this, "The password reset email was sent",Toast.LENGTH_SHORT).show();
+                            finish();
+                            startActivity(new Intent(ResetPassword.this, LoginCustomer.class));
+                        }
+                        else{
+                            Toast.makeText(ResetPassword.this, "Error in sending password reset email",Toast.LENGTH_SHORT).show();
+                        }
                         }
                     });
                 }

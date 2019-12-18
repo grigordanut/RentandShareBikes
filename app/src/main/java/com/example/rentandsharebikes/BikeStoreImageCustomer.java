@@ -40,12 +40,6 @@ public class BikeStoreImageCustomer extends AppCompatActivity {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-//        getIntent().hasExtra("USERID");
-//        userID = Objects.requireNonNull(getIntent().getExtras()).getString("USERID");
-
-//        textViewBikeStore = (TextView)findViewById(R.id.tv);
-//        textViewEvents.setText(String.format("List of Events: %s", userID));
-
         bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
