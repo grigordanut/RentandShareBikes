@@ -1,5 +1,6 @@
 package com.example.rentandsharebikes;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -36,14 +37,15 @@ public class BikesAdapterAdmin extends RecyclerView.Adapter<BikesAdapterAdmin.Im
         return new ImageViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
 
         Bikes uploadCurrent = bikesUploads.get(position);
-        holder.tvBikeDate.setText(uploadCurrent.getAddBike_Date());
-        holder.tvBikeModel.setText(uploadCurrent.getAddBike_Model());
-        holder.tvBikeManufacturer.setText(uploadCurrent.getAddBike_Manufacturer());
-        holder.tvBikePrice.setText(uploadCurrent.getAddBike_Price());
+        holder.tvBikeDate.setText("Date: "+uploadCurrent.getAddBike_Date());
+        holder.tvBikeModel.setText("Model: "+uploadCurrent.getAddBike_Model());
+        holder.tvBikeManufacturer.setText("Factory: "+uploadCurrent.getAddBike_Manufacturer());
+        holder.tvBikePrice.setText("Price/Day: € "+uploadCurrent.getAddBike_Price());
         Picasso.with(bikesContext)
                 .load(R.drawable.bike)
                 .placeholder(R.mipmap.ic_launcher)

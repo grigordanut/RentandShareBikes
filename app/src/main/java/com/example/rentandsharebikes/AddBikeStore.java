@@ -82,7 +82,7 @@ public class AddBikeStore extends AppCompatActivity {
                         if (task.isSuccessful()){
                             finish();
                             Toast.makeText(AddBikeStore.this, "Bike Store Added", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(AddBikeStore.this, BikeStoreImageShowStoreList.class));
+                            startActivity(new Intent(AddBikeStore.this, BikeStoreImageShowStoresListAdmin.class));
                         }
                     }
                 })

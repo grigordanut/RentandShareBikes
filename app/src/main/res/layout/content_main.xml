@@ -35,7 +35,7 @@
 
             <Button
                 android:id="@+id/btnHomePage"
-                android:layout_width="180dp"
+                android:layout_width="160dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/btn_mainPageHome"
@@ -44,7 +44,7 @@
 
             <Button
                 android:id="@+id/btnLoginPage"
-                android:layout_width="180dp"
+                android:layout_width="160dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/btn_mainPageLogin"

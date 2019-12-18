@@ -147,8 +147,6 @@
                 android:id="@+id/btnRegCustom"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/btn_registerCustomer"
                 android:textSize="20sp"

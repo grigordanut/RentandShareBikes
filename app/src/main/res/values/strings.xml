@@ -24,22 +24,27 @@
     <string name="btn_addBikesToStore">Add Bikes to Store</string>
     <string name="btn_showBikesList">Show Bikes List</string>
 
-    <!--    Bike Image-->
-    <string name="tv_bikeListImage">List of Bikes</string>
-
     <!--    Bike Store Image Add Bikes-->
     <string name="tv_bikeStoreImageAddBikes">Select the Bike Store</string>
 
     <!--    Bike Store Image Customer-->
     <string name="tv_bikeStoreImageCustomer">Select the Bike Store</string>
 
-    <!--    Bike Stores Image Show Store List-->
-    <string name="tv_bikeStoreImageShowStoreList">List of Bike Stores</string>
-    <string name="btn_addBikeStores">Add Bike Stores</string>
-    <string name="btn_backToAdminPage">Back Admin Page</string>
+    <!--    Bike Store Image Show Bike List-->
+    <string name="tv_bikeStoreImageShowBikesList">Select the Bike Store</string>
 
-    <!--    Bike Store List-->
-    <string name="tv_bikeStoresImage">Welcome</string>
+    <!--    Bike Stores Image Show Store List Admin-->
+    <string name="tv_bikeStoreImageShowStoreListAdmin">List of Bike Stores</string>
+    <string name="btn_addMoreStores">Add More Stores</string>
+    <string name="btn_backToAdminPageStores">Back Admin Page</string>
+
+    <!--    Activity Bikes Admin-->
+    <string name="tv_activityBikesAdmin">List of Bikes</string>
+    <string name="btn_addMoreBikes">Add More Bikes</string>
+    <string name="btn_backToAdminPageBikes">Back Admin Page</string>
+
+    <!--    Bikes Image Customer-->
+    <string name="tv_bikesImageCustomer">List of Bikes</string>
 
     <!--    Customer Page-->
     <string name="tv_customerPage">Welcome</string>
@@ -69,6 +74,9 @@
     <string name="btn_signInRegCustomer">Sign In</string>
 
     <!--    Reset Password-->
+    <string name="tv_ResetPassword">Reset Your Password</string>
+    <string name="et_emailResetPassword">Enter your Email Address</string>
+    <string name="btn_resetPass">Reset Password</string>
 
     <!--    Main Page-->
     <string name="tv_mainPage">Welcome to Rent and Share Bikes</string>

@@ -26,7 +26,7 @@ public class AdminPage extends AppCompatActivity {
         buttonShowBikeStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminPage.this, BikeStoreImageShowStoreList.class));
+                startActivity(new Intent(AdminPage.this, BikeStoreImageShowStoresListAdmin.class));
             }
         });
 
@@ -42,7 +42,7 @@ public class AdminPage extends AppCompatActivity {
         buttonShowBikesList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminPage.this, BikeStoreImageCustomer.class));
+                startActivity(new Intent(AdminPage.this, BikeStoreImageShowBikesList.class));
             }
         });
     }

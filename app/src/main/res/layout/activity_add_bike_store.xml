@@ -90,12 +90,12 @@
 
         <Button
             android:id="@+id/btnSaveBikeStore"
-            android:layout_width="300dp"
+            android:layout_width="280dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:text="@string/btn_saveBikeStore"
             android:layout_gravity="center"
-            android:textSize="24sp"
+            android:textSize="22sp"
             tools:ignore="ButtonStyle"/>
 
     </LinearLayout>

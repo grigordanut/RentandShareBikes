@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@android:color/holo_blue_bright"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
     android:orientation="vertical"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    tools:context=".BikeStoreImageShowStoreList">
+    tools:context=".BikeStoreImageShowStoresListAdmin">
 
     <TextView
         android:id="@+id/tvBikeStoresImageShowStoreList"
@@ -17,7 +16,7 @@
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
-        android:text="@string/tv_bikeStoreImageShowStoreList"
+        android:text="@string/tv_bikeStoreImageShowStoreListAdmin"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="24sp" />
@@ -25,32 +24,39 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/evRecyclerView"
         android:layout_width="380dp"
-        android:layout_height="620dp"
+        android:layout_height="480dp"
         android:layout_marginTop="10dp">
+
     </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        tools:context=".BikeStoreImageAdmin">
+        tools:context=".BikeStoreImageShowStoresListAdmin">
 
         <Button
-            android:id="@+id/btnAddBikesStores"
-            android:layout_width="170dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:text="@string/btn_addBikeStores"
+            android:id="@+id/btnAddMoreStores"
+            android:layout_width="165dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/round_corners"
+            android:text="@string/btn_addMoreStores"
             android:textAlignment="center"
             android:textSize="14sp"
             tools:ignore="ButtonStyle" />
 
         <Button
-            android:id="@+id/btnBackAdminPage"
-            android:layout_width="170dp"
-            android:layout_height="50dp"
-            android:text="@string/btn_backToAdminPage"
+            android:id="@+id/btnBackAdminPageStore"
+            android:layout_width="165dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/round_corners"
+            android:text="@string/btn_backToAdminPageStores"
             android:textAlignment="center"
             android:textSize="14sp"
             tools:ignore="ButtonStyle" />

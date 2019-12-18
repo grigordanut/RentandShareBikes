@@ -20,24 +20,24 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikeStoreImageShowStoreList extends AppCompatActivity {
+public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity {
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreDBEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
-    private BikeStoreAdapterShowStoreList bikeStoreAdapterShowStoreList;
+    private BikeStoreAdapterShowStoreListAdmin bikeStoreAdapterShowStoreListAdmin;
 
     private List<BikeStore> bikeStoreList;
 
     private ProgressDialog progressDialog;
-    private Button buttonAddBikeStore, buttonBackAdminPage;
+    private Button buttonAddMoreStores, buttonBackAdminPageStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_store_image_show_store_list);
+        setContentView(R.layout.activity_bike_store_image_show_stores_list_admin);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -50,19 +50,19 @@ public class BikeStoreImageShowStoreList extends AppCompatActivity {
 
         progressDialog.show();
 
-        buttonAddBikeStore = (Button)findViewById(R.id.btnAddBikesStores);
-        buttonAddBikeStore.setOnClickListener(new View.OnClickListener() {
+        buttonAddMoreStores = (Button)findViewById(R.id.btnAddMoreStores);
+        buttonAddMoreStores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BikeStoreImageShowStoreList.this, AddBikeStore.class));
+                startActivity(new Intent(BikeStoreImageShowStoresListAdmin.this, AddBikeStore.class));
             }
         });
 
-        buttonBackAdminPage = (Button)findViewById(R.id.btnBackAdminPage);
-        buttonBackAdminPage.setOnClickListener(new View.OnClickListener() {
+        buttonBackAdminPageStore = (Button)findViewById(R.id.btnBackAdminPageStore);
+        buttonBackAdminPageStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BikeStoreImageShowStoreList.this, AdminPage.class));
+                startActivity(new Intent(BikeStoreImageShowStoresListAdmin.this, AdminPage.class));
             }
         });
 
@@ -81,8 +81,8 @@ public class BikeStoreImageShowStoreList extends AppCompatActivity {
                     bikeStoreList.add(bikeStore);
                 }
 
-                bikeStoreAdapterShowStoreList = new BikeStoreAdapterShowStoreList(BikeStoreImageShowStoreList.this, bikeStoreList);
-                bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoreList);
+                bikeStoreAdapterShowStoreListAdmin = new BikeStoreAdapterShowStoreListAdmin(BikeStoreImageShowStoresListAdmin.this, bikeStoreList);
+                bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoreListAdmin);
                 progressDialog.dismiss();
             }
 

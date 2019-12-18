@@ -1,7 +1,6 @@
 package com.example.rentandsharebikes;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class BikeStoreAdapterShowStoreList extends RecyclerView.Adapter<BikeStoreAdapterShowStoreList.ImageViewHolder> {
+public class BikeStoreAdapterShowStoreListAdmin extends RecyclerView.Adapter<BikeStoreAdapterShowStoreListAdmin.ImageViewHolder> {
 
     private Context bikeStoreContext;
     private List<BikeStore> bikeStoreUploads;
 
-    public BikeStoreAdapterShowStoreList(Context bikeStore_context, List<BikeStore> bikeStore_uploads){
+    public BikeStoreAdapterShowStoreListAdmin(Context bikeStore_context, List<BikeStore> bikeStore_uploads){
         bikeStoreContext = bikeStore_context;
         bikeStoreUploads = bikeStore_uploads;
     }
@@ -25,13 +24,13 @@ public class BikeStoreAdapterShowStoreList extends RecyclerView.Adapter<BikeStor
 
     @NonNull
     @Override
-    public BikeStoreAdapterShowStoreList.ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BikeStoreAdapterShowStoreListAdmin.ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(bikeStoreContext).inflate(R.layout.image_bikestore,parent, false);
-        return new BikeStoreAdapterShowStoreList.ImageViewHolder(view);
+        return new BikeStoreAdapterShowStoreListAdmin.ImageViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(BikeStoreAdapterShowStoreList.ImageViewHolder holder, int position) {
+    public void onBindViewHolder(BikeStoreAdapterShowStoreListAdmin.ImageViewHolder holder, int position) {
 
         final BikeStore uploadCurrent = bikeStoreUploads.get(position);
         holder.tvStoreBikeLocation.setText(uploadCurrent.getLocationBike_Store());

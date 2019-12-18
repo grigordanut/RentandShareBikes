@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +39,8 @@ public class BikesImageAdmin extends AppCompatActivity {
     private List<Bikes> bikesList;
 
     private ProgressDialog progressDialog;
+    private Button buttonAddMoreBikes, buttonBackAdminPageBikes;
+
     String storeName ="";
 
 
@@ -63,6 +68,22 @@ public class BikesImageAdmin extends AppCompatActivity {
         bikesList = new ArrayList<>();
 
         progressDialog.show();
+
+        buttonAddMoreBikes = (Button)findViewById(R.id.btnAddMoreBikes);
+        buttonAddMoreBikes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(BikesImageAdmin.this, BikeStoreImageAddBikes.class));
+            }
+        });
+
+        buttonBackAdminPageBikes = (Button)findViewById(R.id.btnBackAdminPageBikes);
+        buttonBackAdminPageBikes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(BikesImageAdmin.this, AdminPage.class));
+            }
+        });
 
         //check if the bikes list is empty and add a new bike
         if(databaseReference == null){
