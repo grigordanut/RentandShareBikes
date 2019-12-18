@@ -47,10 +47,8 @@ public class BikeImageCustomer extends AppCompatActivity {
         getIntent().hasExtra("SName");
         storeName = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
 
-
         textViewBikesImageList = (TextView)findViewById(R.id.tvBikeImageList);
         textViewBikesImageList.setText("List of Bikes in "+storeName+" store");
-
 
         firebaseDatabase = FirebaseDatabase.getInstance();
 

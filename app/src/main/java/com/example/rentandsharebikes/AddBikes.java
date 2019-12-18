@@ -134,7 +134,7 @@ public class AddBikes extends AppCompatActivity {
             public void onClick(View view) {
                 //show progress Dialog
                 progressDialog.show();
-                uploadEvent();
+                uploadBikes();
             }
         });
     }
@@ -203,8 +203,8 @@ public class AddBikes extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    //Upload a new Bicycles into the Bicycles table
-    public void uploadEvent(){
+    //Upload a new Bicycle into the Bicycles table
+    public void uploadBikes(){
         progressDialog.dismiss();
 
         final String tv_BikeDate = textViewDate.getText().toString().trim();
