@@ -48,47 +48,52 @@ public class AddBikeStore extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                loc_BikeStore =  locationBikeStore.getText().toString().trim();
-                address_BikeStore = addressBikeStore.getText().toString().trim();
-                number_SlotsStore = numberSlots.getText().toString().trim();
+            loc_BikeStore =  locationBikeStore.getText().toString().trim();
+            address_BikeStore = addressBikeStore.getText().toString().trim();
+            number_SlotsStore = numberSlots.getText().toString().trim();
 
-                if(loc_BikeStore.isEmpty()){
-                    locationBikeStore.setError("Enter store Location");
-                    locationBikeStore.requestFocus();
-                }
+            if(loc_BikeStore.isEmpty()){
+                locationBikeStore.setError("Enter store Location");
+                locationBikeStore.requestFocus();
+            }
 
-                else if (address_BikeStore.isEmpty()){
-                    addressBikeStore.setError("Please enter store Address");
-                    addressBikeStore.requestFocus();
-                }
+            else if (address_BikeStore.isEmpty()){
+                addressBikeStore.setError("Please enter store Address");
+                addressBikeStore.requestFocus();
+            }
 
-                else {
-                    String loc_BikeStore =  locationBikeStore.getText().toString().trim();
-                    String address_BikeStore = addressBikeStore.getText().toString().trim();
-                    String number_SlotsStore = numberSlots.getText().toString();
-                    String storeID = databaseReference.push().getKey();
+            else if(number_SlotsStore.isEmpty()){
+                numberSlots.setError("Please enter the number of slots");
+                numberSlots.requestFocus();
+            }
 
-                    BikeStore bike_store = new BikeStore(loc_BikeStore, address_BikeStore, number_SlotsStore);
+            else {
+                //String loc_BikeStore =  locationBikeStore.getText().toString().trim();
+                //String address_BikeStore = addressBikeStore.getText().toString().trim();
+                //String number_SlotsStore = numberSlots.getText().toString();
+                String storeID = databaseReference.push().getKey();
 
-                    assert storeID != null;
-                    databaseReference.child(storeID).setValue(bike_store).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
-                                finish();
-                                Toast.makeText(AddBikeStore.this, "Bike Store Added", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(AddBikeStore.this, BikeStoreImageShowStoreList.class));
-                            }
+                BikeStore bike_store = new BikeStore(loc_BikeStore, address_BikeStore, number_SlotsStore);
+
+                assert storeID != null;
+                databaseReference.child(storeID).setValue(bike_store).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            finish();
+                            Toast.makeText(AddBikeStore.this, "Bike Store Added", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AddBikeStore.this, BikeStoreImageShowStoreList.class));
                         }
-                    })
+                    }
+                })
 
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
                         Toast.makeText(AddBikeStore.this,e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+                    }
+                });
+            }
             }
         });
     }

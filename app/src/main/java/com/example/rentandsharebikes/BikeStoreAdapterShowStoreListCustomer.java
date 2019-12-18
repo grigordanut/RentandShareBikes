@@ -40,7 +40,7 @@ public class BikeStoreAdapterShowStoreListCustomer extends RecyclerView.Adapter<
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(bikeStoreContext,BikeImage.class);
+                Intent intent = new Intent(bikeStoreContext, BikesImageAdmin.class);
                 intent.putExtra("SName",uploadCurrent.getLocationBike_Store());
                 bikeStoreContext.startActivity(intent);
             }

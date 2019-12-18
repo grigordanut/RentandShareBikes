@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikeImageCustomer extends AppCompatActivity {
+public class BikesImageAdmin extends AppCompatActivity {
 
     private FirebaseStorage bikesStorage;
     private DatabaseReference databaseReference;
@@ -29,7 +29,7 @@ public class BikeImageCustomer extends AppCompatActivity {
     private ValueEventListener bikesListDBEventListener;
 
     private RecyclerView bikesListRecyclerView;
-    private BikesAdapterCustomer bikesListAdapterCustomer;
+    private BikesAdapterAdmin bikesListAdapter;
 
     private TextView textViewBikesImageList;
 
@@ -38,17 +38,20 @@ public class BikeImageCustomer extends AppCompatActivity {
     private ProgressDialog progressDialog;
     String storeName ="";
 
+
     @SuppressLint({"NewApi", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_image_customer);
+        setContentView(R.layout.activity_bikes_image_admin);
 
         getIntent().hasExtra("SName");
         storeName = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
 
+
         textViewBikesImageList = (TextView)findViewById(R.id.tvBikeImageList);
-        textViewBikesImageList.setText("List of Bikes in "+storeName+" store");
+        textViewBikesImageList.setText("List of Bikes in " +storeName+" store");
+
 
         firebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -79,8 +82,8 @@ public class BikeImageCustomer extends AppCompatActivity {
                     }
                 }
 
-                bikesListAdapterCustomer = new BikesAdapterCustomer(BikeImageCustomer.this, bikesList);
-                bikesListRecyclerView.setAdapter(bikesListAdapterCustomer);
+                bikesListAdapter = new BikesAdapterAdmin(BikesImageAdmin.this, bikesList);
+                bikesListRecyclerView.setAdapter(bikesListAdapter);
                 progressDialog.dismiss();
             }
 

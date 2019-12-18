@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikeImage extends AppCompatActivity {
+public class BikesImageCustomer extends AppCompatActivity {
 
     private FirebaseStorage bikesStorage;
     private DatabaseReference databaseReference;
@@ -30,7 +29,7 @@ public class BikeImage extends AppCompatActivity {
     private ValueEventListener bikesListDBEventListener;
 
     private RecyclerView bikesListRecyclerView;
-    private BikesAdapter bikesListAdapter;
+    private BikesAdapterCustomer bikesListAdapterCustomer;
 
     private TextView textViewBikesImageList;
 
@@ -39,20 +38,17 @@ public class BikeImage extends AppCompatActivity {
     private ProgressDialog progressDialog;
     String storeName ="";
 
-
     @SuppressLint({"NewApi", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_image);
+        setContentView(R.layout.activity_bikes_image_customer);
 
         getIntent().hasExtra("SName");
         storeName = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
 
-
         textViewBikesImageList = (TextView)findViewById(R.id.tvBikeImageList);
-        textViewBikesImageList.setText("List of Bikes in " +storeName+" store");
-
+        textViewBikesImageList.setText("List of Bikes in "+storeName+" store");
 
         firebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -83,8 +79,8 @@ public class BikeImage extends AppCompatActivity {
                     }
                 }
 
-                bikesListAdapter = new BikesAdapter(BikeImage.this, bikesList);
-                bikesListRecyclerView.setAdapter(bikesListAdapter);
+                bikesListAdapterCustomer = new BikesAdapterCustomer(BikesImageCustomer.this, bikesList);
+                bikesListRecyclerView.setAdapter(bikesListAdapterCustomer);
                 progressDialog.dismiss();
             }
 

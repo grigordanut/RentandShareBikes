@@ -17,14 +17,14 @@ import java.util.List;
 
 import static android.icu.text.DateFormat.NONE;
 
-public class BikesAdapter extends RecyclerView.Adapter<BikesAdapter.ImageViewHolder> {
+public class BikesAdapterAdmin extends RecyclerView.Adapter<BikesAdapterAdmin.ImageViewHolder> {
 
     private Context bikesContext;
     private List<Bikes> bikesUploads;
     private OnItemClickListener clickListener;
     private OnItemClickListener mapListener;
 
-    public BikesAdapter(Context bikes_context, List<Bikes> bikes_uploads){
+    public BikesAdapterAdmin(Context bikes_context, List<Bikes> bikes_uploads){
         bikesContext = bikes_context;
         bikesUploads = bikes_uploads;
     }

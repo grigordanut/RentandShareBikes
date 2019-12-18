@@ -22,8 +22,8 @@ public class BikesAdapterCustomer extends RecyclerView.Adapter<BikesAdapterCusto
 
     private Context bikesContext;
     private List<Bikes> bikesUploads;
-    private BikesAdapter.OnItemClickListener clickListener;
-    private BikesAdapter.OnItemClickListener mapListener;
+    private BikesAdapterAdmin.OnItemClickListener clickListener;
+    private BikesAdapterAdmin.OnItemClickListener mapListener;
 
     public BikesAdapterCustomer(Context bikes_context, List<Bikes> bikes_uploads){
         bikesContext = bikes_context;
@@ -132,7 +132,7 @@ public class BikesAdapterCustomer extends RecyclerView.Adapter<BikesAdapterCusto
 
     }
 
-    public void setOnItmClickListener(BikesAdapter.OnItemClickListener listener){
+    public void setOnItmClickListener(BikesAdapterAdmin.OnItemClickListener listener){
         clickListener = listener;
     }
 }

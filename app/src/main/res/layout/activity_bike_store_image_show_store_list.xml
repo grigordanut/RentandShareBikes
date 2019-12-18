@@ -1,65 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    tools:context=".BikeStoreImageShowStoreList">
+
+    <TextView
+        android:id="@+id/tvBikeStoresImageShowStoreList"
+        android:layout_width="380dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:text="@string/tv_bikeStoreImageShowStoreList"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="24sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/evRecyclerView"
+        android:layout_width="380dp"
+        android:layout_height="620dp"
+        android:layout_marginTop="10dp">
+    </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp"
-        tools:context=".BikeStoreImageShowStoreList">
+        android:orientation="horizontal"
+        tools:context=".BikeStoreImageAdmin">
 
-        <TextView
-            android:id="@+id/tvBikeStoresImageShowStoreList"
-            android:layout_width="380dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:text="@string/tv_bikeStoreImageShowStoreList"
+        <Button
+            android:id="@+id/btnAddBikesStores"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="@string/btn_addBikeStores"
             android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="24sp" />
+            android:textSize="14sp"
+            tools:ignore="ButtonStyle" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/evRecyclerView"
-            android:layout_width="380dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="8dp" />
+        <Button
+            android:id="@+id/btnBackAdminPage"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+            android:text="@string/btn_backToAdminPage"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            tools:ignore="ButtonStyle" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:context=".BikeStoreImageAdmin">
-
-            <Button
-                android:id="@+id/btnAddBikesStores"
-                android:layout_width="170dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:text="@string/btn_addBikeStores"
-                android:textAlignment="center"
-                android:textSize="14sp"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/btnBackAdminPage"
-                android:layout_width="170dp"
-                android:layout_height="50dp"
-
-                android:text="@string/btn_backToAdminPage"
-                android:textAlignment="center"
-                android:textSize="14sp"
-                tools:ignore="ButtonStyle" />
-
-        </LinearLayout>
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

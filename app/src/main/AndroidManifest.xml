@@ -18,10 +18,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BikeImageCustomer"></activity>
+        <activity android:name=".BikesImageCustomer"></activity>
         <activity android:name=".BikeStoreImageAddBikes" />
         <activity android:name=".BikeStoreImageShowStoreList" />
-        <activity android:name=".BikeImage" />
+        <activity android:name=".BikesImageAdmin" />
         <activity android:name=".BikeStoreImageCustomer" />
         <activity android:name=".ResetPassword" />
         <activity android:name=".AdminPage" />
