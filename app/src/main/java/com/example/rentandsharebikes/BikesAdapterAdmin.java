@@ -42,16 +42,17 @@ public class BikesAdapterAdmin extends RecyclerView.Adapter<BikesAdapterAdmin.Im
     public void onBindViewHolder(ImageViewHolder holder, int position) {
 
         Bikes uploadCurrent = bikesUploads.get(position);
-        holder.tvBikeDate.setText("Date: "+uploadCurrent.getAddBike_Date());
-        holder.tvBikeModel.setText("Model: "+uploadCurrent.getAddBike_Model());
-        holder.tvBikeManufacturer.setText("Factory: "+uploadCurrent.getAddBike_Manufacturer());
-        holder.tvBikePrice.setText("Price/Day: € "+uploadCurrent.getAddBike_Price());
-        Picasso.with(bikesContext)
-                .load(R.drawable.bike)
-                .placeholder(R.mipmap.ic_launcher)
-                .fit()
-                .centerCrop()
-                .into(holder.imageBike);
+        holder.tvBikeDate.setText("Date: "+uploadCurrent.getBike_Date());
+        holder.tvBikeModel.setText("Model: "+uploadCurrent.getBike_Model());
+        holder.tvBikeManufacturer.setText("Factory: "+uploadCurrent.getBike_Manufacturer());
+        holder.tvBikePrice.setText("Price/Day: € "+uploadCurrent.getBike_Price());
+
+        Picasso.get()
+            .load(uploadCurrent.getBike_Image())
+            .placeholder(R.mipmap.ic_launcher)
+            .fit()
+            .centerCrop()
+            .into(holder.imageBike);
     }
 
     @Override
@@ -91,15 +92,14 @@ public class BikesAdapterAdmin extends RecyclerView.Adapter<BikesAdapterAdmin.Im
             }
         }
 
-
         //create onItem click menu
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             menu.setHeaderTitle("Select an Action");
-            MenuItem doShowMap  = menu.add(NONE, 1, 1, "Show Map");
+            MenuItem doUpdate  = menu.add(NONE, 1, 1, "Update");
             MenuItem doDelete  = menu.add(NONE, 2, 2, "Delete");
 
-            doShowMap.setOnMenuItemClickListener(this);
+            doUpdate.setOnMenuItemClickListener(this);
             doDelete.setOnMenuItemClickListener(this);
         }
 
@@ -110,7 +110,7 @@ public class BikesAdapterAdmin extends RecyclerView.Adapter<BikesAdapterAdmin.Im
                 if (position != RecyclerView.NO_POSITION){
                     switch (item.getItemId()){
                         case 1:
-                            clickListener.onShowMapClick(position);
+                            clickListener.onUpdateClick(position);
                             return true;
 
                         case 2:
@@ -127,7 +127,7 @@ public class BikesAdapterAdmin extends RecyclerView.Adapter<BikesAdapterAdmin.Im
     public interface OnItemClickListener {
         void onItemClick(int position);
 
-        void onShowMapClick(int position);
+        void onUpdateClick(int position);
 
         void onDeleteClick(int position);
 

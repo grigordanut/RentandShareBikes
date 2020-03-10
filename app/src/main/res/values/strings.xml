@@ -90,8 +90,17 @@
     <string name="tv_addBikePrice">Price/Day: </string>
 
     <!--    Image Bike Store-->
+    <string name="tv_storeNumber">Store Number: </string>
     <string name="tv_storeLocation">Store Location: </string>
     <string name="tv_storeAddress">Store Address: </string>
     <string name="tv_numberSlots">Number Slots: </string>
+    <string name="tv_numberAvailable">Nr Available: </string>
+
+    <!--    Update Bike Store Details-->
+    <string name="tv_updateStoreDetails">Update Bike Store Details</string>
+    <string name="btn_updateStoreDetails">Save Updates</string>
+
+    <string name="title_activity_maps">Map</string>
+    <string name="todo">TODO</string>
 
 </resources>

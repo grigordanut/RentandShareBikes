@@ -4,45 +4,54 @@ import com.google.firebase.database.Exclude;
 
 public class BikeStore {
 
+    private int bikeStore_Number;
+    private String bikeStore_Location;
+    private String bikeStore_Address;
+    private int bikeStore_NumberSlots;
 
-    public String locationBike_Store;
-    public String addressBike_Store;
-    public String number_Slots;
-
-    public String storeKey;
+    private String storeKey;
 
     public BikeStore(){
 
     }
 
-    public BikeStore(String locationBike_Store, String addressBike_Store, String number_Slots) {
-        this.locationBike_Store = locationBike_Store;
-        this.addressBike_Store = addressBike_Store;
-        this.number_Slots = number_Slots;
+    public BikeStore(int bikeStore_Number, String bikeStore_Location, String bikeStore_Address, int bikeStore_NumberSlots) {
+        this.bikeStore_Number = bikeStore_Number;
+        this.bikeStore_Location = bikeStore_Location;
+        this.bikeStore_Address = bikeStore_Address;
+        this.bikeStore_NumberSlots = bikeStore_NumberSlots;
     }
 
-    public String getLocationBike_Store() {
-        return locationBike_Store;
+    public int getBikeStore_Number() {
+        return bikeStore_Number;
     }
 
-    public void setLocationBike_Store(String locationBike_Store) {
-        this.locationBike_Store = locationBike_Store;
+    public void setBikeStore_Number(int bikeStore_Number) {
+        this.bikeStore_Number = bikeStore_Number;
     }
 
-    public String getAddressBike_Store() {
-        return addressBike_Store;
+    public String getBikeStore_Location() {
+        return bikeStore_Location;
     }
 
-    public void setAddressBike_Store(String addressBike_Store) {
-        this.addressBike_Store = addressBike_Store;
+    public void setBikeStore_Location(String bikeStore_Location) {
+        this.bikeStore_Location = bikeStore_Location;
     }
 
-    public String getNumber_Slots() {
-        return number_Slots;
+    public String getBikeStore_Address() {
+        return bikeStore_Address;
     }
 
-    public void setNumber_Slots(String number_Slots) {
-        this.number_Slots = number_Slots;
+    public void setBikeStore_Address(String bikeStore_Address) {
+        this.bikeStore_Address = bikeStore_Address;
+    }
+
+    public int getBikeStore_NumberSlots() {
+        return bikeStore_NumberSlots;
+    }
+
+    public void setBikeStore_NumberSlots(int bikeStore_NumberSlots) {
+        this.bikeStore_NumberSlots = bikeStore_NumberSlots;
     }
 
     @Exclude

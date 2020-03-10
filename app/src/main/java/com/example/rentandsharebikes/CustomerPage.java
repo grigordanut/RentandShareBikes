@@ -48,6 +48,14 @@ public class CustomerPage extends AppCompatActivity {
             }
         });
 
+        Button buttonShareBikes = (Button)findViewById(R.id.btnShareBikesCustom);
+        buttonShareBikes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //startActivity(new Intent(CustomerPage.this, UploadFiles.class));
+            }
+        });
+
         //retrieve data from database into text views
         databaseReference = FirebaseDatabase.getInstance().getReference("Customers");
         databaseReference.addValueEventListener(new ValueEventListener() {

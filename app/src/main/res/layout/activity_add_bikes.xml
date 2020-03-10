@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,42 +8,70 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
+        android:paddingBottom="30dp"
         tools:context=".AddBikes">
 
         <TextView
             android:id="@+id/tvWelcomeAddBikes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/tv_welcomeAddBikes"
             android:textAlignment="center"
             android:textColor="#000000"
-            android:textSize="24sp"
-            android:text="@string/tv_welcomeAddBikes"/>
+            android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="150dp"
+            android:id="@+id/tvBikeDate"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textSize="24sp"
-            android:background="#DDDDDD"
-            android:textColor="#000000"
-            android:textAlignment="textEnd"
-            android:paddingEnd="10dp"
+            android:layout_below="@+id/tvWelcomeAddBikes"
+            android:layout_alignEnd="@+id/tvWelcomeAddBikes"
+            android:layout_alignRight="@+id/tvWelcomeAddBikes"
             android:layout_gravity="end"
+            android:layout_marginTop="5dp"
+            android:background="#DDDDDD"
+            android:paddingEnd="10dp"
             android:paddingRight="10dp"
+            android:textAlignment="textEnd"
+            android:textColor="#000000"
+            android:textSize="24sp"
             tools:ignore="RtlSymmetry" />
 
+        <TextView
+            android:id="@+id/tvBikeNumber"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvBikeDate"
+            android:layout_alignEnd="@+id/tvBikeDate"
+            android:layout_alignRight="@+id/tvBikeDate"
+            android:layout_gravity="end"
+            android:layout_marginTop="5dp"
+            android:background="#ffffff"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            android:text="1"
+            android:textAlignment="textEnd"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText,RtlSymmetry" />
+
         <ImageView
-            android:id="@+id/imgViewAddBike"
+            android:id="@+id/imgViewAddBikes"
             android:layout_width="280dp"
             android:layout_height="240dp"
-            android:layout_marginTop="5dp"
+            android:layout_below="@+id/tvBikeNumber"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
+            android:layout_marginTop="5dp"
             android:background="#f2f2f2"
             android:src="@drawable/bikepicture"
             tools:ignore="ContentDescription" />
@@ -53,24 +80,26 @@
             android:id="@+id/tvOr"
             android:layout_width="100dp"
             android:layout_height="40dp"
+            android:layout_below="@+id/imgViewAddBikes"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:textSize="26sp"
             android:background="#ffffff"
-            android:text="@string/tv_orSelect"
-            android:textColor="#000000"
-            android:textAlignment="center"
             android:paddingEnd="10dp"
-            android:layout_gravity="center"
-            android:textStyle="bold"
             android:paddingRight="10dp"
-            tools:ignore="RtlHardcoded,RtlSymmetry" />
+            android:text="@string/tv_orSelect"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            tools:ignore="RtlCompat,RtlHardcoded,RtlSymmetry" />
 
         <ImageButton
             android:id="@+id/btnTakePicture"
             android:layout_width="200dp"
             android:layout_height="60dp"
+            android:layout_below="@+id/tvOr"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:layout_gravity="center"
             android:background="@drawable/cameraimage"
             android:textSize="24sp"
             tools:ignore="ContentDescription" />
@@ -79,9 +108,10 @@
             android:id="@+id/bikeModelWrapper"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp">
+            android:layout_below="@+id/btnTakePicture"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etBikeModel"
@@ -90,8 +120,8 @@
                 android:background="@drawable/round_text"
                 android:hint="@string/et_bikeModel"
                 android:inputType="textPersonName"
-                android:paddingLeft="10dp"
                 android:paddingStart="10dp"
+                android:paddingLeft="10dp"
                 android:textSize="20sp"
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -100,9 +130,10 @@
             android:id="@+id/bikeManufacturerWrapper"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp">
+            android:layout_below="@+id/bikeModelWrapper"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etBikeManufacturer"
@@ -111,8 +142,8 @@
                 android:background="@drawable/round_text"
                 android:hint="@string/et_bikeManufacturer"
                 android:inputType="textPersonName"
-                android:paddingLeft="10dp"
                 android:paddingStart="10dp"
+                android:paddingLeft="10dp"
                 android:textSize="20sp"
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -121,9 +152,10 @@
             android:id="@+id/bikePriceWrapper"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp">
+            android:layout_below="@+id/bikeManufacturerWrapper"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etBikePricePerDay"
@@ -132,8 +164,8 @@
                 android:background="@drawable/round_text"
                 android:hint="@string/et_bikePricePerDay"
                 android:inputType="number"
-                android:paddingLeft="10dp"
                 android:paddingStart="10dp"
+                android:paddingLeft="10dp"
                 android:textSize="20sp"
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -142,12 +174,13 @@
             android:id="@+id/btnSaveBike"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/bikePriceWrapper"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:layout_gravity="center"
-            android:textSize="24sp"
-            android:text="@string/btn_saveBike"/>
+            android:text="@string/btn_saveBike"
+            android:textSize="24sp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>
 
 

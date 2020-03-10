@@ -1,5 +1,6 @@
 package com.example.rentandsharebikes;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -37,16 +38,18 @@ public class BikesAdapterCustomer extends RecyclerView.Adapter<BikesAdapterCusto
         return new BikesAdapterCustomer.ImageViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(BikesAdapterCustomer.ImageViewHolder holder, int position) {
 
         Bikes uploadCurrent = bikesUploads.get(position);
-        holder.tvBikeDate.setText(uploadCurrent.getAddBike_Date());
-        holder.tvBikeModel.setText(uploadCurrent.getAddBike_Model());
-        holder.tvBikeManufacturer.setText(uploadCurrent.getAddBike_Manufacturer());
-        holder.tvBikePrice.setText(uploadCurrent.getAddBike_Price());
-        Picasso.with(bikesContext)
-                .load(uploadCurrent.getAddBike_Image())
+        holder.tvBikeDate.setText("Date: "+uploadCurrent.getBike_Date());
+        holder.tvBikeModel.setText("Model: "+uploadCurrent.getBike_Model());
+        holder.tvBikeManufacturer.setText("Factory: "+uploadCurrent.getBike_Manufacturer());
+        holder.tvBikePrice.setText("Price/Day: € "+uploadCurrent.getBike_Price());
+
+        Picasso.get()
+                .load(uploadCurrent.getBike_Image())
                 .placeholder(R.mipmap.ic_launcher)
                 .fit()
                 .centerCrop()
@@ -71,7 +74,7 @@ public class BikesAdapterCustomer extends RecyclerView.Adapter<BikesAdapterCusto
             super(itemView);
 
             tvBikeDate = itemView.findViewById(R.id.tvAddBikeDate);
-            imageBike = itemView.findViewById(R.id.imgViewAddBike);
+            imageBike = itemView.findViewById(R.id.imgShowBike);
             tvBikeModel = itemView.findViewById(R.id.tvAddBikeModel);
             tvBikeManufacturer = itemView.findViewById(R.id.tvAddBikeManufact);
             tvBikePrice = itemView.findViewById(R.id.tvAddBikePrice);
@@ -90,12 +93,11 @@ public class BikesAdapterCustomer extends RecyclerView.Adapter<BikesAdapterCusto
             }
         }
 
-
         //create onItem click menu
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             menu.setHeaderTitle("Select an Action");
-            MenuItem doShowMap  = menu.add(NONE, 1, 1, "Show Map");
+            MenuItem doShowMap  = menu.add(NONE, 1, 1, "Update");
             MenuItem doDelete  = menu.add(NONE, 2, 2, "Delete");
 
             doShowMap.setOnMenuItemClickListener(this);
@@ -109,7 +111,7 @@ public class BikesAdapterCustomer extends RecyclerView.Adapter<BikesAdapterCusto
                 if (position != RecyclerView.NO_POSITION){
                     switch (item.getItemId()){
                         case 1:
-                            clickListener.onShowMapClick(position);
+                            clickListener.onUpdateClick(position);
                             return true;
 
                         case 2:
@@ -118,7 +120,6 @@ public class BikesAdapterCustomer extends RecyclerView.Adapter<BikesAdapterCusto
                     }
                 }
             }
-
             return false;
         }
     }
@@ -126,10 +127,9 @@ public class BikesAdapterCustomer extends RecyclerView.Adapter<BikesAdapterCusto
     public interface OnItemClickListener {
         void onItemClick(int position);
 
-        void onShowMapClick(int position);
+        void onUpdateClick(int position);
 
         void onDeleteClick(int position);
-
     }
 
     public void setOnItmClickListener(BikesAdapterAdmin.OnItemClickListener listener){

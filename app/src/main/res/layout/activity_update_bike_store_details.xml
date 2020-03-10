@@ -3,122 +3,116 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_bright"
+    android:background="@drawable/backgrandier"
+    tools:context=".UpdateBikeStoreDetails"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="30dp"
-        tools:context=".AddBikeStore">
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvAddBike"
+            android:id="@+id/tvUpdateStoreDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
-            android:gravity="center_horizontal"
-            android:text="@string/tv_addBikeStore"
+            android:text="@string/tv_updateStoreDetails"
             android:textAlignment="center"
-            android:textColor="#000000"
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/tvBikeStoreNumber"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvAddBike"
-            android:layout_alignEnd="@id/tvAddBike"
-            android:layout_alignRight="@id/tvAddBike"
-            android:layout_marginTop="10dp"
-            android:background="#ffffff"
-            android:gravity="center_horizontal"
-            android:text="1"
-            android:textAlignment="center"
-            android:textColor="#000000"
+            android:id="@+id/tvStoreNumber"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/bgrinput"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
             android:textSize="24sp"
-            tools:ignore="HardcodedText" />
+            tools:ignore="RtlSymmetry" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/WrapperBikeStoreLocation"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_below="@+id/tvBikeStoreNumber"
+            android:layout_height="50dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
+            android:background="@drawable/bgrinput"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etBikeStoreLocation"
+                android:id="@+id/etStoreLocation"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="@string/et_locationAddStore"
                 android:inputType="text"
                 android:paddingStart="10dp"
                 android:paddingLeft="10dp"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/WrapperBikeStoreAddress"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_below="@+id/WrapperBikeStoreLocation"
+            android:layout_height="50dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
+            android:background="@drawable/bgrinput"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etBikeStoreAddress"
+                android:id="@+id/etStoreAddress"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="@string/et_addressAddStore"
                 android:inputType="text"
                 android:paddingStart="10dp"
                 android:paddingLeft="10dp"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/WrapperBikeStoreNrSlots"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_below="@+id/WrapperBikeStoreAddress"
+            android:layout_height="50dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
+            android:background="@drawable/bgrinput"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etBikeStoreNrSlots"
+                android:id="@+id/etStoreNrSlots"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="@string/et_numberSlots"
                 android:inputType="number"
                 android:paddingStart="10dp"
                 android:paddingLeft="10dp"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btnSaveBikeStore"
-            android:layout_width="260dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/WrapperBikeStoreNrSlots"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="@string/btn_saveBikeStore"
-            android:textSize="22sp" />
+            android:id="@+id/btnSaveStoreUpdates"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="@string/btn_updateStoreDetails"
+            android:textSize="24sp" />
 
-    </RelativeLayout>
+    </LinearLayout>
 </ScrollView>
+

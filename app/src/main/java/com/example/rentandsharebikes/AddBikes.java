@@ -26,22 +26,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-
-import static java.time.LocalDate.now;
 
 public class AddBikes extends AppCompatActivity {
 
@@ -49,23 +49,26 @@ public class AddBikes extends AppCompatActivity {
     private static final int IMAGE_CAPTURE_CODE = 1001;
     private static final int PERMISSION_CODE = 1000;
 
+    private StorageReference storageReference;
+    private DatabaseReference databaseReference;
+    private StorageTask mUploadTask;
+    private ValueEventListener bikeDBEventListener;
+
     private ImageView ivAddBike;
     private Uri imageUri;
 
-
-    private EditText etBModel, etBManufact, etBPrice;
-    private TextView textViewDate;
+    private EditText etBikeModel, etBikeManufact, etBikePrice;
+    private TextView textViewWelcomeAddBikes, textViewDate, textViewBikeNumber;
     private Button buttonSaveBike;
     private ImageButton buttonTakePicture;
 
-    private StorageReference storageReference;
-    private DatabaseReference databaseReference;
+    private String tvBike_Date, etBike_Model, etBike_Manufact;
+    private int etBike_Price;
+    public int tvBike_Number;
+
+    String bikeStore_Name ="";
 
     private ProgressDialog progressDialog;
-
-
-    private TextView textViewWelcomeAddBikes;
-    String storeName ="";
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -75,27 +78,38 @@ public class AddBikes extends AppCompatActivity {
         setContentView(R.layout.activity_add_bikes);
 
         getIntent().hasExtra("SName");
-        storeName = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
+        bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
 
-        textViewDate = (TextView)findViewById(R.id.tvDate);
         textViewWelcomeAddBikes = (TextView)findViewById(R.id.tvWelcomeAddBikes);
-        textViewWelcomeAddBikes.setText("Add Bicycles to " +storeName+" store");
+        textViewDate = (TextView)findViewById(R.id.tvBikeDate);
+        textViewBikeNumber = (TextView)findViewById(R.id.tvBikeNumber);
 
-        LocalDate localDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-        String insertDate = localDate.format(formatter);
+        textViewWelcomeAddBikes.setText("Add Bicycles to " +bikeStore_Name+" store");
+
+        LocalDate localDate = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            localDate = LocalDate.now();
+        }
+        DateTimeFormatter formatter = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+        }
+        String insertDate = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            insertDate = localDate.format(formatter);
+        }
         textViewDate.setText(insertDate);
 
-        etBModel = (EditText)findViewById(R.id.etBikeModel);
-        etBManufact = (EditText)findViewById(R.id.etBikeManufacturer);
-        etBPrice = (EditText)findViewById(R.id.etBikePricePerDay);
+        etBikeModel = (EditText)findViewById(R.id.etBikeModel);
+        etBikeManufact = (EditText)findViewById(R.id.etBikeManufacturer);
+        etBikePrice = (EditText)findViewById(R.id.etBikePricePerDay);
 
         storageReference = FirebaseStorage.getInstance().getReference("Bikes");
         databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
 
         progressDialog = new ProgressDialog(AddBikes.this);
 
-        ivAddBike = (ImageView) findViewById(R.id.imgViewAddBike);
+        ivAddBike = (ImageView) findViewById(R.id.imgViewAddBikes);
         ivAddBike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,21 +121,21 @@ public class AddBikes extends AppCompatActivity {
         buttonTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M){
-                if(checkSelfPermission(Manifest.permission.CAMERA) ==
-                    PackageManager.PERMISSION_DENIED ||
-                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)==
-                    PackageManager.PERMISSION_DENIED){
-                    String [] permission = {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                    requestPermissions(permission,PERMISSION_CODE);
+                if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M){
+                    if(checkSelfPermission(Manifest.permission.CAMERA) ==
+                            PackageManager.PERMISSION_DENIED ||
+                            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)==
+                                    PackageManager.PERMISSION_DENIED){
+                        String [] permission = {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                        requestPermissions(permission,PERMISSION_CODE);
+                    }
+                    else{
+                        openCamera();
+                    }
                 }
                 else{
                     openCamera();
                 }
-            }
-            else{
-                openCamera();
-            }
             }
         });
 
@@ -132,7 +146,12 @@ public class AddBikes extends AppCompatActivity {
             public void onClick(View view) {
                 //show progress Dialog
                 progressDialog.show();
-                uploadBikes();
+                if (mUploadTask != null && mUploadTask.isInProgress()){
+                    Toast.makeText(AddBikes.this, "Upload in progress", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    uploadBikes();
+                }
             }
         });
     }
@@ -205,58 +224,58 @@ public class AddBikes extends AppCompatActivity {
     public void uploadBikes(){
         progressDialog.dismiss();
 
-        final String tv_BikeDate = textViewDate.getText().toString().trim();
-        final String et_BikeModel = etBModel.getText().toString().trim();
-        final String et_BikeManufact = etBManufact.getText().toString().trim();
-        final String et_BikePrice = etBPrice.getText().toString().trim();
+        tvBike_Date = textViewDate.getText().toString().trim();
+        tvBike_Number = Integer.parseInt(textViewBikeNumber.getText().toString().trim());
+        etBike_Model = etBikeModel.getText().toString().trim();
+        etBike_Manufact = etBikeManufact.getText().toString().trim();
+        etBike_Price = Integer.parseInt(etBikePrice.getText().toString().trim());
 
         if (imageUri == null)   {
             Toast.makeText(AddBikes.this, "Please add a picture", Toast.LENGTH_SHORT).show();
         }
 
-        else if (TextUtils.isEmpty(et_BikeModel)){
-            etBModel.setError("Please add the Model of Bicycle");
-            etBModel.requestFocus();
+        else if (TextUtils.isEmpty(etBike_Model)){
+            etBikeModel.setError("Please add the Model of Bicycle");
+            etBikeModel.requestFocus();
         }
 
-        else if (TextUtils.isEmpty(et_BikeManufact)){
-            etBManufact.setError("Please add the Manufacturer");
-            etBManufact.requestFocus();
+        else if (TextUtils.isEmpty(etBike_Manufact)){
+            etBikeManufact.setError("Please add the Manufacturer");
+            etBikeManufact.requestFocus();
         }
 
-        else if (TextUtils.isEmpty(et_BikePrice)){
-            etBPrice.setError("Please add the Price/Day ");
-            etBPrice.requestFocus();
+        else if (TextUtils.isEmpty(String.valueOf(etBike_Price))){
+            etBikePrice.setError("Please add the Price/Day ");
+            etBikePrice.requestFocus();
         }
 
-        //Add a new Bike into the Bikes table
+        //Bikes bikes = new Bikes(tv_BikeDate, et_BikeModel, et_BikeManufact, et_BikePrice,
+        //taskSnapshot.getUploadSessionUri().toString(),storeName);
+
+        //Add a new Bike into the Bike's table
         else{
             progressDialog.setTitle("The Bike is Uploading");
             progressDialog.show();
-            StorageReference storageReference2 = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(imageUri));
-            storageReference2.putFile(imageUri)
+            final StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(imageUri));
+            mUploadTask = fileReference.putFile(imageUri)
             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Bikes bikes = new Bikes(tv_BikeDate, et_BikeModel, et_BikeManufact, et_BikePrice,
-                    taskSnapshot.getUploadSessionUri().toString(),storeName);
-                    String addBike_id = databaseReference.push().getKey();
-                    assert addBike_id != null;
-                    databaseReference.child(addBike_id).setValue(bikes).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                etBModel.setText("");
-                                etBManufact.setText("");
-                                etBPrice.setText("");
-                                ivAddBike.setImageResource(R.drawable.bikepicture);
+                        public void onSuccess(Uri uri) {
+                            Bikes bikes = new Bikes(tvBike_Date, tvBike_Number, etBike_Model, etBike_Manufact, etBike_Price, uri.toString(), bikeStore_Name);
+                            String addBike_id = databaseReference.push().getKey();
+                            assert addBike_id != null;
+                            databaseReference.child(addBike_id).setValue(bikes);
+                            Toast.makeText(AddBikes.this, "Upload Bicycle successfully", Toast.LENGTH_SHORT).show();
+                            etBikeModel.setText("");
+                            etBikeManufact.setText("");
+                            etBikePrice.setText("");
+                            ivAddBike.setImageResource(R.drawable.bikepicture);
 
-                                Toast.makeText(AddBikes.this, "Upload Bicycle successfully", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(AddBikes.this, AdminPage.class));
-                            }
-                            else{
-                                Toast.makeText(AddBikes.this, "Failed to add the Bike!", Toast.LENGTH_LONG).show();
-                            }
+                            Intent add_Bikes= new Intent(AddBikes.this, AdminPage.class);
+                            startActivity(add_Bikes);
                         }
                     });
                     progressDialog.dismiss();
@@ -279,5 +298,35 @@ public class AddBikes extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onStart() {
+        super.onStart();
+        incrementBikesNumber();
+    }
+
+    private void incrementBikesNumber(){
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
+        bikeDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                    Bikes bikes = postSnapshot.getValue(Bikes.class);
+                    assert bikes != null;
+                    if(bikes.getBikeStoreName().equals(bikeStore_Name)){
+                        tvBike_Number = Integer.parseInt(String.valueOf(bikes.getBike_Number()+1));
+                        textViewBikeNumber.setText(String.valueOf(tvBike_Number));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(AddBikes.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

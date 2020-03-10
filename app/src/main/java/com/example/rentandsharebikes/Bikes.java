@@ -4,65 +4,76 @@ import com.google.firebase.database.Exclude;
 
 public class Bikes {
 
-    private String addBike_Date;
-    private String addBike_Model;
-    private String addBike_Manufacturer;
-    private String addBike_Price;
-    private String addBike_Image;
+    private String bike_Date;
+    private int bike_Number;
+    private String bike_Model;
+    private String bike_Manufacturer;
+    private int bike_Price;
+    private String bike_Image;
     private String bikeStoreName;
+
     private String bikesKey;
 
     public Bikes(){
 
     }
 
-    public Bikes(String addBike_Date, String addBike_Model, String addBike_Manufacturer, String addBike_Price, String addBike_Image, String bikeStoreName) {
-        this.addBike_Date = addBike_Date;
-        this.addBike_Model = addBike_Model;
-        this.addBike_Manufacturer = addBike_Manufacturer;
-        this.addBike_Price = addBike_Price;
-        this.addBike_Image = addBike_Image;
+    public Bikes(String bike_Date, int bike_Number, String bike_Model, String bike_Manufacturer, int bike_Price, String bike_Image, String bikeStoreName) {
+        this.bike_Date = bike_Date;
+        this.bike_Number = bike_Number;
+        this.bike_Model = bike_Model;
+        this.bike_Manufacturer = bike_Manufacturer;
+        this.bike_Price = bike_Price;
+        this.bike_Image = bike_Image;
         this.bikeStoreName = bikeStoreName;
     }
 
-    public String getAddBike_Date() {
-        return addBike_Date;
+    public String getBike_Date() {
+        return bike_Date;
     }
 
-    public void setAddBike_Date(String addBike_Date) {
-        this.addBike_Date = addBike_Date;
+    public void setBike_Date(String bike_Date) {
+        this.bike_Date = bike_Date;
     }
 
-    public String getAddBike_Model() {
-        return addBike_Model;
+    public int getBike_Number() {
+        return bike_Number;
     }
 
-    public void setAddBike_Model(String addBike_Model) {
-        this.addBike_Model = addBike_Model;
+    public void setBike_Number(int bike_Number) {
+        this.bike_Number = bike_Number;
     }
 
-    public String getAddBike_Manufacturer() {
-        return addBike_Manufacturer;
+    public String getBike_Model() {
+        return bike_Model;
     }
 
-    public void setAddBike_Manufacturer(String addBike_Manufacturer) {
-        this.addBike_Manufacturer = addBike_Manufacturer;
+    public void setBike_Model(String bike_Model) {
+        this.bike_Model = bike_Model;
     }
 
-    public String getAddBike_Price() {
-        return addBike_Price;
+    public String getBike_Manufacturer() {
+        return bike_Manufacturer;
     }
 
-    public void setAddBike_Price(String addBike_Price) {
-        this.addBike_Price = addBike_Price;
+    public void setBike_Manufacturer(String bike_Manufacturer) {
+        this.bike_Manufacturer = bike_Manufacturer;
     }
 
-    public String getAddBike_Image() {
-        return addBike_Image;
+    public int getBike_Price() {
+        return bike_Price;
     }
 
-    public void setAddBike_Image(String addBike_Image) {
-        this.addBike_Image = addBike_Image;
+    public void setBike_Price(int bike_Price) {
+        this.bike_Price = bike_Price;
+    }
+
+    public String getBike_Image() {
+        return bike_Image;
+    }
+
+    public void setBike_Image(String bike_Image) {
+        this.bike_Image = bike_Image;
     }
 
     public String getBikeStoreName() {

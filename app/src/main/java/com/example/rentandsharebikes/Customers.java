@@ -2,11 +2,11 @@ package com.example.rentandsharebikes;
 
 public class Customers {
 
-    public String fName_Customer;
-    public String lName_Customer;
-    public String uName_Customer;
-    public String phoneNumb_Customer;
-    public String email_Customer;
+    private String fName_Customer;
+    private String lName_Customer;
+    private String uName_Customer;
+    private String phoneNumb_Customer;
+    private String email_Customer;
 
     public Customers(){
 

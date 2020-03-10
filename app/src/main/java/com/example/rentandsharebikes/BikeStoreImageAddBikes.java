@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,7 +22,6 @@ import java.util.List;
 
 public class BikeStoreImageAddBikes extends AppCompatActivity {
 
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreDBEventListener;
 
@@ -30,16 +30,14 @@ public class BikeStoreImageAddBikes extends AppCompatActivity {
 
     private List<BikeStore> bikeStoreList;
 
-    private ProgressDialog progressDialog;
     private Button buttonBackAddBikeStore;
+    private ProgressDialog progressDialog;
 
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_add_bikes);
-
-        firebaseDatabase = FirebaseDatabase.getInstance();
 
         bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
@@ -52,7 +50,7 @@ public class BikeStoreImageAddBikes extends AppCompatActivity {
 
         //check if the events list is empty and add a new event
         if(databaseReference == null){
-            databaseReference = FirebaseDatabase.getInstance().getReference("Bike stores");
+            databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
         }
 
         bikeStoreDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
@@ -72,7 +70,7 @@ public class BikeStoreImageAddBikes extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(BikeStoreImageAddBikes.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }

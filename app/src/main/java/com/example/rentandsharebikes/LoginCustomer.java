@@ -25,9 +25,9 @@ public class LoginCustomer extends AppCompatActivity {
     private TextInputEditText passLogCustom;
     private String email_logCustom, pass_logCustom;
 
-    private ProgressDialog progressDialog;
-
     private FirebaseAuth firebaseAuth;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

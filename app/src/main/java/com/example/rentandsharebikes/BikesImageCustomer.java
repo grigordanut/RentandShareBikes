@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,8 +36,9 @@ public class BikesImageCustomer extends AppCompatActivity {
 
     private List<Bikes> bikesList;
 
+    String bikeStore_Name ="";
+
     private ProgressDialog progressDialog;
-    String storeName ="";
 
     @SuppressLint({"NewApi", "SetTextI18n"})
     @Override
@@ -45,10 +47,10 @@ public class BikesImageCustomer extends AppCompatActivity {
         setContentView(R.layout.activity_bikes_image_customer);
 
         getIntent().hasExtra("SName");
-        storeName = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
+        bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
 
         textViewBikesImageList = (TextView)findViewById(R.id.tvBikeImageList);
-        textViewBikesImageList.setText("List of Bikes in "+storeName+" store");
+        textViewBikesImageList.setText("List of Bikes in "+bikeStore_Name+" store");
 
         firebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -73,7 +75,7 @@ public class BikesImageCustomer extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if(bikes.getBikeStoreName().equals(storeName)){
+                    if(bikes.getBikeStoreName().equals(bikeStore_Name)){
                         bikes.setBikesKey(postSnapshot.getKey());
                         bikesList.add(bikes);
                     }
@@ -86,7 +88,7 @@ public class BikesImageCustomer extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(BikesImageCustomer.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }

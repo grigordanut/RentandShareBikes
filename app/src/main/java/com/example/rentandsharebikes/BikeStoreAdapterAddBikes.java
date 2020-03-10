@@ -12,8 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-
-public class BikeStoreAdapterAddBikes extends RecyclerView.Adapter<BikeStoreAdapterAddBikes.ImageViewHolder> {
+public class BikeStoreAdapterAddBikes extends RecyclerView.Adapter<BikeStoreAdapterAddBikes.ImageViewHolder>  {
     private Context bikeStoreContext;
     private List<BikeStore> bikeStoreUploads;
 
@@ -33,14 +32,16 @@ public class BikeStoreAdapterAddBikes extends RecyclerView.Adapter<BikeStoreAdap
     public void onBindViewHolder(ImageViewHolder holder, int position) {
 
         final BikeStore uploadCurrent = bikeStoreUploads.get(position);
-        holder.tvStoreBikeLocation.setText(uploadCurrent.getLocationBike_Store());
-        holder.tvStoreBikeAddress.setText(uploadCurrent.getAddressBike_Store());
-        holder.tvStoreBikeSlots.setText(uploadCurrent.getNumber_Slots());
+        holder.tvStoreBikeNumber.setText(String.valueOf(uploadCurrent.getBikeStore_Number()));
+        holder.tvStoreBikeLocation.setText(uploadCurrent.getBikeStore_Location());
+        holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
+        //holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(bikeStoreContext,AddBikes.class);
-                intent.putExtra("SName",uploadCurrent.getLocationBike_Store());
+                intent.putExtra("SName",uploadCurrent.getBikeStore_Location());
                 bikeStoreContext.startActivity(intent);
             }
         });
@@ -53,16 +54,20 @@ public class BikeStoreAdapterAddBikes extends RecyclerView.Adapter<BikeStoreAdap
 
     public class ImageViewHolder extends RecyclerView.ViewHolder {
 
+        public TextView tvStoreBikeNumber;
         public TextView tvStoreBikeLocation;
         public TextView tvStoreBikeAddress;
         public TextView tvStoreBikeSlots;
+        public TextView tvStoreAvailable;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
 
+            tvStoreBikeNumber = itemView.findViewById(R.id.tvStoreNumber);
             tvStoreBikeLocation = itemView.findViewById(R.id.tvStorePlace);
             tvStoreBikeAddress = itemView.findViewById(R.id.tvStoreAddress);
             tvStoreBikeSlots = itemView.findViewById(R.id.tvStoreSlots);
+            tvStoreAvailable =  itemView.findViewById(R.id.tvNrAvailable);
         }
     }
 }

@@ -7,86 +7,162 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="340dp"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="2dp"
         app:cardBackgroundColor="#DDDDDD"
-        app:cardCornerRadius="15dp">
+        app:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/tv_storeNumber"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPlace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvNumber"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/tv_storeLocation"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvPlace"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="140dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/tv_storeAddress"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvSlots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvAddress"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="140dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/tv_numberSlots"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvAvailable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvSlots"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="140dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/tv_numberAvailable"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/tvPlace"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvStoreNumber"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="145dp"
+            android:layout_marginLeft="145dp"
             android:layout_marginTop="10dp"
-            android:text="@string/tv_storeLocation"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#e6f7ff"
+            android:paddingStart="5dp"
+            android:paddingLeft="5dp"
             android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textSize="18sp"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
             android:id="@+id/tvStorePlace"
-            android:layout_width="175dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="155dp"
-            android:layout_marginLeft="155dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="145dp"
+            android:layout_marginLeft="145dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:background="#e6f7ff"
             android:paddingStart="5dp"
             android:paddingLeft="5dp"
             android:textColor="#000000"
-            android:textSize="20sp"
+            android:textSize="18sp"
             tools:ignore="RtlSymmetry" />
-
-        <TextView
-            android:id="@+id/tvAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="140dp"
-            android:layout_marginTop="45dp"
-            android:text="@string/tv_storeAddress"
-            android:textColor="#000000"
-            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tvStoreAddress"
-            android:layout_width="175dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="155dp"
-            android:layout_marginLeft="155dp"
-            android:layout_marginTop="45dp"
+            android:layout_marginStart="145dp"
+            android:layout_marginLeft="145dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:background="#e6f7ff"
             android:paddingStart="5dp"
             android:paddingLeft="5dp"
             android:textColor="#000000"
-            android:textSize="20sp"
+            android:textSize="18sp"
             tools:ignore="RtlSymmetry" />
 
         <TextView
-            android:id="@+id/tvSlots"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="140dp"
-            android:layout_marginTop="80dp"
-            android:text="@string/tv_numberSlots"
-            android:textColor="#000000"
-            android:textSize="20sp" />
-
-        <TextView
             android:id="@+id/tvStoreSlots"
-            android:layout_width="175dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="155dp"
-            android:layout_marginLeft="155dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginStart="145dp"
+            android:layout_marginLeft="145dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:background="#e6f7ff"
             android:paddingStart="5dp"
             android:paddingLeft="5dp"
             android:textColor="#000000"
-            android:textSize="20sp"
+            android:textSize="18sp"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/tvNrAvailable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="145dp"
+            android:layout_marginLeft="145dp"
+            android:layout_marginTop="130dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#e6f7ff"
+            android:paddingStart="5dp"
+            android:paddingLeft="5dp"
+            android:textColor="#000000"
+            android:textSize="18sp"
             tools:ignore="RtlSymmetry" />
 
     </androidx.cardview.widget.CardView>

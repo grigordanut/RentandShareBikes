@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,9 +21,6 @@ import java.util.List;
 
 public class BikeStoreImageShowBikesList extends AppCompatActivity {
 
-    private TextView textViewBikeStore;
-
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreDBEventListener;
 
@@ -38,8 +36,6 @@ public class BikeStoreImageShowBikesList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_show_bikes_list);
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
-
         bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -51,7 +47,7 @@ public class BikeStoreImageShowBikesList extends AppCompatActivity {
 
         //check if the bikes list is empty and add a new bike
         if(databaseReference == null){
-            databaseReference = FirebaseDatabase.getInstance().getReference("Bike stores");
+            databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
         }
 
         bikeStoreDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
@@ -71,7 +67,7 @@ public class BikeStoreImageShowBikesList extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(BikeStoreImageShowBikesList.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "437872894942",
-    "firebase_url": "https://rent-and-share-bikes-f467e.firebaseio.com",
-    "project_id": "rent-and-share-bikes-f467e",
-    "storage_bucket": "rent-and-share-bikes-f467e.appspot.com"
+    "project_number": "593048155793",
+    "firebase_url": "https://rent-and-share-bikes-eb5db.firebaseio.com",
+    "project_id": "rent-and-share-bikes-eb5db",
+    "storage_bucket": "rent-and-share-bikes-eb5db.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:437872894942:android:3641a100b334aed6caf34f",
+        "mobilesdk_app_id": "1:593048155793:android:564115b3fa86a49b4f3130",
         "android_client_info": {
           "package_name": "com.example.rentandsharebikes"
         }
       },
       "oauth_client": [
         {
-          "client_id": "437872894942-sjkp598p68msetmbg0co3fdu43qriqna.apps.googleusercontent.com",
+          "client_id": "593048155793-rb0detga0vo2nolfmaqomddue01hj324.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.rentandsharebikes",
-            "certificate_hash": "592a2784a461f3bbce5e95a91b321be30cd6bc78"
+            "certificate_hash": "18fd422f406b7e3a0b6f1272e5e26d9217133d5e"
           }
         },
         {
-          "client_id": "437872894942-mf3gahpiip8smtopflkap5p448tpncss.apps.googleusercontent.com",
+          "client_id": "593048155793-oqtn9hm1t2q13f2eb7c146ddrdmpp6qc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBP_XKYhBS-aL8liZcthIEWFkAef0a5gOg"
+          "current_key": "AIzaSyBRgxgHy_L6VsdGW4C8g8xXZZXpHnNcFMY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "437872894942-mf3gahpiip8smtopflkap5p448tpncss.apps.googleusercontent.com",
+              "client_id": "593048155793-oqtn9hm1t2q13f2eb7c146ddrdmpp6qc.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

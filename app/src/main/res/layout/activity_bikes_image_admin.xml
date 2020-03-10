@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
-    android:orientation="vertical"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
     tools:context=".BikesImageAdmin">
 
     <TextView
         android:id="@+id/tvBikeImageList"
-        android:layout_width="380dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
         android:text="@string/tv_activityBikesAdmin"
         android:textAlignment="center"
         android:textColor="@android:color/black"
@@ -23,46 +24,44 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/evRecyclerView"
-        android:layout_width="380dp"
-        android:layout_height="480dp"
-        android:layout_marginTop="10dp">
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_below="@+id/tvBikeImageList"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:context=".BikesImageAdmin">
+    <Button
+        android:id="@+id/btnAddMoreBikes"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/evRecyclerView"
+        android:layout_alignStart="@+id/tvBikeImageList"
+        android:layout_alignLeft="@+id/tvBikeImageList"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/round_corners"
+        android:text="@string/btn_addMoreBikes"
+        android:textSize="14sp"
+        tools:ignore="ButtonStyle" />
 
-        <Button
-            android:id="@+id/btnAddMoreBikes"
-            android:layout_width="165dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/round_corners"
-            android:text="@string/btn_addMoreBikes"
-            android:textAlignment="center"
-            android:textSize="14sp"
-            tools:ignore="ButtonStyle" />
+    <Button
+        android:id="@+id/btnBackAdminPageBikes"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/evRecyclerView"
+        android:layout_alignEnd="@+id/tvBikeImageList"
+        android:layout_alignRight="@+id/tvBikeImageList"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/round_corners"
+        android:text="@string/btn_backToAdminPageBikes"
+        android:textSize="14sp"
+        tools:ignore="ButtonStyle" />
 
-        <Button
-            android:id="@+id/btnBackAdminPageBikes"
-            android:layout_width="165dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/round_corners"
-            android:text="@string/btn_backToAdminPageBikes"
-            android:textAlignment="center"
-            android:textSize="14sp"
-            tools:ignore="ButtonStyle" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>
 
 

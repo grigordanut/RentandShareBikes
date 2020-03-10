@@ -33,14 +33,15 @@ public class BikeStoreAdapterShowStoreListCustomer extends RecyclerView.Adapter<
     public void onBindViewHolder(BikeStoreAdapterShowStoreListCustomer.ImageViewHolder holder, int position) {
 
         final BikeStore uploadCurrent = bikeStoreUploads.get(position);
-        holder.tvStoreBikeLocation.setText(uploadCurrent.getLocationBike_Store());
-        holder.tvStoreBikeAddress.setText(uploadCurrent.getAddressBike_Store());
-        holder.tvStoreBikeSlots.setText(uploadCurrent.getNumber_Slots());
+        holder.tvStoreBikeNumber.setText(String.valueOf(uploadCurrent.getBikeStore_Number()));
+        holder.tvStoreBikeLocation.setText(uploadCurrent.getBikeStore_Location());
+        holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
+        holder.tvStoreBikeSlots.setText(uploadCurrent.getBikeStore_NumberSlots());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(bikeStoreContext, BikesImageAdmin.class);
-                intent.putExtra("SName",uploadCurrent.getLocationBike_Store());
+                Intent intent = new Intent(bikeStoreContext, BikesImageCustomer.class);
+                intent.putExtra("SName",uploadCurrent.getBikeStore_Location());
                 bikeStoreContext.startActivity(intent);
             }
         });
@@ -52,14 +53,14 @@ public class BikeStoreAdapterShowStoreListCustomer extends RecyclerView.Adapter<
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder {
-
+        public TextView tvStoreBikeNumber;
         public TextView tvStoreBikeLocation;
         public TextView tvStoreBikeAddress;
         public TextView tvStoreBikeSlots;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-
+            tvStoreBikeNumber = itemView.findViewById(R.id.tvStoreNumber);
             tvStoreBikeLocation = itemView.findViewById(R.id.tvStorePlace);
             tvStoreBikeAddress = itemView.findViewById(R.id.tvStoreAddress);
             tvStoreBikeSlots = itemView.findViewById(R.id.tvStoreSlots);

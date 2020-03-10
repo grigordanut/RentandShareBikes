@@ -8,57 +8,63 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
+        android:paddingBottom="30dp"
         tools:context=".MainActivity"
         tools:showIn="@layout/activity_main">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="60dp"
+            android:id="@+id/tvMainPage"
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
             android:text="@string/tv_mainPage"
             android:textAlignment="center"
             android:textColor="#000000"
-            android:textSize="22sp" />
+            android:textSize="22sp"
+            tools:ignore="RtlCompat" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            tools:context=".MainActivity"
-            tools:showIn="@layout/activity_main">
+        <Button
+            android:id="@+id/btnHomePage"
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/tvMainPage"
+            android:layout_alignStart="@+id/tvMainPage"
+            android:layout_alignLeft="@+id/tvMainPage"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/btn_mainPageHome"
+            android:textSize="22sp"
+            tools:ignore="ButtonStyle" />
 
-            <Button
-                android:id="@+id/btnHomePage"
-                android:layout_width="160dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/btn_mainPageHome"
-                android:textAlignment="center"
-                android:textSize="22sp" />
-
-            <Button
-                android:id="@+id/btnLoginPage"
-                android:layout_width="160dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/btn_mainPageLogin"
-                android:textAlignment="center"
-                android:textSize="22sp" />
-        </LinearLayout>
-
+        <Button
+            android:id="@+id/btnLoginPage"
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/tvMainPage"
+            android:layout_alignEnd="@+id/tvMainPage"
+            android:layout_alignRight="@+id/tvMainPage"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/btn_mainPageLogin"
+            android:textSize="22sp"
+            tools:ignore="ButtonStyle" />
 
         <ImageView
             android:id="@+id/ivMainPage"
-            android:layout_width="400dp"
+            android:layout_width="340dp"
             android:layout_height="400dp"
+            android:layout_below="@+id/btnHomePage"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20sp"
-            android:background="@drawable/smartbike" />
+            android:background="@drawable/smartbike"
+            tools:ignore="ContentDescription" />
 
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>
