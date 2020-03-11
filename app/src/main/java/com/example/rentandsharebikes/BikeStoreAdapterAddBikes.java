@@ -35,7 +35,7 @@ public class BikeStoreAdapterAddBikes extends RecyclerView.Adapter<BikeStoreAdap
         holder.tvStoreBikeNumber.setText(String.valueOf(uploadCurrent.getBikeStore_Number()));
         holder.tvStoreBikeLocation.setText(uploadCurrent.getBikeStore_Location());
         holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
-        //holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
+        holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

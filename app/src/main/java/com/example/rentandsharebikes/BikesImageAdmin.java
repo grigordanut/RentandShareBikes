@@ -86,14 +86,15 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
         });
 
         //check if the bikes list is empty and add a new bike
-        //if (databaseReference == null) {
+        if (databaseReference == null) {
             bikeStorage = FirebaseStorage.getInstance();
             databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
-        //}
+        }
 
         bikesDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikesList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
@@ -138,7 +139,7 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
     @Override
     public void onDeleteClick(final int position) {
         AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageAdmin.this);
-        builderAlert.setMessage("Are sure to delete this item?");
+        builderAlert.setMessage("Are sure to delete this Bike?");
         builderAlert.setCancelable(true);
         builderAlert.setPositiveButton(
                 "Yes",
@@ -152,7 +153,6 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
                             public void onSuccess(Void aVoid) {
                                 databaseReference.child(selectedKeyBike).removeValue();
                                 Toast.makeText(BikesImageAdmin.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
-                                //startActivity(new Intent(BikesImageAdmin.this, AdminPage.class));
                             }
                         });
                     }

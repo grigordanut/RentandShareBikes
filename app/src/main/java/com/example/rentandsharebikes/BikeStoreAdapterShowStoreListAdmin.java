@@ -31,9 +31,10 @@ public class BikeStoreAdapterShowStoreListAdmin extends RecyclerView.Adapter<Bik
 
     private OnItemClickListener clickListener;
     private OnItemClickListener mapListener;
-    public int numberAvailable;
+
     private DatabaseReference databaseReference;
-    private FirebaseStorage bikeStorage;
+
+    private int numberAvailable;
 
     public BikeStoreAdapterShowStoreListAdmin(Context bikeStore_context, List<BikeStore> bikeStore_uploads) {
         bikeStoreContext = bikeStore_context;
@@ -47,20 +48,37 @@ public class BikeStoreAdapterShowStoreListAdmin extends RecyclerView.Adapter<Bik
         return new BikeStoreAdapterShowStoreListAdmin.ImageViewHolder(view);
     }
 
-    AddBikes addBikes = new AddBikes();
-    Bikes bikes = new Bikes();
-    BikesImageAdmin bikesImageAdmin = new BikesImageAdmin();
-
     @Override
-    public void onBindViewHolder(BikeStoreAdapterShowStoreListAdmin.ImageViewHolder holder, int position) {
+    public void onBindViewHolder(final BikeStoreAdapterShowStoreListAdmin.ImageViewHolder holder, int position) {
         final BikeStore uploadCurrent = bikeStoreUploads.get(position);
         holder.tvStoreBikeNumber.setText(String.valueOf(uploadCurrent.getBikeStore_Number()));
         holder.tvStoreBikeLocation.setText(uploadCurrent.getBikeStore_Location());
         holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
         holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
         //holder.tvStoreAvailable.setText(String.valueOf(bikesImageAdmin.calculateNumberAvailable()));
-        //holder.tvStoreAvailable.setText(String.valueOf(numberAvailable));
         //holder.tvStoreAvailable.setText(String.valueOf(calculateNumberAvailableOld()));
+
+        if(databaseReference == null){
+            databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
+        }
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    numberAvailable = (int)dataSnapshot.getChildrenCount();
+                    holder.tvStoreAvailable.setText(String.valueOf(numberAvailable));
+                }
+                else{
+                    holder.tvStoreAvailable.setText(String.valueOf(numberAvailable));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -106,7 +124,6 @@ public class BikeStoreAdapterShowStoreListAdmin extends RecyclerView.Adapter<Bik
             MenuItem doShowMapStore = menu.add(NONE, 1, 1, "Show Map Store");
             MenuItem doUpdateStore = menu.add(NONE, 2, 2, "Update Bike Store");
             MenuItem doDeleteStore = menu.add(NONE, 3, 3, "Delete Bike Store");
-            //MenuItem doDeleteStore = menu.add(NONE, 3, 3, "Delete Bike Store");
 
             doShowMapStore.setOnMenuItemClickListener(this);
             doUpdateStore.setOnMenuItemClickListener(this);
@@ -149,45 +166,5 @@ public class BikeStoreAdapterShowStoreListAdmin extends RecyclerView.Adapter<Bik
 
     public void setOnItmClickListener(OnItemClickListener listener) {
         clickListener = listener;
-    }
-
-    public int calculateNumberAvailableOld() {
-        if (databaseReference == null) {
-            bikeStorage = FirebaseStorage.getInstance();
-            databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
-        }
-        //databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
-        //Query query = databaseReference.child("Bikes").orderByChild("bikeStoreName");
-        Query query = databaseReference.orderByChild("Bikes").equalTo("bikeStoreName");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()){
-                    //ds.getChildrenCount();
-                    //numberAvailable = (int)ds.getChildrenCount();
-                    numberAvailable = 5;//(int)dataSnapshot.getChildrenCount();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                //if (dataSnapshot.exists())
-//                numberAvailable = 5;//(int)dataSnapshot.getChildrenCount();
-//                //numberAvailable = (int)dataSnapshot.getChildrenCount();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                //Toast.makeText(BikeStoreAdapterShowStoreListAdmin.this,databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-        return numberAvailable;
     }
 }

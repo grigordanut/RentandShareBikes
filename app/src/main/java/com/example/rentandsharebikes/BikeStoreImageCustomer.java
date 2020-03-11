@@ -21,9 +21,6 @@ import java.util.List;
 
 public class BikeStoreImageCustomer extends AppCompatActivity {
 
-    private TextView textViewBikeStore;
-
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreDBEventListener;
 
@@ -38,8 +35,6 @@ public class BikeStoreImageCustomer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_customer);
-
-        firebaseDatabase = FirebaseDatabase.getInstance();
 
         bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);

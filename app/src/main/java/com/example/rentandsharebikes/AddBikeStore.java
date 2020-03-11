@@ -61,7 +61,7 @@ public class AddBikeStore extends AppCompatActivity {
                 tvStore_Number = Integer.parseInt(tvStoreNumber.getText().toString().trim());
                 etStore_Location = etStoreLocation.getText().toString().trim();
                 etStore_Address = etStoreAddress.getText().toString().trim();
-                etStore_NrSlots = Integer.parseInt(etStoreNumberSlots.getText().toString().trim());
+                etStore_NrSlots = Integer.parseInt(etStoreNumberSlots.getText().toString());
 
                 if(TextUtils.isEmpty(etStore_Location)){
                     etStoreLocation.setError("Enter store Location");
@@ -79,7 +79,6 @@ public class AddBikeStore extends AppCompatActivity {
                 }
 
                 else {
-
                     progressDialog.setMessage("Add Bike Store");
                     progressDialog.show();
                     String storeID = databaseReference.push().getKey();

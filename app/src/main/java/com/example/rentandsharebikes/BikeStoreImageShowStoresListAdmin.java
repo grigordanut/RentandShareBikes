@@ -74,14 +74,15 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
         });
 
         //check if the bikes store list is empty and add a new bike store
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
+        if(databaseReference == null){
+            databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
+        }
 
         bikeStoreDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikeStoreList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-
                     BikeStore bikeStore = postSnapshot.getValue(BikeStore.class);
                     assert bikeStore != null;
                     bikeStore.setStoreKey(postSnapshot.getKey());
@@ -129,28 +130,17 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
     @Override
     public void onDeleteStoreClick(final int position) {
         AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikeStoreImageShowStoresListAdmin.this);
-        builderAlert.setMessage("Are sure to delete this item?");
+        BikeStore selectedBikeStore = bikeStoreList.get(position);
+        builderAlert.setMessage("Are sure to delete "+selectedBikeStore.getBikeStore_Location()+" Bike Store?");
         builderAlert.setCancelable(true);
         builderAlert.setPositiveButton(
                 "Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
                         BikeStore selectedBikeStore = bikeStoreList.get(position);
                         String selectedKeyStore = selectedBikeStore.getStoreKey();
-                        //finish();
                         databaseReference.child(selectedKeyStore).removeValue();
-                        //bikeStoreList.remove(selectedBikeStore);
-
-//                        MedicalRecord selectedMedRec = medRecList.get(position);
-//                        final String selectedKey = selectedMedRec.getRecordKey();
-//
-//                        databaseRefMedRecord.child(selectedKey).removeValue();
-
-
-                        //finish();
-                        Toast.makeText(BikeStoreImageShowStoresListAdmin.this, "The item has been deleted successfully ", Toast.LENGTH_SHORT).show();
-                        //startActivity(new Intent(BikeStoreImageShowStoresListAdmin.this, AdminPage.class));
+                        Toast.makeText(BikeStoreImageShowStoresListAdmin.this, "The Bike Store "+selectedBikeStore.getBikeStore_Location()+" has been deleted successfully", Toast.LENGTH_SHORT).show();
 
                     }
                 });

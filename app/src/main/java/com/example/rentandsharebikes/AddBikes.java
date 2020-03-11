@@ -234,7 +234,7 @@ public class AddBikes extends AppCompatActivity {
             Toast.makeText(AddBikes.this, "Please add a picture", Toast.LENGTH_SHORT).show();
         }
 
-        else if (TextUtils.isEmpty(etBike_Model)){
+        else if (etBike_Model.isEmpty()){
             etBikeModel.setError("Please add the Model of Bicycle");
             etBikeModel.requestFocus();
         }
@@ -268,12 +268,13 @@ public class AddBikes extends AppCompatActivity {
                             String addBike_id = databaseReference.push().getKey();
                             assert addBike_id != null;
                             databaseReference.child(addBike_id).setValue(bikes);
-                            Toast.makeText(AddBikes.this, "Upload Bicycle successfully", Toast.LENGTH_SHORT).show();
+
                             etBikeModel.setText("");
                             etBikeManufact.setText("");
                             etBikePrice.setText("");
                             ivAddBike.setImageResource(R.drawable.bikepicture);
-
+                            finish();
+                            Toast.makeText(AddBikes.this, "Upload Bicycle successfully", Toast.LENGTH_SHORT).show();
                             Intent add_Bikes= new Intent(AddBikes.this, AdminPage.class);
                             startActivity(add_Bikes);
                         }
