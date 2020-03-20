@@ -18,7 +18,7 @@ public class AdminPage extends AppCompatActivity {
         buttonAddBikeStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminPage.this, AddBikeStore.class));
+                startActivity(new Intent(AdminPage.this, CalculateCoordinates.class));
             }
         });
 

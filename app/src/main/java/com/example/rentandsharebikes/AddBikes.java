@@ -58,7 +58,7 @@ public class AddBikes extends AppCompatActivity {
     private Uri imageUri;
 
     private EditText etBikeModel, etBikeManufact, etBikePrice;
-    private TextView textViewWelcomeAddBikes, textViewDate, textViewBikeNumber;
+    private TextView textViewWelcomeAddBikes, textViewDate, textViewBikeNumber, textViewBikesAvailable;
     private Button buttonSaveBike;
     private ImageButton buttonTakePicture;
 
@@ -66,7 +66,10 @@ public class AddBikes extends AppCompatActivity {
     private int etBike_Price;
     public int tvBike_Number;
 
-    String bikeStore_Name ="";
+    String bikeStore_Name = "";
+
+    public int numberAvailable;
+    int numberBikesAvailable;
 
     private ProgressDialog progressDialog;
 
@@ -80,11 +83,12 @@ public class AddBikes extends AppCompatActivity {
         getIntent().hasExtra("SName");
         bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
 
-        textViewWelcomeAddBikes = (TextView)findViewById(R.id.tvWelcomeAddBikes);
-        textViewDate = (TextView)findViewById(R.id.tvBikeDate);
-        textViewBikeNumber = (TextView)findViewById(R.id.tvBikeNumber);
+        textViewWelcomeAddBikes = (TextView) findViewById(R.id.tvWelcomeAddBikes);
+        textViewDate = (TextView) findViewById(R.id.tvBikeDate);
+        textViewBikeNumber = (TextView) findViewById(R.id.tvBikeNumber);
+        textViewBikesAvailable = (TextView) findViewById(R.id.tvBikesAvailable);
 
-        textViewWelcomeAddBikes.setText("Add Bicycles to " +bikeStore_Name+" store");
+        textViewWelcomeAddBikes.setText("Add Bicycles to " + bikeStore_Name + " store");
 
         LocalDate localDate = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -100,12 +104,12 @@ public class AddBikes extends AppCompatActivity {
         }
         textViewDate.setText(insertDate);
 
-        etBikeModel = (EditText)findViewById(R.id.etBikeModel);
-        etBikeManufact = (EditText)findViewById(R.id.etBikeManufacturer);
-        etBikePrice = (EditText)findViewById(R.id.etBikePricePerDay);
+        etBikeModel = (EditText) findViewById(R.id.etBikeModel);
+        etBikeManufact = (EditText) findViewById(R.id.etBikeManufacturer);
+        etBikePrice = (EditText) findViewById(R.id.etBikePricePerDay);
 
-        storageReference = FirebaseStorage.getInstance().getReference("Bikes");
-        databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
+        storageReference = FirebaseStorage.getInstance().getReference("Bike Store").child("Bikes");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Bike Store").child("Bikes");
 
         progressDialog = new ProgressDialog(AddBikes.this);
 
@@ -117,23 +121,21 @@ public class AddBikes extends AppCompatActivity {
             }
         });
 
-        buttonTakePicture = (ImageButton)findViewById(R.id.btnTakePicture);
+        buttonTakePicture = (ImageButton) findViewById(R.id.btnTakePicture);
         buttonTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M){
-                    if(checkSelfPermission(Manifest.permission.CAMERA) ==
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (checkSelfPermission(Manifest.permission.CAMERA) ==
                             PackageManager.PERMISSION_DENIED ||
-                            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)==
-                                    PackageManager.PERMISSION_DENIED){
-                        String [] permission = {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                        requestPermissions(permission,PERMISSION_CODE);
-                    }
-                    else{
+                            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                                    PackageManager.PERMISSION_DENIED) {
+                        String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                        requestPermissions(permission, PERMISSION_CODE);
+                    } else {
                         openCamera();
                     }
-                }
-                else{
+                } else {
                     openCamera();
                 }
             }
@@ -146,24 +148,23 @@ public class AddBikes extends AppCompatActivity {
             public void onClick(View view) {
                 //show progress Dialog
                 progressDialog.show();
-                if (mUploadTask != null && mUploadTask.isInProgress()){
+                if (mUploadTask != null && mUploadTask.isInProgress()) {
                     Toast.makeText(AddBikes.this, "Upload in progress", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     uploadBikes();
                 }
             }
         });
     }
 
-    public void openCamera(){
+    public void openCamera() {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "New picture");
         values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera");
-        imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
+        imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        startActivityForResult(cameraIntent,IMAGE_CAPTURE_CODE);
+        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE);
     }
 
     private void openGallery() {
@@ -184,7 +185,7 @@ public class AddBikes extends AppCompatActivity {
                     // permission was granted
                     openCamera();
                 } else {
-                    Toast.makeText(getApplicationContext(),"Permission denied", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
                     // permission deniedDisable the
                     // functionality that depends on this permission.
                 }
@@ -197,31 +198,30 @@ public class AddBikes extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             ivAddBike.setImageURI(imageUri);
-            Toast.makeText(getApplicationContext(),"Image captured by Camera", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Image captured by Camera", Toast.LENGTH_SHORT).show();
         }
 
-        if (requestCode == REQUEST_IMAGE_GET && resultCode ==RESULT_OK){
+        if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
             try {
                 imageUri = data.getData();
                 Bitmap thumbnail = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                 ivAddBike.setImageBitmap(thumbnail);
                 Toast.makeText(AddBikes.this, "Image picked from Gallery", Toast.LENGTH_SHORT).show();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(),"Exception: "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Exception: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private String getFileExtension(Uri uri){
+    private String getFileExtension(Uri uri) {
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
     //Upload a new Bicycle into the Bicycles table
-    public void uploadBikes(){
+    public void uploadBikes() {
         progressDialog.dismiss();
 
         tvBike_Date = textViewDate.getText().toString().trim();
@@ -230,21 +230,15 @@ public class AddBikes extends AppCompatActivity {
         etBike_Manufact = etBikeManufact.getText().toString().trim();
         etBike_Price = Integer.parseInt(etBikePrice.getText().toString().trim());
 
-        if (imageUri == null)   {
+        if (imageUri == null) {
             Toast.makeText(AddBikes.this, "Please add a picture", Toast.LENGTH_SHORT).show();
-        }
-
-        else if (etBike_Model.isEmpty()){
+        } else if (etBike_Model.isEmpty()) {
             etBikeModel.setError("Please add the Model of Bicycle");
             etBikeModel.requestFocus();
-        }
-
-        else if (TextUtils.isEmpty(etBike_Manufact)){
+        } else if (TextUtils.isEmpty(etBike_Manufact)) {
             etBikeManufact.setError("Please add the Manufacturer");
             etBikeManufact.requestFocus();
-        }
-
-        else if (TextUtils.isEmpty(String.valueOf(etBike_Price))){
+        } else if (TextUtils.isEmpty(String.valueOf(etBike_Price))) {
             etBikePrice.setError("Please add the Price/Day ");
             etBikePrice.requestFocus();
         }
@@ -253,51 +247,54 @@ public class AddBikes extends AppCompatActivity {
         //taskSnapshot.getUploadSessionUri().toString(),storeName);
 
         //Add a new Bike into the Bike's table
-        else{
+        else {
             progressDialog.setTitle("The Bike is Uploading");
             progressDialog.show();
-            final StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(imageUri));
+            final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             mUploadTask = fileReference.putFile(imageUri)
-            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onSuccess(Uri uri) {
-                            Bikes bikes = new Bikes(tvBike_Date, tvBike_Number, etBike_Model, etBike_Manufact, etBike_Price, uri.toString(), bikeStore_Name);
-                            String addBike_id = databaseReference.push().getKey();
-                            assert addBike_id != null;
-                            databaseReference.child(addBike_id).setValue(bikes);
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
 
-                            etBikeModel.setText("");
-                            etBikeManufact.setText("");
-                            etBikePrice.setText("");
-                            ivAddBike.setImageResource(R.drawable.bikepicture);
-                            finish();
-                            Toast.makeText(AddBikes.this, "Upload Bicycle successfully", Toast.LENGTH_SHORT).show();
-                            Intent add_Bikes= new Intent(AddBikes.this, AdminPage.class);
-                            startActivity(add_Bikes);
+                                    Bikes bikes = new Bikes(tvBike_Date, tvBike_Number, etBike_Model, etBike_Manufact, etBike_Price, uri.toString(), bikeStore_Name);
+                                    String addBike_id = databaseReference.push().getKey();
+                                    assert addBike_id != null;
+                                    databaseReference.child(addBike_id).setValue(bikes);
+
+                                    etBikeModel.setText("");
+                                    etBikeManufact.setText("");
+                                    etBikePrice.setText("");
+                                    ivAddBike.setImageResource(R.drawable.bikepicture);
+
+                                    Intent add_Bikes = new Intent(AddBikes.this, AdminPage.class);
+                                    startActivity(add_Bikes);
+
+                                    Toast.makeText(AddBikes.this, "Upload Bicycle successfully", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            });
+                            progressDialog.dismiss();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(AddBikes.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                            //show upload Progress
+                            double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
+                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                            progressDialog.setProgress((int) progress);
                         }
                     });
-                    progressDialog.dismiss();
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    progressDialog.dismiss();
-                    Toast.makeText(AddBikes.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            })
-            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                    //show upload Progress
-                    double progress = 100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount();
-                    progressDialog.setMessage("Uploaded "+ (int)progress+"%");
-                    progressDialog.setProgress((int)progress);
-                }
-            });
         }
     }
 
@@ -306,28 +303,126 @@ public class AddBikes extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         incrementBikesNumber();
+        bikesAvailable();
     }
 
-    private void incrementBikesNumber(){
+    private void incrementBikesNumber() {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
         bikeDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if(bikes.getBikeStoreName().equals(bikeStore_Name)){
-                        tvBike_Number = Integer.parseInt(String.valueOf(bikes.getBike_Number()+1));
+                    if (bikes.getBikeStoreName().equals(bikeStore_Name)) {
+                        tvBike_Number = Integer.parseInt(String.valueOf(bikes.getBike_Number() + 1));
                         textViewBikeNumber.setText(String.valueOf(tvBike_Number));
+//                        if (dataSnapshot.exists()) {
+//                            numberAvailable = (int) dataSnapshot.getChildrenCount();
+//                            textViewBikesAvailable.setText(String.valueOf(numberAvailable));
+//                        }
                     }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(AddBikes.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    private void bikesAvailable() {
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Bikes bikes = postSnapshot.getValue(Bikes.class);
+                    assert bikes != null;
+                    if (bikes.getBikeStoreName().equals(bikeStore_Name)) {
+                        bikes.setBikesKey(postSnapshot.getKey());
+                        if (dataSnapshot.exists()) {
+
+                            //Log.e(postSnapshot.getKey(), String.valueOf(postSnapshot.getChildrenCount()));
+                            //numberAvailable = (int) dataSnapshot.getChildrenCount();
+
+                            //numberAvailable = Integer.parseInt(String.valueOf((bikes.getBike_Number())));
+                            numberAvailable = Integer.parseInt(String.valueOf(dataSnapshot.getChildrenCount()));
+                            //numberAvailable = Integer.parseInt(String.valueOf(postSnapshot.getChildrenCount()));
+                            //numberAvailable = Log.e(bikes(dataSnapshot.getChildrenCount()));
+
+                            textViewBikesAvailable.setText(String.valueOf(numberAvailable));
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public int numberAvailable() {
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
+        bikeDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                    Bikes bikes = postSnapshot.getValue(Bikes.class);
+                    assert bikes != null;
+                    if (bikes.getBikeStoreName().equals(bikeStore_Name)) {
+                        bikes.setBikesKey(postSnapshot.getKey());
+                        if (dataSnapshot.exists()) {
+
+                            //Log.e(postSnapshot.getKey(), String.valueOf(postSnapshot.getChildrenCount()));
+                            //numberAvailable = (int) dataSnapshot.getChildrenCount();
+
+                            //numberAvailable = Integer.parseInt(String.valueOf(bikes.getBike_Number()));
+                            numberBikesAvailable = 6;
+                            //numberAvailable = Integer.parseInt(String.valueOf(postSnapshot.getChildrenCount()));
+
+                            //textViewBikesAvailable.setText(String.valueOf(numberAvailable));
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(AddBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        return numberBikesAvailable;
+    }
+
+//    public int numberAvailableNew() {
+//        if (databaseReference == null) {
+//            databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
+//        }
+//
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    //numberAvailable = (int) dataSnapshot.getChildrenCount();
+//                    //numberAvailable = 10;
+//                    //holder.tvStoreAvailable.setText(String.valueOf(numberAvailable));
+//                } else {
+//                    //holder.tvStoreAvailable.setText(String.valueOf(numberAvailable));
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//        return numberAvailable;
+//    }
 }

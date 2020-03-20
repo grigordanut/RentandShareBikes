@@ -35,7 +35,7 @@
             android:layout_below="@id/tvAddBike"
             android:layout_alignEnd="@id/tvAddBike"
             android:layout_alignRight="@id/tvAddBike"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:background="#ffffff"
             android:gravity="center_horizontal"
             android:text="1"
@@ -47,17 +47,17 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/WrapperBikeStoreLocation"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:layout_below="@+id/tvBikeStoreNumber"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etBikeStoreLocation"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:hint="@string/et_locationAddStore"
                 android:inputType="text"
                 android:paddingStart="10dp"
@@ -69,17 +69,17 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/WrapperBikeStoreAddress"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:layout_below="@+id/WrapperBikeStoreLocation"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etBikeStoreAddress"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:hint="@string/et_addressAddStore"
                 android:inputType="text"
                 android:paddingStart="10dp"
@@ -89,19 +89,63 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/WrapperBikeStoreNrSlots"
+            android:id="@+id/WrapperBikeStoreLatitude"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:layout_below="@+id/WrapperBikeStoreAddress"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etBikeStoreLatitude"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:hint="@string/et_addressAddLatitude"
+                android:inputType="numberDecimal|numberSigned"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/WrapperBikeStoreLongitude"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/WrapperBikeStoreLatitude"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etBikeStoreLongitude"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:hint="@string/et_addressAddLongitude"
+                android:inputType="numberDecimal|numberSigned"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/WrapperBikeStoreNrSlots"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/WrapperBikeStoreLongitude"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etBikeStoreNrSlots"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:hint="@string/et_numberSlots"
                 android:inputType="number"
                 android:paddingStart="10dp"

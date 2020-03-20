@@ -7,17 +7,21 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
         tools:context=".RegisterCustomer">
 
         <TextView
             android:id="@+id/tvRegCustomer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#000000"
+            android:layout_marginRight="10dp"
             android:text="@string/tv_regCustomer"
             android:textAlignment="center"
             android:textSize="22sp" />
@@ -25,15 +29,20 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fNameWrapperRegCustomer"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/tvRegCustomer"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etFirstNameRegCustom"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:hint="@string/et_firstNameCustomer"
                 android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
                 android:textSize="20sp"
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -41,15 +50,20 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/lNameWrapperRegCustomer"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/fNameWrapperRegCustomer"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etLastNameRegCustom"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:hint="@string/et_lastNameCustomer"
                 android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
                 android:textSize="20sp"
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -57,15 +71,20 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/uNameWrapperRegCustomer"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/lNameWrapperRegCustomer"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etUserNameRegCustom"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:hint="@string/et_userNameCustomer"
                 android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
                 android:textSize="20sp"
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -73,15 +92,20 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fNrWrapperRegCustomer"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/uNameWrapperRegCustomer"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPhoneNrRegCustom"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:hint="@string/et_phoneCustomer"
                 android:inputType="number"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
                 android:textSize="20sp"
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -89,15 +113,20 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailWrapperRegCustomer"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/fNrWrapperRegCustomer"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmailRegCustom"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:hint="@string/et_emailRegCustomer"
                 android:inputType="textEmailAddress"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
                 android:textSize="20sp"
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -105,75 +134,87 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passWrapperRegCustomer"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/emailWrapperRegCustomer"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textColorHint="#000000"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassRegCustom"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:hint="@string/et_passRegCustomer"
                 android:inputType="textPassword"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
                 android:textSize="20sp"
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/cPassWrapperRegCustomer"
+            android:id="@+id/confPassWrapperRegCustomer"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/passWrapperRegCustomer"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textColorHint="#000000"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etConfPassRegCustom"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:hint="@string/et_confPassRegCustomer"
+                android:paddingLeft="10dp"
                 android:inputType="textPassword"
                 android:textSize="20sp"
-                tools:ignore="RtlSymmetry" />
+                tools:ignore="RtlSymmetry"
+                android:paddingStart="10dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btnRegCustom"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            tools:context=".RegisterCustomer">
+            android:layout_below="@+id/confPassWrapperRegCustomer"
+            android:layout_alignStart="@+id/tvRegCustomer"
+            android:layout_alignLeft="@+id/tvRegCustomer"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/btn_registerCustomer"
+            android:textSize="20sp"
+            tools:ignore="ButtonStyle" />
 
-            <Button
-                android:id="@+id/btnRegCustom"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/btn_registerCustomer"
-                android:textSize="20sp"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/btnRegCancelCustom"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/btn_cancelRegCustomer"
-                android:textSize="20sp"
-                tools:ignore="ButtonStyle" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/btnRegCancelCustom"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/confPassWrapperRegCustomer"
+            android:layout_alignEnd="@+id/tvRegCustomer"
+            android:layout_alignRight="@+id/tvRegCustomer"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/btn_cancelRegCustomer"
+            android:textSize="20sp"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btnSignInRegCustom"
-            android:layout_width="330dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_gravity="center"
+            android:layout_below="@+id/btnRegCustom"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
             android:text="@string/btn_signInRegCustomer"
             android:textSize="20sp"
             tools:ignore="ButtonStyle" />
 
-
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>

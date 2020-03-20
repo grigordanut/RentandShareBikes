@@ -64,11 +64,29 @@
             android:textSize="24sp"
             tools:ignore="HardcodedText,RtlSymmetry" />
 
+        <TextView
+            android:id="@+id/tvBikesAvailable"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvBikeNumber"
+            android:layout_alignEnd="@+id/tvBikeDate"
+            android:layout_alignRight="@+id/tvBikeDate"
+            android:layout_gravity="end"
+            android:layout_marginTop="5dp"
+            android:background="#ffffff"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            android:text="0"
+            android:textAlignment="textEnd"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText,RtlSymmetry" />
+
         <ImageView
             android:id="@+id/imgViewAddBikes"
             android:layout_width="280dp"
             android:layout_height="240dp"
-            android:layout_below="@+id/tvBikeNumber"
+            android:layout_below="@+id/tvBikesAvailable"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"

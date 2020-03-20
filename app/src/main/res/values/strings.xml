@@ -6,6 +6,8 @@
     <string name="tv_addBikeStore">Add Bike Stores</string>
     <string name="et_locationAddStore">Store Location</string>
     <string name="et_addressAddStore">Store Address</string>
+    <string name="et_addressAddLatitude">Store Latitude</string>
+    <string name="et_addressAddLongitude">Store Longitude</string>
     <string name="et_numberSlots">Number Slots</string>
     <string name="btn_saveBikeStore">Save Bike Store</string>
 
@@ -23,6 +25,7 @@
     <string name="btn_showBikeStores">Show Bike Stores</string>
     <string name="btn_addBikesToStore">Add Bikes to Store</string>
     <string name="btn_showBikesList">Show Bikes List</string>
+    <string name="btn_showCoordinates">Show Coordinates</string>
 
     <!--    Bike Store Image Add Bikes-->
     <string name="tv_bikeStoreImageAddBikes">Select the Bike Store</string>
@@ -78,6 +81,15 @@
     <string name="et_emailResetPassword">Enter your Email Address</string>
     <string name="btn_resetPass">Reset Password</string>
 
+    <!--    Calculate Coordinates-->
+    <string name="tv_calculateCoordinates">Calculate Address Coordinates</string>
+    <string name="et_locationAddress">Enter Location Address</string>
+    <string name="btn_calculateCoordinates">Show Coordinates</string>
+    <string name="tv_showStoreAddress">Store Address</string>
+    <string name="tv_showLatitude">Latitude</string>
+    <string name="tv_showLongitude">Longitude</string>
+    <string name="btn_saveCoordinates">Save Coordinates</string>
+
     <!--    Main Page-->
     <string name="tv_mainPage">Welcome to Rent and Share Bikes</string>
     <string name="btn_mainPageHome">Home</string>
@@ -99,6 +111,9 @@
     <!--    Update Bike Store Details-->
     <string name="tv_updateStoreDetails">Update Bike Store Details</string>
     <string name="btn_updateStoreDetails">Save Updates</string>
+
+    <!--    Activity Details-->
+    <string name="tv_activityDetails">Marker Title</string>
 
     <string name="title_activity_maps">Map</string>
     <string name="todo">TODO</string>

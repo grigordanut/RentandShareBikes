@@ -73,6 +73,17 @@
             android:text="@string/btn_showBikesList"
             android:textStyle="bold" />
 
+<!--        <Button-->
+<!--            android:id="@+id/btnShowCoordinates"-->
+<!--            android:layout_width="165dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/btnAddBikesToStore"-->
+<!--            android:layout_alignStart="@+id/textViewAdminPage"-->
+<!--            android:layout_alignLeft="@+id/textViewAdminPage"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:text="@string/btn_showCoordinates"-->
+<!--            android:textStyle="bold" />-->
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="360dp"

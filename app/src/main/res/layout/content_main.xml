@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_bright"
+    android:background="@drawable/grad"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
@@ -17,11 +17,13 @@
 
         <TextView
             android:id="@+id/tvMainPage"
-            android:layout_width="380dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="70dp"
+            android:layout_marginRight="10dp"
             android:text="@string/tv_mainPage"
             android:textAlignment="center"
             android:textColor="#000000"
@@ -30,39 +32,48 @@
 
         <Button
             android:id="@+id/btnHomePage"
-            android:layout_width="160dp"
+            android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_below="@+id/tvMainPage"
             android:layout_alignStart="@+id/tvMainPage"
             android:layout_alignLeft="@+id/tvMainPage"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/bgdbutton"
             android:text="@string/btn_mainPageHome"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="#FFFF"
             android:textSize="22sp"
-            tools:ignore="ButtonStyle" />
+            tools:ignore="ButtonStyle"
+            android:layout_marginStart="10dp" />
 
         <Button
             android:id="@+id/btnLoginPage"
-            android:layout_width="160dp"
+            android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_below="@+id/tvMainPage"
             android:layout_alignEnd="@+id/tvMainPage"
             android:layout_alignRight="@+id/tvMainPage"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bgdbutton"
             android:text="@string/btn_mainPageLogin"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="#FFFF"
             android:textSize="22sp"
-            tools:ignore="ButtonStyle" />
+            tools:ignore="ButtonStyle"
+            android:layout_marginEnd="10dp" />
 
         <ImageView
             android:id="@+id/ivMainPage"
-            android:layout_width="340dp"
-            android:layout_height="400dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@+id/btnHomePage"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/smartbike"
             tools:ignore="ContentDescription" />
 

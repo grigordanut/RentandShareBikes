@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,9 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.List;
 
@@ -32,9 +29,11 @@ public class BikeStoreAdapterShowStoreListAdmin extends RecyclerView.Adapter<Bik
     private OnItemClickListener clickListener;
     private OnItemClickListener mapListener;
 
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceBikes;
+    private DatabaseReference databaseReferenceStores;
 
-    private int numberAvailable;
+    //private int numberAvailable = 7;
+
 
     public BikeStoreAdapterShowStoreListAdmin(Context bikeStore_context, List<BikeStore> bikeStore_uploads) {
         bikeStoreContext = bikeStore_context;
@@ -48,6 +47,8 @@ public class BikeStoreAdapterShowStoreListAdmin extends RecyclerView.Adapter<Bik
         return new BikeStoreAdapterShowStoreListAdmin.ImageViewHolder(view);
     }
 
+    AddBikes addBikes = new AddBikes();
+
     @Override
     public void onBindViewHolder(final BikeStoreAdapterShowStoreListAdmin.ImageViewHolder holder, int position) {
         final BikeStore uploadCurrent = bikeStoreUploads.get(position);
@@ -56,29 +57,40 @@ public class BikeStoreAdapterShowStoreListAdmin extends RecyclerView.Adapter<Bik
         holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
         holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
         //holder.tvStoreAvailable.setText(String.valueOf(bikesImageAdmin.calculateNumberAvailable()));
-        //holder.tvStoreAvailable.setText(String.valueOf(calculateNumberAvailableOld()));
+        holder.tvStoreAvailable.setText(String.valueOf(addBikes.numberAvailable()));
 
-        if(databaseReference == null){
-            databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
-        }
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    numberAvailable = (int)dataSnapshot.getChildrenCount();
-                    holder.tvStoreAvailable.setText(String.valueOf(numberAvailable));
-                }
-                else{
-                    holder.tvStoreAvailable.setText(String.valueOf(numberAvailable));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+//        if (databaseReferenceStores == null) {
+//            databaseReferenceStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
+//        }
+//
+//        if (databaseReferenceBikes == null) {
+//            //bikeStorage = FirebaseStorage.getInstance();
+//            databaseReferenceBikes = FirebaseDatabase.getInstance().getReference("Bikes");
+//        }
+//
+//
+//        databaseReferenceBikes.orderByChild("bikeStoreName").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                if (dataSnapshot.exists()) {
+//                    //if ((databaseReferenceStores.orderByChild("bikeStore_Location")).equals(databaseReferenceBikes.orderByChild("bikeStoreName"))) {
+//
+//                        //numberAvailable = (int) dataSnapshot.getChildrenCount();
+//                        numberAvailable = 8;
+//                        holder.tvStoreAvailable.setText(String.valueOf(numberAvailable));
+//                    //}
+//                } else {
+//                    holder.tvStoreAvailable.setText(String.valueOf(0));
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 
     @Override

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,14 +11,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="35dp"
         tools:context=".LoginCustomer">
 
         <TextView
             android:id="@+id/tvLogCustomer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
             android:text="@string/tv_loginCustomer"
             android:textAlignment="center"
             android:textColor="#000000"
@@ -28,11 +28,13 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailWrapperLogCustomer"
-            android:layout_width="340dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_below="@+id/tvLogCustomer"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -41,16 +43,20 @@
                 android:layout_height="50dp"
                 android:hint="@string/et_emailLogCustomer"
                 android:inputType="textEmailAddress"
+                android:paddingLeft="10dp"
                 android:textSize="20sp"
-                tools:ignore="RtlSymmetry" />
+                tools:ignore="RtlSymmetry"
+                android:paddingStart="10dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passWrapperRegCustomer"
-            android:layout_width="340dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_below="@+id/emailWrapperLogCustomer"
             android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textColorHint="#000000"
             app:passwordToggleEnabled="true">
 
@@ -60,8 +66,10 @@
                 android:layout_height="50dp"
                 android:hint="@string/et_passLogCustomer"
                 android:inputType="textPassword"
+                android:paddingLeft="10dp"
                 android:textSize="20sp"
-                tools:ignore="RtlSymmetry" />
+                tools:ignore="RtlSymmetry"
+                android:paddingStart="10dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -87,11 +95,11 @@
             android:layout_below="@+id/tvForgotPassCustom"
             android:layout_alignLeft="@+id/passWrapperRegCustomer"
             android:layout_marginTop="10dp"
+            android:background="@drawable/bgdbutton"
             android:text="@string/btn_logInCustomer"
-            android:textSize="20sp"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="#FFFF"
-            android:background="@drawable/bgdbutton"
+            android:textSize="20sp"
             tools:ignore="RtlHardcoded" />
 
         <Button
@@ -99,16 +107,16 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvForgotPassCustom"
+            android:layout_alignEnd="@+id/passWrapperRegCustomer"
             android:layout_alignRight="@+id/passWrapperRegCustomer"
             android:layout_marginStart="25dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/bgdbutton"
             android:text="@string/btn_cancelLogCustomer"
-            android:textSize="20sp"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="#FFFF"
-            android:background="@drawable/bgdbutton"
-            android:layout_alignEnd="@+id/passWrapperRegCustomer" />
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btnSignUpCustom"
@@ -117,12 +125,12 @@
             android:layout_below="@+id/btnLoginCustom"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bgdbutton"
             android:text="@string/btn_signUpCustomer"
-            android:textSize="20sp"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="#FFFF"
-            android:background="@drawable/bgdbutton"/>
+            android:textSize="20sp" />
 
     </RelativeLayout>
 </ScrollView>
