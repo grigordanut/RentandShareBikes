@@ -22,8 +22,8 @@ public class AdminPage extends AppCompatActivity {
             }
         });
 
-        Button buttonShowBikeStore = (Button)findViewById(R.id.btnShowBikesStore);
-        buttonShowBikeStore.setOnClickListener(new View.OnClickListener() {
+        Button buttonShowBikeStores = (Button)findViewById(R.id.btnShowBikesStore);
+        buttonShowBikeStores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(AdminPage.this, BikeStoreImageShowStoresListAdmin.class));
@@ -34,7 +34,7 @@ public class AdminPage extends AppCompatActivity {
         buttonAddBikesToStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminPage.this, BikeStoreImageAddBikes.class));
+                startActivity(new Intent(AdminPage.this, BikeStoreImageAddBikesAdmin.class));
             }
         });
 
@@ -42,7 +42,7 @@ public class AdminPage extends AppCompatActivity {
         buttonShowBikesList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminPage.this, BikeStoreImageShowBikesList.class));
+                startActivity(new Intent(AdminPage.this, BikeStoreImageShowBikesListAdmin.class));
             }
         });
     }

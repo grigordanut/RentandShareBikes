@@ -33,18 +33,21 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
 
     private DatabaseReference databaseReference;
     private FirebaseStorage bikeStorage;
-    private ValueEventListener bikesDBEventListener;
+    private ValueEventListener bikesEventListener;
 
     private RecyclerView bikesListRecyclerView;
     private BikesAdapterAdmin bikesListAdapter;
 
     private TextView textViewBikesImageList;
 
-    public List<Bikes> bikesList;
+    private List<Bikes> bikesList;
 
     private Button buttonAddMoreBikes, buttonBackAdminPageBikes;
 
     String bikeStore_Name = "";
+    String bikeStore_Key = "";
+
+    private int numberBikesAvailable;
 
     private ProgressDialog progressDialog;
 
@@ -56,6 +59,9 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
 
         getIntent().hasExtra("SName");
         bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
+
+        getIntent().hasExtra("SKey");
+        bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
 
         textViewBikesImageList = (TextView) findViewById(R.id.tvBikeImageList);
         textViewBikesImageList.setText("List of Bikes in " + bikeStore_Name + " store");
@@ -73,7 +79,7 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
         buttonAddMoreBikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BikesImageAdmin.this, BikeStoreImageAddBikes.class));
+                startActivity(new Intent(BikesImageAdmin.this, BikeStoreImageAddBikesAdmin.class));
             }
         });
 
@@ -82,37 +88,6 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(BikesImageAdmin.this, AdminPage.class));
-            }
-        });
-
-        //check if the bikes list is empty and add a new bike
-        if (databaseReference == null) {
-            bikeStorage = FirebaseStorage.getInstance();
-            databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
-        }
-
-        bikesDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    if (bikes.getBikeStoreName().equals(bikeStore_Name)) {
-                        bikes.setBikesKey(postSnapshot.getKey());
-                        bikesList.add(bikes);
-                    }
-                }
-
-                bikesListAdapter = new BikesAdapterAdmin(BikesImageAdmin.this, bikesList);
-                bikesListRecyclerView.setAdapter(bikesListAdapter);
-                bikesListAdapter.setOnItmClickListener(BikesImageAdmin.this);
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikesImageAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -128,7 +103,7 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
         Intent intent = new Intent(BikesImageAdmin.this, UpdateBikeDetails.class);
         Bikes selected_Bike = bikesList.get(position);
         //final String selectedKey = selected_Bike.getBikesKey();
-        intent.putExtra("model",selected_Bike.getBike_Model());
+        intent.putExtra("model", selected_Bike.getBike_Model());
         //intent.putExtra("manufact",selected_Bike.getBike_Manufacturer());
         //intent.putExtra("Price",selected_Bike.getBike_Price());
         startActivity(intent);
@@ -173,6 +148,43 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        databaseReference.removeEventListener(bikesDBEventListener);
+        databaseReference.removeEventListener(bikesEventListener);
+    }
+
+    private void loadBikesList() {
+        //initialize the bike storage database
+        bikeStorage = FirebaseStorage.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
+
+        bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikesList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Bikes bikes = postSnapshot.getValue(Bikes.class);
+                    assert bikes != null;
+                    if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
+                        bikes.setBikesKey(postSnapshot.getKey());
+                        bikesList.add(bikes);
+                    }
+                }
+
+                bikesListAdapter = new BikesAdapterAdmin(BikesImageAdmin.this, bikesList);
+                bikesListRecyclerView.setAdapter(bikesListAdapter);
+                bikesListAdapter.setOnItmClickListener(BikesImageAdmin.this);
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(BikesImageAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadBikesList();
     }
 }

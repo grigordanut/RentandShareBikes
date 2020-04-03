@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/myAccount"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="@string/menu_myAccount" />
+
+        <item
+            android:id="@+id/myCart"
+            android:icon="@drawable/ic_shopping_cart_black_24dp"
+            android:title="@string/menu_myCart" />
+
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:itemTextAppearance="@style/NavDrawerTextStyle"
+            android:title="@string/menu_settings" />
+    </group>
+</menu>

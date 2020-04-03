@@ -12,13 +12,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,18 +30,19 @@ import java.util.Objects;
 public class AddBikeStore extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
-    private ValueEventListener bikeStoreDBEventListener;
+    private ValueEventListener bikeStoresEventListener;
 
-    private TextInputEditText etStoreLocation;
-    private TextInputEditText etStoreAddress;
-    private TextInputEditText etStoreLatitude;
-    private TextInputEditText etStoreLongitude;
-    private TextInputEditText etStoreNumberSlots;
+    private EditText etStoreLocation;
+    private EditText etStoreAddress;
+    private EditText etStoreLatitude;
+    private EditText etStoreLongitude;
+    private EditText etStoreNumberSlots;
 
     private TextView tvStoreNumber;
 
     private String etStore_Location, etStore_Address;
     private int tvStore_Number, etStore_NrSlots;
+
     private double etStore_Latitude, etStore_Longitude;
 
     String store_Address, store_Latitude, store_Longitude;
@@ -82,29 +83,36 @@ public class AddBikeStore extends AppCompatActivity {
         buttonSaveBikeStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvStore_Number = Integer.parseInt(tvStoreNumber.getText().toString().trim());
-                etStore_Location = etStoreLocation.getText().toString().trim();
-                etStore_Address = etStoreAddress.getText().toString().trim();
-                etStore_Latitude = Double.parseDouble(etStoreLatitude.getText().toString().trim());
-                etStore_Longitude = Double.parseDouble(etStoreLongitude.getText().toString().trim());
-                etStore_NrSlots = Integer.parseInt(etStoreNumberSlots.getText().toString());
+                final String store_locationValidation = etStoreLocation.getText().toString().trim();
+                final String store_AddressValidation = etStoreAddress.getText().toString().trim();
+                final String store_LatitudeValidation = etStoreLatitude.getText().toString().trim();
+                final String store_LongitudeValidation = etStoreLongitude.getText().toString().trim();
+                final String store_NrSlotsValidation = etStoreNumberSlots.getText().toString();
 
-                if (TextUtils.isEmpty(etStore_Location)) {
+                if (TextUtils.isEmpty(store_locationValidation)) {
                     etStoreLocation.setError("Enter store Location");
                     etStoreLocation.requestFocus();
-                } else if (TextUtils.isEmpty(etStore_Address)) {
+                } else if (TextUtils.isEmpty(store_AddressValidation)) {
                     etStoreAddress.setError("Please enter store Address");
                     etStoreAddress.requestFocus();
-                } else if (TextUtils.isEmpty(String.valueOf(etStore_Latitude))) {
+                } else if (TextUtils.isEmpty(store_LatitudeValidation)) {
                     etStoreLatitude.setError("Please enter store Latitude");
                     etStoreLatitude.requestFocus();
-                } else if (TextUtils.isEmpty(String.valueOf(etStore_Longitude))) {
+                } else if (TextUtils.isEmpty(store_LongitudeValidation)) {
                     etStoreLongitude.setError("Please enter store Longitude");
                     etStoreLongitude.requestFocus();
-                } else if (TextUtils.isEmpty(String.valueOf(etStore_NrSlots))) {
+                } else if (TextUtils.isEmpty(store_NrSlotsValidation)) {
                     etStoreNumberSlots.setError("Please enter the number of slots");
                     etStoreNumberSlots.requestFocus();
                 } else {
+
+                    tvStore_Number = Integer.parseInt(tvStoreNumber.getText().toString().trim());
+                    etStore_Location = etStoreLocation.getText().toString().trim();
+                    etStore_Address = etStoreAddress.getText().toString().trim();
+                    etStore_Latitude = Double.parseDouble(Objects.requireNonNull(etStoreLatitude.getText()).toString().trim());
+                    etStore_Longitude = Double.parseDouble(etStoreLongitude.getText().toString().trim());
+                    etStore_NrSlots = Integer.parseInt(etStoreNumberSlots.getText().toString());
+
                     progressDialog.setMessage("Add Bike Store");
                     progressDialog.show();
                     String storeID = databaseReference.push().getKey();
@@ -146,12 +154,12 @@ public class AddBikeStore extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        incrementBikesStoreNumber();
+        incrementNumberBikeStores();
     }
 
-    private void incrementBikesStoreNumber() {
+    private void incrementNumberBikeStores() {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
-        bikeStoreDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+        bikeStoresEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

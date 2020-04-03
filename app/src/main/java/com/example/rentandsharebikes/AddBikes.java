@@ -52,13 +52,13 @@ public class AddBikes extends AppCompatActivity {
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
     private StorageTask mUploadTask;
-    private ValueEventListener bikeDBEventListener;
+    private ValueEventListener bikesEventListener;
 
     private ImageView ivAddBike;
     private Uri imageUri;
 
     private EditText etBikeModel, etBikeManufact, etBikePrice;
-    private TextView textViewWelcomeAddBikes, textViewDate, textViewBikeNumber, textViewBikesAvailable;
+    private TextView textViewWelcomeAddBikes, textViewDate, textViewBikeNumber;
     private Button buttonSaveBike;
     private ImageButton buttonTakePicture;
 
@@ -67,9 +67,7 @@ public class AddBikes extends AppCompatActivity {
     public int tvBike_Number;
 
     String bikeStore_Name = "";
-
-    public int numberAvailable;
-    int numberBikesAvailable;
+    String bikeStore_Key = "";
 
     private ProgressDialog progressDialog;
 
@@ -83,11 +81,13 @@ public class AddBikes extends AppCompatActivity {
         getIntent().hasExtra("SName");
         bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
 
+        getIntent().hasExtra("SKey");
+        bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
+
+
         textViewWelcomeAddBikes = (TextView) findViewById(R.id.tvWelcomeAddBikes);
         textViewDate = (TextView) findViewById(R.id.tvBikeDate);
         textViewBikeNumber = (TextView) findViewById(R.id.tvBikeNumber);
-        textViewBikesAvailable = (TextView) findViewById(R.id.tvBikesAvailable);
-
         textViewWelcomeAddBikes.setText("Add Bicycles to " + bikeStore_Name + " store");
 
         LocalDate localDate = null;
@@ -108,8 +108,8 @@ public class AddBikes extends AppCompatActivity {
         etBikeManufact = (EditText) findViewById(R.id.etBikeManufacturer);
         etBikePrice = (EditText) findViewById(R.id.etBikePricePerDay);
 
-        storageReference = FirebaseStorage.getInstance().getReference("Bike Store").child("Bikes");
-        databaseReference = FirebaseDatabase.getInstance().getReference("Bike Store").child("Bikes");
+        storageReference = FirebaseStorage.getInstance().getReference("Bikes");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
 
         progressDialog = new ProgressDialog(AddBikes.this);
 
@@ -243,9 +243,6 @@ public class AddBikes extends AppCompatActivity {
             etBikePrice.requestFocus();
         }
 
-        //Bikes bikes = new Bikes(tv_BikeDate, et_BikeModel, et_BikeManufact, et_BikePrice,
-        //taskSnapshot.getUploadSessionUri().toString(),storeName);
-
         //Add a new Bike into the Bike's table
         else {
             progressDialog.setTitle("The Bike is Uploading");
@@ -259,7 +256,7 @@ public class AddBikes extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
 
-                                    Bikes bikes = new Bikes(tvBike_Date, tvBike_Number, etBike_Model, etBike_Manufact, etBike_Price, uri.toString(), bikeStore_Name);
+                                    Bikes bikes = new Bikes(tvBike_Date, tvBike_Number, etBike_Model, etBike_Manufact, etBike_Price, uri.toString(), bikeStore_Key);
                                     String addBike_id = databaseReference.push().getKey();
                                     assert addBike_id != null;
                                     databaseReference.child(addBike_id).setValue(bikes);
@@ -302,26 +299,21 @@ public class AddBikes extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        incrementBikesNumber();
-        bikesAvailable();
+        incrementNumberBikes();
     }
 
-    private void incrementBikesNumber() {
+    private void incrementNumberBikes() {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
-        bikeDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+        bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if (bikes.getBikeStoreName().equals(bikeStore_Name)) {
+                    if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
                         tvBike_Number = Integer.parseInt(String.valueOf(bikes.getBike_Number() + 1));
                         textViewBikeNumber.setText(String.valueOf(tvBike_Number));
-//                        if (dataSnapshot.exists()) {
-//                            numberAvailable = (int) dataSnapshot.getChildrenCount();
-//                            textViewBikesAvailable.setText(String.valueOf(numberAvailable));
-//                        }
                     }
                 }
             }
@@ -332,97 +324,4 @@ public class AddBikes extends AppCompatActivity {
             }
         });
     }
-
-    private void bikesAvailable() {
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    if (bikes.getBikeStoreName().equals(bikeStore_Name)) {
-                        bikes.setBikesKey(postSnapshot.getKey());
-                        if (dataSnapshot.exists()) {
-
-                            //Log.e(postSnapshot.getKey(), String.valueOf(postSnapshot.getChildrenCount()));
-                            //numberAvailable = (int) dataSnapshot.getChildrenCount();
-
-                            //numberAvailable = Integer.parseInt(String.valueOf((bikes.getBike_Number())));
-                            numberAvailable = Integer.parseInt(String.valueOf(dataSnapshot.getChildrenCount()));
-                            //numberAvailable = Integer.parseInt(String.valueOf(postSnapshot.getChildrenCount()));
-                            //numberAvailable = Log.e(bikes(dataSnapshot.getChildrenCount()));
-
-                            textViewBikesAvailable.setText(String.valueOf(numberAvailable));
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    public int numberAvailable() {
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
-        bikeDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    if (bikes.getBikeStoreName().equals(bikeStore_Name)) {
-                        bikes.setBikesKey(postSnapshot.getKey());
-                        if (dataSnapshot.exists()) {
-
-                            //Log.e(postSnapshot.getKey(), String.valueOf(postSnapshot.getChildrenCount()));
-                            //numberAvailable = (int) dataSnapshot.getChildrenCount();
-
-                            //numberAvailable = Integer.parseInt(String.valueOf(bikes.getBike_Number()));
-                            numberBikesAvailable = 6;
-                            //numberAvailable = Integer.parseInt(String.valueOf(postSnapshot.getChildrenCount()));
-
-                            //textViewBikesAvailable.setText(String.valueOf(numberAvailable));
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(AddBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        return numberBikesAvailable;
-    }
-
-//    public int numberAvailableNew() {
-//        if (databaseReference == null) {
-//            databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
-//        }
-//
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    //numberAvailable = (int) dataSnapshot.getChildrenCount();
-//                    //numberAvailable = 10;
-//                    //holder.tvStoreAvailable.setText(String.valueOf(numberAvailable));
-//                } else {
-//                    //holder.tvStoreAvailable.setText(String.valueOf(numberAvailable));
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//        return numberAvailable;
-//    }
 }

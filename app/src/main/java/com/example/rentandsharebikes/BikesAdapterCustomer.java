@@ -24,7 +24,6 @@ public class BikesAdapterCustomer extends RecyclerView.Adapter<BikesAdapterCusto
     private Context bikesContext;
     private List<Bikes> bikesUploads;
     private BikesAdapterAdmin.OnItemClickListener clickListener;
-    private BikesAdapterAdmin.OnItemClickListener mapListener;
 
     public BikesAdapterCustomer(Context bikes_context, List<Bikes> bikes_uploads){
         bikesContext = bikes_context;

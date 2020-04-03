@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -77,12 +78,12 @@ public class RegisterCustomer extends AppCompatActivity {
                 pass_regCustom = passRegCustom.getText().toString().trim();
                 confPass_regCustom = confPassRegCustom.getText().toString().trim();
 
-                if (firstName_regCustom.isEmpty()) {
+                if (TextUtils.isEmpty(firstName_regCustom)) {
                     firstNameRegCustom.setError("First Name can be empty");
                     firstNameRegCustom.requestFocus();
                 }
 
-                else if (lastName_regCustom.isEmpty()) {
+                else if (TextUtils.isEmpty(lastName_regCustom)) {
                     lastNameRegCustom.setError("Last Name cannot be empty");
                     lastNameRegCustom.requestFocus();
                 }

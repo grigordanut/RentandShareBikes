@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CalculateCoordinates extends AppCompatActivity {
 
@@ -21,6 +24,9 @@ public class CalculateCoordinates extends AppCompatActivity {
     private String store_Place;
 
     private TextView tvStoreAddress, tvLatitude, tvLongitude;
+
+    private Button buttonShowCoordinates, buttonSaveCoordinates;
+
     private ProgressDialog progressDialog;
 
     @Override
@@ -47,7 +53,7 @@ public class CalculateCoordinates extends AppCompatActivity {
             }
         });
 
-        Button buttonShowCoordinates = findViewById(R.id.btnShowCoordinates);
+        buttonShowCoordinates = findViewById(R.id.btnShowCoordinates);
         buttonShowCoordinates.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -93,15 +99,25 @@ public class CalculateCoordinates extends AppCompatActivity {
             //etStorePlace.setText("");
             //finish();
 
-            Button buttonSaveCoordinates = findViewById(R.id.btnSaveCoordinates);
+            buttonSaveCoordinates = findViewById(R.id.btnSaveCoordinates);
             buttonSaveCoordinates.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    progressDialog.setMessage("Save Coordinates");
+                    progressDialog.show();
+                    etStorePlace.setText("");
+                    tvStoreAddress.setText("Store Address");
+                    tvLatitude.setText("");
+                    tvLongitude.setText("");
+
+                    finish();
+                    Toast.makeText(CalculateCoordinates.this,"The coordinates has been saved",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(CalculateCoordinates.this, AddBikeStore.class);
-                    intent.putExtra("Address",storeAddress);
-                    intent.putExtra("Latitude",addressStoreLat);
+                    intent.putExtra("Address", storeAddress);
+                    intent.putExtra("Latitude", addressStoreLat);
                     intent.putExtra("Longitude", addressStoreLong);
                     startActivity(intent);
+                    progressDialog.dismiss();
                 }
             });
         }

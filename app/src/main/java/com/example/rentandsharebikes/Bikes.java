@@ -10,7 +10,7 @@ public class Bikes {
     private String bike_Manufacturer;
     private int bike_Price;
     private String bike_Image;
-    private String bikeStoreName;
+    private String bikeStoreKey;
 
     private String bikesKey;
 
@@ -18,14 +18,14 @@ public class Bikes {
 
     }
 
-    public Bikes(String bike_Date, int bike_Number, String bike_Model, String bike_Manufacturer, int bike_Price, String bike_Image, String bikeStoreName) {
+    public Bikes(String bike_Date, int bike_Number, String bike_Model, String bike_Manufacturer, int bike_Price, String bike_Image, String bikeStoreKey) {
         this.bike_Date = bike_Date;
         this.bike_Number = bike_Number;
         this.bike_Model = bike_Model;
         this.bike_Manufacturer = bike_Manufacturer;
         this.bike_Price = bike_Price;
         this.bike_Image = bike_Image;
-        this.bikeStoreName = bikeStoreName;
+        this.bikeStoreKey = bikeStoreKey;
     }
 
     public String getBike_Date() {
@@ -76,12 +76,12 @@ public class Bikes {
         this.bike_Image = bike_Image;
     }
 
-    public String getBikeStoreName() {
-        return bikeStoreName;
+    public String getBikeStoreKey() {
+        return bikeStoreKey;
     }
 
-    public void setBikeStoreName(String bikeStoreName) {
-        this.bikeStoreName = bikeStoreName;
+    public void setBikeStoreKey(String bikeStoreKey) {
+        this.bikeStoreKey = bikeStoreKey;
     }
 
     @Exclude

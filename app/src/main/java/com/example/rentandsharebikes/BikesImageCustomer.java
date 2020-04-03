@@ -26,8 +26,7 @@ public class BikesImageCustomer extends AppCompatActivity {
 
     private FirebaseStorage bikesStorage;
     private DatabaseReference databaseReference;
-    private FirebaseDatabase firebaseDatabase;
-    private ValueEventListener bikesListDBEventListener;
+    private ValueEventListener bikesEventListener;
 
     private RecyclerView bikesListRecyclerView;
     private BikesAdapterCustomer bikesListAdapterCustomer;
@@ -36,7 +35,8 @@ public class BikesImageCustomer extends AppCompatActivity {
 
     private List<Bikes> bikesList;
 
-    String bikeStore_Name ="";
+    String bikeStore_Name = "";
+    String bikeStore_Key = "";
 
     private ProgressDialog progressDialog;
 
@@ -49,10 +49,11 @@ public class BikesImageCustomer extends AppCompatActivity {
         getIntent().hasExtra("SName");
         bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
 
-        textViewBikesImageList = (TextView)findViewById(R.id.tvBikeImageList);
-        textViewBikesImageList.setText("List of Bikes in "+bikeStore_Name+" store");
+        getIntent().hasExtra("SKey");
+        bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        textViewBikesImageList = (TextView) findViewById(R.id.tvBikeImageList);
+        textViewBikesImageList.setText("List of Bikes in " + bikeStore_Name + " store");
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -63,19 +64,17 @@ public class BikesImageCustomer extends AppCompatActivity {
 
         progressDialog.show();
 
-        //check if the bikes list is empty and add a new bike
-        if(databaseReference == null){
-            bikesStorage = FirebaseStorage.getInstance();
-            databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
-        }
+        //initialize the bike storage database
+        bikesStorage = FirebaseStorage.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
 
-        bikesListDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+        bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if(bikes.getBikeStoreName().equals(bikeStore_Name)){
+                    if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
                         bikes.setBikesKey(postSnapshot.getKey());
                         bikesList.add(bikes);
                     }
@@ -88,7 +87,7 @@ public class BikesImageCustomer extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikesImageCustomer.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikesImageCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

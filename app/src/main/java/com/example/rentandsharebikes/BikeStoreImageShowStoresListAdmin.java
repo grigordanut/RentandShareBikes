@@ -25,17 +25,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity implements BikeStoreAdapterShowStoreListAdmin.OnItemClickListener {
+public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity implements BikeStoreAdapterShowStoresListAdmin.OnItemClickListener {
 
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreDBEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
-    private BikeStoreAdapterShowStoreListAdmin bikeStoreAdapterShowStoreListAdmin;
+    private BikeStoreAdapterShowStoresListAdmin bikeStoreAdapterShowStoresListAdmin;
 
     public List<BikeStore> bikeStoreList;
-
-    private TextView tvImageAdmin;
 
     private ProgressDialog progressDialog;
     private Button buttonAddMoreStores, buttonBackAdminPageStore;
@@ -46,9 +44,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_show_stores_list_admin);
 
-        tvImageAdmin = (TextView) findViewById(R.id.tvBikeStoresImageShowStoreList);
-
-        bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerViewAdmin);
         bikeStoreRecyclerView.setHasFixedSize(true);
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -70,34 +66,6 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(BikeStoreImageShowStoresListAdmin.this, AdminPage.class));
-            }
-        });
-
-        //check if the bikes store list is empty and add a new bike store
-        if(databaseReference == null){
-            databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
-        }
-
-        bikeStoreDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikeStoreList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStore bikeStore = postSnapshot.getValue(BikeStore.class);
-                    assert bikeStore != null;
-                    bikeStore.setStoreKey(postSnapshot.getKey());
-                    bikeStoreList.add(bikeStore);
-                }
-
-                bikeStoreAdapterShowStoreListAdmin = new BikeStoreAdapterShowStoreListAdmin(BikeStoreImageShowStoresListAdmin.this, bikeStoreList);
-                bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoreListAdmin);
-                bikeStoreAdapterShowStoreListAdmin.setOnItmClickListener(BikeStoreImageShowStoresListAdmin.this);
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeStoreImageShowStoresListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -131,7 +99,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
     public void onDeleteStoreClick(final int position) {
         AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikeStoreImageShowStoresListAdmin.this);
         BikeStore selectedBikeStore = bikeStoreList.get(position);
-        builderAlert.setMessage("Are sure to delete "+selectedBikeStore.getBikeStore_Location()+" Bike Store?");
+        builderAlert.setMessage("Are sure to delete " + selectedBikeStore.getBikeStore_Location() + " Bike Store?");
         builderAlert.setCancelable(true);
         builderAlert.setPositiveButton(
                 "Yes",
@@ -140,7 +108,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
                         BikeStore selectedBikeStore = bikeStoreList.get(position);
                         String selectedKeyStore = selectedBikeStore.getStoreKey();
                         databaseReference.child(selectedKeyStore).removeValue();
-                        Toast.makeText(BikeStoreImageShowStoresListAdmin.this, "The Bike Store "+selectedBikeStore.getBikeStore_Location()+" has been deleted successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BikeStoreImageShowStoresListAdmin.this, "The Bike Store " + selectedBikeStore.getBikeStore_Location() + " has been deleted successfully", Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -161,5 +129,40 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
     protected void onDestroy() {
         super.onDestroy();
         databaseReference.removeEventListener(bikeStoreDBEventListener);
+    }
+
+    private void loadBikeStoresList() {
+        //initialize the bikeStore database
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
+
+        bikeStoreDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikeStoreList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    BikeStore bikeStore = postSnapshot.getValue(BikeStore.class);
+                    assert bikeStore != null;
+                    bikeStore.setStoreKey(postSnapshot.getKey());
+                    bikeStoreList.add(bikeStore);
+                }
+
+                bikeStoreAdapterShowStoresListAdmin = new BikeStoreAdapterShowStoresListAdmin(BikeStoreImageShowStoresListAdmin.this, bikeStoreList);
+                bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoresListAdmin);
+                bikeStoreAdapterShowStoresListAdmin.setOnItmClickListener(BikeStoreImageShowStoresListAdmin.this);
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(BikeStoreImageShowStoresListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadBikeStoresList();
     }
 }

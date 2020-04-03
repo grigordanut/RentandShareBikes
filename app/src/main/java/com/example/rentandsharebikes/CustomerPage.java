@@ -40,11 +40,19 @@ public class CustomerPage extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        Button buttonRentBike = (Button)findViewById(R.id.btnRentBikeCustom);
-        buttonRentBike.setOnClickListener(new View.OnClickListener() {
+        Button buttonRentBikes = (Button)findViewById(R.id.btnRentBikeCustom);
+        buttonRentBikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CustomerPage.this, BikeStoreImageCustomer.class));
+                startActivity(new Intent(CustomerPage.this, BikeStoreImageRentBikesCustomer.class));
+            }
+        });
+
+        Button buttonShowBikeStores = (Button)findViewById(R.id.btnShowBikeStoresListCustom);
+        buttonShowBikeStores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CustomerPage.this, BikeStoreImageShowStoresListCustomer.class));
             }
         });
 

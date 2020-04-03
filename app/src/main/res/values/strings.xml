@@ -4,6 +4,7 @@
 
     <!--    Add Bike Store-->
     <string name="tv_addBikeStore">Add Bike Stores</string>
+    <string name="tv_bikeStoreNumber">1</string>
     <string name="et_locationAddStore">Store Location</string>
     <string name="et_addressAddStore">Store Address</string>
     <string name="et_addressAddLatitude">Store Latitude</string>
@@ -13,6 +14,7 @@
 
     <!--    Add Bikes-->
     <string name="tv_welcomeAddBikes">Welcome to add Bikes</string>
+    <string name="tv_bikeNumber">1</string>
     <string name="tv_orSelect">Or</string>
     <string name="et_bikeModel">Bike Model</string>
     <string name="et_bikeManufacturer">Manufacturer</string>
@@ -52,6 +54,7 @@
     <!--    Customer Page-->
     <string name="tv_customerPage">Welcome</string>
     <string name="btn_rentBike">Rent Bike</string>
+    <string name="btn_showBikeStoresList">Bike Stores List</string>
     <string name="btn_shareBike">Share Bike</string>
 
     <!--    Login Customer-->
@@ -106,7 +109,8 @@
     <string name="tv_storeLocation">Store Location: </string>
     <string name="tv_storeAddress">Store Address: </string>
     <string name="tv_numberSlots">Number Slots: </string>
-    <string name="tv_numberAvailable">Nr Available: </string>
+    <string name="tv_numberAvailable">Bikes Available: </string>
+    <string name="tv_numberBikesAvailable">0</string>
 
     <!--    Update Bike Store Details-->
     <string name="tv_updateStoreDetails">Update Bike Store Details</string>
@@ -115,7 +119,14 @@
     <!--    Activity Details-->
     <string name="tv_activityDetails">Marker Title</string>
 
+    <!--    Drawer Menu-->
+    <string name="menu_myCart">My Cart</string>
+    <string name="menu_myAccount">My Account</string>
+    <string name="menu_settings">Settings</string>
+
     <string name="title_activity_maps">Map</string>
     <string name="todo">TODO</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
 </resources>

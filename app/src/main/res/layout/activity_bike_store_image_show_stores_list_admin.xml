@@ -7,11 +7,10 @@
     tools:context=".BikeStoreImageShowStoresListAdmin">
 
     <TextView
-        android:id="@+id/tvBikeStoresImageShowStoreList"
+        android:id="@+id/tvBikeStoresImageShowStoreListAdmin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
@@ -22,10 +21,10 @@
         android:textSize="24sp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/evRecyclerView"
+        android:id="@+id/evRecyclerViewAdmin"
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        android:layout_below="@+id/tvBikeStoresImageShowStoreList"
+        android:layout_below="@+id/tvBikeStoresImageShowStoreListAdmin"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
@@ -37,9 +36,8 @@
         android:id="@+id/btnAddMoreStores"
         android:layout_width="160dp"
         android:layout_height="40dp"
-        android:layout_below="@+id/evRecyclerView"
-        android:layout_alignStart="@+id/evRecyclerView"
-        android:layout_alignLeft="@+id/evRecyclerView"
+        android:layout_below="@+id/evRecyclerViewAdmin"
+        android:layout_alignStart="@+id/evRecyclerViewAdmin"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/round_corners"
@@ -51,11 +49,9 @@
         android:id="@+id/btnBackAdminPageStore"
         android:layout_width="160dp"
         android:layout_height="40dp"
-        android:layout_below="@+id/evRecyclerView"
-        android:layout_alignEnd="@+id/evRecyclerView"
-        android:layout_alignRight="@+id/evRecyclerView"
+        android:layout_below="@+id/evRecyclerViewAdmin"
+        android:layout_alignEnd="@+id/evRecyclerViewAdmin"
         android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/round_corners"

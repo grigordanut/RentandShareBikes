@@ -23,7 +23,6 @@ public class BikesAdapterAdmin extends RecyclerView.Adapter<BikesAdapterAdmin.Im
     private Context bikesContext;
     private List<Bikes> bikesUploads;
     private OnItemClickListener clickListener;
-    private OnItemClickListener mapListener;
 
     public BikesAdapterAdmin(Context bikes_context, List<Bikes> bikes_uploads){
         bikesContext = bikes_context;
