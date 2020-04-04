@@ -57,6 +57,20 @@
     <string name="btn_showBikeStoresList">Bike Stores List</string>
     <string name="btn_shareBike">Share Bike</string>
 
+    <!--    Edit User Profile-->
+    <string name="tv_editUserProfile">Edit your Profile</string>
+    <string name="tv_fNameUserProfile">First Name</string>
+    <string name="et_userFirstName">First Name: </string>
+    <string name="tv_lNameUserProfile">Last Name: </string>
+    <string name="et_userLastName">Last Name: </string>
+    <string name="tv_userNameUserProfile">User Name: </string>
+    <string name="et_userName">User Name: </string>
+    <string name="tv_phoneUserProfile">Phone: </string>
+    <string name="et_userPhone">Phone: </string>
+    <string name="tv_emailUserProfile">Email: </string>
+    <string name="et_userEmailAddress">Email: </string>
+    <string name="btn_saveChangesEditProfile">Save Changes</string>
+
     <!--    Login Customer-->
     <string name="tv_loginCustomer">Please Enter your Log In details</string>
     <string name="et_emailLogCustomer">Email Address</string>

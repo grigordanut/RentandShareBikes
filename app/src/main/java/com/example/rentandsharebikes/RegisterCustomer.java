@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterCustomer extends AppCompatActivity {
+
     private TextInputEditText firstNameRegCustom;
     private TextInputEditText lastNameRegCustom;
     private TextInputEditText userNameRegCustom;
@@ -54,7 +55,6 @@ public class RegisterCustomer extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Customers");
 
-
         Button buttonSignInCustom = (Button) findViewById(R.id.btnSignInRegCustom);
         buttonSignInCustom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +63,6 @@ public class RegisterCustomer extends AppCompatActivity {
                 startActivity(intentLog);
             }
         });
-
 
         Button buttonRegister = (Button) findViewById(R.id.btnRegCustom);
         buttonRegister.setOnClickListener(new View.OnClickListener() {

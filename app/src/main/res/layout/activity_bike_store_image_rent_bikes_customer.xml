@@ -22,8 +22,8 @@
         android:textSize="24sp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/evRecyclerViewCustomer"
-        android:layout_width="380dp"
+        android:id="@+id/evRecyclerView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvBikeStoresRentBikesCustomer"
         android:layout_marginStart="10dp"

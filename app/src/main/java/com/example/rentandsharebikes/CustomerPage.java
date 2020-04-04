@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -90,5 +92,39 @@ public class CustomerPage extends AppCompatActivity {
                 Toast.makeText(CustomerPage.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    //user log out
+    private void LogOut(){
+        firebaseAuth.signOut();
+        finish();
+        startActivity(new Intent(CustomerPage.this, MainActivity.class));
+    }
+
+    private void CustomerDetails() {
+        finish();
+        startActivity(new Intent(CustomerPage.this, EditCustomerProfile.class));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_user, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logOutUser:{
+                LogOut();
+            }
+        }
+        switch (item.getItemId()) {
+            case R.id.customerDetails:{
+                CustomerDetails();
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

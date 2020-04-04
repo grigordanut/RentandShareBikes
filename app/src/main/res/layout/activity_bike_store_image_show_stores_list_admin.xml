@@ -21,7 +21,7 @@
         android:textSize="24sp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/evRecyclerViewAdmin"
+        android:id="@+id/evRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:layout_below="@+id/tvBikeStoresImageShowStoreListAdmin"
@@ -36,8 +36,8 @@
         android:id="@+id/btnAddMoreStores"
         android:layout_width="160dp"
         android:layout_height="40dp"
-        android:layout_below="@+id/evRecyclerViewAdmin"
-        android:layout_alignStart="@+id/evRecyclerViewAdmin"
+        android:layout_below="@+id/evRecyclerView"
+        android:layout_alignStart="@+id/evRecyclerView"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/round_corners"
@@ -49,8 +49,8 @@
         android:id="@+id/btnBackAdminPageStore"
         android:layout_width="160dp"
         android:layout_height="40dp"
-        android:layout_below="@+id/evRecyclerViewAdmin"
-        android:layout_alignEnd="@+id/evRecyclerViewAdmin"
+        android:layout_below="@+id/evRecyclerView"
+        android:layout_alignEnd="@+id/evRecyclerView"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"

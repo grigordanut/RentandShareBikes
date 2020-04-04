@@ -22,8 +22,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BikeStoreImageShowStoresListCustomer" />
-        <activity android:name=".CalculateCoordinates" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -42,11 +40,14 @@
         <activity android:name=".UpdateBikeStoreDetails" />
         <activity android:name=".UpdateBikeDetails" />
         <activity android:name=".BikeStoreImageShowBikesListAdmin" />
+        <activity android:name=".BikeStoreImageShowStoresListCustomer" />
         <activity android:name=".BikesImageCustomer" />
         <activity android:name=".BikeStoreImageAddBikesAdmin" />
         <activity android:name=".BikeStoreImageShowStoresListAdmin" />
         <activity android:name=".BikesImageAdmin" />
         <activity android:name=".BikeStoreImageRentBikesCustomer" />
+        <activity android:name=".EditCustomerProfile" />
+        <activity android:name=".CalculateCoordinates" />
         <activity android:name=".ResetPassword" />
         <activity android:name=".AdminPage" />
         <activity android:name=".CustomerPage" />
