@@ -15,24 +15,25 @@
         tools:showIn="@layout/activity_main">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvDrawerMenuMain"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Master Android Chanel on Youtube\n\nThis is Navigation Drawer Example"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/tv_menuMain"
             android:textSize="30sp"
-            tools:ignore="HardcodedText">
-
-        </TextView>
-
+            tools:ignore="HardcodedText"/>
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navView"
+        android:id="@+id/navViewMain"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/new_header"
-        android:itemTextAppearance="@style/NavDrawerTextStyle"
-        app:menu="@menu/navigation_menu" />
+        app:itemTextColor="@drawable/drawer_item_color"
+        app:headerLayout="@layout/main_header"
+        app:itemTextAppearance="?android:textAppearanceMedium"
+        app:menu="@menu/menu_drawer_main" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

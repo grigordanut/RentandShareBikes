@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +28,8 @@ public class LoginCustomer extends AppCompatActivity {
     private TextInputEditText emailLogCustom;
     private TextInputEditText passLogCustom;
     private String email_logCustom, pass_logCustom;
+
+    private TextView textViewEmailLogCustom, textViewPassLogCustom;
 
     private FirebaseAuth firebaseAuth;
 
@@ -50,6 +56,8 @@ public class LoginCustomer extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+
+
         Button buttonSignUp = (Button)findViewById(R.id.btnSignUpCustom);
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,19 +78,16 @@ public class LoginCustomer extends AppCompatActivity {
                     emailLogCustom.setError("Enter your Login Email");
                     emailLogCustom.requestFocus();
                 }
-
                 else if(!Patterns.EMAIL_ADDRESS.matcher(email_logCustom).matches()){
                     Toast.makeText(LoginCustomer.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
                     emailLogCustom.setError("Enter a valid Email Address");
                     emailLogCustom.requestFocus();
                 }
-
                 else if(pass_logCustom.isEmpty()){
                     passLogCustom.setError("Enter your Login Password");
                     passLogCustom.requestFocus();
                 }
-
-                else if (email_logCustom.equals("admin@gmail.com") && (pass_logCustom.equals("admin"))){
+                else if (email_logCustom.equals("admin_page@gmail.com") && (pass_logCustom.equals("admin_page"))){
                     progressDialog.setMessage("Login Admin");
                     progressDialog.show();
                     startActivity(new Intent(LoginCustomer.this, AdminPage.class));
@@ -90,7 +95,6 @@ public class LoginCustomer extends AppCompatActivity {
                     passLogCustom.setText("");
                     progressDialog.dismiss();
                 }
-
                 else{
                     progressDialog.setMessage("Login Customer");
                     progressDialog.show();
@@ -104,13 +108,63 @@ public class LoginCustomer extends AppCompatActivity {
                             passLogCustom.setText("");
                             checkEmailVerification();
                         }
-
                         else{
-                            progressDialog.dismiss();
+
                             Toast.makeText(LoginCustomer.this, "Log in failed, you entered a wrong Email or Password", Toast.LENGTH_SHORT).show();
                         }
+                        progressDialog.dismiss();
                         }
                     });
+                }
+            }
+        });
+
+
+        textViewEmailLogCustom = (TextView) findViewById(R.id.text_dummy_hint_emailLog);
+        textViewPassLogCustom = (TextView) findViewById(R.id.text_dummy_hint_password);
+
+        // Email Address
+        emailLogCustom.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            // Show white background behind floating label
+                            textViewEmailLogCustom.setVisibility(View.VISIBLE);
+                        }
+                    }, 10);
+                } else {
+                    // Required to show/hide white background behind floating label during focus change
+                    if (emailLogCustom.getText().length() > 0)
+                        textViewEmailLogCustom.setVisibility(View.VISIBLE);
+                    else
+                        textViewEmailLogCustom.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        // Password
+        passLogCustom.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Show white background behind floating label
+                            textViewPassLogCustom.setVisibility(View.VISIBLE);
+                        }
+                    }, 10);
+                }
+                else {
+                    // Required to show/hide white background behind floating label during focus change
+                    if (passLogCustom.getText().length() > 0)
+                        textViewPassLogCustom.setVisibility(View.VISIBLE);
+                    else
+                        textViewPassLogCustom.setVisibility(View.INVISIBLE);
                 }
             }
         });

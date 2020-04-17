@@ -49,7 +49,7 @@ public class BikeStoreAdapterShowBikesListAdmin extends RecyclerView.Adapter<Bik
     public void onBindViewHolder(final BikeStoreAdapterShowBikesListAdmin.ImageViewHolder holder, int position) {
 
         final BikeStore uploadCurrent = bikeStoreUploads.get(position);
-        holder.tvStoreBikeNumber.setText(String.valueOf(uploadCurrent.getBikeStore_Number()));
+        //holder.tvStoreBikeNumber.setText(String.valueOf(uploadCurrent.getBikeStore_Number()));
         holder.tvStoreBikeLocation.setText(uploadCurrent.getBikeStore_Location());
         holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
         holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
@@ -78,7 +78,7 @@ public class BikeStoreAdapterShowBikesListAdmin extends RecyclerView.Adapter<Bik
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Toast.makeText(BikesImageAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(BikeStoreAdapterShowBikesListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -99,7 +99,6 @@ public class BikeStoreAdapterShowBikesListAdmin extends RecyclerView.Adapter<Bik
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvStoreBikeNumber;
         public TextView tvStoreBikeLocation;
         public TextView tvStoreBikeAddress;
         public TextView tvStoreBikeSlots;
@@ -107,7 +106,6 @@ public class BikeStoreAdapterShowBikesListAdmin extends RecyclerView.Adapter<Bik
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            tvStoreBikeNumber = itemView.findViewById(R.id.tvStoreNumber);
             tvStoreBikeLocation = itemView.findViewById(R.id.tvStorePlace);
             tvStoreBikeAddress = itemView.findViewById(R.id.tvStoreAddress);
             tvStoreBikeSlots = itemView.findViewById(R.id.tvStoreSlots);

@@ -27,8 +27,9 @@ import java.util.List;
 
 public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity implements BikeStoreAdapterShowStoresListAdmin.OnItemClickListener {
 
+    private TextView textViewBikeStoresImageShowStoreListAdmin;
     private DatabaseReference databaseReference;
-    private ValueEventListener bikeStoreDBEventListener;
+    private ValueEventListener bikeStoreEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
     private BikeStoreAdapterShowStoresListAdmin bikeStoreAdapterShowStoresListAdmin;
@@ -38,11 +39,14 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
     private ProgressDialog progressDialog;
     private Button buttonAddMoreStores, buttonBackAdminPageStore;
 
-    @SuppressLint("DefaultLocale")
+    @SuppressLint({"DefaultLocale", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_show_stores_list_admin);
+
+        textViewBikeStoresImageShowStoreListAdmin = (TextView)findViewById(R.id.tvBikeStoresImageShowStoreListAdmin);
+        textViewBikeStoresImageShowStoreListAdmin.setText("No bike stores available");
 
         bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
@@ -87,7 +91,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
 
         Intent intent = new Intent(BikeStoreImageShowStoresListAdmin.this, UpdateBikeStoreDetails.class);
         BikeStore selected_BikeStore = bikeStoreList.get(position);
-        intent.putExtra("SNumber", selected_BikeStore.getBikeStore_Number());
+        //intent.putExtra("SNumber", selected_BikeStore.getBikeStore_Number());
         intent.putExtra("SLocation", selected_BikeStore.getBikeStore_Location());
         intent.putExtra("SAddress", selected_BikeStore.getBikeStore_Address());
         intent.putExtra("SNrSlots", selected_BikeStore.getBikeStore_NumberSlots());
@@ -126,17 +130,35 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
     }
 
     @Override
+    public void alertDialogBikeStoreNotEmpty(final int position) {
+        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikeStoreImageShowStoresListAdmin.this);
+        BikeStore selectedBikeStore = bikeStoreList.get(position);
+        builderAlert.setMessage("The " +selectedBikeStore.getBikeStore_Location()+ " Bike Store still has bikes and cannot be deleted \nDelete the Bikes first and after delete the Bike Store");
+        builderAlert.setCancelable(true);
+        builderAlert.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+                });
+
+        AlertDialog alert1 = builderAlert.create();
+        alert1.show();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        databaseReference.removeEventListener(bikeStoreDBEventListener);
+        databaseReference.removeEventListener(bikeStoreEventListener);
     }
 
     private void loadBikeStoresList() {
         //initialize the bikeStore database
-
         databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
-        bikeStoreDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+        bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikeStoreList.clear();
@@ -145,6 +167,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
                     assert bikeStore != null;
                     bikeStore.setStoreKey(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
+                    textViewBikeStoresImageShowStoreListAdmin.setText("Bike stores available " +bikeStoreList.size());
                 }
 
                 bikeStoreAdapterShowStoresListAdmin = new BikeStoreAdapterShowStoresListAdmin(BikeStoreImageShowStoresListAdmin.this, bikeStoreList);

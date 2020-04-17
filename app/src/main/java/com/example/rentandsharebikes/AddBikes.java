@@ -28,11 +28,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -52,7 +49,6 @@ public class AddBikes extends AppCompatActivity {
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
     private StorageTask mUploadTask;
-    private ValueEventListener bikesEventListener;
 
     private ImageView ivAddBike;
     private Uri imageUri;
@@ -87,7 +83,7 @@ public class AddBikes extends AppCompatActivity {
 
         textViewWelcomeAddBikes = (TextView) findViewById(R.id.tvWelcomeAddBikes);
         textViewDate = (TextView) findViewById(R.id.tvBikeDate);
-        textViewBikeNumber = (TextView) findViewById(R.id.tvBikeNumber);
+        //textViewBikeNumber = (TextView) findViewById(R.id.tvBikeNumber);
         textViewWelcomeAddBikes.setText("Add Bicycles to " + bikeStore_Name + " store");
 
         LocalDate localDate = null;
@@ -225,7 +221,6 @@ public class AddBikes extends AppCompatActivity {
         progressDialog.dismiss();
 
         tvBike_Date = textViewDate.getText().toString().trim();
-        tvBike_Number = Integer.parseInt(textViewBikeNumber.getText().toString().trim());
         etBike_Model = etBikeModel.getText().toString().trim();
         etBike_Manufact = etBikeManufact.getText().toString().trim();
         etBike_Price = Integer.parseInt(etBikePrice.getText().toString().trim());
@@ -249,79 +244,51 @@ public class AddBikes extends AppCompatActivity {
             progressDialog.show();
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             mUploadTask = fileReference.putFile(imageUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
+                        public void onSuccess(Uri uri) {
 
-                                    Bikes bikes = new Bikes(tvBike_Date, tvBike_Number, etBike_Model, etBike_Manufact, etBike_Price, uri.toString(), bikeStore_Key);
-                                    String addBike_id = databaseReference.push().getKey();
-                                    assert addBike_id != null;
-                                    databaseReference.child(addBike_id).setValue(bikes);
+                            Bikes bikes = new Bikes(tvBike_Date, tvBike_Number, etBike_Model, etBike_Manufact, etBike_Price, uri.toString(), bikeStore_Key);
+                            String addBike_id = databaseReference.push().getKey();
+                            assert addBike_id != null;
+                            databaseReference.child(addBike_id).setValue(bikes);
 
-                                    etBikeModel.setText("");
-                                    etBikeManufact.setText("");
-                                    etBikePrice.setText("");
-                                    ivAddBike.setImageResource(R.drawable.bikepicture);
+                            etBikeModel.setText("");
+                            etBikeManufact.setText("");
+                            etBikePrice.setText("");
+                            ivAddBike.setImageResource(R.drawable.add_bikes_picture);
 
-                                    Intent add_Bikes = new Intent(AddBikes.this, AdminPage.class);
-                                    startActivity(add_Bikes);
+                            Intent add_Bikes = new Intent(AddBikes.this, AdminPage.class);
+                            startActivity(add_Bikes);
 
-                                    Toast.makeText(AddBikes.this, "Upload Bicycle successfully", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                            });
-                            progressDialog.dismiss();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(AddBikes.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                            //show upload Progress
-                            double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
-                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
-                            progressDialog.setProgress((int) progress);
+                            Toast.makeText(AddBikes.this, "Upload Bicycle successfully", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
                     });
+                    progressDialog.dismiss();
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressDialog.dismiss();
+                    Toast.makeText(AddBikes.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            })
+            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                    //show upload Progress
+                    double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
+                    progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                    progressDialog.setProgress((int) progress);
+                }
+            });
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void onStart() {
-        super.onStart();
-        incrementNumberBikes();
-    }
 
-    private void incrementNumberBikes() {
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
-        bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
-                        tvBike_Number = Integer.parseInt(String.valueOf(bikes.getBike_Number() + 1));
-                        textViewBikeNumber.setText(String.valueOf(tvBike_Number));
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(AddBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 }

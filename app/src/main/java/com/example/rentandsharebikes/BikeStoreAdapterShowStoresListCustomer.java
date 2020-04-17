@@ -53,7 +53,7 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final BikeStoreAdapterShowStoresListCustomer.ImageViewHolder holder, int position) {
         final BikeStore uploadCurrent = bikeStoreUploads.get(position);
-        holder.tvStoreBikeNumber.setText(String.valueOf(uploadCurrent.getBikeStore_Number()));
+        //holder.tvStoreBikeNumber.setText(String.valueOf(uploadCurrent.getBikeStore_Number()));
         holder.tvStoreBikeLocation.setText(uploadCurrent.getBikeStore_Location());
         holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
         holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
@@ -94,8 +94,6 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
             View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
-
-        public TextView tvStoreBikeNumber;
         public TextView tvStoreBikeLocation;
         public TextView tvStoreBikeAddress;
         public TextView tvStoreBikeSlots;
@@ -103,7 +101,6 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            tvStoreBikeNumber = itemView.findViewById(R.id.tvStoreNumber);
             tvStoreBikeLocation = itemView.findViewById(R.id.tvStorePlace);
             tvStoreBikeAddress = itemView.findViewById(R.id.tvStoreAddress);
             tvStoreBikeSlots = itemView.findViewById(R.id.tvStoreSlots);

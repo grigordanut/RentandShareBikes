@@ -66,7 +66,7 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
 
         Intent intent = new Intent(BikeStoreImageShowStoresListCustomer.this, UpdateBikeStoreDetails.class);
         BikeStore selected_BikeStore = bikeStoreList.get(position);
-        intent.putExtra("SNumber", selected_BikeStore.getBikeStore_Number());
+        //intent.putExtra("SNumber", selected_BikeStore.getBikeStore_Number());
         intent.putExtra("SLocation", selected_BikeStore.getBikeStore_Location());
         intent.putExtra("SAddress", selected_BikeStore.getBikeStore_Address());
         intent.putExtra("SNrSlots", selected_BikeStore.getBikeStore_NumberSlots());

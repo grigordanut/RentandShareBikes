@@ -18,7 +18,7 @@
         android:text="@string/tv_activityBikesAdmin"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/evRecyclerView"
@@ -40,7 +40,7 @@
         android:layout_alignStart="@+id/tvBikeImageList"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/round_corners"
+        android:background="@drawable/btn_delete_round_corners"
         android:text="@string/btn_addMoreBikes"
         android:textSize="14sp"
         tools:ignore="ButtonStyle" />
@@ -53,7 +53,7 @@
         android:layout_alignEnd="@+id/tvBikeImageList"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/round_corners"
+        android:background="@drawable/btn_delete_round_corners"
         android:text="@string/btn_backToAdminPageBikes"
         android:textSize="14sp"
         tools:ignore="ButtonStyle" />

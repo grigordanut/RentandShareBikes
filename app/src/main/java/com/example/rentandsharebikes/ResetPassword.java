@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,6 +23,8 @@ public class ResetPassword extends AppCompatActivity {
     private EditText emailResetPass;
     private Button buttonResetPass;
     private FirebaseAuth firebaseAuth;
+
+    private TextView textViewEmailResetPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,30 @@ public class ResetPassword extends AppCompatActivity {
                         }
                         }
                     });
+                }
+            }
+        });
+
+        textViewEmailResetPass = (TextView) findViewById(R.id.text_dummy_hint_emailResetPass);
+        // Email Address
+        emailResetPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            // Show white background behind floating label
+                            textViewEmailResetPass.setVisibility(View.VISIBLE);
+                        }
+                    }, 10);
+                } else {
+                    // Required to show/hide white background behind floating label during focus change
+                    if (emailResetPass.getText().length() > 0)
+                        textViewEmailResetPass.setVisibility(View.VISIBLE);
+                    else
+                        textViewEmailResetPass.setVisibility(View.INVISIBLE);
                 }
             }
         });

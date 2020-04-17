@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,8 +24,6 @@ public class BikeStoreAdapterRentBikesCustomer extends RecyclerView.Adapter<Bike
 
     private Context bikeStoreContext;
     private List<BikeStore> bikeStoreUploads;
-
-    private AdapterView.OnItemClickListener clickListener;
 
     private FirebaseStorage bikeStorage;
     private DatabaseReference databaseReference;
@@ -52,7 +49,7 @@ public class BikeStoreAdapterRentBikesCustomer extends RecyclerView.Adapter<Bike
     public void onBindViewHolder(final BikeStoreAdapterRentBikesCustomer.ImageViewHolder holder, int position) {
 
         final BikeStore uploadCurrent = bikeStoreUploads.get(position);
-        holder.tvStoreBikeNumber.setText(String.valueOf(uploadCurrent.getBikeStore_Number()));
+        //holder.tvStoreBikeNumber.setText(String.valueOf(uploadCurrent.getBikeStore_Number()));
         holder.tvStoreBikeLocation.setText(uploadCurrent.getBikeStore_Location());
         holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
         holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
@@ -81,7 +78,7 @@ public class BikeStoreAdapterRentBikesCustomer extends RecyclerView.Adapter<Bike
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Toast.makeText(BikesImageAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(BikeStoreAdapterRentBikesCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -102,7 +99,6 @@ public class BikeStoreAdapterRentBikesCustomer extends RecyclerView.Adapter<Bike
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvStoreBikeNumber;
         public TextView tvStoreBikeLocation;
         public TextView tvStoreBikeAddress;
         public TextView tvStoreBikeSlots;
@@ -110,7 +106,6 @@ public class BikeStoreAdapterRentBikesCustomer extends RecyclerView.Adapter<Bike
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            tvStoreBikeNumber = itemView.findViewById(R.id.tvStoreNumber);
             tvStoreBikeLocation = itemView.findViewById(R.id.tvStorePlace);
             tvStoreBikeAddress = itemView.findViewById(R.id.tvStoreAddress);
             tvStoreBikeSlots = itemView.findViewById(R.id.tvStoreSlots);

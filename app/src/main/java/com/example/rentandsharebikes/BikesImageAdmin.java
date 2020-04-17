@@ -47,11 +47,9 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
     String bikeStore_Name = "";
     String bikeStore_Key = "";
 
-    private int numberBikesAvailable;
-
     private ProgressDialog progressDialog;
 
-    @SuppressLint({"NewApi", "SetTextI18n"})
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +62,7 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
         bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
 
         textViewBikesImageList = (TextView) findViewById(R.id.tvBikeImageList);
-        textViewBikesImageList.setText("List of Bikes in " + bikeStore_Name + " store");
+        textViewBikesImageList.setText("No bikes available in " +bikeStore_Name+ " store");
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -157,6 +155,7 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
         databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
 
         bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikesList.clear();
@@ -166,6 +165,7 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
                     if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
                         bikes.setBikesKey(postSnapshot.getKey());
                         bikesList.add(bikes);
+                        textViewBikesImageList.setText(bikesList.size()+" bikes available in "+bikeStore_Name+" store");
                     }
                 }
 
@@ -182,6 +182,7 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
         });
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onStart() {
         super.onStart();

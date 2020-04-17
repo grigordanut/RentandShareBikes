@@ -11,9 +11,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:background="@drawable/smartbike"
-        tools:ignore="ContentDescription">
-
-    </ImageView>
+        android:background="@drawable/drawer_menu_picture"
+        tools:ignore="ContentDescription"/>
 
 </LinearLayout>

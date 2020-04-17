@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        navigationView = findViewById(R.id.navView);
+        navigationView = findViewById(R.id.navViewMain);
 
         //Adding Click Events to our navigation drawer item
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, LoginCustomer.class));
                         break;
                     case R.id.myCart:
-                        Toast.makeText(MainActivity.this, "My CArt",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "My Cart",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.settings:
                         Toast.makeText(MainActivity.this, "Settings",Toast.LENGTH_SHORT).show();

@@ -4,7 +4,6 @@ import com.google.firebase.database.Exclude;
 
 public class BikeStore {
 
-    private int bikeStore_Number;
     private String bikeStore_Location;
     private String bikeStore_Address;
     private double bikeStore_Latitude;
@@ -17,21 +16,12 @@ public class BikeStore {
 
     }
 
-    public BikeStore(int bikeStore_Number, String bikeStore_Location, String bikeStore_Address, double bikeStore_Latitude, double bikeStore_Longitude, int bikeStore_NumberSlots) {
-        this.bikeStore_Number = bikeStore_Number;
+    public BikeStore(String bikeStore_Location, String bikeStore_Address, double bikeStore_Latitude, double bikeStore_Longitude, int bikeStore_NumberSlots) {
         this.bikeStore_Location = bikeStore_Location;
         this.bikeStore_Address = bikeStore_Address;
         this.bikeStore_Latitude = bikeStore_Latitude;
         this.bikeStore_Longitude = bikeStore_Longitude;
         this.bikeStore_NumberSlots = bikeStore_NumberSlots;
-    }
-
-    public int getBikeStore_Number() {
-        return bikeStore_Number;
-    }
-
-    public void setBikeStore_Number(int bikeStore_Number) {
-        this.bikeStore_Number = bikeStore_Number;
     }
 
     public String getBikeStore_Location() {

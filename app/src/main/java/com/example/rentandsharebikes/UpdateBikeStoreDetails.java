@@ -11,7 +11,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class UpdateBikeStoreDetails extends AppCompatActivity {
 
-    private String store_Number, store_Location, store_Address, store_NrSlots;
+    private String store_Location, store_Address, store_NrSlots;
 
     private ProgressDialog progressDialog;
 
@@ -19,11 +19,6 @@ public class UpdateBikeStoreDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_bike_store_details);
-
-        getIntent().hasExtra("SNumber");
-        store_Number = String.valueOf((getIntent().getExtras()).getInt("SNumber"));
-        TextView storeNumber = (TextView) findViewById(R.id.tvStoreNumber);
-        storeNumber.setText(String.valueOf(store_Number));
 
         getIntent().hasExtra("SLocation");
         store_Location = (getIntent().getExtras()).getString("SLocation");
@@ -39,7 +34,5 @@ public class UpdateBikeStoreDetails extends AppCompatActivity {
         store_NrSlots = String.valueOf((getIntent().getExtras()).getInt("SNrSlots"));
         TextInputEditText storeNrSlots = (TextInputEditText)findViewById(R.id.etStoreNrSlots);
         storeNrSlots.setText(String.valueOf(store_NrSlots));
-
-
     }
 }

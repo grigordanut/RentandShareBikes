@@ -1,12 +1,17 @@
 package com.example.rentandsharebikes;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,7 +58,6 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
     @Override
     public void onBindViewHolder(final BikeStoreAdapterShowStoresListAdmin.ImageViewHolder holder, int position) {
         final BikeStore uploadCurrent = bikeStoreUploads.get(position);
-        holder.tvStoreBikeNumber.setText(String.valueOf(uploadCurrent.getBikeStore_Number()));
         holder.tvStoreBikeLocation.setText(uploadCurrent.getBikeStore_Location());
         holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
         holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
@@ -85,25 +89,6 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
                 //Toast.makeText(BikesImageAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-//        databaseReferenceBikes.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()){
-//                    //numberAvailable = (int)dataSnapshot.getChildrenCount();
-//                    //holder.tvStoreAvailable.setText(String.valueOf(numberAvailable));
-//                    holder.tvStoreAvailable.setText(String.valueOf(dataSnapshot.getChildrenCount()));
-//                }
-//                else{
-//                    holder.tvStoreAvailable.setText(String.valueOf(0));
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
     }
 
     @Override
@@ -113,8 +98,6 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
             View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
-
-        public TextView tvStoreBikeNumber;
         public TextView tvStoreBikeLocation;
         public TextView tvStoreBikeAddress;
         public TextView tvStoreBikeSlots;
@@ -122,7 +105,6 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            tvStoreBikeNumber = itemView.findViewById(R.id.tvStoreNumber);
             tvStoreBikeLocation = itemView.findViewById(R.id.tvStorePlace);
             tvStoreBikeAddress = itemView.findViewById(R.id.tvStoreAddress);
             tvStoreBikeSlots = itemView.findViewById(R.id.tvStoreSlots);
@@ -170,7 +152,11 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
                             return true;
 
                         case 3:
-                            clickListener.onDeleteStoreClick(position);
+                            if (tvStoreBikesAvailable.getText().toString().equals(String.valueOf(0))) {
+                                clickListener.onDeleteStoreClick(position);
+                            } else {
+                                clickListener.alertDialogBikeStoreNotEmpty(position);
+                            }
                             return true;
                     }
                 }
@@ -187,6 +173,8 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
         void onUpdateStoreClick(int position);
 
         void onDeleteStoreClick(int position);
+
+        void alertDialogBikeStoreNotEmpty(int position);
     }
 
     public void setOnItmClickListener(OnItemClickListener listener) {

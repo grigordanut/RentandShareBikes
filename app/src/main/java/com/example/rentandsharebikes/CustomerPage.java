@@ -101,14 +101,19 @@ public class CustomerPage extends AppCompatActivity {
         startActivity(new Intent(CustomerPage.this, MainActivity.class));
     }
 
-    private void CustomerDetails() {
+    private void editProfile() {
         finish();
         startActivity(new Intent(CustomerPage.this, EditCustomerProfile.class));
     }
 
+    private void changePassword() {
+        finish();
+        startActivity(new Intent(CustomerPage.this, ChangePassword.class));
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_user, menu);
+        getMenuInflater().inflate(R.menu.menu_customer, menu);
         return true;
     }
 
@@ -120,8 +125,14 @@ public class CustomerPage extends AppCompatActivity {
             }
         }
         switch (item.getItemId()) {
-            case R.id.customerDetails:{
-                CustomerDetails();
+            case R.id.editProfile:{
+                editProfile();
+            }
+        }
+
+        switch (item.getItemId()) {
+            case R.id.changePassword:{
+                changePassword();
             }
         }
 

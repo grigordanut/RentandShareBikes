@@ -21,7 +21,7 @@ import java.util.List;
 public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
-    private ValueEventListener bikeStoreDBEventListener;
+    private ValueEventListener bikeStoreEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
     private BikeStoreAdapterShowBikesListAdmin bikeStoreAdapterShowBikesListAdmin;
@@ -49,7 +49,7 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity {
             databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
         }
 
-        bikeStoreDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+        bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){

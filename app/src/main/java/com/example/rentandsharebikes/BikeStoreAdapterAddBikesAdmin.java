@@ -48,7 +48,6 @@ public class BikeStoreAdapterAddBikesAdmin extends RecyclerView.Adapter<BikeStor
     public void onBindViewHolder(final ImageViewHolder holder, int position) {
 
         final BikeStore uploadCurrent = bikeStoreUploads.get(position);
-        holder.tvStoreBikeNumber.setText(String.valueOf(uploadCurrent.getBikeStore_Number()));
         holder.tvStoreBikeLocation.setText(uploadCurrent.getBikeStore_Location());
         holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
         holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
@@ -77,7 +76,7 @@ public class BikeStoreAdapterAddBikesAdmin extends RecyclerView.Adapter<BikeStor
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Toast.makeText(BikesImageAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(BikeStoreAdapterAddBikesAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -98,8 +97,6 @@ public class BikeStoreAdapterAddBikesAdmin extends RecyclerView.Adapter<BikeStor
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView tvStoreBikeNumber;
         public TextView tvStoreBikeLocation;
         public TextView tvStoreBikeAddress;
         public TextView tvStoreBikeSlots;
@@ -107,8 +104,6 @@ public class BikeStoreAdapterAddBikesAdmin extends RecyclerView.Adapter<BikeStor
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-
-            tvStoreBikeNumber = itemView.findViewById(R.id.tvStoreNumber);
             tvStoreBikeLocation = itemView.findViewById(R.id.tvStorePlace);
             tvStoreBikeAddress = itemView.findViewById(R.id.tvStoreAddress);
             tvStoreBikeSlots = itemView.findViewById(R.id.tvStoreSlots);

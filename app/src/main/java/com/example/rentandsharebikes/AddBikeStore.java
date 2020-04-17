@@ -30,7 +30,6 @@ import java.util.Objects;
 public class AddBikeStore extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
-    private ValueEventListener bikeStoresEventListener;
 
     private EditText etStoreLocation;
     private EditText etStoreAddress;
@@ -64,7 +63,7 @@ public class AddBikeStore extends AppCompatActivity {
         getIntent().hasExtra("Longitude");
         store_Longitude = Objects.requireNonNull(getIntent().getExtras()).getString("Longitude");
 
-        tvStoreNumber = (TextView) findViewById(R.id.tvBikeStoreNumber);
+        //tvStoreNumber = (TextView) findViewById(R.id.tvBikeStoreNumber);
         etStoreLocation = findViewById(R.id.etBikeStoreLocation);
         etStoreAddress = findViewById(R.id.etBikeStoreAddress);
         etStoreLatitude = findViewById(R.id.etBikeStoreLatitude);
@@ -106,7 +105,7 @@ public class AddBikeStore extends AppCompatActivity {
                     etStoreNumberSlots.requestFocus();
                 } else {
 
-                    tvStore_Number = Integer.parseInt(tvStoreNumber.getText().toString().trim());
+                    //tvStore_Number = Integer.parseInt(tvStoreNumber.getText().toString().trim());
                     etStore_Location = etStoreLocation.getText().toString().trim();
                     etStore_Address = etStoreAddress.getText().toString().trim();
                     etStore_Latitude = Double.parseDouble(Objects.requireNonNull(etStoreLatitude.getText()).toString().trim());
@@ -117,7 +116,7 @@ public class AddBikeStore extends AppCompatActivity {
                     progressDialog.show();
                     String storeID = databaseReference.push().getKey();
 
-                    BikeStore bike_store = new BikeStore(tvStore_Number, etStore_Location, etStore_Address, etStore_Latitude, etStore_Longitude, etStore_NrSlots);
+                    BikeStore bike_store = new BikeStore(etStore_Location, etStore_Address, etStore_Latitude, etStore_Longitude, etStore_NrSlots);
 
                     assert storeID != null;
                     databaseReference.child(storeID).setValue(bike_store).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -125,7 +124,7 @@ public class AddBikeStore extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
 
-                                tvStoreNumber.setText("");
+                                //tvStoreNumber.setText("");
                                 etStoreLocation.setText("");
                                 etStoreAddress.setText("");
                                 etStoreNumberSlots.setText("");
@@ -146,34 +145,6 @@ public class AddBikeStore extends AppCompatActivity {
                                 }
                             });
                 }
-            }
-        });
-    }
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void onStart() {
-        super.onStart();
-        incrementNumberBikeStores();
-    }
-
-    private void incrementNumberBikeStores() {
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
-        bikeStoresEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStore bike_Store = postSnapshot.getValue(BikeStore.class);
-                    assert bike_Store != null;
-                    tvStore_Number = Integer.parseInt(String.valueOf(bike_Store.getBikeStore_Number() + 1));
-                    tvStoreNumber.setText(String.valueOf(tvStore_Number));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(AddBikeStore.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

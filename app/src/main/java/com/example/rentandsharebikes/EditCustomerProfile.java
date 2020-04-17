@@ -91,7 +91,6 @@ public class EditCustomerProfile extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 progressDialog.show();
                 String newFirst_Name = newFirstName.getText().toString().trim();
                 String newLast_Name = newLastName.getText().toString().trim();
@@ -105,18 +104,16 @@ public class EditCustomerProfile extends AppCompatActivity {
                 currentUser.setValue(customersProf);
 
                 //clear data input fields
-                newFirstName.setText("");
-                newLastName.setText("");
-                newUserName.setText("");
-                newPhone.setText("");
-                newEmail.setText("");
+                newFirstName.getText().clear();
+                newLastName.getText().clear();
+                newUserName.getText().clear();
+                newPhone.getText().clear();
+                newEmail.getText().clear();
 
-
-                firebaseAuth.signOut();
-                finish();
+                progressDialog.dismiss();
                 Toast.makeText(EditCustomerProfile.this, "Your details has been changed successfully", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(EditCustomerProfile.this, LoginCustomer.class));
-                progressDialog.dismiss();
+                finish();
             }
         });
     }

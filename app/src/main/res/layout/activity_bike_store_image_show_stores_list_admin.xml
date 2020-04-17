@@ -40,7 +40,7 @@
         android:layout_alignStart="@+id/evRecyclerView"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/round_corners"
+        android:background="@drawable/btn_delete_round_corners"
         android:text="@string/btn_addMoreStores"
         android:textSize="14sp"
         tools:ignore="ButtonStyle" />
@@ -54,7 +54,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/round_corners"
+        android:background="@drawable/btn_delete_round_corners"
         android:text="@string/btn_backToAdminPageStores"
         android:textSize="14sp"
         tools:ignore="ButtonStyle" />
