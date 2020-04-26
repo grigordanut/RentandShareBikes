@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/userShow_storesList"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menuDrawerUser_showStoresList" />
+
+        <item
+            android:id="@+id/userShow_bikesList"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menuDrawerUser_showBikesList" />
+
+        <item
+            android:id="@+id/userRent_bikes"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menuDrawerUser_rentBikes" />
+
+        <item
+            android:id="@+id/userShow_bikesRented"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menuDrawerUser_showBikesRented" />
+
+        <item
+            android:id="@+id/userReturn_bikes"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menuDrawerUser_returnBikes" />
+
+        <item
+            android:id="@+id/userShare_bikes"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menuDrawerUser_shareBikes" />
+    </group>
+
+</menu>

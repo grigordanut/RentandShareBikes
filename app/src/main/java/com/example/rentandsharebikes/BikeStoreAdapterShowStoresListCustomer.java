@@ -45,15 +45,14 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
 
     @NonNull
     @Override
-    public BikeStoreAdapterShowStoresListCustomer.ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(bikeStoreContext).inflate(R.layout.image_bikestore, parent, false);
-        return new BikeStoreAdapterShowStoresListCustomer.ImageViewHolder(view);
+        return new ImageViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final BikeStoreAdapterShowStoresListCustomer.ImageViewHolder holder, int position) {
+    public void onBindViewHolder(final ImageViewHolder holder, int position) {
         final BikeStore uploadCurrent = bikeStoreUploads.get(position);
-        //holder.tvStoreBikeNumber.setText(String.valueOf(uploadCurrent.getBikeStore_Number()));
         holder.tvStoreBikeLocation.setText(uploadCurrent.getBikeStore_Location());
         holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
         holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
@@ -71,8 +70,8 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(uploadCurrent.getStoreKey())) {
-                        bikes.setBikesKey(postSnapshot.getKey());
+                    if (bikes.getBikeStoreName().equals(uploadCurrent.getBikeStore_Location())) {
+                        bikes.setBike_Key(postSnapshot.getKey());
                         bikesList.add(bikes);
                         numberBikesAvailable = bikesList.size();
                         holder.tvStoreBikesAvailable.setText(String.valueOf(numberBikesAvailable));
@@ -82,7 +81,7 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Toast.makeText(BikesImageAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(BikesImageShowBikesListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -125,10 +124,10 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             menu.setHeaderTitle("Select an Action");
             MenuItem doShowMapStore = menu.add(NONE, 1, 1, "Show Map Store");
-            MenuItem doUpdateStore = menu.add(NONE, 2, 2, "Update Bike Store");
+            MenuItem doSaveStore = menu.add(NONE, 2, 2, "Save Bike Store");
 
             doShowMapStore.setOnMenuItemClickListener(this);
-            doUpdateStore.setOnMenuItemClickListener(this);
+            doSaveStore.setOnMenuItemClickListener(this);
         }
 
         @Override
@@ -142,7 +141,7 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
                             return true;
 
                         case 2:
-                            clickListener.onUpdateStoreClick(position);
+                            clickListener.onSaveStoreClick(position);
                             return true;
                     }
                 }
@@ -156,7 +155,7 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
 
         void onShowMapStoreClick(int position);
 
-        void onUpdateStoreClick(int position);
+        void onSaveStoreClick(int position);
     }
 
     public void setOnItmClickListener(OnItemClickListener listener) {

@@ -1,10 +1,5 @@
 package com.example.rentandsharebikes;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -15,6 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -29,14 +29,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAdmin.OnItemClickListener {
+public class BikesImageShowBikesListAdmin extends AppCompatActivity implements BikesAdapterShowBikesListAdmin.OnItemClickListener {
 
     private DatabaseReference databaseReference;
-    private FirebaseStorage bikeStorage;
+    private FirebaseStorage bikesStorage;
     private ValueEventListener bikesEventListener;
 
     private RecyclerView bikesListRecyclerView;
-    private BikesAdapterAdmin bikesListAdapter;
+    private BikesAdapterShowBikesListAdmin bikesListAdapter;
 
     private TextView textViewBikesImageList;
 
@@ -45,7 +45,6 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
     private Button buttonAddMoreBikes, buttonBackAdminPageBikes;
 
     String bikeStore_Name = "";
-    String bikeStore_Key = "";
 
     private ProgressDialog progressDialog;
 
@@ -53,13 +52,10 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bikes_image_admin);
+        setContentView(R.layout.activity_bikes_image_show_bikes_list_admin);
 
         getIntent().hasExtra("SName");
         bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
-
-        getIntent().hasExtra("SKey");
-        bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
 
         textViewBikesImageList = (TextView) findViewById(R.id.tvBikeImageList);
         textViewBikesImageList.setText("No bikes available in " +bikeStore_Name+ " store");
@@ -77,7 +73,7 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
         buttonAddMoreBikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BikesImageAdmin.this, BikeStoreImageAddBikesAdmin.class));
+                startActivity(new Intent(BikesImageShowBikesListAdmin.this, BikeStoreImageAddBikesAdmin.class));
             }
         });
 
@@ -85,7 +81,7 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
         buttonBackAdminPageBikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BikesImageAdmin.this, AdminPage.class));
+                startActivity(new Intent(BikesImageShowBikesListAdmin.this, AdminPage.class));
             }
         });
     }
@@ -98,20 +94,21 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
 
     @Override
     public void onUpdateClick(int position) {
-        Intent intent = new Intent(BikesImageAdmin.this, UpdateBikeDetails.class);
+        Intent intent = new Intent(BikesImageShowBikesListAdmin.this, UpdateBikeDetails.class);
         Bikes selected_Bike = bikesList.get(position);
-        //final String selectedKey = selected_Bike.getBikesKey();
-        intent.putExtra("model", selected_Bike.getBike_Model());
-        //intent.putExtra("manufact",selected_Bike.getBike_Manufacturer());
-        //intent.putExtra("Price",selected_Bike.getBike_Price());
+        intent.putExtra("BCondition",selected_Bike.getBike_Condition());
+        intent.putExtra("BModel",selected_Bike.getBike_Model());
+        intent.putExtra("BManufact",selected_Bike.getBike_Manufacturer());
+        intent.putExtra("BPrice",String.valueOf(selected_Bike.getBike_Price()));
+        intent.putExtra("BImage",selected_Bike.getBike_Image());
+        intent.putExtra("BKey",selected_Bike.getBike_Key());
         startActivity(intent);
-
     }
 
     //Action of the menu Delete and alert dialog
     @Override
     public void onDeleteClick(final int position) {
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageAdmin.this);
+        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowBikesListAdmin.this);
         builderAlert.setMessage("Are sure to delete this Bike?");
         builderAlert.setCancelable(true);
         builderAlert.setPositiveButton(
@@ -119,13 +116,13 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Bikes selected_Bike = bikesList.get(position);
-                        final String selectedKeyBike = selected_Bike.getBikesKey();
-                        StorageReference imageReference = bikeStorage.getReferenceFromUrl(selected_Bike.getBike_Image());
+                        final String selectedKeyBike = selected_Bike.getBike_Key();
+                        StorageReference imageReference = bikesStorage.getReferenceFromUrl(selected_Bike.getBike_Image());
                         imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 databaseReference.child(selectedKeyBike).removeValue();
-                                Toast.makeText(BikesImageAdmin.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BikesImageShowBikesListAdmin.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -149,9 +146,16 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
         databaseReference.removeEventListener(bikesEventListener);
     }
 
-    private void loadBikesList() {
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadBikesListAdmin();
+    }
+
+    private void loadBikesListAdmin() {
         //initialize the bike storage database
-        bikeStorage = FirebaseStorage.getInstance();
+        bikesStorage = FirebaseStorage.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
 
         bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
@@ -162,30 +166,22 @@ public class BikesImageAdmin extends AppCompatActivity implements BikesAdapterAd
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
-                        bikes.setBikesKey(postSnapshot.getKey());
+                    if (bikes.getBikeStoreName().equals(bikeStore_Name)) {
+                        bikes.setBike_Key(postSnapshot.getKey());
                         bikesList.add(bikes);
                         textViewBikesImageList.setText(bikesList.size()+" bikes available in "+bikeStore_Name+" store");
                     }
                 }
-
-                bikesListAdapter = new BikesAdapterAdmin(BikesImageAdmin.this, bikesList);
+                bikesListAdapter = new BikesAdapterShowBikesListAdmin(BikesImageShowBikesListAdmin.this, bikesList);
                 bikesListRecyclerView.setAdapter(bikesListAdapter);
-                bikesListAdapter.setOnItmClickListener(BikesImageAdmin.this);
+                bikesListAdapter.setOnItmClickListener(BikesImageShowBikesListAdmin.this);
                 progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikesImageAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikesImageShowBikesListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void onStart() {
-        super.onStart();
-        loadBikesList();
     }
 }

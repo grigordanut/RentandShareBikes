@@ -2,27 +2,29 @@
     <string name="app_name">Rent and Share Bikes</string>
     <string name="action_settings">Settings</string>
 
-                    <!--Layout Resources-->
-    <!--    Activity Add Bike Store-->
+    <!--Layout Resources-->
+    <!--    Add Bike Store-->
     <string name="tv_addBikeStore">Add Bike Stores</string>
-    <string name="tv_bikeStoreNumber">1</string>
-    <string name="et_locationAddStore">Store Location</string>
-    <string name="et_addressAddStore">Store Address</string>
-    <string name="et_addressAddLatitude">Store Latitude</string>
-    <string name="et_addressAddLongitude">Store Longitude</string>
-    <string name="et_numberSlots">Number Slots</string>
+    <string name="et_addStoreLocation">Store Location</string>
+    <string name="et_addStoreAddress">Store Address</string>
+    <string name="et_addStoreLatitude">Store Latitude</string>
+    <string name="et_addStoreLongitude">Store Longitude</string>
+    <string name="et_addStoreNoSlots">Number Slots</string>
     <string name="btn_saveBikeStore">Save Bike Store</string>
 
-    <!--    Activity Add Bikes-->
+    <!--    Add Bikes-->
     <string name="tv_welcomeAddBikes">Welcome to add Bikes</string>
-    <string name="tv_bikeNumber">1</string>
     <string name="tv_orSelect">Or</string>
+    <string name="atc_selectCondition">Select Condition</string>
+    <string name="img_arrowCond">Arrow</string>
     <string name="et_bikeModel">Bike Model</string>
     <string name="et_bikeManufacturer">Manufacturer</string>
     <string name="et_bikePricePerDay">Price per day</string>
-    <string name="btn_saveBike">SAVE BIKE</string>
+    <string name="btn_saveBike">Save Bike</string>
 
-    <!--    Activity Admin Page-->
+    <!--    Admin Page-->
+    <string name="open_adminPage">Open</string>
+    <string name="close_adminPage">Close</string>
     <string name="tv_adminPage">Admin Page</string>
     <string name="btn_addBikeStore">Add Bike Store</string>
     <string name="btn_showBikeStores">Show Bike Stores</string>
@@ -30,35 +32,71 @@
     <string name="btn_showBikesList">Show Bikes List</string>
     <string name="btn_showCoordinates">Show Coordinates</string>
 
-    <!--    Activity Bike Store Image Add Bikes Admin-->
+    <!--    Bike Store Image Add Bikes Admin-->
     <string name="tv_bikeStoreImageAddBikes">Select the Bike Store</string>
 
-    <!--    Bike Store Image Customer-->
-    <string name="tv_bikeStoreImageCustomer">Select the Bike Store</string>
+    <!--    Bike Store Image Rent Bikes Customer-->
+    <string name="tv_bikeStoreImageRentBikesCustomer">Select the Bike Store</string>
 
-    <!--    Bike Store Image Show Bike List-->
-    <string name="tv_bikeStoreImageShowBikesList">Select the Bike Store</string>
+    <!--    Bike Store Image Rent Bikes Customer-->
+    <string name="tv_bikeStoreImageReturnBikeDiffStore">Select the Bike Store</string>
 
-    <!--    Bike Stores Image Show Store List Admin-->
-    <string name="tv_bikeStoreImageShowStoreListAdmin">List of Bike Stores</string>
+    <!--    Bike Store Image Show Bike List Admin-->
+    <string name="tv_bikeStoreImageShowBikesListAdmin">Select the Bike Store</string>
+
+    <!--    Bike Store Image Show Bike List Admin-->
+    <string name="tv_bikeStoreImageShowBikesListCustomer">Select the Bike Store</string>
+
+    <!--    Bike Stores Image Show Stores List Admin-->
+    <string name="tv_bikeStoreImageShowStoresListAdmin">List of Bike Stores</string>
     <string name="btn_addMoreStores">Add More Stores</string>
     <string name="btn_backToAdminPageStores">Back Admin Page</string>
 
-    <!--    Activity Bikes Admin-->
-    <string name="tv_activityBikesAdmin">List of Bikes</string>
+    <!--    Bike Store Image Show Stores List Customer-->
+    <string name="tv_bikeStoreImageShowStoresListCustomer">Select the Bike Store</string>
+
+    <!--    Bikes Image Rent Bikes Customer-->
+    <string name="tv_bikesImageRentBikesCustomer">List of Bikes</string>
+
+    <!--    Bikes Image Show Bikes List Admin-->
+    <string name="tv_bikesImageShowBikesListAdmin">List of Bikes</string>
     <string name="btn_addMoreBikes">Add More Bikes</string>
     <string name="btn_backToAdminPageBikes">Back Admin Page</string>
 
-    <!--    Bikes Image Customer-->
-    <string name="tv_bikesImageCustomer">List of Bikes</string>
+    <!--    Bikes Image Show Bikes List Customer-->
+    <string name="tv_bikesImageShowBikesListCustomer">List of Bikes</string>
+
+    <!--    Bikes Image Show Bikes Rented Admin-->
+    <string name="tv_bikesImageShowBikesRentedAdmin">List of Bikes</string>
+
+    <!--    Bikes Image Show Bikes Rented Customer-->
+    <string name="tv_bikesImageShowBikesRentedCustomer">List of Bikes</string>
+
+    <!--    Calculate Coordinates-->
+    <string name="tv_calculateCoordinates">Calculate Address Coordinates</string>
+    <string name="et_locationAddress">Enter Location Address</string>
+    <string name="btn_calculateCoordinates">Show Coordinates</string>
+    <string name="tv_showStoreAddress">Store Address</string>
+    <string name="tv_showLatitude">Latitude</string>
+    <string name="tv_showLongitude">Longitude</string>
+    <string name="btn_saveCoordinates">Save Coordinates</string>
+
+    <!--    Change Password-->
+    <string name="tv_changePassword">Change Your Password</string>
+    <string name="et_enterOldPassword">Enter Old Password</string>
+    <string name="et_enterNewPassword">Enter New Password</string>
+    <string name="btn_updatePassword">Update Password</string>
 
     <!--    Customer Page-->
+    <string name="open_userPage">Open</string>
+    <string name="close_userPage">Close</string>
     <string name="tv_customerPage">Welcome</string>
-    <string name="btn_rentBike">Rent Bike</string>
-    <string name="btn_showBikeStoresList">Bike Stores List</string>
-    <string name="btn_shareBike">Share Bike</string>
+    <string name="btn_bikeStoresListCustomer">Bike Stores List</string>
+    <string name="btn_bikesAvailableCustomer">Bikes Available</string>
+    <string name="btn_rentBikesCustomer">Rent Bikes</string>
+    <string name="btn_shareBikeCustomer">Share Bike</string>
 
-    <!--    Edit User Profile-->
+    <!--    Edit Customer Profile-->
     <string name="tv_editUserProfile">Edit your Profile</string>
     <string name="tv_fNameUserProfile">First Name</string>
     <string name="et_userFirstName">First Name: </string>
@@ -83,6 +121,11 @@
     <string name="btn_cancelLogCustomer">Cancel</string>
     <string name="btn_signUpCustomer">Sign Up</string>
 
+    <!--    Main Activity Layout Page-->
+    <string name="open_mainActivity">Open</string>
+    <string name="close_mainActivity">Close</string>
+    <string name="tv_mainPage">Welcome to Rent and Share Bikes</string>
+
     <!--    Register Customer-->
     <string name="tv_regCustomer">Please Enter your Register details</string>
     <string name="et_firstNameCustomer">First Name</string>
@@ -96,8 +139,24 @@
     <string name="btn_cancelRegCustomer">Cancel</string>
     <string name="btn_signInRegCustomer">Sign In</string>
 
-    <!--    Rent Bikes-->
+    <!--    Rent Bikes Customer-->
     <string name="tv_rentBikes">Rent a Bike</string>
+    <string name="tv_dateRentBikes">Date of Rent</string>
+    <string name="et_firstNameRentBikes">First Name</string>
+    <string name="et_lastNameRentBikes">Last Name</string>
+    <string name="et_phoneNoRentBikes">Phone Number</string>
+    <string name="et_emailRentBikes">Email</string>
+    <string name="tv_rentBikesDetails">Bike Details</string>
+    <string name="tv_rentBikeStore">Bike Store: </string>
+    <string name="tv_rentBikeCondition">Condition: </string>
+    <string name="tv_rentBikeModel">Model: </string>
+    <string name="tv_rentBikeManufacturer">Factory: </string>
+    <string name="tv_rentBikePrice">Price/Day: </string>
+    <string name="tv_rentBikeAddCollectDate">Add Collect Date</string>
+    <string name="et_rentBikeCollectDate">Collect Date</string>
+    <string name="tv_rentBikeAddReturnDate">Add Return Date</string>
+    <string name="et_rentBikeReturnDate">Return Date</string>
+    <string name="btn_rentBike">Rent Bike</string>
 
     <!--    Reset Password-->
     <string name="tv_ResetPassword">Reset Your Password</string>
@@ -105,65 +164,117 @@
     <string name="et_emailResetPassword">Enter your Email Address</string>
     <string name="btn_resetPass">Reset Password</string>
 
-    <!--    Calculate Coordinates-->
-    <string name="tv_calculateCoordinates">Calculate Address Coordinates</string>
-    <string name="et_locationAddress">Enter Location Address</string>
-    <string name="btn_calculateCoordinates">Show Coordinates</string>
-    <string name="tv_showStoreAddress">Store Address</string>
-    <string name="tv_showLatitude">Latitude</string>
-    <string name="tv_showLongitude">Longitude</string>
-    <string name="btn_saveCoordinates">Save Coordinates</string>
+    <!--    Return Rented Bikes-->
+    <string name="tv_returnRentedBike">Return Rented Bike</string>
+    <string name="tv_dateReturnBike">Date of Return</string>
+    <string name="et_firstNameReturnBike">First Name</string>
+    <string name="et_lastNameReturnBike">Last Name</string>
+    <string name="tv_returnBikeStore">Return Bike Store</string>
+    <string name="et_returnBikeStore">Return Store</string>
+    <string name="cb_returnSameAsRentStore">Same as rent</string>
+    <string name="cb_returnDiffRentStore">Different Store</string>
+    <string name="tv_returnBikeDetails">Bike Details</string>
+    <string name="tv_returnBikeStoreName">Bike Store: </string>
+    <string name="tv_returnBikeCondition">Condition: </string>
+    <string name="tv_returnBikeModel">Model: </string>
+    <string name="tv_returnBikeFactory">Factory: </string>
+    <string name="tv_returnBikePrice">Price/day: </string>
+    <string name="btn_returnBike">Return Bikes</string>
 
-    <!--    Change Password-->
-    <string name="tv_changePassword">Change Your Password</string>
-    <string name="et_enterOldPassword">Enter Old Password</string>
-    <string name="et_enterNewPassword">Enter New Password</string>
-    <string name="btn_updatePassword">Update Password</string>
+    <!--    Update Bike Details-->
+    <string name="tv_updateBikeDetails">Update Bike Details</string>
+    <string name="tv_updateOrSelect">Or</string>
+    <string name="atc_updateSelectCond">Select Condition</string>
+    <string name="img_updateArrowCond">Arrow</string>
+    <string name="et_updateBikeModel">Bike Model</string>
+    <string name="et_updateBikeManufac">Manufacturer</string>
+    <string name="et_updateBikePricePerDay">Price per day</string>
+    <string name="btn_updateSaveBike">Save Bike Updated</string>
 
-    <!--    Main Activity Layout Page-->
-    <string name="tv_mainPage">Welcome to Rent and Share Bikes</string>
-    <string name="tv_menuMain">Master Android Chanel on Youtube
-                                    \n\nThis is Navigation Drawer Example</string>
+    <!--    Update Bike Store Details-->
+    <string name="tv_updateStoreDetails">Update Bike Store Details</string>
+    <string name="tv_updateStoreLocation">Bike Store Location</string>
+    <string name="et_updateStoreLocation">Bike Store Location</string>
+    <string name="tv_updateStoreAddress">Bike Store Address</string>
+    <string name="et_updateStoreAddress">Bike Store Address</string>
+    <string name="tv_updateStoreLatitude">Bike Store Latitude</string>
+    <string name="et_updateStoreLatitude">Bike Store Latitude</string>
+    <string name="tv_updateStoreLongitude">Bike Store Longitude</string>
+    <string name="et_updateStoreLongitude">Bike Store Longitude</string>
+    <string name="tv_updateStoreNoSlots">Bike Store No Slots</string>
+    <string name="et_updateStoreNoSlots">Bike Store No Slots</string>
+    <string name="btn_updateStoreDetails">Save Store Updates</string>
+
+    <!--    Admin Header-->
+    <string name="tv_drawerMenuAdmin">Admin Page\n\nEmail: admin@gmail.com</string>
+
+    <!--    Customer Header-->
+    <string name="tv_drawerMenuCustomer">Customer Name</string>
+
 
     <!--    Image Bikes-->
-    <string name="tv_addBikeDate">Date: </string>
-    <string name="tv_addBikeModel">Model: </string>
-    <string name="tv_addBikeManufacturer">Factory: </string>
-    <string name="tv_addBikePrice">Price/Day: </string>
+    <string name="tv_bikeCondition">Condition: </string>
+    <string name="tv_bikeModel">Model: </string>
+    <string name="tv_bikeManufacturer">Factory: </string>
+    <string name="tv_bikePrice">Price/Day: </string>
+
+    <!--    Image Bikes Rented Admin-->
+    <string name="tv_rentedBikeUserNameAdmin">Customer Name: </string>
+    <string name="tv_rentedBikeStoreNameAdmin">Bike Store Name: </string>
+    <string name="tv_rentedBikeConditionAdmin">Bike Condition: </string>
+    <string name="tv_rentedBikeModelAdmin">Bike Model: </string>
+    <string name="tv_rentedBikeManufacturerAdmin">Bike Factory: </string>
+    <string name="tv_rentedBikePriceAdmin">Price/Day: </string>
+    <string name="tv_rentedBikeDurationAdmin">Rent Duration: </string>
+
+    <!--    Image Bikes Rented Customer-->
+    <string name="tv_rentedBikeStoreNameUser">Bike Store Name: </string>
+    <string name="tv_rentedBikeConditionUser">Bike Condition: </string>
+    <string name="tv_rentedBikeModelUser">Bike Model: </string>
+    <string name="tv_rentedBikeManufacturerUser">Bike Factory: </string>
+    <string name="tv_rentedBikePriceUser">Price/Day: </string>
+    <string name="tv_rentedBikeDurationUser">Rent Duration: </string>
 
     <!--    Image Bike Store-->
-    <string name="tv_storeNumber">Store Number: </string>
     <string name="tv_storeLocation">Store Location: </string>
     <string name="tv_storeAddress">Store Address: </string>
     <string name="tv_numberSlots">Number Slots: </string>
     <string name="tv_numberAvailable">Bikes Available: </string>
     <string name="tv_numberBikesAvailable">0</string>
 
-    <!--    Update Bike Store Details-->
-    <string name="tv_updateStoreDetails">Update Bike Store Details</string>
-    <string name="btn_updateStoreDetails">Save Updates</string>
-
-    <!--    Activity Details-->
-    <string name="tv_activityDetails">Marker Title</string>
+    <!--    Image Bike Store REturn-->
+    <string name="tv_storeLocationReturn">Store Location: </string>
+    <string name="tv_storeAddressReturn">Store Address: </string>
 
     <!--    Main Header-->
-    <string name="tv_drawerMenuAdmin">Admin Page\n\nEmail: admin@gmail.com</string>
+    <string name="tv_menuMain">Master Android Chanel on Youtube
+                                    \n\nThis is Navigation Drawer Example</string>
 
-                <!--    Menu Resources-->
+    <!--    Menu Resources-->
     <!--    Menu Admin-->
-    <string name="menuAdmin_logOut">Log Out</string>
+    <string name="menu_adminSettings">Admin</string>
+    <string name="menu_adminLogOut">Log Out</string>
 
     <!--    Menu Customer-->
-    <string name="menuCustomer_logOut">Log Out</string>
-    <string name="menu_editProfile">Edit Profile</string>
-    <string name="menu_changePassword">Change Password</string>
-    <string name="menu_refresh">Refresh</string>
+    <string name="menu_userSettings">User</string>
+    <string name="menu_userEditProfile">Edit Profile</string>
+    <string name="menu_userChangePassword">Change Password</string>
+    <string name="menu_userLogOut">Log Out</string>
 
     <!--    Menu Drawer Admin-->
     <string name="menuDrawerAdmin_addBikeStores">Add Bike Stores</string>
     <string name="menuDrawerAdmin_showBikeStores">Show Bike Stores</string>
     <string name="menuDrawerAdmin_addBikeToStores">Add Bike To Store</string>
     <string name="menuDrawerAdmin_showBikesList">Show Bikes List</string>
+    <string name="menuDrawerAdmin_showBikesRented">Show Bikes Rented</string>
+
+    <!--    Menu Drawer Customer-->
+    <string name="menuDrawerUser_showStoresList">Bike Stores List</string>
+    <string name="menuDrawerUser_showBikesList">Bikes Available</string>
+    <string name="menuDrawerUser_rentBikes">Rent Bikes</string>
+    <string name="menuDrawerUser_showBikesRented">Rented Bikes</string>
+    <string name="menuDrawerUser_returnBikes">Return Bikes</string>
+    <string name="menuDrawerUser_shareBikes">Share Bikes</string>
 
     <!--    Menu Drawer Main-->
     <string name="menu_myCart">My Cart</string>
@@ -172,11 +283,5 @@
 
     <!--    Manifest File-->
     <string name="title_activity_maps">Map</string>
-
-    <!--    Main Activity Java Page    -->
-    <string name="open">Open</string>
-    <string name="close">Close</string>
-
-    <string name="todo">TODO</string>
 
 </resources>

@@ -3,27 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/logOutUser"
+        android:id="@+id/userDetails"
         android:orderInCategory="100"
-        android:title="@string/menuCustomer_logOut"
+        android:title="@string/menu_userSettings"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/editProfile"
         android:orderInCategory="100"
-        android:title="@string/menu_editProfile"
+        android:title="@string/menu_userEditProfile"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/changePassword"
         android:orderInCategory="200"
-        android:title="@string/menu_changePassword"
+        android:title="@string/menu_userChangePassword"
         app:showAsAction="never"/>
 
     <item
-        android:id="@+id/refreshMenu"
+        android:id="@+id/logOutUser"
         android:orderInCategory="300"
-        android:title="@string/menu_refresh"
+        android:title="@string/menu_userLogOut"
         app:showAsAction="never"/>
 </menu>
 

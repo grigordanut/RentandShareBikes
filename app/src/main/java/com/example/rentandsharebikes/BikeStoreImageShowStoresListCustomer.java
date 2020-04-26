@@ -1,18 +1,16 @@
 package com.example.rentandsharebikes;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,8 +23,10 @@ import java.util.List;
 
 public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity implements BikeStoreAdapterShowStoresListCustomer.OnItemClickListener{
 
+    private TextView textViewBikeStoresImageShowStoreListCustomer;
+
     private DatabaseReference databaseReference;
-    private ValueEventListener bikeStoreDBEventListener;
+    private ValueEventListener bikeStoreEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
     private BikeStoreAdapterShowStoresListCustomer bikeStoreAdapterShowStoresListCustomer;
@@ -38,6 +38,9 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_show_stores_list_customer);
+
+        textViewBikeStoresImageShowStoreListCustomer = (TextView)findViewById(R.id.tvBikeStoresImageShowStoresListCustomer);
+        textViewBikeStoresImageShowStoreListCustomer.setText("No Bike Stores available");
 
         bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
@@ -62,23 +65,22 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
     }
 
     @Override
-    public void onUpdateStoreClick(int position) {
+    public void onSaveStoreClick(int position) {
 
-        Intent intent = new Intent(BikeStoreImageShowStoresListCustomer.this, UpdateBikeStoreDetails.class);
-        BikeStore selected_BikeStore = bikeStoreList.get(position);
-        //intent.putExtra("SNumber", selected_BikeStore.getBikeStore_Number());
-        intent.putExtra("SLocation", selected_BikeStore.getBikeStore_Location());
-        intent.putExtra("SAddress", selected_BikeStore.getBikeStore_Address());
-        intent.putExtra("SNrSlots", selected_BikeStore.getBikeStore_NumberSlots());
-        startActivity(intent);
     }
 
-    private void loadBikeStoresList() {
-        //initialize the bikeStore database
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadBikeStoresListCustomer();
+    }
 
+    private void loadBikeStoresListCustomer() {
+        //initialize the bike store database
         databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
-        bikeStoreDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+        bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikeStoreList.clear();
@@ -87,8 +89,8 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
                     assert bikeStore != null;
                     bikeStore.setStoreKey(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
+                    textViewBikeStoresImageShowStoreListCustomer.setText("Bike Stores available " +bikeStoreList.size());
                 }
-
                 bikeStoreAdapterShowStoresListCustomer = new BikeStoreAdapterShowStoresListCustomer(BikeStoreImageShowStoresListCustomer.this, bikeStoreList);
                 bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoresListCustomer);
                 bikeStoreAdapterShowStoresListCustomer.setOnItmClickListener(BikeStoreImageShowStoresListCustomer.this);
@@ -100,11 +102,5 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
                 Toast.makeText(BikeStoreImageShowStoresListCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        loadBikeStoresList();
     }
 }

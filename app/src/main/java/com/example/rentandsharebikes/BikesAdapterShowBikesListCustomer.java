@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,13 +19,13 @@ import java.util.List;
 
 import static android.icu.text.DateFormat.NONE;
 
-public class BikesAdapterAdmin extends RecyclerView.Adapter<BikesAdapterAdmin.ImageViewHolder> {
+public class BikesAdapterShowBikesListCustomer extends RecyclerView.Adapter<BikesAdapterShowBikesListCustomer.ImageViewHolder> {
 
     private Context bikesContext;
     private List<Bikes> bikesUploads;
     private OnItemClickListener clickListener;
 
-    public BikesAdapterAdmin(Context bikes_context, List<Bikes> bikes_uploads){
+    public BikesAdapterShowBikesListCustomer(Context bikes_context, List<Bikes> bikes_uploads){
         bikesContext = bikes_context;
         bikesUploads = bikes_uploads;
     }
@@ -32,26 +33,26 @@ public class BikesAdapterAdmin extends RecyclerView.Adapter<BikesAdapterAdmin.Im
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(bikesContext).inflate(R.layout.image_bikes,parent, false);
+        View view = LayoutInflater.from(bikesContext).inflate(R.layout.image_bikes_customer,parent, false);
         return new ImageViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(ImageViewHolder holder, int position) {
+    public void onBindViewHolder(final ImageViewHolder holder, int position) {
 
-        Bikes uploadCurrent = bikesUploads.get(position);
-        holder.tvBikeDate.setText("Date: "+uploadCurrent.getBike_Date());
-        holder.tvBikeModel.setText("Model: "+uploadCurrent.getBike_Model());
-        holder.tvBikeManufacturer.setText("Factory: "+uploadCurrent.getBike_Manufacturer());
-        holder.tvBikePrice.setText("Price/Day: € "+uploadCurrent.getBike_Price());
+        final Bikes uploadCurrent = bikesUploads.get(position);
+        holder.tvBikeCUser.setText(uploadCurrent.getBike_Condition());
+        holder.tvBikeMUser.setText(uploadCurrent.getBike_Model());
+        holder.tvBikeManUser.setText(uploadCurrent.getBike_Manufacturer());
+        holder.tvBikePUser.setText(String.valueOf(uploadCurrent.getBike_Price()));
 
         Picasso.get()
-            .load(uploadCurrent.getBike_Image())
-            .placeholder(R.mipmap.ic_launcher)
-            .fit()
-            .centerCrop()
-            .into(holder.imageBike);
+                .load(uploadCurrent.getBike_Image())
+                .placeholder(R.mipmap.ic_launcher)
+                .fit()
+                .centerCrop()
+                .into(holder.imBikeUser);
     }
 
     @Override
@@ -62,20 +63,20 @@ public class BikesAdapterAdmin extends RecyclerView.Adapter<BikesAdapterAdmin.Im
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
             View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener{
 
-        public TextView tvBikeDate;
-        public ImageView imageBike;
-        public TextView tvBikeModel;
-        public TextView tvBikeManufacturer;
-        public TextView tvBikePrice;
+        public ImageView imBikeUser;
+        public TextView tvBikeCUser;
+        public TextView tvBikeMUser;
+        public TextView tvBikeManUser;
+        public TextView tvBikePUser;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
 
-            tvBikeDate = itemView.findViewById(R.id.tvAddBikeDate);
-            imageBike = itemView.findViewById(R.id.imgShowBike);
-            tvBikeModel = itemView.findViewById(R.id.tvAddBikeModel);
-            tvBikeManufacturer = itemView.findViewById(R.id.tvAddBikeManufact);
-            tvBikePrice = itemView.findViewById(R.id.tvAddBikePrice);
+            imBikeUser = itemView.findViewById(R.id.imgBikesUser);
+            tvBikeCUser = itemView.findViewById(R.id.tvBikeCondUser);
+            tvBikeMUser = itemView.findViewById(R.id.tvBikeModelUser);
+            tvBikeManUser = itemView.findViewById(R.id.tvBikeManufactUser);
+            tvBikePUser = itemView.findViewById(R.id.tvBikePriceUser);
 
             itemView.setOnClickListener(this);
             itemView.setOnCreateContextMenuListener(this);
@@ -95,11 +96,11 @@ public class BikesAdapterAdmin extends RecyclerView.Adapter<BikesAdapterAdmin.Im
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             menu.setHeaderTitle("Select an Action");
-            MenuItem doUpdate  = menu.add(NONE, 1, 1, "Update");
-            MenuItem doDelete  = menu.add(NONE, 2, 2, "Delete");
+            MenuItem doRentBike  = menu.add(NONE, 1, 1, "Rent Bikes");
+            MenuItem doAddToCartBike  = menu.add(NONE, 2, 2, "Add to Cart");
 
-            doUpdate.setOnMenuItemClickListener(this);
-            doDelete.setOnMenuItemClickListener(this);
+            doRentBike.setOnMenuItemClickListener(this);
+            doAddToCartBike.setOnMenuItemClickListener(this);
         }
 
         @Override
@@ -109,11 +110,11 @@ public class BikesAdapterAdmin extends RecyclerView.Adapter<BikesAdapterAdmin.Im
                 if (position != RecyclerView.NO_POSITION){
                     switch (item.getItemId()){
                         case 1:
-                            clickListener.onUpdateClick(position);
+                            clickListener.onRentBikeClick(position);
                             return true;
 
                         case 2:
-                            clickListener.onDeleteClick(position);
+                            clickListener.onAddToCartBikeClick(position);
                             return true;
                     }
                 }
@@ -126,10 +127,9 @@ public class BikesAdapterAdmin extends RecyclerView.Adapter<BikesAdapterAdmin.Im
     public interface OnItemClickListener {
         void onItemClick(int position);
 
-        void onUpdateClick(int position);
+        void onRentBikeClick(int position);
 
-        void onDeleteClick(int position);
-
+        void onAddToCartBikeClick(int position);
     }
 
     public void setOnItmClickListener(OnItemClickListener listener){

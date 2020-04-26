@@ -1,23 +1,23 @@
 package com.example.rentandsharebikes;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.google.android.material.navigation.NavigationView;
 
 public class AdminPage extends AppCompatActivity {
 
     //Declaring some objects
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle drawerToggle;
+    private DrawerLayout drawerLayoutAdmin;
+    private ActionBarDrawerToggle drawerToggleAdmin;
     private NavigationView navigationViewAdmin;
 
     @Override
@@ -25,11 +25,11 @@ public class AdminPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_page);
 
-        drawerLayout = findViewById(R.id.activity_admin_page);
-        drawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.open, R.string.close);
+        drawerLayoutAdmin = findViewById(R.id.activity_admin_page);
+        drawerToggleAdmin = new ActionBarDrawerToggle(this,drawerLayoutAdmin, R.string.open_adminPage, R.string.close_adminPage);
 
-        drawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
+        drawerLayoutAdmin.addDrawerListener(drawerToggleAdmin);
+        drawerToggleAdmin.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -41,21 +41,26 @@ public class AdminPage extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 switch (id){
-                    case R.id.addBikeStores:
+                    case R.id.adminAdd_bikeStores:
                         Toast.makeText(AdminPage.this, "Add Bike Stores",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this,CalculateCoordinates.class));
+                        startActivity(new Intent(AdminPage.this, CalculateCoordinates.class));
                         break;
-                    case R.id.showBikeStores:
+                    case R.id.adminShow_bikeStores:
                         Toast.makeText(AdminPage.this, "Show Bike Stores",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this,BikeStoreImageShowStoresListAdmin.class));
+                        startActivity(new Intent(AdminPage.this, BikeStoreImageShowStoresListAdmin.class));
                         break;
-                    case R.id.addBikesToStore:
+                    case R.id.adminAdd_bikesToStore:
                         Toast.makeText(AdminPage.this, "Add Bikes to Store",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikeStoreImageAddBikesAdmin.class));
                         break;
-                    case R.id.showBikesList:
+                    case R.id.adminShow_bikesList:
                         Toast.makeText(AdminPage.this, "Show Bikes List",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikeStoreImageShowBikesListAdmin.class));
+                        break;
+
+                    case R.id.adminShow_bikesRented:
+                        Toast.makeText(AdminPage.this, "Rented Bikes",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AdminPage.this, BikesImageShowBikesRentedAdmin.class));
                         break;
                     default:
                         return true;
@@ -63,10 +68,7 @@ public class AdminPage extends AppCompatActivity {
                 return true;
             }
         });
-
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,7 +89,7 @@ public class AdminPage extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-        if(drawerToggle.onOptionsItemSelected(item)) {
+        if(drawerToggleAdmin.onOptionsItemSelected(item)) {
             return true;
         }
 
@@ -99,8 +101,4 @@ public class AdminPage extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
 }

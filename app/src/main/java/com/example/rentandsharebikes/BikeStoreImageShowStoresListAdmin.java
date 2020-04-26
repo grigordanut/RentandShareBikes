@@ -1,10 +1,5 @@
 package com.example.rentandsharebikes;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -15,6 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,7 +46,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
         setContentView(R.layout.activity_bike_store_image_show_stores_list_admin);
 
         textViewBikeStoresImageShowStoreListAdmin = (TextView)findViewById(R.id.tvBikeStoresImageShowStoreListAdmin);
-        textViewBikeStoresImageShowStoreListAdmin.setText("No bike stores available");
+        textViewBikeStoresImageShowStoreListAdmin.setText("No Bike Stores available");
 
         bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
@@ -61,7 +61,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
         buttonAddMoreStores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BikeStoreImageShowStoresListAdmin.this, AddBikeStore.class));
+                startActivity(new Intent(BikeStoreImageShowStoresListAdmin.this, CalculateCoordinates.class));
             }
         });
 
@@ -70,6 +70,41 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(BikeStoreImageShowStoresListAdmin.this, AdminPage.class));
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadBikeStoresListAdmin();
+    }
+
+    private void loadBikeStoresListAdmin() {
+        //initialize the bike store database
+        databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
+
+        bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikeStoreList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    BikeStore bikeStore = postSnapshot.getValue(BikeStore.class);
+                    assert bikeStore != null;
+                    bikeStore.setStoreKey(postSnapshot.getKey());
+                    bikeStoreList.add(bikeStore);
+                    textViewBikeStoresImageShowStoreListAdmin.setText("Bike Stores available " +bikeStoreList.size());
+                }
+                bikeStoreAdapterShowStoresListAdmin = new BikeStoreAdapterShowStoresListAdmin(BikeStoreImageShowStoresListAdmin.this, bikeStoreList);
+                bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoresListAdmin);
+                bikeStoreAdapterShowStoresListAdmin.setOnItmClickListener(BikeStoreImageShowStoresListAdmin.this);
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(BikeStoreImageShowStoresListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -91,10 +126,11 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
 
         Intent intent = new Intent(BikeStoreImageShowStoresListAdmin.this, UpdateBikeStoreDetails.class);
         BikeStore selected_BikeStore = bikeStoreList.get(position);
-        //intent.putExtra("SNumber", selected_BikeStore.getBikeStore_Number());
         intent.putExtra("SLocation", selected_BikeStore.getBikeStore_Location());
         intent.putExtra("SAddress", selected_BikeStore.getBikeStore_Address());
-        intent.putExtra("SNrSlots", selected_BikeStore.getBikeStore_NumberSlots());
+        intent.putExtra("SLatitude", String.valueOf(selected_BikeStore.getBikeStore_Latitude()));
+        intent.putExtra("SLongitude", String.valueOf(selected_BikeStore.getBikeStore_Longitude()));
+        intent.putExtra("SNoSlots", String.valueOf(selected_BikeStore.getBikeStore_NumberSlots()));
         startActivity(intent);
     }
 
@@ -151,41 +187,5 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
     protected void onDestroy() {
         super.onDestroy();
         databaseReference.removeEventListener(bikeStoreEventListener);
-    }
-
-    private void loadBikeStoresList() {
-        //initialize the bikeStore database
-        databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
-
-        bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikeStoreList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStore bikeStore = postSnapshot.getValue(BikeStore.class);
-                    assert bikeStore != null;
-                    bikeStore.setStoreKey(postSnapshot.getKey());
-                    bikeStoreList.add(bikeStore);
-                    textViewBikeStoresImageShowStoreListAdmin.setText("Bike stores available " +bikeStoreList.size());
-                }
-
-                bikeStoreAdapterShowStoresListAdmin = new BikeStoreAdapterShowStoresListAdmin(BikeStoreImageShowStoresListAdmin.this, bikeStoreList);
-                bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoresListAdmin);
-                bikeStoreAdapterShowStoresListAdmin.setOnItmClickListener(BikeStoreImageShowStoresListAdmin.this);
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeStoreImageShowStoresListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        loadBikeStoresList();
     }
 }

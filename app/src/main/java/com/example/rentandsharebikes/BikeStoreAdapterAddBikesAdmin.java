@@ -65,8 +65,8 @@ public class BikeStoreAdapterAddBikesAdmin extends RecyclerView.Adapter<BikeStor
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(uploadCurrent.getStoreKey())) {
-                        bikes.setBikesKey(postSnapshot.getKey());
+                    if (bikes.getBikeStoreName().equals(uploadCurrent.getBikeStore_Location())) {
+                        bikes.setBike_Key(postSnapshot.getKey());
                         bikesList.add(bikes);
                         numberBikesAvailable = bikesList.size();
                         holder.tvStoreBikesAvailable.setText(String.valueOf(numberBikesAvailable));
@@ -83,9 +83,8 @@ public class BikeStoreAdapterAddBikesAdmin extends RecyclerView.Adapter<BikeStor
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(bikeStoreContext,AddBikes.class);
+                Intent intent = new Intent(bikeStoreContext, AddBikes.class);
                 intent.putExtra("SName",uploadCurrent.getBikeStore_Location());
-                intent.putExtra("SKey",uploadCurrent.getStoreKey());
                 bikeStoreContext.startActivity(intent);
             }
         });

@@ -27,20 +27,6 @@
             android:textColor="#000000"
             android:textSize="24sp" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/tvBikeStoreNumber"-->
-<!--            android:layout_width="30dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/tvAddBike"-->
-<!--            android:layout_alignEnd="@id/tvAddBike"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:background="#ffffff"-->
-<!--            android:text="@string/tv_bikeStoreNumber"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textColor="#000000"-->
-<!--            android:textSize="24sp"-->
-<!--            tools:ignore="HardcodedText" />-->
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/WrapperBikeStoreLocation"
             android:layout_width="match_parent"
@@ -55,7 +41,7 @@
                 android:id="@+id/etBikeStoreLocation"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:hint="@string/et_locationAddStore"
+                android:hint="@string/et_addStoreLocation"
                 android:inputType="text|textCapWords"
                 android:paddingStart="10dp"
                 android:textSize="20sp"
@@ -76,7 +62,7 @@
                 android:id="@+id/etBikeStoreAddress"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:hint="@string/et_addressAddStore"
+                android:hint="@string/et_addStoreAddress"
                 android:inputType="text|textCapWords"
                 android:paddingStart="10dp"
                 android:textSize="20sp"
@@ -97,7 +83,7 @@
                 android:id="@+id/etBikeStoreLatitude"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:hint="@string/et_addressAddLatitude"
+                android:hint="@string/et_addStoreLatitude"
                 android:inputType="numberDecimal|numberSigned"
                 android:paddingStart="10dp"
                 android:textSize="20sp"
@@ -118,7 +104,7 @@
                 android:id="@+id/etBikeStoreLongitude"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:hint="@string/et_addressAddLongitude"
+                android:hint="@string/et_addStoreLongitude"
                 android:inputType="numberDecimal|numberSigned"
                 android:paddingStart="10dp"
                 android:textSize="20sp"
@@ -139,7 +125,7 @@
                 android:id="@+id/etBikeStoreNrSlots"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:hint="@string/et_numberSlots"
+                android:hint="@string/et_addStoreNoSlots"
                 android:inputType="number"
                 android:paddingStart="10dp"
                 android:textSize="20sp"

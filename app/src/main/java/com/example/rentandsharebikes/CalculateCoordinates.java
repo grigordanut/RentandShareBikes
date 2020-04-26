@@ -1,12 +1,7 @@
 package com.example.rentandsharebikes;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class CalculateCoordinates extends AppCompatActivity {
 
@@ -96,8 +94,6 @@ public class CalculateCoordinates extends AppCompatActivity {
             tvStoreAddress.setText("Address: " + storeAddress);
             tvLatitude.setText(addressStoreLat);
             tvLongitude.setText(addressStoreLong);
-            //etStorePlace.setText("");
-            //finish();
 
             buttonSaveCoordinates = findViewById(R.id.btnSaveCoordinates);
             buttonSaveCoordinates.setOnClickListener(new View.OnClickListener() {

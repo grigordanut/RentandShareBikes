@@ -1,21 +1,19 @@
 package com.example.rentandsharebikes;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -75,7 +73,7 @@ public class ChangePassword extends AppCompatActivity {
                                             progressDialog.dismiss();
                                             finish();
                                             Toast.makeText(ChangePassword.this, "Your password was updated", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(ChangePassword.this,LoginCustomer.class));
+                                            startActivity(new Intent(ChangePassword.this, LoginCustomer.class));
 
                                         }
                                         else{

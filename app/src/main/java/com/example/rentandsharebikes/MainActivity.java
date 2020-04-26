@@ -2,23 +2,16 @@ package com.example.rentandsharebikes;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
     //Declaring some objects
@@ -32,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         drawerLayout = findViewById(R.id.activity_main);
-        drawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.open, R.string.close);
+        drawerToggle = new ActionBarDrawerToggle(this,drawerLayout, R.string.open_mainActivity, R.string.close_mainActivity);
 
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();

@@ -1,17 +1,12 @@
 package com.example.rentandsharebikes;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,13 +45,13 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
 
     @NonNull
     @Override
-    public BikeStoreAdapterShowStoresListAdmin.ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(bikeStoreContext).inflate(R.layout.image_bikestore, parent, false);
-        return new BikeStoreAdapterShowStoresListAdmin.ImageViewHolder(view);
+        return new ImageViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final BikeStoreAdapterShowStoresListAdmin.ImageViewHolder holder, int position) {
+    public void onBindViewHolder(final ImageViewHolder holder, int position) {
         final BikeStore uploadCurrent = bikeStoreUploads.get(position);
         holder.tvStoreBikeLocation.setText(uploadCurrent.getBikeStore_Location());
         holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
@@ -75,8 +70,8 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(uploadCurrent.getStoreKey())) {
-                        bikes.setBikesKey(postSnapshot.getKey());
+                    if (bikes.getBikeStoreName().equals(uploadCurrent.getBikeStore_Location())) {
+                        bikes.setBike_Key(postSnapshot.getKey());
                         bikesList.add(bikes);
                         numberBikesAvailable = bikesList.size();
                         holder.tvStoreBikesAvailable.setText(String.valueOf(numberBikesAvailable));
@@ -86,7 +81,7 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Toast.makeText(BikesImageAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(BikesImageShowBikesListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -146,11 +141,9 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
                         case 1:
                             clickListener.onShowMapStoreClick(position);
                             return true;
-
                         case 2:
                             clickListener.onUpdateStoreClick(position);
                             return true;
-
                         case 3:
                             if (tvStoreBikesAvailable.getText().toString().equals(String.valueOf(0))) {
                                 clickListener.onDeleteStoreClick(position);

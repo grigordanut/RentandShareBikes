@@ -3,24 +3,29 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/addBikeStores"
+            android:id="@+id/adminAdd_bikeStores"
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/menuDrawerAdmin_addBikeStores" />
 
         <item
-            android:id="@+id/showBikeStores"
+            android:id="@+id/adminShow_bikeStores"
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/menuDrawerAdmin_showBikeStores" />
 
         <item
-            android:id="@+id/addBikesToStore"
+            android:id="@+id/adminAdd_bikesToStore"
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/menuDrawerAdmin_addBikeToStores" />
 
         <item
-            android:id="@+id/showBikesList"
+            android:id="@+id/adminShow_bikesList"
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/menuDrawerAdmin_showBikesList" />
+
+        <item
+            android:id="@+id/adminShow_bikesRented"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menuDrawerAdmin_showBikesRented" />
     </group>
 
 </menu>

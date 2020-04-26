@@ -8,7 +8,7 @@
     tools:context=".BikeStoreImageShowStoresListCustomer">
 
     <TextView
-        android:id="@+id/tvBikeStoresImageShowStoreListCustomer"
+        android:id="@+id/tvBikeStoresImageShowStoresListCustomer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -16,7 +16,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
-        android:text="@string/tv_bikeStoreImageShowStoreListAdmin"
+        android:text="@string/tv_bikeStoreImageShowStoresListCustomer"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="24sp" />
@@ -25,7 +25,7 @@
         android:id="@+id/evRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        android:layout_below="@+id/tvBikeStoresImageShowStoreListCustomer"
+        android:layout_below="@+id/tvBikeStoresImageShowStoresListCustomer"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"

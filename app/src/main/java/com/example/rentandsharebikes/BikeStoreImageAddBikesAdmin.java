@@ -1,15 +1,13 @@
 package com.example.rentandsharebikes;
 
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,10 +28,8 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity {
 
     private List<BikeStore> bikeStoreList;
 
-    private Button buttonBackAddBikeStore;
     private ProgressDialog progressDialog;
 
-    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +45,14 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity {
         progressDialog.show();
     }
 
-    private void loadBikeStoresList(){
-        //initialize the bikeStore database
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadBikeStoresListAdmin();
+    }
+
+    private void loadBikeStoresListAdmin(){
+        //initialize the bike store database
         databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
         bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
@@ -62,7 +64,6 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity {
                     bikeStore.setStoreKey(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
                 }
-
                 bikeStoreAdapterAddBikesAdmin = new BikeStoreAdapterAddBikesAdmin(BikeStoreImageAddBikesAdmin.this, bikeStoreList);
                 bikeStoreRecyclerView.setAdapter(bikeStoreAdapterAddBikesAdmin);
                 progressDialog.dismiss();
@@ -73,11 +74,5 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity {
                 Toast.makeText(BikeStoreImageAddBikesAdmin.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        loadBikeStoresList();
     }
 }

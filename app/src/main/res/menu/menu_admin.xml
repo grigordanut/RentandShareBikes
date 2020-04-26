@@ -3,15 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/logOutUser"
+        android:id="@+id/adminDetails"
         android:orderInCategory="100"
-        android:title="@string/menuAdmin_logOut"
+        android:title="@string/menu_adminSettings"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/refreshMenu"
+        android:id="@+id/logOutUser"
         android:orderInCategory="100"
-        android:title="@string/menu_refresh"
+        android:title="@string/menu_adminLogOut"
         app:showAsAction="never"/>
+
+
 
 </menu>

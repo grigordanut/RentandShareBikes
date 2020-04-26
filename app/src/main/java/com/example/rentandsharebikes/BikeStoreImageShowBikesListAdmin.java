@@ -1,13 +1,13 @@
 package com.example.rentandsharebikes;
 
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,11 +43,17 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity {
         bikeStoreList = new ArrayList<>();
 
         progressDialog.show();
+    }
 
-        //check if the bikes list is empty and add a new bike
-        if(databaseReference == null){
-            databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
-        }
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadBikeStoresListAdmin();
+    }
+
+    private void loadBikeStoresListAdmin(){
+        //initialize the bike store database
+        databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
         bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -58,7 +64,6 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity {
                     bikeStore.setStoreKey(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
                 }
-
                 bikeStoreAdapterShowBikesListAdmin = new BikeStoreAdapterShowBikesListAdmin(BikeStoreImageShowBikesListAdmin.this, bikeStoreList);
                 bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowBikesListAdmin);
                 progressDialog.dismiss();

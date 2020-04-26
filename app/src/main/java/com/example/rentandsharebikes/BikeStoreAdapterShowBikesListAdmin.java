@@ -40,16 +40,15 @@ public class BikeStoreAdapterShowBikesListAdmin extends RecyclerView.Adapter<Bik
 
     @NonNull
     @Override
-    public BikeStoreAdapterShowBikesListAdmin.ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(bikeStoreContext).inflate(R.layout.image_bikestore,parent, false);
-        return new BikeStoreAdapterShowBikesListAdmin.ImageViewHolder(view);
+        return new ImageViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final BikeStoreAdapterShowBikesListAdmin.ImageViewHolder holder, int position) {
+    public void onBindViewHolder(final ImageViewHolder holder, int position) {
 
         final BikeStore uploadCurrent = bikeStoreUploads.get(position);
-        //holder.tvStoreBikeNumber.setText(String.valueOf(uploadCurrent.getBikeStore_Number()));
         holder.tvStoreBikeLocation.setText(uploadCurrent.getBikeStore_Location());
         holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
         holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
@@ -67,8 +66,8 @@ public class BikeStoreAdapterShowBikesListAdmin extends RecyclerView.Adapter<Bik
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(uploadCurrent.getStoreKey())) {
-                        bikes.setBikesKey(postSnapshot.getKey());
+                    if (bikes.getBikeStoreName().equals(uploadCurrent.getBikeStore_Location())) {
+                        bikes.setBike_Key(postSnapshot.getKey());
                         bikesList.add(bikes);
                         numberBikesAvailable = bikesList.size();
                         holder.tvStoreBikesAvailable.setText(String.valueOf(numberBikesAvailable));
@@ -85,9 +84,8 @@ public class BikeStoreAdapterShowBikesListAdmin extends RecyclerView.Adapter<Bik
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(bikeStoreContext, BikesImageAdmin.class);
+                Intent intent = new Intent(bikeStoreContext, BikesImageShowBikesListAdmin.class);
                 intent.putExtra("SName",uploadCurrent.getBikeStore_Location());
-                intent.putExtra("SKey",uploadCurrent.getStoreKey());
                 bikeStoreContext.startActivity(intent);
             }
         });

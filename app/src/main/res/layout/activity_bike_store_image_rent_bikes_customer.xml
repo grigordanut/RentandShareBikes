@@ -16,7 +16,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
-        android:text="@string/tv_bikeStoreImageShowStoreListAdmin"
+        android:text="@string/tv_bikeStoreImageRentBikesCustomer"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="24sp" />

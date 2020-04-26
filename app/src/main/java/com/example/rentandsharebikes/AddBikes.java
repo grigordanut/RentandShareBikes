@@ -19,6 +19,8 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -53,17 +55,18 @@ public class AddBikes extends AppCompatActivity {
     private ImageView ivAddBike;
     private Uri imageUri;
 
-    private EditText etBikeModel, etBikeManufact, etBikePrice;
-    private TextView textViewWelcomeAddBikes, textViewDate, textViewBikeNumber;
+    private EditText eTextBikeModel, eTextBikeManufact, eTextBikePrice;
+    private TextView tViewWelcomeAddBikes;
+    private AutoCompleteTextView tViewBikeCondition;
+    private ImageView imgArrowBikeCondition;
     private Button buttonSaveBike;
     private ImageButton buttonTakePicture;
 
-    private String tvBike_Date, etBike_Model, etBike_Manufact;
-    private int etBike_Price;
-    public int tvBike_Number;
+    private String eTextBike_Condition, eTextBike_Model, eTextBike_Manufact;
+    private double eTextBike_Price;
 
     String bikeStore_Name = "";
-    String bikeStore_Key = "";
+    String bike_Key = "";
 
     private ProgressDialog progressDialog;
 
@@ -73,36 +76,28 @@ public class AddBikes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bikes);
-
         getIntent().hasExtra("SName");
         bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
 
-        getIntent().hasExtra("SKey");
-        bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
+        tViewWelcomeAddBikes = (TextView) findViewById(R.id.tvWelcomeAddBikes);
+        tViewWelcomeAddBikes.setText("Add Bicycles to " + bikeStore_Name + " store");
 
+        tViewBikeCondition = (AutoCompleteTextView)findViewById(R.id.tvBikeCondition);
+        imgArrowBikeCondition = (ImageView)findViewById(R.id.imgBikeCondition);
 
-        textViewWelcomeAddBikes = (TextView) findViewById(R.id.tvWelcomeAddBikes);
-        textViewDate = (TextView) findViewById(R.id.tvBikeDate);
-        //textViewBikeNumber = (TextView) findViewById(R.id.tvBikeNumber);
-        textViewWelcomeAddBikes.setText("Add Bicycles to " + bikeStore_Name + " store");
+        ArrayAdapter<String> conditionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,bikeCondition);
+        tViewBikeCondition.setAdapter(conditionAdapter);
 
-        LocalDate localDate = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            localDate = LocalDate.now();
-        }
-        DateTimeFormatter formatter = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-        }
-        String insertDate = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            insertDate = localDate.format(formatter);
-        }
-        textViewDate.setText(insertDate);
+        imgArrowBikeCondition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tViewBikeCondition.showDropDown();
+            }
+        });
 
-        etBikeModel = (EditText) findViewById(R.id.etBikeModel);
-        etBikeManufact = (EditText) findViewById(R.id.etBikeManufacturer);
-        etBikePrice = (EditText) findViewById(R.id.etBikePricePerDay);
+        eTextBikeModel = (EditText) findViewById(R.id.etBikeModel);
+        eTextBikeManufact = (EditText) findViewById(R.id.etBikeManufacturer);
+        eTextBikePrice = (EditText) findViewById(R.id.etBikePricePerDay);
 
         storageReference = FirebaseStorage.getInstance().getReference("Bikes");
         databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
@@ -220,75 +215,92 @@ public class AddBikes extends AppCompatActivity {
     public void uploadBikes() {
         progressDialog.dismiss();
 
-        tvBike_Date = textViewDate.getText().toString().trim();
-        etBike_Model = etBikeModel.getText().toString().trim();
-        etBike_Manufact = etBikeManufact.getText().toString().trim();
-        etBike_Price = Integer.parseInt(etBikePrice.getText().toString().trim());
+        final String tv_BikeConditionValidation = tViewBikeCondition.getText().toString().trim();
+        final String etBike_ModelValidation = eTextBikeModel.getText().toString().trim();
+        final String etBike_ManufactValidation = eTextBikeManufact.getText().toString().trim();
+        final String etBike_PriceValidation = eTextBikePrice.getText().toString().trim();
 
         if (imageUri == null) {
             Toast.makeText(AddBikes.this, "Please add a picture", Toast.LENGTH_SHORT).show();
-        } else if (etBike_Model.isEmpty()) {
-            etBikeModel.setError("Please add the Model of Bicycle");
-            etBikeModel.requestFocus();
-        } else if (TextUtils.isEmpty(etBike_Manufact)) {
-            etBikeManufact.setError("Please add the Manufacturer");
-            etBikeManufact.requestFocus();
-        } else if (TextUtils.isEmpty(String.valueOf(etBike_Price))) {
-            etBikePrice.setError("Please add the Price/Day ");
-            etBikePrice.requestFocus();
+        }
+        else if(TextUtils.isEmpty(tv_BikeConditionValidation)){
+            tViewBikeCondition.setError("Please select Bike Condition");
+            tViewBikeCondition.requestFocus();
+        }
+        else if (TextUtils.isEmpty(etBike_ModelValidation)) {
+            eTextBikeModel.setError("Please add the Model of Bicycle");
+            eTextBikeModel.requestFocus();
+        }
+        else if (TextUtils.isEmpty(etBike_ManufactValidation)) {
+            eTextBikeManufact.setError("Please add the Manufacturer");
+            eTextBikeManufact.requestFocus();
+        }
+        else if (TextUtils.isEmpty(etBike_PriceValidation)) {
+            eTextBikePrice.setError("Please add the Price/Day ");
+            eTextBikePrice.requestFocus();
         }
 
         //Add a new Bike into the Bike's table
         else {
+
+            eTextBike_Condition = tViewBikeCondition.getText().toString().trim();
+            eTextBike_Model = eTextBikeModel.getText().toString().trim();
+            eTextBike_Manufact = eTextBikeManufact.getText().toString().trim();
+            eTextBike_Price = Double.parseDouble(eTextBikePrice.getText().toString().trim());
+
             progressDialog.setTitle("The Bike is Uploading");
             progressDialog.show();
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             mUploadTask = fileReference.putFile(imageUri)
-            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onSuccess(Uri uri) {
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String addBike_id = databaseReference.push().getKey();
+                                    bike_Key = addBike_id;
 
-                            Bikes bikes = new Bikes(tvBike_Date, tvBike_Number, etBike_Model, etBike_Manufact, etBike_Price, uri.toString(), bikeStore_Key);
-                            String addBike_id = databaseReference.push().getKey();
-                            assert addBike_id != null;
-                            databaseReference.child(addBike_id).setValue(bikes);
+                                    Bikes bikes = new Bikes(eTextBike_Condition, eTextBike_Model, eTextBike_Manufact, eTextBike_Price, uri.toString(), bikeStore_Name, bike_Key);
 
-                            etBikeModel.setText("");
-                            etBikeManufact.setText("");
-                            etBikePrice.setText("");
-                            ivAddBike.setImageResource(R.drawable.add_bikes_picture);
+                                    assert addBike_id != null;
+                                    databaseReference.child(addBike_id).setValue(bikes);
 
-                            Intent add_Bikes = new Intent(AddBikes.this, AdminPage.class);
-                            startActivity(add_Bikes);
+                                    eTextBikeModel.setText("");
+                                    eTextBikeManufact.setText("");
+                                    eTextBikePrice.setText("");
+                                    ivAddBike.setImageResource(R.drawable.add_bikes_picture);
 
-                            Toast.makeText(AddBikes.this, "Upload Bicycle successfully", Toast.LENGTH_SHORT).show();
-                            finish();
+                                    Intent add_Bikes = new Intent(AddBikes.this, AdminPage.class);
+                                    startActivity(add_Bikes);
+
+                                    Toast.makeText(AddBikes.this, "Upload Bicycle successfully", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            });
+                            progressDialog.dismiss();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(AddBikes.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                            //show upload Progress
+                            double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
+                            progressDialog.setMessage("Uploaded: " + (int) progress + "%");
+                            progressDialog.setProgress((int) progress);
                         }
                     });
-                    progressDialog.dismiss();
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    progressDialog.dismiss();
-                    Toast.makeText(AddBikes.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            })
-            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                    //show upload Progress
-                    double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
-                    progressDialog.setMessage("Uploaded " + (int) progress + "%");
-                    progressDialog.setProgress((int) progress);
-                }
-            });
         }
     }
+
+    private static final String[] bikeCondition = new String[]{"Brand New", "Used Bike"};
 
 
 }

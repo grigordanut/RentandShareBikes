@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".RentBikesCustomer">
+
+        <TextView
+            android:id="@+id/tvRentBikes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/tv_rentBikes"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/tvDateRent"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvRentBikes"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/tv_dateRentBikes"
+            android:textColor="#000000"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/tvDateRentBike"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvRentBikes"
+            android:layout_alignEnd="@+id/tvRentBikes"
+            android:layout_marginTop="5dp"
+            android:background="#f2f2f2"
+            android:paddingEnd="10dp"
+            android:textAlignment="textEnd"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            tools:ignore="RtlSymmetry" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fNameWrapperRentBikes"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_below="@+id/tvDateRent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFirstNameRentBikes"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:hint="@string/et_firstNameRentBikes"
+                android:inputType="textPersonName|textCapWords"
+                android:paddingStart="10dp"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lNameWrapperRentBikes"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_below="@+id/fNameWrapperRentBikes"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etLastNameRentBikes"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:hint="@string/et_lastNameRentBikes"
+                android:inputType="textPersonName|textCapWords"
+                android:paddingStart="10dp"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fNrWrapperRentBikes"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_below="@+id/lNameWrapperRentBikes"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPhoneNoRentBikes"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:hint="@string/et_phoneCustomer"
+                android:inputType="phone"
+                android:paddingStart="10dp"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailWrapperRentBikes"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_below="@+id/fNrWrapperRentBikes"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmailRentBikes"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:hint="@string/et_emailRegCustomer"
+                android:inputType="textEmailAddress"
+                android:paddingStart="10dp"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tvRentBikeDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/emailWrapperRentBikes"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/tv_rentBikesDetails"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="22sp" />
+
+        <RelativeLayout
+            android:id="@+id/relRentBikeDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvRentBikeDetails"
+            android:layout_margin="5dp"
+            android:background="#DDDDDD">
+
+            <ImageView
+                android:id="@+id/imgShowRentBikes"
+                android:layout_width="110dp"
+                android:layout_height="140dp"
+                android:layout_margin="5dp"
+                android:background="#ffffff"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvRentStoreName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/imgShowRentBikes"
+                android:text="@string/tv_rentBikeStore"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvRentCond"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvRentStoreName"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/imgShowRentBikes"
+                android:text="@string/tv_rentBikeCondition"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvRentModel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvRentCond"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/imgShowRentBikes"
+                android:text="@string/tv_rentBikeModel"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="NotSibling,RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvRentManufact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvRentModel"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/imgShowRentBikes"
+                android:text="@string/tv_rentBikeManufacturer"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvRentPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvRentManufact"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/imgShowRentBikes"
+                android:text="@string/tv_rentBikePrice"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvRentBikesStoreName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="210dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="#e6f7ff"
+                android:paddingStart="5dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvRentBikesCond"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvRentBikesStoreName"
+                android:layout_marginStart="210dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="#e6f7ff"
+                android:paddingStart="5dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvRentBikesModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvRentBikesCond"
+                android:layout_marginStart="210dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="#e6f7ff"
+                android:paddingStart="5dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvRentBikesManufact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvRentBikesModel"
+                android:layout_marginStart="210dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="#e6f7ff"
+                android:paddingStart="5dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvRentBikesPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvRentBikesManufact"
+                android:layout_marginStart="210dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="#e6f7ff"
+                android:paddingStart="10dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvAddCollectDate"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relRentBikeDetails"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/tv_rentBikeAddCollectDate"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            tools:ignore="RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/etCollectDate"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relRentBikeDetails"
+            android:layout_alignEnd="@+id/relRentBikeDetails"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="#f2f2f2"
+            android:hint="@string/et_rentBikeCollectDate"
+            android:inputType="date"
+            android:paddingEnd="10dp"
+            android:textAlignment="textEnd"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            tools:ignore="Autofill,RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/tvAddRetDate"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvAddCollectDate"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/tv_rentBikeAddReturnDate"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            tools:ignore="RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/etRetDate"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etCollectDate"
+            android:layout_alignEnd="@+id/relRentBikeDetails"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="#f2f2f2"
+            android:hint="@string/et_rentBikeReturnDate"
+            android:inputType="date"
+            android:paddingEnd="10dp"
+            android:textAlignment="textEnd"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            tools:ignore="Autofill,RtlSymmetry" />
+
+        <Button
+            android:id="@+id/btnRentBike"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/tvAddRetDate"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/btn_background"
+            android:text="@string/btn_rentBike"
+            android:textColor="#FFFF"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</ScrollView>

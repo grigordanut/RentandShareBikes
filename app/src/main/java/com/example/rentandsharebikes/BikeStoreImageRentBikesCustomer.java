@@ -1,13 +1,13 @@
 package com.example.rentandsharebikes;
 
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,7 +21,7 @@ import java.util.List;
 public class BikeStoreImageRentBikesCustomer extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
-    private ValueEventListener bikeStoreDBEventListener;
+    private ValueEventListener bikeStoreEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
     private BikeStoreAdapterRentBikesCustomer bikeStoreAdapterRentBikesCustomer;
@@ -43,13 +43,19 @@ public class BikeStoreImageRentBikesCustomer extends AppCompatActivity {
         bikeStoreList = new ArrayList<>();
 
         progressDialog.show();
+    }
 
-        //check if the bikes list is empty and add a new bike
-        if(databaseReference == null){
-            databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
-        }
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadBikeStoresListCustomer();
+    }
 
-        bikeStoreDBEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+    private void loadBikeStoresListCustomer(){
+        //initialize the bike store database
+        databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
+
+        bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
@@ -58,7 +64,6 @@ public class BikeStoreImageRentBikesCustomer extends AppCompatActivity {
                     bikeStore.setStoreKey(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
                 }
-
                 bikeStoreAdapterRentBikesCustomer = new BikeStoreAdapterRentBikesCustomer(BikeStoreImageRentBikesCustomer.this, bikeStoreList);
                 bikeStoreRecyclerView.setAdapter(bikeStoreAdapterRentBikesCustomer);
                 progressDialog.dismiss();
