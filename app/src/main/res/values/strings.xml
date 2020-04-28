@@ -56,7 +56,10 @@
     <string name="tv_bikeStoreImageShowStoresListCustomer">Select the Bike Store</string>
 
     <!--    Bikes Image Rent Bikes Customer-->
-    <string name="tv_bikesImageRentBikesCustomer">List of Bikes</string>
+    <string name="tv_bikesImageRentBikesCustomer">Select the Bike</string>
+
+    <!--    Bikes Image Return Bikes Rented-->
+    <string name="tv_bikesImageRentBikesRented">Select the Bike</string>
 
     <!--    Bikes Image Show Bikes List Admin-->
     <string name="tv_bikesImageShowBikesListAdmin">List of Bikes</string>
@@ -67,10 +70,15 @@
     <string name="tv_bikesImageShowBikesListCustomer">List of Bikes</string>
 
     <!--    Bikes Image Show Bikes Rented Admin-->
-    <string name="tv_bikesImageShowBikesRentedAdmin">List of Bikes</string>
+    <string name="tv_bikesImageShowBikesRentedAdmin">List of rented Bikes</string>
 
     <!--    Bikes Image Show Bikes Rented Customer-->
     <string name="tv_bikesImageShowBikesRentedCustomer">List of Bikes</string>
+
+    <!--    Bikes Image Show Own Shared Bikes-->
+    <string name="tv_bikesImageShowOwnSharedBikes">List of Bikes</string>
+    <string name="btn_addMoreBikesShare">Add More Bikes</string>
+    <string name="btn_backToCustomPageShare">Back Main Page</string>
 
     <!--    Calculate Coordinates-->
     <string name="tv_calculateCoordinates">Calculate Address Coordinates</string>
@@ -181,6 +189,21 @@
     <string name="tv_returnBikePrice">Price/day: </string>
     <string name="btn_returnBike">Return Bikes</string>
 
+    <!--    Share Bikes-->
+    <string name="tv_welcomeShareBikes">Welcome to Share Bikes</string>
+    <string name="et_bikeFNameShare">First Name</string>
+    <string name="et_bikeLNameShare">Last Name</string>
+    <string name="et_bikePNoShare">Phone Number</string>
+    <string name="et_bikeEmailShare">Email Address</string>
+    <string name="tv_orSelectShare">Or</string>
+    <string name="atc_selectCondShare">Select Condition</string>
+    <string name="img_arrowCondShare">Arrow</string>
+    <string name="et_bikeModelShare">Bike Model</string>
+    <string name="et_bikeManufactShare">Manufacturer</string>
+    <string name="tv_bikeShareAvDate">Available From</string>
+    <string name="et_bikeShareAvDate">Date avail</string>
+    <string name="btn_shareBike">Save Bike</string>
+
     <!--    Update Bike Details-->
     <string name="tv_updateBikeDetails">Update Bike Details</string>
     <string name="tv_updateOrSelect">Or</string>
@@ -208,11 +231,20 @@
     <!--    Admin Header-->
     <string name="tv_drawerMenuAdmin">Admin Page\n\nEmail: admin@gmail.com</string>
 
-    <!--    Customer Header-->
-    <string name="tv_drawerMenuCustomer">Customer Name</string>
+    <!--    Customer Header Rent Bikes-->
+    <string name="tv_drawerMenuCustomRent">Customer Name</string>
 
+    <!--    Customer Header Share Bikes-->
+    <string name="tv_drawerMenuCustomShare">Customer Name</string>
 
-    <!--    Image Bikes-->
+    <!--    Image Bikes Shared Customer-->
+    <string name="tv_sharedBikesCustomCond">Bike Condition: </string>
+    <string name="tv_sharedBikesCustomModel">Bike Model: </string>
+    <string name="tv_sharedBikesCustomManufact">Bike Factory: </string>
+    <string name="tv_sharedBikesCustomPrice">Price/Day: </string>
+    <string name="tv_sharedBikesCustomDateAv">Available From: </string>
+
+    <!--    Image Bikes Admin-->
     <string name="tv_bikeCondition">Condition: </string>
     <string name="tv_bikeModel">Model: </string>
     <string name="tv_bikeManufacturer">Factory: </string>
@@ -242,7 +274,7 @@
     <string name="tv_numberAvailable">Bikes Available: </string>
     <string name="tv_numberBikesAvailable">0</string>
 
-    <!--    Image Bike Store REturn-->
+    <!--    Image Bike Store Return-->
     <string name="tv_storeLocationReturn">Store Location: </string>
     <string name="tv_storeAddressReturn">Store Address: </string>
 
@@ -255,26 +287,36 @@
     <string name="menu_adminSettings">Admin</string>
     <string name="menu_adminLogOut">Log Out</string>
 
-    <!--    Menu Customer-->
-    <string name="menu_userSettings">User</string>
-    <string name="menu_userEditProfile">Edit Profile</string>
-    <string name="menu_userChangePassword">Change Password</string>
-    <string name="menu_userLogOut">Log Out</string>
+    <!--    Menu Customer Main Page-->
+    <string name="menuUser_MainSettings">User Details</string>
+    <string name="menuUser_MainEditProfile">Edit Profile</string>
+    <string name="menuUserMain_ChangePassword">Change Password</string>
+    <string name="menuUser_MainLogOut">Log Out</string>
+
+    <!--    Menu Customer Rent Bikes-->
+    <string name="menuUser_RentGoBack">Go Back</string>
+
+    <!--    Menu Customer Share Bikes-->
+    <string name="menuUser_ShareGoBack">Go Back</string>
 
     <!--    Menu Drawer Admin-->
-    <string name="menuDrawerAdmin_addBikeStores">Add Bike Stores</string>
-    <string name="menuDrawerAdmin_showBikeStores">Show Bike Stores</string>
-    <string name="menuDrawerAdmin_addBikeToStores">Add Bike To Store</string>
-    <string name="menuDrawerAdmin_showBikesList">Show Bikes List</string>
-    <string name="menuDrawerAdmin_showBikesRented">Show Bikes Rented</string>
+    <string name="menuDAdmin_addBikeStores">Add Bike Stores</string>
+    <string name="menuDAdmin_showBikeStores">Show Bike Stores</string>
+    <string name="menuDAdmin_addBikeToStores">Add Bike To Store</string>
+    <string name="menuDAdmin_showBikesList">Show Bikes List</string>
+    <string name="menuDAdmin_showBikesRented">Show Bikes Rented</string>
 
-    <!--    Menu Drawer Customer-->
-    <string name="menuDrawerUser_showStoresList">Bike Stores List</string>
-    <string name="menuDrawerUser_showBikesList">Bikes Available</string>
-    <string name="menuDrawerUser_rentBikes">Rent Bikes</string>
-    <string name="menuDrawerUser_showBikesRented">Rented Bikes</string>
-    <string name="menuDrawerUser_returnBikes">Return Bikes</string>
-    <string name="menuDrawerUser_shareBikes">Share Bikes</string>
+    <!--    Menu Drawer Customer Rent Bikes-->
+    <string name="mDUser_showStoresListRent">Bike Stores List</string>
+    <string name="mDUser_showBikesListRent">Bikes Available</string>
+    <string name="mDUser_rentBikesRent">Rent Bikes</string>
+    <string name="mDUser_showBikesRentedRent">Rented Bikes</string>
+    <string name="mDUser_returnBikesRent">Return Bikes</string>
+
+    <!--    Menu Drawer Customer Share Bikes-->
+    <string name="mDUser_shareBikesShare">Share Bikes</string>
+    <string name="mDUser_showOwnBikesShare">Show My Bikes</string>
+    <string name="mDUser_showAvailableBikesShare">Show All Bikes</string>
 
     <!--    Menu Drawer Main-->
     <string name="menu_myCart">My Cart</string>
