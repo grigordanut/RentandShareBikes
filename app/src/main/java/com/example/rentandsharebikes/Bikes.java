@@ -79,17 +79,4 @@ public class Bikes {
     public void setBike_Key(String bike_Key) {
         this.bike_Key = bike_Key;
     }
-
-    //    @Exclude
-//    public String getBikesKey(){
-//        return bikesKey;
-//    }
-//
-//    @Exclude
-//    public void setBikesKey(String bikesKey){
-//        this.bikesKey = bikesKey;
-//    }
-//
-//    public class NONE {
-//    }
 }

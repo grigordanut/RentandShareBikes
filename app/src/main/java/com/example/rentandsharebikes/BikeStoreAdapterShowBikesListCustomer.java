@@ -110,5 +110,4 @@ public class BikeStoreAdapterShowBikesListCustomer extends RecyclerView.Adapter<
             tvStoreBikesAvailable =  itemView.findViewById(R.id.tvNrAvailable);
         }
     }
-
 }

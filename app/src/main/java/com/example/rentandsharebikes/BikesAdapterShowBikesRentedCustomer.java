@@ -102,5 +102,4 @@ public class BikesAdapterShowBikesRentedCustomer extends RecyclerView.Adapter<Bi
     public void setOnItmClickListener(BikesAdapterShowBikesRentedCustomer.OnItemClickListener listener){
         clickListener = listener;
     }
-
 }

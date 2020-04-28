@@ -38,8 +38,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class AddBikes extends AppCompatActivity {
@@ -76,6 +74,7 @@ public class AddBikes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bikes);
+
         getIntent().hasExtra("SName");
         bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
 
@@ -301,6 +300,4 @@ public class AddBikes extends AppCompatActivity {
     }
 
     private static final String[] bikeCondition = new String[]{"Brand New", "Used Bike"};
-
-
 }

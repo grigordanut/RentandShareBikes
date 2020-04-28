@@ -3,7 +3,6 @@ package com.example.rentandsharebikes;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,8 +30,6 @@ public class BikesImageRentBikesCustomer extends AppCompatActivity {
     private RecyclerView bikesListRecyclerView;
     private BikesAdapterRentBikesCustomer bikesAdapterRentBikesCustomer;
 
-    private TextView textViewBikesImageList;
-
     private List<Bikes> bikesList;
 
     String bikeStore_Name = "";
@@ -47,9 +44,6 @@ public class BikesImageRentBikesCustomer extends AppCompatActivity {
 
         getIntent().hasExtra("SName");
         bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
-
-        textViewBikesImageList = (TextView) findViewById(R.id.tvBikeImageList);
-        textViewBikesImageList.setText("No bikes available in " +bikeStore_Name+ " store");
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -84,7 +78,6 @@ public class BikesImageRentBikesCustomer extends AppCompatActivity {
                     if (bikes.getBikeStoreName().equals(bikeStore_Name)) {
                         bikes.setBike_Key(postSnapshot.getKey());
                         bikesList.add(bikes);
-                        textViewBikesImageList.setText(bikesList.size()+" bikes available in "+bikeStore_Name+" store");
                     }
                 }
                 bikesAdapterRentBikesCustomer = new BikesAdapterRentBikesCustomer(BikesImageRentBikesCustomer.this, bikesList);

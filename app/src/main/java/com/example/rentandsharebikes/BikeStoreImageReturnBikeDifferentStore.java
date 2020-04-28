@@ -43,7 +43,6 @@ public class BikeStoreImageReturnBikeDifferentStore extends AppCompatActivity im
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             bike_StoreReturnBikesSame = bundle.getString("BStoreSame");
-            //bike_StoreReturnBikesDiff = bundle.getString("BStoreDiff");
             bike_KeyReturnBikeSame = bundle.getString("BKey");
         }
 
@@ -98,7 +97,6 @@ public class BikeStoreImageReturnBikeDifferentStore extends AppCompatActivity im
     //Action of the menu onClick
     @Override
     public void onItemClick(int position) {
-
         Intent intent = new Intent(BikeStoreImageReturnBikeDifferentStore.this, ReturnRentedBikes.class);
         BikeStore selected_BikeStore = bikeStoreList.get(position);
         intent.putExtra("BStoreDiff", selected_BikeStore.getBikeStore_Location());

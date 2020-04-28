@@ -22,7 +22,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CustomerPageRentBikes"></activity>
+        <activity android:name=".BikeStoreImageShowStoresListMain"></activity>
+        <activity android:name=".UpdateBikeSharedDetails" />
+        <activity android:name=".BikesImageShowOwnSharedBikes" />
+        <activity android:name=".CustomerPageRentBikes" />
         <activity android:name=".CustomerPageShareBikes" />
         <activity android:name=".CustomerPageMain" />
         <activity android:name=".ShareBikesCustomer" />

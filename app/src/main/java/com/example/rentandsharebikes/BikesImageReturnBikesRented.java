@@ -28,13 +28,10 @@ public class BikesImageReturnBikesRented extends AppCompatActivity {
 
     private FirebaseStorage bikesStReturnBikesRented;
 
-
     private ValueEventListener returnBikesEventListener;
 
     private RecyclerView bikesListRecyclerView;
     private BikesAdapterReturnBikesRented bikesAdapterReturnBikesRented;
-
-    private TextView tVCustomerReturnBikes;
 
     private List<RentBikes> rentBikesList;
 
@@ -58,9 +55,6 @@ public class BikesImageReturnBikesRented extends AppCompatActivity {
 
         getIntent().hasExtra("CId");
         customer_Id = Objects.requireNonNull(getIntent().getExtras()).getString("CId");
-
-        tVCustomerReturnBikes = (TextView) findViewById(R.id.tvCusReturnBikes);
-        tVCustomerReturnBikes.setText("Bikes rented by: "+customerFirst_Name+" "+customerLast_Name);
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);

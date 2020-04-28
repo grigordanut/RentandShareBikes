@@ -228,5 +228,4 @@ public class BikesImageShowBikesRentedCustomer extends AppCompatActivity impleme
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
 }
