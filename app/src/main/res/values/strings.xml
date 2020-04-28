@@ -95,14 +95,20 @@
     <string name="et_enterNewPassword">Enter New Password</string>
     <string name="btn_updatePassword">Update Password</string>
 
-    <!--    Customer Page-->
-    <string name="open_userPage">Open</string>
-    <string name="close_userPage">Close</string>
-    <string name="tv_customerPage">Welcome</string>
-    <string name="btn_bikeStoresListCustomer">Bike Stores List</string>
-    <string name="btn_bikesAvailableCustomer">Bikes Available</string>
+    <!--    Customer Page Main-->
+    <string name="tv_customPageMain">Welcome</string>
     <string name="btn_rentBikesCustomer">Rent Bikes</string>
     <string name="btn_shareBikeCustomer">Share Bike</string>
+
+    <!--    Customer Page Rent Bikes-->
+    <string name="tv_customPageRentBikes">Welcome</string>
+    <string name="open_customPageRent">Open</string>
+    <string name="close_customPageRent">Close</string>
+
+    <!--    Customer Page Share Bikes-->
+    <string name="tv_customPageShareBikes">Welcome</string>
+    <string name="open_customPageShare">Open</string>
+    <string name="close_customPageShare">Close</string>
 
     <!--    Edit Customer Profile-->
     <string name="tv_editUserProfile">Edit your Profile</string>

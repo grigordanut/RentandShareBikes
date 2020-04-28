@@ -176,7 +176,7 @@ public class LoginCustomer extends AppCompatActivity {
             progressDialog.dismiss();
             finish();
             Toast.makeText(LoginCustomer.this, "Log In successful", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(LoginCustomer.this, CustomerPage.class));
+            startActivity(new Intent(LoginCustomer.this, CustomerPageRentBikes.class));
         }
 
         else{

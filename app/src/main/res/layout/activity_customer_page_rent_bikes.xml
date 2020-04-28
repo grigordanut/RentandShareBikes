@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_customer_page"
+    android:id="@+id/activity_customer_page_rent_bikes"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright">
@@ -11,14 +11,14 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:context=".CustomerPage"
-        tools:showIn = "@layout/activity_customer_page">
+        tools:context=".CustomerPageRentBikes"
+        tools:showIn = "@layout/activity_customer_page_rent_bikes">
 
         <TextView
-            android:id="@+id/tvCustomerPage"
+            android:id="@+id/tvCustomPageRent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tv_customerPage"
+            android:text="@string/tv_customPageRentBikes"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="24sp" />
@@ -26,13 +26,13 @@
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navViewCustomer"
+        android:id="@+id/navViewCustomRent"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:itemTextColor="@drawable/drawer_item_color"
         app:itemTextAppearance="?android:textAppearanceMedium"
-        app:headerLayout="@layout/customer_header"
-        app:menu="@menu/menu_drawer_customer" />
+        app:headerLayout="@layout/customer_header_rent_bikes"
+        app:menu="@menu/menu_drawer_customer_rent_bikes" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

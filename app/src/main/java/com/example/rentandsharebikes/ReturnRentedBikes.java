@@ -211,7 +211,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        startActivity(new Intent(ReturnRentedBikes.this, CustomerPage.class));
+                        startActivity(new Intent(ReturnRentedBikes.this, CustomerPageRentBikes.class));
                         Toast.makeText(ReturnRentedBikes.this, "Bike Returned successfully", Toast.LENGTH_SHORT).show();
                         finish();
                     }

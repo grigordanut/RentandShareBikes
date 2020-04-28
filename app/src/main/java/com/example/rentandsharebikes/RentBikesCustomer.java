@@ -392,7 +392,7 @@ public class RentBikesCustomer extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()){
-                        startActivity(new Intent(RentBikesCustomer.this, CustomerPage.class));
+                        startActivity(new Intent(RentBikesCustomer.this, CustomerPageRentBikes.class));
                         Toast.makeText(RentBikesCustomer.this, "Rent Bike successfully", Toast.LENGTH_SHORT).show();
                         finish();
                     }
@@ -453,7 +453,7 @@ public class RentBikesCustomer extends AppCompatActivity {
                         }
                         progressDialog.dismiss();
                         Toast.makeText(RentBikesCustomer.this, "Bike removed", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RentBikesCustomer.this, CustomerPage.class));
+                        startActivity(new Intent(RentBikesCustomer.this, CustomerPageRentBikes.class));
                         finish();
                     }
 

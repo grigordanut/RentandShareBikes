@@ -22,7 +22,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ShareBikesCustomer"></activity>
+        <activity android:name=".CustomerPageRentBikes"></activity>
+        <activity android:name=".CustomerPageShareBikes" />
+        <activity android:name=".CustomerPageMain" />
+        <activity android:name=".ShareBikesCustomer" />
         <activity android:name=".BikesImageRentBikesCustomer" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -52,7 +55,6 @@
         <activity android:name=".ResetPassword" />
         <activity android:name=".RentBikesCustomer" />
         <activity android:name=".AdminPage" />
-        <activity android:name=".CustomerPage" />
         <activity android:name=".AddBikes" />
         <activity android:name=".AddBikeStore" />
         <activity android:name=".LoginCustomer" />

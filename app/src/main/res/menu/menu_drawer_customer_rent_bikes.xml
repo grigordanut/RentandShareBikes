@@ -5,32 +5,27 @@
         <item
             android:id="@+id/userShow_storesList"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/menuDrawerUser_showStoresList" />
+            android:title="@string/mDUser_showStoresListRent" />
 
         <item
             android:id="@+id/userShow_bikesList"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/menuDrawerUser_showBikesList" />
+            android:title="@string/mDUser_showBikesListRent" />
 
         <item
             android:id="@+id/userRent_bikes"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/menuDrawerUser_rentBikes" />
+            android:title="@string/mDUser_rentBikesRent" />
 
         <item
             android:id="@+id/userShow_bikesRented"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/menuDrawerUser_showBikesRented" />
+            android:title="@string/mDUser_showBikesRentedRent" />
 
         <item
             android:id="@+id/userReturn_bikes"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/menuDrawerUser_returnBikes" />
-
-        <item
-            android:id="@+id/userShare_bikes"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/menuDrawerUser_shareBikes" />
+            android:title="@string/mDUser_returnBikesRent" />
     </group>
 
 </menu>
