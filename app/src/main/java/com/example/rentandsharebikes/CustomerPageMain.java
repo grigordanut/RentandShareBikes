@@ -27,6 +27,7 @@ import java.util.Objects;
 
 public class CustomerPageMain extends AppCompatActivity {
 
+
     //Variable to access current user database
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
@@ -38,6 +39,7 @@ public class CustomerPageMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_page_main);
+
         //initialise the variables
         tVCustomPageMain = (TextView) findViewById(R.id.tvCustomPageMain);
         //tViewDMCustomer = (TextView)findViewById(R.id.tvDMCustomer

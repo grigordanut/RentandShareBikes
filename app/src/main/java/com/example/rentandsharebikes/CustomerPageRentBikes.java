@@ -26,7 +26,6 @@ import java.util.Objects;
 
 public class CustomerPageRentBikes extends AppCompatActivity {
 
-
     //Declaring some objects
     private DrawerLayout drawerLayoutUserRent;
     private ActionBarDrawerToggle drawerToggleUserRent;
@@ -38,12 +37,10 @@ public class CustomerPageRentBikes extends AppCompatActivity {
 
     private TextView tVCustomPageRent;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_page_rent_bikes);
-
 
         //initialise the variables
         tVCustomPageRent = (TextView) findViewById(R.id.tvCustomPageRent);

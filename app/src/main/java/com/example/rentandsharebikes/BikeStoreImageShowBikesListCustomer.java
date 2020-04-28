@@ -34,7 +34,6 @@ public class BikeStoreImageShowBikesListCustomer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_show_bikes_list_customer);
-
         bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
