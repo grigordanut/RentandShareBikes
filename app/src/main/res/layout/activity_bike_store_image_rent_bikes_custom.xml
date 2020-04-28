@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
-    tools:context=".BikeStoreImageRentBikesCustomer">
+    tools:context=".BikeStoreImageRentBikesCustom">
 
     <TextView
-        android:id="@+id/tvBikeStoresRentBikesCustomer"
+        android:id="@+id/tvBikeStoresRentBikesCustom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -19,13 +19,13 @@
         android:text="@string/tv_bikeStoreImageRentBikesCustomer"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="24sp" />
+        android:textSize="22sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/evRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvBikeStoresRentBikesCustomer"
+        android:layout_below="@+id/tvBikeStoresRentBikesCustom"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"

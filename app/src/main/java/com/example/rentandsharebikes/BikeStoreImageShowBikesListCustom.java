@@ -1,13 +1,13 @@
 package com.example.rentandsharebikes;
 
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,13 +18,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikeStoreImageShowBikesListCustomer extends AppCompatActivity {
+public class BikeStoreImageShowBikesListCustom extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
-    private BikeStoreAdapterShowBikesListCustomer bikeStoreAdapterShowBikesListCustomer;
+    private BikeStoreAdapterShowBikesListCustom bikeStoreAdapterShowBikesListCustom;
 
     private List<BikeStore> bikeStoreList;
 
@@ -33,7 +33,8 @@ public class BikeStoreImageShowBikesListCustomer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_store_image_show_bikes_list_customer);
+        setContentView(R.layout.activity_bike_store_image_show_bikes_list_custom);
+
         bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -63,14 +64,14 @@ public class BikeStoreImageShowBikesListCustomer extends AppCompatActivity {
                     bikeStore.setStoreKey(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
                 }
-                bikeStoreAdapterShowBikesListCustomer = new BikeStoreAdapterShowBikesListCustomer(BikeStoreImageShowBikesListCustomer.this, bikeStoreList);
-                bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowBikesListCustomer);
+                bikeStoreAdapterShowBikesListCustom = new BikeStoreAdapterShowBikesListCustom(BikeStoreImageShowBikesListCustom.this, bikeStoreList);
+                bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowBikesListCustom);
                 progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeStoreImageShowBikesListCustomer.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeStoreImageShowBikesListCustom.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }

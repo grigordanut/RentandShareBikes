@@ -1,16 +1,16 @@
 package com.example.rentandsharebikes;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,14 +23,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikesImageShowBikesListCustomer extends AppCompatActivity implements BikesAdapterShowBikesListCustomer.OnItemClickListener{
+public class BikesImageShowBikesListCustom extends AppCompatActivity implements BikesAdapterShowBikesListCustom.OnItemClickListener{
 
     private FirebaseStorage bikesStorage;
     private DatabaseReference databaseReference;
     private ValueEventListener bikesEventListener;
 
     private RecyclerView bikesListRecyclerView;
-    private BikesAdapterShowBikesListCustomer bikesAdapterShowBikesListCustomer;
+    private BikesAdapterShowBikesListCustom bikesAdapterShowBikesListCustom;
 
     private TextView textViewBikesImageList;
 
@@ -40,11 +40,10 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
 
     private ProgressDialog progressDialog;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bikes_image_show_bikes_list_customer);
+        setContentView(R.layout.activity_bikes_image_show_bikes_list_custom);
 
         getIntent().hasExtra("SName");
         bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
@@ -71,7 +70,7 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
     //Action of the menu Rent Bikes on alert dialog
     @Override
     public void onRentBikeClick(int position) {
-        Intent intent = new Intent(BikesImageShowBikesListCustomer.this, RentBikesCustomer.class);
+        Intent intent = new Intent(BikesImageShowBikesListCustom.this, RentBikesCustomer.class);
         Bikes selected_Bike = bikesList.get(position);
         intent.putExtra("BCondition",selected_Bike.getBike_Condition());
         intent.putExtra("BModel",selected_Bike.getBike_Model());
@@ -115,15 +114,15 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
                         textViewBikesImageList.setText(bikesList.size()+" bikes available in "+bikeStore_Name+" store");
                     }
                 }
-                bikesAdapterShowBikesListCustomer = new BikesAdapterShowBikesListCustomer(BikesImageShowBikesListCustomer.this, bikesList);
-                bikesListRecyclerView.setAdapter(bikesAdapterShowBikesListCustomer);
-                bikesAdapterShowBikesListCustomer.setOnItmClickListener(BikesImageShowBikesListCustomer.this);
+                bikesAdapterShowBikesListCustom = new BikesAdapterShowBikesListCustom(BikesImageShowBikesListCustom.this, bikesList);
+                bikesListRecyclerView.setAdapter(bikesAdapterShowBikesListCustom);
+                bikesAdapterShowBikesListCustom.setOnItmClickListener(BikesImageShowBikesListCustom.this);
                 progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikesImageShowBikesListCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikesImageShowBikesListCustom.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

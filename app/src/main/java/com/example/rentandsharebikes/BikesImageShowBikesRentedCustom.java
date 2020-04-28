@@ -1,5 +1,10 @@
 package com.example.rentandsharebikes;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -9,11 +14,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,8 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikesImageShowBikesRentedCustomer extends AppCompatActivity implements BikesAdapterShowBikesRentedCustomer.OnItemClickListener{
-
+public class BikesImageShowBikesRentedCustom extends AppCompatActivity implements BikesAdapterShowBikesRentedCustom.OnItemClickListener{
     private DatabaseReference databaseRefRemoveBike;
     private DatabaseReference databaseRefRestoreBike;
     private FirebaseStorage bikesStorageRemoveBike;
@@ -40,7 +39,7 @@ public class BikesImageShowBikesRentedCustomer extends AppCompatActivity impleme
     private ValueEventListener bikesEventListener;
 
     private RecyclerView bikesListRecyclerView;
-    private BikesAdapterShowBikesRentedCustomer bikesAdapterShowBikesRentedCustomer;
+    private BikesAdapterShowBikesRentedCustom bikesAdapterShowBikesRentedCustom;
 
     private TextView tVCustomerRentBikes;
 
@@ -52,11 +51,10 @@ public class BikesImageShowBikesRentedCustomer extends AppCompatActivity impleme
 
     private ProgressDialog progressDialog;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bikes_image_show_bikes_rented_customer);
+        setContentView(R.layout.activity_bikes_image_show_bikes_rented_custom);
 
         getIntent().hasExtra("CFName");
         customerFirst_Name = Objects.requireNonNull(getIntent().getExtras()).getString("CFName");
@@ -67,7 +65,7 @@ public class BikesImageShowBikesRentedCustomer extends AppCompatActivity impleme
         getIntent().hasExtra("CId");
         customer_Id = Objects.requireNonNull(getIntent().getExtras()).getString("CId");
 
-        tVCustomerRentBikes = (TextView) findViewById(R.id.tvCustomerRentBikes);
+        tVCustomerRentBikes = (TextView) findViewById(R.id.tvCustomRentBikes);
         tVCustomerRentBikes.setText("Bikes rented by: "+customerFirst_Name+" "+customerLast_Name);
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
@@ -113,15 +111,15 @@ public class BikesImageShowBikesRentedCustomer extends AppCompatActivity impleme
                         //textViewBikesImageList.setText(bikesList.size()+" bikes available in "+bikeStore_Name+" store");
                     }
                 }
-                bikesAdapterShowBikesRentedCustomer = new BikesAdapterShowBikesRentedCustomer(BikesImageShowBikesRentedCustomer.this, rentBikesList);
-                bikesListRecyclerView.setAdapter(bikesAdapterShowBikesRentedCustomer);
-                bikesAdapterShowBikesRentedCustomer.setOnItmClickListener(BikesImageShowBikesRentedCustomer.this);
+                bikesAdapterShowBikesRentedCustom = new BikesAdapterShowBikesRentedCustom(BikesImageShowBikesRentedCustom.this, rentBikesList);
+                bikesListRecyclerView.setAdapter(bikesAdapterShowBikesRentedCustom);
+                bikesAdapterShowBikesRentedCustom.setOnItmClickListener(BikesImageShowBikesRentedCustom.this);
                 progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikesImageShowBikesRentedCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikesImageShowBikesRentedCustom.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -150,7 +148,7 @@ public class BikesImageShowBikesRentedCustomer extends AppCompatActivity impleme
                                         @Override
                                         public void onComplete(@NonNull Task<Uri> task) {
                                             databaseRefRestoreBike.child("Bikes").setValue(selBikeReturn);
-                                            Toast.makeText(BikesImageShowBikesRentedCustomer.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(BikesImageShowBikesRentedCustom.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
                                         }
                                     });
 
@@ -161,7 +159,7 @@ public class BikesImageShowBikesRentedCustomer extends AppCompatActivity impleme
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             databaseRefRemoveBike.child(selectedKeyBike).removeValue();
-                                            Toast.makeText(BikesImageShowBikesRentedCustomer.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(BikesImageShowBikesRentedCustom.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
                                         }
                                     });
 
@@ -189,7 +187,7 @@ public class BikesImageShowBikesRentedCustomer extends AppCompatActivity impleme
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     RentBikes selected_Bike = rentBikesList.get(position);
-                                    Intent intent = new Intent (BikesImageShowBikesRentedCustomer.this, ReturnRentedBikes.class);
+                                    Intent intent = new Intent (BikesImageShowBikesRentedCustom.this, ReturnRentedBikes.class);
                                     intent.putExtra("BStoreSame",selected_Bike.getStoreLocation_RentBikes());
                                     intent.putExtra("BKey",selected_Bike.getBike_RentKey());
                                     startActivity(intent);

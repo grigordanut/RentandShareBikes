@@ -19,13 +19,13 @@ import java.util.List;
 
 import static android.icu.text.DateFormat.NONE;
 
-public class BikesAdapterShowBikesListCustomer extends RecyclerView.Adapter<BikesAdapterShowBikesListCustomer.ImageViewHolder> {
+public class BikesAdapterShowBikesListCustom extends RecyclerView.Adapter<BikesAdapterShowBikesListCustom.ImageViewHolder> {
 
     private Context bikesContext;
     private List<Bikes> bikesUploads;
     private OnItemClickListener clickListener;
 
-    public BikesAdapterShowBikesListCustomer(Context bikes_context, List<Bikes> bikes_uploads){
+    public BikesAdapterShowBikesListCustom(Context bikes_context, List<Bikes> bikes_uploads){
         bikesContext = bikes_context;
         bikesUploads = bikes_uploads;
     }

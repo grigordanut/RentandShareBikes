@@ -223,7 +223,6 @@
     <!--    Update Bike Shared Details-->
 
 
-
     <!--    Update Bike Store Details-->
     <string name="tv_updateStoreDetails">Update Bike Store Details</string>
     <string name="tv_updateStoreLocation">Bike Store Location</string>
@@ -257,15 +256,12 @@
     <!--    Image Bikes Customer-->
 
 
-
-
     <!--    Image Bikes Shared Customer-->
     <string name="tv_sharedBikesCustomCond">Bike Condition: </string>
     <string name="tv_sharedBikesCustomModel">Bike Model: </string>
     <string name="tv_sharedBikesCustomManufact">Bike Factory: </string>
     <string name="tv_sharedBikesCustomPrice">Price/Day: </string>
     <string name="tv_sharedBikesCustomDateAv">Available From: </string>
-
 
 
     <!--    Image Bikes Rented Admin-->

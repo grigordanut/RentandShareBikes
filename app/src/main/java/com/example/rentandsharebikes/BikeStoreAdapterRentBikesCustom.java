@@ -20,7 +20,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikeStoreAdapterShowBikesListCustomer extends RecyclerView.Adapter<BikeStoreAdapterShowBikesListCustomer.ImageViewHolder>{
+public class BikeStoreAdapterRentBikesCustom extends RecyclerView.Adapter<BikeStoreAdapterRentBikesCustom.ImageViewHolder> {
 
     private Context bikeStoreContext;
     private List<BikeStore> bikeStoreUploads;
@@ -33,7 +33,7 @@ public class BikeStoreAdapterShowBikesListCustomer extends RecyclerView.Adapter<
 
     private int numberBikesAvailable;
 
-    public BikeStoreAdapterShowBikesListCustomer(Context bikeStore_context, List<BikeStore> bikeStore_uploads){
+    public BikeStoreAdapterRentBikesCustom(Context bikeStore_context, List<BikeStore> bikeStore_uploads){
         bikeStoreContext = bikeStore_context;
         bikeStoreUploads = bikeStore_uploads;
     }
@@ -77,14 +77,14 @@ public class BikeStoreAdapterShowBikesListCustomer extends RecyclerView.Adapter<
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Toast.makeText(BikeStoreAdapterShowBikesListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(BikeStoreAdapterRentBikesCustom.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(bikeStoreContext, BikesImageShowBikesListCustomer.class);
+                Intent intent = new Intent(bikeStoreContext, BikesImageRentBikesCustomer.class);
                 intent.putExtra("SName",uploadCurrent.getBikeStore_Location());
                 bikeStoreContext.startActivity(intent);
             }
@@ -107,7 +107,7 @@ public class BikeStoreAdapterShowBikesListCustomer extends RecyclerView.Adapter<
             tvStoreBikeLocation = itemView.findViewById(R.id.tvStorePlace);
             tvStoreBikeAddress = itemView.findViewById(R.id.tvStoreAddress);
             tvStoreBikeSlots = itemView.findViewById(R.id.tvStoreSlots);
-            tvStoreBikesAvailable =  itemView.findViewById(R.id.tvNrAvailable);
+            tvStoreBikesAvailable = itemView.findViewById(R.id.tvNrAvailable);
         }
     }
 }

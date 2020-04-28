@@ -15,12 +15,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class BikesAdapterShowBikesRentedCustomer extends RecyclerView.Adapter<BikesAdapterShowBikesRentedCustomer.ImageViewHolder>{
+public class BikesAdapterShowBikesRentedCustom extends RecyclerView.Adapter<BikesAdapterShowBikesRentedCustom.ImageViewHolder>{
+
     private Context bikesContext;
     private List<RentBikes> bikesUploads;
     private OnItemClickListener clickListener;
 
-    public BikesAdapterShowBikesRentedCustomer(Context bikes_context, List<RentBikes> bikes_uploads){
+    public BikesAdapterShowBikesRentedCustom(Context bikes_context, List<RentBikes> bikes_uploads){
         bikesContext = bikes_context;
         bikesUploads = bikes_uploads;
     }
@@ -99,7 +100,7 @@ public class BikesAdapterShowBikesRentedCustomer extends RecyclerView.Adapter<Bi
         void alertDialogStoreLocation(int position);
     }
 
-    public void setOnItmClickListener(BikesAdapterShowBikesRentedCustomer.OnItemClickListener listener){
+    public void setOnItmClickListener(OnItemClickListener listener){
         clickListener = listener;
     }
 }

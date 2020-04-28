@@ -22,7 +22,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BikeStoreImageShowStoresListMain"></activity>
+        <activity android:name=".BikesImageShowBikesRentedCustom"></activity>
+        <activity android:name=".BikesImageShowBikesListCustom" />
+        <activity android:name=".BikeStoreImageRentBikesCustom" />
+        <activity android:name=".BikeStoreImageShowBikesListCustom" />
+        <activity android:name=".BikeStoreImageShowStoresListMain" />
         <activity android:name=".UpdateBikeSharedDetails" />
         <activity android:name=".BikesImageShowOwnSharedBikes" />
         <activity android:name=".CustomerPageRentBikes" />
@@ -51,7 +55,6 @@
         <activity android:name=".BikeStoreImageShowStoresListCustomer" />
         <activity android:name=".BikeStoreImageAddBikesAdmin" />
         <activity android:name=".BikeStoreImageShowStoresListAdmin" />
-        <activity android:name=".BikeStoreImageRentBikesCustomer" />
         <activity android:name=".EditCustomerProfile" />
         <activity android:name=".ChangePassword" />
         <activity android:name=".CalculateCoordinates" />
