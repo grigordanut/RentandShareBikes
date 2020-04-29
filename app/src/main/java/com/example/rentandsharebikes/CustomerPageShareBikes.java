@@ -89,15 +89,23 @@ public class CustomerPageShareBikes extends AppCompatActivity {
                                         break;
                                     case R.id.userShow_ownShareBikes:
                                         Toast.makeText(CustomerPageShareBikes.this, "Show Bikes Shared", Toast.LENGTH_SHORT).show();
-                                        Intent intentRent = new Intent(CustomerPageShareBikes.this, BikesImageShowOwnSharedBikes.class);
-                                        intentRent.putExtra("CFNameShare", custom_data.getfName_Customer());
-                                        intentRent.putExtra("CLNameShare", custom_data.getlName_Customer());
-                                        intentRent.putExtra("CIdShare", currentUser.getUid());
-                                        startActivity(intentRent);
+                                        Intent intentShowBikes = new Intent(CustomerPageShareBikes.this, BikesImageShowOwnSharedBikes.class);
+                                        intentShowBikes.putExtra("CFNameShare", custom_data.getfName_Customer());
+                                        intentShowBikes.putExtra("CLNameShare", custom_data.getlName_Customer());
+                                        intentShowBikes.putExtra("CIdShare", currentUser.getUid());
+                                        startActivity(intentShowBikes);
                                         break;
                                     case R.id.userShow_shareBikesAvailable:
                                         Toast.makeText(CustomerPageShareBikes.this, "Share Bikes", Toast.LENGTH_SHORT).show();
                                         //startActivity(new Intent(CustomerPageShareBikes.this, ShareBikesCustomer.class));
+                                        break;
+                                    case R.id.userUpdate_ownShareBikes:
+                                        Toast.makeText(CustomerPageShareBikes.this, "Update my Bike", Toast.LENGTH_SHORT).show();
+                                        Intent intentUpdate = new Intent(CustomerPageShareBikes.this, BikesImageShowOwnSharedBikes.class);
+                                        //intentUpdate.putExtra("CFNameShare", custom_data.getfName_Customer());
+                                        //intentUpdate.putExtra("CLNameShare", custom_data.getlName_Customer());
+                                        intentUpdate.putExtra("CIdUpdate", currentUser.getUid());
+                                        startActivity(intentUpdate);
                                         break;
                                     default:
                                         return true;

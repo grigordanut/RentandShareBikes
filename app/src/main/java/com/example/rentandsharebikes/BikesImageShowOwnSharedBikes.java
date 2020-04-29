@@ -130,7 +130,7 @@ public class BikesImageShowOwnSharedBikes extends AppCompatActivity implements B
             public void onClick(DialogInterface dialog, int which) {
 
                 if (which == 0) {
-                    Intent intent = new Intent(BikesImageShowOwnSharedBikes.this, UpdateBikeSharedDetails.class);
+                    Intent intent = new Intent(BikesImageShowOwnSharedBikes.this, UpdateBikeShareDetails.class);
 //                    ShareBikes selected_Bike = shareBikesList.get(position);
 //                    intent.putExtra("BSharedKey", selected_Bike.getShareBike_Key());
                     startActivity(intent);

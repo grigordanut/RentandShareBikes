@@ -92,9 +92,6 @@ public class RentBikesCustomer extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-
-        //storageReference = FirebaseStorage.getInstance().getReference("Bikes");
-        //databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
         storageRefRentBikes = FirebaseStorage.getInstance().getReference("Rent Bikes");
         databaseRefRentBikes = FirebaseDatabase.getInstance().getReference("Rent Bikes");
 

@@ -80,6 +80,9 @@
     <string name="btn_addMoreBikesShare">Add More Bikes</string>
     <string name="btn_backToCustomPageShare">Back Main Page</string>
 
+    <!--    Bikes Image Show Own Shared Bikes-->
+    <string name="tv_bikesImageShowOwnSharedBikesToUpdate">Select the Bike</string>
+
     <!--    Calculate Coordinates-->
     <string name="tv_calculateCoordinates">Calculate Address Coordinates</string>
     <string name="et_locationAddress">Enter Location Address</string>
@@ -331,6 +334,7 @@
     <string name="mDUser_shareBikesShare">Share Bikes</string>
     <string name="mDUser_showOwnBikesShare">Show My Bikes</string>
     <string name="mDUser_showAvailableBikesShare">Show All Bikes</string>
+    <string name="mDUser_updateAvailableBikesShare">Update My Bike</string>
 
     <!--    Menu Drawer Main-->
     <string name="menu_myCart">My Cart</string>
