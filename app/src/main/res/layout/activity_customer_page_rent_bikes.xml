@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_customer_page_rent_bikes"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
+    tools:showIn="@layout/activity_customer_page_rent_bikes">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:context=".CustomerPageRentBikes">
+
+        <TextView
+            android:id="@+id/tvCustomPageRent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_customPageRentBikes"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="24sp" />
+
+    </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navViewCustomRent"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/customer_header_rent_bikes"
+        app:itemTextAppearance="?android:textAppearanceMedium"
+        app:itemTextColor="@drawable/drawer_item_color"
+        app:menu="@menu/menu_drawer_customer_rent_bikes" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

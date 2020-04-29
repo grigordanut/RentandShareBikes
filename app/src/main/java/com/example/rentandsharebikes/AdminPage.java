@@ -35,20 +35,20 @@ public class AdminPage extends AppCompatActivity {
 
         navigationViewAdmin = findViewById(R.id.navViewAdmin);
 
-//        //Adding Click Events to our navigation drawer item
-//        navigationViewAdmin.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                int id = item.getItemId();
-//                switch (id){
-//                    case R.id.adminAdd_bikeStores:
-//                        Toast.makeText(AdminPage.this, "Add Bike Stores",Toast.LENGTH_SHORT).show();
-//                        startActivity(new Intent(AdminPage.this, CalculateCoordinates.class));
-//                        break;
-//                    case R.id.adminShow_bikeStores:
-//                        Toast.makeText(AdminPage.this, "Show Bike Stores",Toast.LENGTH_SHORT).show();
-//                        startActivity(new Intent(AdminPage.this, BikeStoreImageShowStoresListAdmin.class));
-//                        break;
+        //Adding Click Events to our navigation drawer item
+        navigationViewAdmin.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                switch (id){
+                    case R.id.adminAdd_bikeStores:
+                        Toast.makeText(AdminPage.this, "Add Bike Stores",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AdminPage.this, CalculateCoordinates.class));
+                        break;
+                    case R.id.adminShow_bikeStores:
+                        Toast.makeText(AdminPage.this, "Show Bike Stores",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AdminPage.this, BikeStoreImageShowStoresListAdmin.class));
+                        break;
 //                    case R.id.adminAdd_bikesToStore:
 //                        Toast.makeText(AdminPage.this, "Add Bikes to Store",Toast.LENGTH_SHORT).show();
 //                        startActivity(new Intent(AdminPage.this, BikeStoreImageAddBikesAdmin.class));
@@ -62,12 +62,12 @@ public class AdminPage extends AppCompatActivity {
 //                        Toast.makeText(AdminPage.this, "Rented Bikes",Toast.LENGTH_SHORT).show();
 //                        startActivity(new Intent(AdminPage.this, BikesImageShowBikesRentedAdmin.class));
 //                        break;
-//                    default:
-//                        return true;
-//                }
-//                return true;
-//            }
-//        });
+                    default:
+                        return true;
+                }
+                return true;
+            }
+        });
     }
 
     @Override
