@@ -53,15 +53,15 @@ public class AdminPage extends AppCompatActivity {
                         Toast.makeText(AdminPage.this, "Add Bikes to Store",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikeStoreImageAddBikesAdmin.class));
                         break;
-//                    case R.id.adminShow_bikesList:
-//                        Toast.makeText(AdminPage.this, "Show Bikes List",Toast.LENGTH_SHORT).show();
-//                        startActivity(new Intent(AdminPage.this, BikeStoreImageShowBikesListAdmin.class));
-//                        break;
-//
-//                    case R.id.adminShow_bikesRented:
-//                        Toast.makeText(AdminPage.this, "Rented Bikes",Toast.LENGTH_SHORT).show();
-//                        startActivity(new Intent(AdminPage.this, BikesImageShowBikesRentedAdmin.class));
-//                        break;
+                    case R.id.adminShow_bikesList:
+                        Toast.makeText(AdminPage.this, "Show Bikes List",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AdminPage.this, BikeStoreImageShowBikesListAdmin.class));
+                        break;
+
+                    case R.id.adminShow_bikesRented:
+                        Toast.makeText(AdminPage.this, "Rented Bikes",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AdminPage.this, BikesImageShowBikesRentedAdmin.class));
+                        break;
                     default:
                         return true;
                 }

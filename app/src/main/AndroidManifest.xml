@@ -22,7 +22,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BikeStoreImageReturnBikeDifferentStore"></activity>
+        <activity android:name=".BikesImageShowBikesRentedAdmin"></activity>
+        <activity android:name=".UpdateBikeDetails" />
+        <activity android:name=".BikesImageShowBikesListAdmin" />
+        <activity android:name=".BikeStoreImageShowBikesListAdmin" />
+        <activity android:name=".BikeStoreImageShowBikesListMain" />
+        <activity android:name=".BikesImageShowBikesToRentMain" />
+        <activity android:name=".BikeStoreImageShowStoresListMain" />
+        <activity android:name=".BikesImageReturnBikesRented" />
+        <activity android:name=".BikeStoreImageReturnBikeDifferentStore" />
         <activity android:name=".ReturnRentedBikes" />
         <activity android:name=".BikesImageShowBikesRentedCustom" />
         <activity android:name=".BikesImageRentBikesCustomer" />

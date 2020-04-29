@@ -44,11 +44,18 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "My Account",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, LoginCustomer.class));
                         break;
-                    case R.id.myCart:
-                        Toast.makeText(MainActivity.this, "My Cart",Toast.LENGTH_SHORT).show();
+                    case R.id.bikeStoreAv:
+                        Toast.makeText(MainActivity.this, "Bike Stores",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, BikeStoreImageShowStoresListMain.class));
+                        break;
+                    case R.id.bikeAvToRent:
+                        Toast.makeText(MainActivity.this, "Bikes to Rent",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.bikeAvToShare:
+                        Toast.makeText(MainActivity.this, "Bikes to Share",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.settings:
-                        Toast.makeText(MainActivity.this, "Settings",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Bikes to share",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, AdminPage.class));
                         break;
                     default:

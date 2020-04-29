@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
+    tools:context=".BikesImageShowBikesListAdmin">
+
+    <TextView
+        android:id="@+id/tvBikeImageList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/tv_bikesImageShowBikesListAdmin"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/evRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_below="@+id/tvBikeImageList"
+        android:layout_margin="5dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/btnAddMoreBikes"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/evRecyclerView"
+        android:layout_alignStart="@+id/tvBikeImageList"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/btn_delete_round_corners"
+        android:text="@string/btn_addMoreBikes"
+        android:textSize="14sp"
+        tools:ignore="ButtonStyle" />
+
+    <Button
+        android:id="@+id/btnBackAdminPageBikes"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/evRecyclerView"
+        android:layout_alignEnd="@+id/tvBikeImageList"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/btn_delete_round_corners"
+        android:text="@string/btn_backToAdminPageBikes"
+        android:textSize="14sp"
+        tools:ignore="ButtonStyle" />
+
+</RelativeLayout>

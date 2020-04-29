@@ -14,7 +14,7 @@
 
         <item
             android:id="@+id/userRent_bikes"
-            android:icon="@drawable/ic_launcher_foreground"
+            android:icon="@drawable/ic_shopping_cart_black_24dp"
             android:title="@string/mDUser_rentBikesRent" />
 
         <item

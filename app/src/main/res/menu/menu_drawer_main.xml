@@ -8,9 +8,19 @@
             android:title="@string/menu_myAccount" />
 
         <item
-            android:id="@+id/myCart"
-            android:icon="@drawable/ic_shopping_cart_black_24dp"
-            android:title="@string/menu_myCart" />
+            android:id="@+id/bikeStoreAv"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menu_storesAvailable" />
+
+        <item
+            android:id="@+id/bikeAvToRent"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menu_bikesAvToRent" />
+
+        <item
+            android:id="@+id/bikeAvToShare"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menu_bikesAvToShare" />
 
         <item
             android:id="@+id/settings"

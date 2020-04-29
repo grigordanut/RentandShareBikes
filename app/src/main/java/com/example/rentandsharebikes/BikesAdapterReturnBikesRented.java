@@ -2,6 +2,7 @@ package com.example.rentandsharebikes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class BikesAdapterShowBikesRentedCustomer extends RecyclerView.Adapter<BikesAdapterShowBikesRentedCustomer.ImageViewHolder> {
+public class BikesAdapterReturnBikesRented extends RecyclerView.Adapter<BikesAdapterReturnBikesRented.ImageViewHolder> {
 
     private Context bikesContext;
     private List<RentBikes> bikesUploads;
-    private OnItemClickListener clickListener;
 
-    public BikesAdapterShowBikesRentedCustomer(Context bikes_context, List<RentBikes> bikes_uploads){
+    public BikesAdapterReturnBikesRented(Context bikes_context, List<RentBikes> bikes_uploads){
         bikesContext = bikes_context;
         bikesUploads = bikes_uploads;
     }
@@ -52,6 +52,16 @@ public class BikesAdapterShowBikesRentedCustomer extends RecyclerView.Adapter<Bi
                 .centerCrop()
                 .into(holder.imageRentedBikeUser);
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (bikesContext, ReturnRentedBikes.class);
+                intent.putExtra("BStoreSame",uploadCurrent.getStoreLocation_RentBikes());
+                intent.putExtra("BKey",uploadCurrent.getBike_RentKey());
+                bikesContext.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -59,7 +69,7 @@ public class BikesAdapterShowBikesRentedCustomer extends RecyclerView.Adapter<Bi
         return bikesUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ImageViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView imageRentedBikeUser;
         public TextView tvRentedBikeStoreNameUser;
@@ -79,28 +89,6 @@ public class BikesAdapterShowBikesRentedCustomer extends RecyclerView.Adapter<Bi
             tvRentedBikeManufacturerUser = itemView.findViewById(R.id.tvBikeManufactRentUser);
             tvRentedBikePriceUser = itemView.findViewById(R.id.tvBikePriceRentUser);
             tvRentedBikeDurationUser = itemView.findViewById(R.id.tvBikeDurationRent);
-
-            itemView.setOnClickListener(this);
         }
-
-        @Override
-        public void onClick(View v) {
-            if(clickListener !=null){
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION){
-                    clickListener.onItemClick(position);
-                }
-            }
-        }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-
-        void alertDialogStoreLocation(int position);
-    }
-
-    public void setOnItmClickListener(BikesAdapterShowBikesRentedCustomer.OnItemClickListener listener){
-        clickListener = listener;
     }
 }

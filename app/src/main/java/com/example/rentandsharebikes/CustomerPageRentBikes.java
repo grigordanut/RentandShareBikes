@@ -106,12 +106,12 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                         break;
 
                                     case R.id.userReturn_bikes:
-//                                        Toast.makeText(CustomerPageRentBikes.this, "Return Bikes", Toast.LENGTH_SHORT).show();
-//                                        Intent intentReturn = new Intent(CustomerPageRentBikes.this, BikesImageReturnBikesRented.class);
-//                                        intentReturn.putExtra("CFName", custom_data.getfName_Customer());
-//                                        intentReturn.putExtra("CLName", custom_data.getlName_Customer());
-//                                        intentReturn.putExtra("CId", currentUser.getUid());
-//                                        startActivity(intentReturn);
+                                        Toast.makeText(CustomerPageRentBikes.this, "Return Bikes", Toast.LENGTH_SHORT).show();
+                                        Intent intentReturn = new Intent(CustomerPageRentBikes.this, BikesImageReturnBikesRented.class);
+                                        intentReturn.putExtra("CFName", custom_data.getfName_Customer());
+                                        intentReturn.putExtra("CLName", custom_data.getlName_Customer());
+                                        intentReturn.putExtra("CId", currentUser.getUid());
+                                        startActivity(intentReturn);
                                         break;
                                     default:
                                         return true;

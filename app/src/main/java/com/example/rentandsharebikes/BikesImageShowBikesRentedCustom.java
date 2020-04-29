@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikesImageShowBikesRentedCustom extends AppCompatActivity implements BikesAdapterShowBikesRentedCustomer.OnItemClickListener {
+public class BikesImageShowBikesRentedCustom extends AppCompatActivity implements BikesAdapterShowBikesRentedCustom.OnItemClickListener {
 
     private DatabaseReference databaseRefRemoveBike;
     private DatabaseReference databaseRefRestoreBike;
@@ -40,7 +40,7 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
     private ValueEventListener bikesEventListener;
 
     private RecyclerView bikesListRecyclerView;
-    private BikesAdapterShowBikesRentedCustomer bikesAdapterShowBikesRentedCustomer;
+    private BikesAdapterShowBikesRentedCustom bikesAdapterShowBikesRentedCustom;
 
     private TextView tVCustomerRentBikes;
 
@@ -67,7 +67,7 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
         customer_Id = Objects.requireNonNull(getIntent().getExtras()).getString("CId");
 
         tVCustomerRentBikes = (TextView) findViewById(R.id.tvCustomerRentBikes);
-        tVCustomerRentBikes.setText("Bikes rented by: "+customerFirst_Name+" "+customerLast_Name);
+        tVCustomerRentBikes.setText("No Bikes rented by: "+customerFirst_Name+" "+customerLast_Name);
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -109,12 +109,12 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
                     if (rent_Bikes.getCustomerId_RentBikes().equals(customer_Id)) {
                         rent_Bikes.setBike_RentKey(postSnapshot.getKey());
                         rentBikesList.add(rent_Bikes);
-                        //textViewBikesImageList.setText(bikesList.size()+" bikes available in "+bikeStore_Name+" store");
+                        tVCustomerRentBikes.setText(rentBikesList.size()+" bikes rented by "+rent_Bikes.getfName_RentBikes()+" "+rent_Bikes.getlName_RentBikes());
                     }
                 }
-                bikesAdapterShowBikesRentedCustomer = new BikesAdapterShowBikesRentedCustomer(BikesImageShowBikesRentedCustom.this, rentBikesList);
-                bikesListRecyclerView.setAdapter(bikesAdapterShowBikesRentedCustomer);
-                bikesAdapterShowBikesRentedCustomer.setOnItmClickListener(BikesImageShowBikesRentedCustom.this);
+                bikesAdapterShowBikesRentedCustom = new BikesAdapterShowBikesRentedCustom(BikesImageShowBikesRentedCustom.this, rentBikesList);
+                bikesListRecyclerView.setAdapter(bikesAdapterShowBikesRentedCustom);
+                bikesAdapterShowBikesRentedCustom.setOnItmClickListener(BikesImageShowBikesRentedCustom.this);
                 progressDialog.dismiss();
             }
 

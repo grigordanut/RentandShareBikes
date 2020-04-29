@@ -74,18 +74,12 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
     String bike_StoreNameRentedBikesSame = "";
     String bike_StoreNameRentedBikesDiff = "";
-    //    String bike_CondReturnBikes = "";
-//    String bike_ModelReturnBikes = "";
-//    String bike_ManufactReturnBikes = "";
-//    String bike_PriceReturnBikes = "";
-//    String bike_ImageReturnBikes = "";
     String bike_CusIdRentedBikes = "";
     String bike_KeyRentedBike = "";
-
-
     String bikeKey_ReturnBike = "";
 
     private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,9 +88,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
         progressDialog = new ProgressDialog(ReturnRentedBikes.this);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
-//        storageRefRentBikes = FirebaseStorage.getInstance().getReference("Rent Bikes");
-//        databaseRefRentBikes = FirebaseDatabase.getInstance().getReference("Rent Bikes");
 
         //initialise variables
         tVReturnBikes = (TextView) findViewById(R.id.tvReturnBikes);
@@ -144,7 +135,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
         cBoxRetSameStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (cBoxRetSameStore.isChecked()) {
                     cBoxRetDiffStore.setChecked(false);
                     etBikeStoreReturn.setText(bike_StoreNameRentedBikesSame);
@@ -170,8 +160,11 @@ public class ReturnRentedBikes extends AppCompatActivity {
         buttonReturnBikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadBikesNoPicture();
-                deleteDataNoPicture();
+                if (bikesReturnTask != null && bikesReturnTask.isInProgress()) {
+                    Toast.makeText(ReturnRentedBikes.this, "Return Bikes in progress", Toast.LENGTH_SHORT).show();
+                } else {
+                    uploadBikesNoPicture();
+                }
             }
         });
 
@@ -209,6 +202,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         startActivity(new Intent(ReturnRentedBikes.this, CustomerPageRentBikes.class));
                         Toast.makeText(ReturnRentedBikes.this, "Bike Returned successfully", Toast.LENGTH_SHORT).show();
+                        deleteDataNoPicture();
                         finish();
                     }
                 }

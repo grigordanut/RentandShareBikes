@@ -55,6 +55,9 @@
     <!--    Bike Store Image Show Stores List Customer-->
     <string name="tv_bikeStoreImageShowStoresListCustomer">Select the Bike Store</string>
 
+    <!--    Bike Store Image Show Stores List Main-->
+    <string name="tv_bikeStoreImageShowStoresListMain">List of Bike Stores</string>
+
     <!--    Bikes Image Rent Bikes Customer-->
     <string name="tv_bikesImageRentBikesCustomer">Select the Bike</string>
 
@@ -337,8 +340,10 @@
     <string name="mDUser_updateAvailableBikesShare">Update My Bike</string>
 
     <!--    Menu Drawer Main-->
-    <string name="menu_myCart">My Cart</string>
     <string name="menu_myAccount">My Account</string>
+    <string name="menu_storesAvailable">Stores Available</string>
+    <string name="menu_bikesAvToRent">Bike to Rent</string>
+    <string name="menu_bikesAvToShare">Bike to Share</string>
     <string name="menu_settings">Settings</string>
 
     <!--    Manifest File-->

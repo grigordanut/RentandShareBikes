@@ -48,7 +48,7 @@ public class AddBikes extends AppCompatActivity {
 
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
-    private StorageTask mUploadTask;
+    private StorageTask bikesUploadTask;
 
     private ImageView ivAddBike;
     private Uri imageUri;
@@ -136,9 +136,8 @@ public class AddBikes extends AppCompatActivity {
         buttonSaveBike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //show progress Dialog
                 progressDialog.show();
-                if (mUploadTask != null && mUploadTask.isInProgress()) {
+                if (bikesUploadTask != null && bikesUploadTask.isInProgress()) {
                     Toast.makeText(AddBikes.this, "Upload in progress", Toast.LENGTH_SHORT).show();
                 } else {
                     uploadBikes();
@@ -250,7 +249,7 @@ public class AddBikes extends AppCompatActivity {
             progressDialog.setTitle("The Bike is Uploading");
             progressDialog.show();
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
-            mUploadTask = fileReference.putFile(imageUri)
+            bikesUploadTask = fileReference.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
