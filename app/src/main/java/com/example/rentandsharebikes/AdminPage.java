@@ -35,39 +35,39 @@ public class AdminPage extends AppCompatActivity {
 
         navigationViewAdmin = findViewById(R.id.navViewAdmin);
 
-        //Adding Click Events to our navigation drawer item
-        navigationViewAdmin.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                switch (id){
-                    case R.id.adminAdd_bikeStores:
-                        Toast.makeText(AdminPage.this, "Add Bike Stores",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this, CalculateCoordinates.class));
-                        break;
-                    case R.id.adminShow_bikeStores:
-                        Toast.makeText(AdminPage.this, "Show Bike Stores",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this, BikeStoreImageShowStoresListAdmin.class));
-                        break;
-                    case R.id.adminAdd_bikesToStore:
-                        Toast.makeText(AdminPage.this, "Add Bikes to Store",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this, BikeStoreImageAddBikesAdmin.class));
-                        break;
-                    case R.id.adminShow_bikesList:
-                        Toast.makeText(AdminPage.this, "Show Bikes List",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this, BikeStoreImageShowBikesListAdmin.class));
-                        break;
-
-                    case R.id.adminShow_bikesRented:
-                        Toast.makeText(AdminPage.this, "Rented Bikes",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this, BikesImageShowBikesRentedAdmin.class));
-                        break;
-                    default:
-                        return true;
-                }
-                return true;
-            }
-        });
+//        //Adding Click Events to our navigation drawer item
+//        navigationViewAdmin.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                int id = item.getItemId();
+//                switch (id){
+//                    case R.id.adminAdd_bikeStores:
+//                        Toast.makeText(AdminPage.this, "Add Bike Stores",Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(AdminPage.this, CalculateCoordinates.class));
+//                        break;
+//                    case R.id.adminShow_bikeStores:
+//                        Toast.makeText(AdminPage.this, "Show Bike Stores",Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(AdminPage.this, BikeStoreImageShowStoresListAdmin.class));
+//                        break;
+//                    case R.id.adminAdd_bikesToStore:
+//                        Toast.makeText(AdminPage.this, "Add Bikes to Store",Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(AdminPage.this, BikeStoreImageAddBikesAdmin.class));
+//                        break;
+//                    case R.id.adminShow_bikesList:
+//                        Toast.makeText(AdminPage.this, "Show Bikes List",Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(AdminPage.this, BikeStoreImageShowBikesListAdmin.class));
+//                        break;
+//
+//                    case R.id.adminShow_bikesRented:
+//                        Toast.makeText(AdminPage.this, "Rented Bikes",Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(AdminPage.this, BikesImageShowBikesRentedAdmin.class));
+//                        break;
+//                    default:
+//                        return true;
+//                }
+//                return true;
+//            }
+//        });
     }
 
     @Override

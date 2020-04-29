@@ -22,19 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UpdateBikeShareDetails"></activity>
-        <activity android:name=".BikesImageShowOwnSharedBikesToUpdate" />
-        <activity android:name=".BikesImageShowBikesRentedCustom" />
-        <activity android:name=".BikesImageShowBikesListCustom" />
-        <activity android:name=".BikeStoreImageRentBikesCustom" />
-        <activity android:name=".BikeStoreImageShowBikesListCustom" />
-        <activity android:name=".BikeStoreImageShowStoresListMain" />
-        <activity android:name=".BikesImageShowOwnSharedBikes" />
-        <activity android:name=".CustomerPageRentBikes" />
-        <activity android:name=".CustomerPageShareBikes" />
-        <activity android:name=".CustomerPageMain" />
-        <activity android:name=".ShareBikesCustomer" />
-        <activity android:name=".BikesImageRentBikesCustomer" />
+        <activity android:name=".CustomerPageMain"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -50,17 +38,9 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".UpdateBikeStoreDetails" />
-        <activity android:name=".UpdateBikeDetails" />
-        <activity android:name=".BikeStoreImageShowBikesListAdmin" />
-        <activity android:name=".BikeStoreImageShowStoresListCustomer" />
-        <activity android:name=".BikeStoreImageAddBikesAdmin" />
-        <activity android:name=".BikeStoreImageShowStoresListAdmin" />
         <activity android:name=".EditCustomerProfile" />
-        <activity android:name=".ChangePassword" />
         <activity android:name=".CalculateCoordinates" />
         <activity android:name=".ResetPassword" />
-        <activity android:name=".RentBikesCustomer" />
         <activity android:name=".AdminPage" />
         <activity android:name=".AddBikes" />
         <activity android:name=".AddBikeStore" />
