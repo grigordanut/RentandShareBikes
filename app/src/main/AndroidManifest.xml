@@ -22,7 +22,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChangePassword"></activity>
+        <activity android:name=".RentBikesCustomer"></activity>
+        <activity android:name=".BikesImageShowBikesListCustomer" />
+        <activity android:name=".BikeStoreImageShowBikesListCustomer" />
+        <activity android:name=".BikeStoreImageShowStoresListCustomer" />
+        <activity android:name=".ChangePassword" />
         <activity android:name=".CustomerPageShareBikes" />
         <activity android:name=".CustomerPageRentBikes" />
         <activity android:name=".UpdateBikeStoreDetails" />

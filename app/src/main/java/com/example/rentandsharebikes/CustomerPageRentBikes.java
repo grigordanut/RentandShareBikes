@@ -86,7 +86,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                 switch (id) {
                                     case R.id.userShow_storesList:
                                         Toast.makeText(CustomerPageRentBikes.this, "Bike Stores", Toast.LENGTH_SHORT).show();
-                                        //startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageShowStoresListCustomer.class));
+                                        startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageShowStoresListCustomer.class));
                                         break;
                                     case R.id.userShow_bikesList:
                                         Toast.makeText(CustomerPageRentBikes.this, "Bikes Available", Toast.LENGTH_SHORT).show();

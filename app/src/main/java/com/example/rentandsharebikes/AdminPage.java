@@ -49,10 +49,10 @@ public class AdminPage extends AppCompatActivity {
                         Toast.makeText(AdminPage.this, "Show Bike Stores",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikeStoreImageShowStoresListAdmin.class));
                         break;
-//                    case R.id.adminAdd_bikesToStore:
-//                        Toast.makeText(AdminPage.this, "Add Bikes to Store",Toast.LENGTH_SHORT).show();
-//                        startActivity(new Intent(AdminPage.this, BikeStoreImageAddBikesAdmin.class));
-//                        break;
+                    case R.id.adminAdd_bikesToStore:
+                        Toast.makeText(AdminPage.this, "Add Bikes to Store",Toast.LENGTH_SHORT).show();
+                        //startActivity(new Intent(AdminPage.this, BikeStoreImageAddBikesAdmin.class));
+                        break;
 //                    case R.id.adminShow_bikesList:
 //                        Toast.makeText(AdminPage.this, "Show Bikes List",Toast.LENGTH_SHORT).show();
 //                        startActivity(new Intent(AdminPage.this, BikeStoreImageShowBikesListAdmin.class));
