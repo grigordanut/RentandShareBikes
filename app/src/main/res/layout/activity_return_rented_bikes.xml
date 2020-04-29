@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    tools:context=".ReturnRentedBikes">
+
+        <TextView
+            android:id="@+id/tvReturnBikes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/tv_returnRentedBike"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/tvDateReturn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvReturnBikes"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/tv_dateReturnBike"
+            android:textColor="#000000"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/tvDateReturnBike"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvReturnBikes"
+            android:layout_alignEnd="@+id/tvReturnBikes"
+            android:layout_marginTop="15dp"
+            android:background="#f2f2f2"
+            android:paddingEnd="10dp"
+            android:textAlignment="textEnd"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            tools:ignore="RtlSymmetry" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fNameWrapperReturnBikes"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_below="@+id/tvDateReturn"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFirstNameReturnBikes"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:hint="@string/et_firstNameReturnBike"
+                android:inputType="textPersonName|textCapWords"
+                android:paddingStart="10dp"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lNameWrapperRentBikes"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_below="@+id/fNameWrapperReturnBikes"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColorHint="#000000">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etLastNameReturnBikes"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:hint="@string/et_lastNameReturnBike"
+                android:inputType="textPersonName|textCapWords"
+                android:paddingStart="10dp"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tvBikeStoreReturn"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lNameWrapperRentBikes"
+            android:layout_alignStart="@id/lNameWrapperRentBikes"
+            android:layout_marginTop="10dp"
+            android:text="@string/tv_returnBikeStore"
+            android:textAlignment="textStart"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/etBikeReturnStore"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lNameWrapperRentBikes"
+            android:layout_alignEnd="@id/lNameWrapperRentBikes"
+            android:layout_marginTop="10dp"
+            android:background="#f2f2f2"
+            android:hint="@string/et_returnBikeStore"
+            android:inputType="text"
+            android:paddingStart="10dp"
+            android:textAlignment="textStart"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            tools:ignore="Autofill,RtlSymmetry" />
+
+        <CheckBox
+            android:id="@+id/cbReturnBikeSameStore"
+            android:layout_width="160dp"
+            android:layout_height="35dp"
+            android:layout_below="@id/tvBikeStoreReturn"
+            android:layout_alignStart="@id/lNameWrapperRentBikes"
+            android:layout_marginStart="-10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/check_box"
+            android:text="@string/cb_returnSameAsRentStore"
+            android:textSize="18sp"
+            tools:ignore="RtlSymmetry" />
+
+        <CheckBox
+            android:id="@+id/cbReturnBikeDiffStore"
+            android:layout_width="160dp"
+            android:layout_height="35dp"
+            android:layout_below="@id/tvBikeStoreReturn"
+            android:layout_alignEnd="@id/lNameWrapperRentBikes"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="-10dp"
+            android:background="@drawable/check_box"
+            android:text="@string/cb_returnDiffRentStore"
+            android:textSize="18sp"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/tvReturnBikeDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cbReturnBikeSameStore"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/tv_returnBikeDetails"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="22sp" />
+
+        <RelativeLayout
+            android:id="@+id/relReturnBikeDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvReturnBikeDetails"
+            android:layout_margin="5dp"
+            android:background="#DDDDDD">
+
+            <ImageView
+                android:id="@+id/imgShowReturnBikes"
+                android:layout_width="110dp"
+                android:layout_height="140dp"
+                android:layout_margin="5dp"
+                android:background="#ffffff"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvReturnStoreName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/imgShowReturnBikes"
+                android:text="@string/tv_returnBikeStoreName"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvReturnCond"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/tvReturnStoreName"
+                android:layout_toEndOf="@+id/imgShowReturnBikes"
+                android:text="@string/tv_returnBikeCondition"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvReturnModel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvReturnCond"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/imgShowReturnBikes"
+                android:text="@string/tv_returnBikeModel"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="NotSibling,RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvReturnManufact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvReturnModel"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/imgShowReturnBikes"
+                android:text="@string/tv_returnBikeFactory"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvReturnPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvReturnManufact"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/imgShowReturnBikes"
+                android:text="@string/tv_returnBikePrice"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+
+
+            <TextView
+                android:id="@+id/tvReturnBikesStoreName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="210dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="#e6f7ff"
+                android:paddingStart="5dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvReturnBikesCond"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="210dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/tvReturnBikesStoreName"
+                android:layout_marginEnd="5dp"
+                android:background="#e6f7ff"
+                android:paddingStart="5dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvReturnBikesModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvReturnBikesCond"
+                android:layout_marginStart="210dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="#e6f7ff"
+                android:paddingStart="5dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvReturnBikesManufact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvReturnBikesModel"
+                android:layout_marginStart="210dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="#e6f7ff"
+                android:paddingStart="5dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvReturnBikesPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvReturnBikesManufact"
+                android:layout_marginStart="210dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="#e6f7ff"
+                android:paddingStart="10dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btnReturnBike"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/relReturnBikeDetails"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/btn_background"
+            android:text="@string/btn_returnBike"
+            android:textColor="#FFFF"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</ScrollView>

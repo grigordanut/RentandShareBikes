@@ -18,13 +18,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikeStoreImageShowBikesListCustomer extends AppCompatActivity {
+public class BikeStoreImageRentBikesCustom extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
-    private BikeStoreAdapterShowBikesListCustomer bikeStoreAdapterShowBikesListCustomer;
+    private BikeStoreAdapterRentBikesCustom bikeStoreAdapterRentBikesCustom;
 
     private List<BikeStore> bikeStoreList;
 
@@ -33,7 +33,7 @@ public class BikeStoreImageShowBikesListCustomer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_store_image_show_bikes_list_customer);
+        setContentView(R.layout.activity_bike_store_image_rent_bikes_customer);
 
         bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
@@ -64,14 +64,14 @@ public class BikeStoreImageShowBikesListCustomer extends AppCompatActivity {
                     bikeStore.setStoreKey(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
                 }
-                bikeStoreAdapterShowBikesListCustomer = new BikeStoreAdapterShowBikesListCustomer(BikeStoreImageShowBikesListCustomer.this, bikeStoreList);
-                bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowBikesListCustomer);
+                bikeStoreAdapterRentBikesCustom = new BikeStoreAdapterRentBikesCustom(BikeStoreImageRentBikesCustom.this, bikeStoreList);
+                bikeStoreRecyclerView.setAdapter(bikeStoreAdapterRentBikesCustom);
                 progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeStoreImageShowBikesListCustomer.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeStoreImageRentBikesCustom.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }
