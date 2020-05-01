@@ -35,8 +35,14 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ReturnRentedBikes extends AppCompatActivity {
@@ -60,15 +66,16 @@ public class ReturnRentedBikes extends AppCompatActivity {
     private StorageTask bikesReturnTask;
 
     private TextInputEditText etFNameReturnBikes, etLNameReturnBikes;
-    private TextView tVReturnBikes, tVDateReturnBike, tVStoreNameReturnBikes, tVCondReturnBikes, tVModelReturnBikes, tVManufactReturnBikes, tVPriceReturnBikes;
+    private TextView tVReturnBikes, tVStoreNameReturnBikes, tVCondReturnBikes, tVModelReturnBikes, tVManufactReturnBikes, tVPriceReturnBikes;
     private CheckBox cBoxRetSameStore, cBoxRetDiffStore;
-    private EditText etBikeStoreReturn;
+    private EditText eTDateOfRentBike, eTDateReturnBike, eTRentDurationBike, eTReturnTotalHours, etBikeStoreReturn;
 
     //variables for data received
     private String etFName_ReturnBikes, etLName_ReturnBikes;
     private String tVDate_ReturnBikes, storeName_ReturnBikes, tVCond_ReturnBikes, tVModel_ReturnBikes, tVManufact_ReturnBikes,img_ReturnBikes;
 
     private double tVPrice_ReturnBikes;
+    private Double totalHours = 0.00;
 
     private ImageView ivReturnBikes;
 
@@ -80,6 +87,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,20 +100,21 @@ public class ReturnRentedBikes extends AppCompatActivity {
         //initialise variables
         tVReturnBikes = (TextView) findViewById(R.id.tvReturnBikes);
 
-        LocalDate localDate = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            localDate = LocalDate.now();
-        }
-        DateTimeFormatter formatter = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-        }
-        String insertDate = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            insertDate = localDate.format(formatter);
-        }
-        tVDateReturnBike = (TextView) findViewById(R.id.tvDateReturnBike);
-        tVDateReturnBike.setText(insertDate);
+        //Date of Rent
+        eTDateOfRentBike = (EditText)findViewById(R.id.etDateOfRentBike);
+        eTDateOfRentBike.setEnabled(false);
+
+        //Date of Return
+        eTDateReturnBike = (EditText) findViewById(R.id.etDateReturnBike);
+        eTDateReturnBike.setEnabled(false);
+
+        //Duration Time
+        eTRentDurationBike = (EditText) findViewById(R.id.etRentDurationBike);
+        eTRentDurationBike.setEnabled(false);
+
+        //Total Hours
+        eTReturnTotalHours = (EditText)findViewById(R.id.etReturnTotalHours);
+        eTReturnTotalHours.setEnabled(false);
 
         etFNameReturnBikes = (TextInputEditText) findViewById(R.id.etFirstNameReturnBikes);
         etFNameReturnBikes.setEnabled(false);
@@ -228,8 +237,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
                 }
                 progressDialog.dismiss();
                 Toast.makeText(ReturnRentedBikes.this, "Rented Bike removed", Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(UpdateEve.this, UserPage.class));
-                //finish();
             }
 
             @Override
@@ -309,12 +316,49 @@ public class ReturnRentedBikes extends AppCompatActivity {
                     assert return_Bikes != null;
                     return_Bikes.setBike_RentKey(postSnapshot.getKey());
                     if (return_Bikes.getBike_RentKey().equals(bike_KeyRentedBike)) {
-
+                        eTDateOfRentBike.setText(return_Bikes.getDate_RentBikes());
                         tVStoreNameReturnBikes.setText(return_Bikes.getStoreLocation_RentBikes());
                         tVCondReturnBikes.setText(return_Bikes.getBikeCond_RentBikes());
                         tVModelReturnBikes.setText(return_Bikes.getBikeModel_RentBikes());
                         tVManufactReturnBikes.setText(return_Bikes.getBikeManufact_RentBikes());
                         tVPriceReturnBikes.setText(String.valueOf(return_Bikes.getBikePrice_RentBikes()));
+
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+                        String currentDateAndTime = sdf.format(new Date());
+                        eTDateReturnBike.setText(currentDateAndTime);
+
+                        String date1 = eTDateOfRentBike.getText().toString().trim();
+                        String date2 = eTDateReturnBike.getText().toString().trim();
+
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                        Duration diff = Duration.between(LocalDateTime.parse(date1, formatter),
+                                LocalDateTime.parse(date2, formatter));
+
+                        if (diff.isZero()) {
+                            Toast.makeText(ReturnRentedBikes.this, "The was rented 0m", Toast.LENGTH_SHORT).show();
+                        } else {
+                            long days = diff.toDays();
+                            if (days != 0) {
+                                diff = diff.minusDays(days);
+                            }
+                            long hours = diff.toHours();
+                            if (hours != 0) {
+                                diff = diff.minusHours(hours);
+                            }
+                            long minutes = diff.toMinutes();
+                            if (minutes != 0) {
+                                diff = diff.minusMinutes(minutes);
+                            }
+//                            long seconds = diff.getSeconds();
+//                            if (seconds != 0) {
+//                                System.out.print("" + seconds + "s ");
+//                            }
+                            System.out.println();
+
+                            eTRentDurationBike.setText(days+" d "+" "+hours+" h "+""+minutes+" m");
+                            double totalHours = ((days*24)+hours+(minutes/60));
+                            eTReturnTotalHours.setText(String.valueOf(totalHours));
+                        }
 
                         //receive data from the other activity
                         Picasso.get()

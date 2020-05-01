@@ -183,7 +183,7 @@
     <string name="tv_rentBikeCondition">Condition: </string>
     <string name="tv_rentBikeModel">Model: </string>
     <string name="tv_rentBikeManufacturer">Factory: </string>
-    <string name="tv_rentBikePrice">Price/Day: </string>
+    <string name="tv_rentBikePrice">Price/Hour: </string>
     <string name="btn_rentBike">Rent This Bike</string>
 
     <!--    Reset Password-->
@@ -290,7 +290,7 @@
     <string name="tv_rentedBikeConditionAdmin">Bike Condition: </string>
     <string name="tv_rentedBikeModelAdmin">Bike Model: </string>
     <string name="tv_rentedBikeManufacturerAdmin">Bike Factory: </string>
-    <string name="tv_rentedBikePriceAdmin">Price/Day: </string>
+    <string name="tv_rentedBikePriceAdmin">Price/Hour: </string>
     <string name="tv_rentedBikeDateRentAdmin">Date of Rent: </string>
 
     <!--    Image Bikes Rented Customer-->
@@ -298,7 +298,7 @@
     <string name="tv_rentedBikeConditionUser">Bike Condition: </string>
     <string name="tv_rentedBikeModelUser">Bike Model: </string>
     <string name="tv_rentedBikeManufacturerUser">Bike Factory: </string>
-    <string name="tv_rentedBikePriceUser">Price/Day: </string>
+    <string name="tv_rentedBikePriceUser">Price/Hour: </string>
     <string name="tv_rentedBikeDateRent">Date of Rent: </string>
 
     <!--    Image Bike Store-->

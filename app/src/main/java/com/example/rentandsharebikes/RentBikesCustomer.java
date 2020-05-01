@@ -37,7 +37,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Objects;
@@ -91,31 +93,33 @@ public class RentBikesCustomer extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-
-        //storageReference = FirebaseStorage.getInstance().getReference("Bikes");
-        //databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
         storageRefRentBikes = FirebaseStorage.getInstance().getReference("Rent Bikes");
         databaseRefRentBikes = FirebaseDatabase.getInstance().getReference("Rent Bikes");
 
         //initialise variables
         tVRentBikes = (TextView) findViewById(R.id.tvRentBikes);
 
-        LocalDate localDate = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            localDate = LocalDate.now();
-        }
-        DateTimeFormatter formatter = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-        }
-        String insertDate = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            insertDate = localDate.format(formatter);
-        }
+//        LocalDate localDate = null;
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//            localDate = LocalDate.now();
+//        }
+//        DateTimeFormatter formatter = null;
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//            formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+//        }
+//        String insertDate = null;
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//            insertDate = localDate.format(formatter);
+//        }
+
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String dateRent = date.format(formatter);
+
 
         eTextDateRentBike =(EditText) findViewById(R.id.etDateRentBike);
         eTextDateRentBike.setEnabled(false);
-        eTextDateRentBike.setText(insertDate);
+        eTextDateRentBike.setText(dateRent);
 
         etFNameRentBikes = (TextInputEditText) findViewById(R.id.etFirstNameRentBikes);
         etLNameRentBikes = (TextInputEditText)findViewById(R.id.etLastNameRentBikes);
@@ -298,7 +302,6 @@ public class RentBikesCustomer extends AppCompatActivity {
             }
         });
     }
-
 
     private void deleteEventPicture(){
         progressDialog.show();
