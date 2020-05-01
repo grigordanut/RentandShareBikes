@@ -57,7 +57,10 @@ public class AdminPage extends AppCompatActivity {
                         Toast.makeText(AdminPage.this, "Show Bikes List",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikeStoreImageShowBikesListAdmin.class));
                         break;
-
+                    case R.id.adminShow_bikesListFull:
+                        Toast.makeText(AdminPage.this, "Show Full List of Bikes",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AdminPage.this, BikesImageShowBikesListAdminFull.class));
+                        break;
                     case R.id.adminShow_bikesRented:
                         Toast.makeText(AdminPage.this, "Rented Bikes",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikesImageShowBikesRentedAdmin.class));

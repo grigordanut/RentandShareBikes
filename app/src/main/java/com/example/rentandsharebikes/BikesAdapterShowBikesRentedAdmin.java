@@ -43,7 +43,7 @@ public class BikesAdapterShowBikesRentedAdmin extends RecyclerView.Adapter<Bikes
         holder.tvRentedBikeModelAdmin.setText(uploadCurrent.getBikeModel_RentBikes());
         holder.tvRentedBikeManufacturerAdmin.setText(uploadCurrent.getBikeManufact_RentBikes());
         holder.tvRentedBikePriceAdmin.setText(String.valueOf( +uploadCurrent.getBikePrice_RentBikes()));
-        holder.tvRentedBikeDurationAdmin.setText(uploadCurrent.getBikeDateCollect_RentBikes()+"-"+uploadCurrent.getBikeDateReturn_RentBikes());
+        holder.tvRentedBikeDateRentAdmin.setText(uploadCurrent.getDate_RentBikes());
 
         Picasso.get()
                 .load(uploadCurrent.getBikeImage_RentBike())
@@ -67,7 +67,7 @@ public class BikesAdapterShowBikesRentedAdmin extends RecyclerView.Adapter<Bikes
         public TextView tvRentedBikeModelAdmin;
         public TextView tvRentedBikeManufacturerAdmin;
         public TextView tvRentedBikePriceAdmin;
-        public TextView tvRentedBikeDurationAdmin;
+        public TextView tvRentedBikeDateRentAdmin;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
@@ -79,7 +79,7 @@ public class BikesAdapterShowBikesRentedAdmin extends RecyclerView.Adapter<Bikes
             tvRentedBikeModelAdmin = itemView.findViewById(R.id.tvBikeModelRentAdmin);
             tvRentedBikeManufacturerAdmin = itemView.findViewById(R.id.tvBikeManufactRentAdmin);
             tvRentedBikePriceAdmin = itemView.findViewById(R.id.tvBikePriceRentAdmin);
-            tvRentedBikeDurationAdmin = itemView.findViewById(R.id.tvBikeDurationRentAdmin);
+            tvRentedBikeDateRentAdmin = itemView.findViewById(R.id.tvBikeDateRentAdmin);
         }
     }
 }

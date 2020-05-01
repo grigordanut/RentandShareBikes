@@ -22,7 +22,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BikesImageShowBikesRentedAdmin"></activity>
+        <activity android:name=".BikesImageShowBikesListAdminFull"></activity>
+        <activity android:name=".BikesImageShowAllSharedBikes" />
+        <activity android:name=".BikesImageShowOwnSharedBikesToUpdate" />
+        <activity android:name=".UpdateBikeShareDetails" />
+        <activity android:name=".BikesImageShowOwnSharedBikes" />
+        <activity android:name=".ShareBikesCustomer" />
+        <activity android:name=".BikesImageShowBikesRentedAdmin" />
         <activity android:name=".UpdateBikeDetails" />
         <activity android:name=".BikesImageShowBikesListAdmin" />
         <activity android:name=".BikeStoreImageShowBikesListAdmin" />

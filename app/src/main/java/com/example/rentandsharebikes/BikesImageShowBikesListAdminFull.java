@@ -29,20 +29,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikesImageShowBikesListAdmin extends AppCompatActivity implements BikesAdapterShowBikesListAdmin.OnItemClickListener {
+public class BikesImageShowBikesListAdminFull extends AppCompatActivity implements BikesAdapterShowBikesListAdminFull.OnItemClickListener{
 
     private DatabaseReference databaseReference;
     private FirebaseStorage bikesStorage;
     private ValueEventListener bikesEventListener;
 
     private RecyclerView bikesListRecyclerView;
-    private BikesAdapterShowBikesListAdmin bikesListAdapter;
+    private BikesAdapterShowBikesListAdminFull bikesListAdapterAdminFull;
 
     private TextView textViewBikesImageList;
 
     private List<Bikes> bikesList;
 
-    private Button buttonAddMoreBikes, buttonBackAdminPageBikes;
+    private Button buttonAddMoreBikesFull, buttonBackAdminPageBikesFull;
 
     String bikeStore_Name = "";
 
@@ -51,13 +51,13 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bikes_image_show_bikes_list_admin);
+        setContentView(R.layout.activity_bikes_image_show_bikes_list_admin_full);
 
-        getIntent().hasExtra("SName");
-        bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
+//        getIntent().hasExtra("SName");
+//        bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
 
-        textViewBikesImageList = (TextView) findViewById(R.id.tvBikeImageList);
-        textViewBikesImageList.setText("No bikes available in " +bikeStore_Name+ " store");
+        textViewBikesImageList = (TextView) findViewById(R.id.tvBikeImageListFull);
+        textViewBikesImageList.setText("No bikes available");
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -68,19 +68,19 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
 
         progressDialog.show();
 
-        buttonAddMoreBikes = (Button) findViewById(R.id.btnAddMoreBikes);
-        buttonAddMoreBikes.setOnClickListener(new View.OnClickListener() {
+        buttonAddMoreBikesFull = (Button) findViewById(R.id.btnAddMoreBikesFull);
+        buttonAddMoreBikesFull.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BikesImageShowBikesListAdmin.this, BikeStoreImageAddBikesAdmin.class));
+                startActivity(new Intent(BikesImageShowBikesListAdminFull.this, BikeStoreImageAddBikesAdmin.class));
             }
         });
 
-        buttonBackAdminPageBikes = (Button) findViewById(R.id.btnBackAdminPageBikes);
-        buttonBackAdminPageBikes.setOnClickListener(new View.OnClickListener() {
+        buttonBackAdminPageBikesFull = (Button) findViewById(R.id.btnBackAdminPageBikesFull);
+        buttonBackAdminPageBikesFull.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BikesImageShowBikesListAdmin.this, AdminPage.class));
+                startActivity(new Intent(BikesImageShowBikesListAdminFull.this, AdminPage.class));
             }
         });
     }
@@ -93,7 +93,7 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
 
     @Override
     public void onUpdateClick(int position) {
-        Intent intent = new Intent(BikesImageShowBikesListAdmin.this, UpdateBikeDetails.class);
+        Intent intent = new Intent(BikesImageShowBikesListAdminFull.this, UpdateBikeDetails.class);
         Bikes selected_Bike = bikesList.get(position);
         intent.putExtra("BCondition",selected_Bike.getBike_Condition());
         intent.putExtra("BModel",selected_Bike.getBike_Model());
@@ -107,7 +107,7 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
     //Action of the menu Delete and alert dialog
     @Override
     public void onDeleteClick(final int position) {
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowBikesListAdmin.this);
+        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowBikesListAdminFull.this);
         builderAlert.setMessage("Are sure to delete this Bike?");
         builderAlert.setCancelable(true);
         builderAlert.setPositiveButton(
@@ -121,7 +121,7 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
                             @Override
                             public void onSuccess(Void aVoid) {
                                 databaseReference.child(selectedKeyBike).removeValue();
-                                Toast.makeText(BikesImageShowBikesListAdmin.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BikesImageShowBikesListAdminFull.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -165,21 +165,21 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if (bikes.getBikeStoreName().equals(bikeStore_Name)) {
+                    //if (bikes.getBikeStoreName().equals(bikeStore_Name)) {
                         bikes.setBike_Key(postSnapshot.getKey());
                         bikesList.add(bikes);
-                        textViewBikesImageList.setText(bikesList.size()+" Bikes available in "+bikeStore_Name+" store");
-                    }
+                        textViewBikesImageList.setText(bikesList.size()+" Bikes available");
+                    //}
                 }
-                bikesListAdapter = new BikesAdapterShowBikesListAdmin(BikesImageShowBikesListAdmin.this, bikesList);
-                bikesListRecyclerView.setAdapter(bikesListAdapter);
-                bikesListAdapter.setOnItmClickListener(BikesImageShowBikesListAdmin.this);
+                bikesListAdapterAdminFull = new BikesAdapterShowBikesListAdminFull(BikesImageShowBikesListAdminFull.this, bikesList);
+                bikesListRecyclerView.setAdapter(bikesListAdapterAdminFull);
+                bikesListAdapterAdminFull.setOnItmClickListener(BikesImageShowBikesListAdminFull.this);
                 progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikesImageShowBikesListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikesImageShowBikesListAdminFull.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

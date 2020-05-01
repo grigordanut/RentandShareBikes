@@ -128,59 +128,11 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
     @Override
     public void alertDialogStoreLocation(final int position) {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        final String [] options = {"Delete this bike", "Return this Bike"};
+        final String [] options = {"Return this Bike", "Back to Rent Page"};
         alertDialogBuilder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(which == 0){
-                    alertDialogBuilder.setMessage("Are sure to delete this Bike?");
-                    alertDialogBuilder.setCancelable(true);
-                    alertDialogBuilder.setPositiveButton(
-                            "Yes",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-
-
-
-                                    RentBikes selected_BikeReturn = rentBikesList.get(position);
-                                    final String selBikeReturn = selected_BikeReturn.getBike_RentKey();
-                                    StorageReference imageRefReturn = bikesStorageReturnBike.getReferenceFromUrl(selected_BikeReturn.getBikeImage_RentBike());
-                                    imageRefReturn.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Uri> task) {
-                                            databaseRefRestoreBike.child("Bikes").setValue(selBikeReturn);
-                                            Toast.makeText(BikesImageShowBikesRentedCustom.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-
-                                    RentBikes selected_Bike = rentBikesList.get(position);
-                                    final String selectedKeyBike = selected_Bike.getBike_RentKey();
-                                    StorageReference imageReference = bikesStorageRemoveBike.getReferenceFromUrl(selected_Bike.getBikeImage_RentBike());
-                                    imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            databaseRefRemoveBike.child(selectedKeyBike).removeValue();
-                                            Toast.makeText(BikesImageShowBikesRentedCustom.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-
-                                }
-                            });
-
-
-                    alertDialogBuilder.setNegativeButton(
-                            "No",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-                    AlertDialog alert1 = alertDialogBuilder.create();
-                    alert1.show();
-                }
-
-                if (which == 1){
                     alertDialogBuilder.setMessage("Are sure to return this Bike?");
                     alertDialogBuilder.setCancelable(true);
                     alertDialogBuilder.setPositiveButton(
@@ -202,6 +154,13 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
                                     dialog.cancel();
                                 }
                             });
+
+                    AlertDialog alert1 = alertDialogBuilder.create();
+                    alert1.show();
+                }
+                if (which == 1){
+                    Toast.makeText(BikesImageShowBikesRentedCustom.this, "Go back to main page", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(BikesImageShowBikesRentedCustom.this, RentBikesCustomer.class));
 
                     AlertDialog alert1 = alertDialogBuilder.create();
                     alert1.show();

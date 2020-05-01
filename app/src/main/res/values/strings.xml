@@ -44,8 +44,11 @@
     <!--    Bike Store Image Show Bike List Admin-->
     <string name="tv_bikeStoreImageShowBikesListAdmin">Select the Bike Store</string>
 
-    <!--    Bike Store Image Show Bike List Admin-->
+    <!--    Bike Store Image Show Bike List Customer-->
     <string name="tv_bikeStoreImageShowBikesListCustomer">Select the Bike Store</string>
+
+    <!--    Bike Store Image Show Bike List Customer-->
+    <string name="tv_bikeStoreImageShowBikesListMain">Select the Bike Store</string>
 
     <!--    Bike Stores Image Show Stores List Admin-->
     <string name="tv_bikeStoreImageShowStoresListAdmin">List of Bike Stores</string>
@@ -64,6 +67,9 @@
     <!--    Bikes Image Return Bikes Rented-->
     <string name="tv_bikesImageRentBikesRented">Select the Bike</string>
 
+    <!--    Bikes Image Show All Shared Bikes Bikes-->
+    <string name="tv_bikesImageAllShareBikes">List of Bikes to share</string>
+
     <!--    Bikes Image Show Bikes List Admin-->
     <string name="tv_bikesImageShowBikesListAdmin">List of Bikes</string>
     <string name="btn_addMoreBikes">Add More Bikes</string>
@@ -77,6 +83,10 @@
 
     <!--    Bikes Image Show Bikes Rented Customer-->
     <string name="tv_bikesImageShowBikesRentedCustomer">List of Bikes</string>
+
+    <!--    Bikes Image Show Bikes To Rent Main-->
+    <string name="tv_bikesImageShowBikesToRentMain">List of Bikes</string>
+
 
     <!--    Bikes Image Show Own Shared Bikes-->
     <string name="tv_bikesImageShowOwnSharedBikes">List of Bikes</string>
@@ -103,8 +113,9 @@
 
     <!--    Customer Page Main-->
     <string name="tv_customPageMain">Welcome</string>
-    <string name="btn_rentBikesCustomer">Rent Bikes</string>
-    <string name="btn_shareBikeCustomer">Share Bike</string>
+    <string name="tv_customPageServices">Select the service</string>
+    <string name="btn_rentBikesCustomer">Renting Bikes</string>
+    <string name="btn_shareBikeCustomer">Sharing Bikes</string>
 
     <!--    Customer Page Rent Bikes-->
     <string name="tv_customPageRentBikes">Welcome</string>
@@ -162,6 +173,7 @@
     <!--    Rent Bikes Customer-->
     <string name="tv_rentBikes">Rent a Bike</string>
     <string name="tv_dateRentBikes">Date of Rent</string>
+    <string name="et_dateRentBikes">Date of Rent</string>
     <string name="et_firstNameRentBikes">First Name</string>
     <string name="et_lastNameRentBikes">Last Name</string>
     <string name="et_phoneNoRentBikes">Phone Number</string>
@@ -172,11 +184,7 @@
     <string name="tv_rentBikeModel">Model: </string>
     <string name="tv_rentBikeManufacturer">Factory: </string>
     <string name="tv_rentBikePrice">Price/Day: </string>
-    <string name="tv_rentBikeAddCollectDate">Add Collect Date</string>
-    <string name="et_rentBikeCollectDate">Collect Date</string>
-    <string name="tv_rentBikeAddReturnDate">Add Return Date</string>
-    <string name="et_rentBikeReturnDate">Return Date</string>
-    <string name="btn_rentBike">Rent Bike</string>
+    <string name="btn_rentBike">Rent This Bike</string>
 
     <!--    Reset Password-->
     <string name="tv_ResetPassword">Reset Your Password</string>
@@ -258,6 +266,12 @@
     <string name="tv_bikeManufacturer">Factory: </string>
     <string name="tv_bikePrice">Price/Day: </string>
 
+    <!--    Image Bikes Admin Full-->
+    <string name="tv_bikeStoreFull">Bike Store Name: </string>
+    <string name="tv_bikeCondFull">Condition: </string>
+    <string name="tv_bikeModelFull">Model: </string>
+    <string name="tv_bikeManufactFull">Factory: </string>
+    <string name="tv_bikePriceFull">Price/Day: </string>
 
     <!--    Image Bikes Customer-->
 
@@ -277,7 +291,7 @@
     <string name="tv_rentedBikeModelAdmin">Bike Model: </string>
     <string name="tv_rentedBikeManufacturerAdmin">Bike Factory: </string>
     <string name="tv_rentedBikePriceAdmin">Price/Day: </string>
-    <string name="tv_rentedBikeDurationAdmin">Rent Duration: </string>
+    <string name="tv_rentedBikeDateRentAdmin">Date of Rent: </string>
 
     <!--    Image Bikes Rented Customer-->
     <string name="tv_rentedBikeStoreNameUser">Bike Store Name: </string>
@@ -285,7 +299,7 @@
     <string name="tv_rentedBikeModelUser">Bike Model: </string>
     <string name="tv_rentedBikeManufacturerUser">Bike Factory: </string>
     <string name="tv_rentedBikePriceUser">Price/Day: </string>
-    <string name="tv_rentedBikeDurationUser">Rent Duration: </string>
+    <string name="tv_rentedBikeDateRent">Date of Rent: </string>
 
     <!--    Image Bike Store-->
     <string name="tv_storeLocation">Store Location: </string>
@@ -323,7 +337,8 @@
     <string name="menuDAdmin_addBikeStores">Add Bike Stores</string>
     <string name="menuDAdmin_showBikeStores">Show Bike Stores</string>
     <string name="menuDAdmin_addBikeToStores">Add Bike To Store</string>
-    <string name="menuDAdmin_showBikesList">Show Bikes List</string>
+    <string name="menuDAdmin_showBikesList">List of Bikes</string>
+    <string name="menuDAdmin_showBikesListFull">List of Bikes Full</string>
     <string name="menuDAdmin_showBikesRented">Show Bikes Rented</string>
 
     <!--    Menu Drawer Customer Rent Bikes-->

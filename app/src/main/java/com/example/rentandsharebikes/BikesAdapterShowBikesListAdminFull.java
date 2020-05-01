@@ -19,13 +19,12 @@ import java.util.List;
 
 import static android.icu.text.DateFormat.NONE;
 
-public class BikesAdapterShowBikesListAdmin extends RecyclerView.Adapter<BikesAdapterShowBikesListAdmin.ImageViewHolder> {
-
+public class BikesAdapterShowBikesListAdminFull extends RecyclerView.Adapter<BikesAdapterShowBikesListAdminFull.ImageViewHolder> {
     private Context bikesContext;
     private List<Bikes> bikesUploads;
     private OnItemClickListener clickListener;
 
-    public BikesAdapterShowBikesListAdmin(Context bikes_context, List<Bikes> bikes_uploads){
+    public BikesAdapterShowBikesListAdminFull(Context bikes_context, List<Bikes> bikes_uploads){
         bikesContext = bikes_context;
         bikesUploads = bikes_uploads;
     }
@@ -33,7 +32,7 @@ public class BikesAdapterShowBikesListAdmin extends RecyclerView.Adapter<BikesAd
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(bikesContext).inflate(R.layout.image_bikes_admin,parent, false);
+        View view = LayoutInflater.from(bikesContext).inflate(R.layout.image_bikes_admin_full,parent, false);
         return new ImageViewHolder(view);
     }
 
@@ -42,17 +41,18 @@ public class BikesAdapterShowBikesListAdmin extends RecyclerView.Adapter<BikesAd
     public void onBindViewHolder(ImageViewHolder holder, int position) {
 
         Bikes uploadCurrent = bikesUploads.get(position);
-        holder.tvBikeConAdmin.setText(uploadCurrent.getBike_Condition());
-        holder.tvBikeMAdmin.setText(uploadCurrent.getBike_Model());
-        holder.tvBikeManAdmin.setText(uploadCurrent.getBike_Manufacturer());
-        holder.tvBikePAdmin.setText(String.valueOf( +uploadCurrent.getBike_Price()));
+        holder.tVBikeStoreNameFull.setText(uploadCurrent.getBikeStoreName());
+        holder.tVBikeConAdminFull.setText(uploadCurrent.getBike_Condition());
+        holder.tVBikeMAdminFull.setText(uploadCurrent.getBike_Model());
+        holder.tVBikeManAdminFull.setText(uploadCurrent.getBike_Manufacturer());
+        holder.tVBikePAdminFull.setText(String.valueOf( +uploadCurrent.getBike_Price()));
 
         Picasso.get()
                 .load(uploadCurrent.getBike_Image())
                 .placeholder(R.mipmap.ic_launcher)
                 .fit()
                 .centerCrop()
-                .into(holder.imBikeAdmin);
+                .into(holder.imBikeAdminFull);
     }
 
     @Override
@@ -62,21 +62,21 @@ public class BikesAdapterShowBikesListAdmin extends RecyclerView.Adapter<BikesAd
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
             View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener{
-
-        public ImageView imBikeAdmin;
-        public TextView tvBikeConAdmin;
-        public TextView tvBikeMAdmin;
-        public TextView tvBikeManAdmin;
-        public TextView tvBikePAdmin;
+        public TextView tVBikeStoreNameFull;
+        public ImageView imBikeAdminFull;
+        public TextView tVBikeConAdminFull;
+        public TextView tVBikeMAdminFull;
+        public TextView tVBikeManAdminFull;
+        public TextView tVBikePAdminFull;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-
-            imBikeAdmin = itemView.findViewById(R.id.imgShowBike);
-            tvBikeConAdmin = itemView.findViewById(R.id.tvBikeCondition);
-            tvBikeMAdmin = itemView.findViewById(R.id.tvBikeModel);
-            tvBikeManAdmin = itemView.findViewById(R.id.tvBikeManufact);
-            tvBikePAdmin = itemView.findViewById(R.id.tvBikePrice);
+            tVBikeStoreNameFull = itemView.findViewById(R.id.tvBikeStoreNameFull);
+            imBikeAdminFull = itemView.findViewById(R.id.imgShowBikeFull);
+            tVBikeConAdminFull = itemView.findViewById(R.id.tvBikeCondFull);
+            tVBikeMAdminFull = itemView.findViewById(R.id.tvBikeModelFull);
+            tVBikeManAdminFull = itemView.findViewById(R.id.tvBikeManufactFull);
+            tVBikePAdminFull = itemView.findViewById(R.id.tvBikePriceFull);
 
             itemView.setOnClickListener(this);
             itemView.setOnCreateContextMenuListener(this);
@@ -133,7 +133,7 @@ public class BikesAdapterShowBikesListAdmin extends RecyclerView.Adapter<BikesAd
 
     }
 
-    public void setOnItmClickListener(OnItemClickListener listener){
+    public void setOnItmClickListener(BikesAdapterShowBikesListAdminFull.OnItemClickListener listener){
         clickListener = listener;
     }
 }

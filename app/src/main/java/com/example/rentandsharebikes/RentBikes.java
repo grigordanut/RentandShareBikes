@@ -13,8 +13,6 @@ public class RentBikes {
     private String bikeManufact_RentBikes;
     private double bikePrice_RentBikes;
     private String bikeImage_RentBike;
-    private String bikeDateCollect_RentBikes;
-    private String bikeDateReturn_RentBikes;
     private String customerId_RentBikes;
     private String bike_RentKey;
 
@@ -22,7 +20,10 @@ public class RentBikes {
 
     }
 
-    public RentBikes(String date_RentBikes, String fName_RentBikes, String lName_RentBikes, String phoneNo_RentBikes, String email_RentBikes, String storeLocation_RentBikes, String bikeCond_RentBikes, String bikeModel_RentBikes, String bikeManufact_RentBikes, double bikePrice_RentBikes, String bikeImage_RentBike, String bikeDateCollect_RentBikes, String bikeDateReturn_RentBikes, String customerId_RentBikes, String bike_RentKey) {
+    public RentBikes(String date_RentBikes, String fName_RentBikes, String lName_RentBikes, String phoneNo_RentBikes,
+                     String email_RentBikes, String storeLocation_RentBikes, String bikeCond_RentBikes,
+                     String bikeModel_RentBikes, String bikeManufact_RentBikes, double bikePrice_RentBikes,
+                     String bikeImage_RentBike, String customerId_RentBikes, String bike_RentKey) {
         this.date_RentBikes = date_RentBikes;
         this.fName_RentBikes = fName_RentBikes;
         this.lName_RentBikes = lName_RentBikes;
@@ -34,8 +35,6 @@ public class RentBikes {
         this.bikeManufact_RentBikes = bikeManufact_RentBikes;
         this.bikePrice_RentBikes = bikePrice_RentBikes;
         this.bikeImage_RentBike = bikeImage_RentBike;
-        this.bikeDateCollect_RentBikes = bikeDateCollect_RentBikes;
-        this.bikeDateReturn_RentBikes = bikeDateReturn_RentBikes;
         this.customerId_RentBikes = customerId_RentBikes;
         this.bike_RentKey = bike_RentKey;
     }
@@ -126,22 +125,6 @@ public class RentBikes {
 
     public void setBikeImage_RentBike(String bikeImage_RentBike) {
         this.bikeImage_RentBike = bikeImage_RentBike;
-    }
-
-    public String getBikeDateCollect_RentBikes() {
-        return bikeDateCollect_RentBikes;
-    }
-
-    public void setBikeDateCollect_RentBikes(String bikeDateCollect_RentBikes) {
-        this.bikeDateCollect_RentBikes = bikeDateCollect_RentBikes;
-    }
-
-    public String getBikeDateReturn_RentBikes() {
-        return bikeDateReturn_RentBikes;
-    }
-
-    public void setBikeDateReturn_RentBikes(String bikeDateReturn_RentBikes) {
-        this.bikeDateReturn_RentBikes = bikeDateReturn_RentBikes;
     }
 
     public String getCustomerId_RentBikes() {

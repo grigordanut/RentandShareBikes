@@ -13,106 +13,111 @@
         app:cardBackgroundColor="#DDDDDD"
         app:cardCornerRadius="10dp">
 
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvBikeStore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/tv_bikeStoreFull"
+                android:layout_marginStart="50dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
 
             <ImageView
-                android:id="@+id/imgRentedBikesUser"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:id="@+id/imgShowBikeFull"
+                android:layout_width="110dp"
+                android:layout_height="115dp"
+                android:layout_below="@+id/tvBikeStore"
                 android:layout_margin="5dp"
                 android:background="#ffffff"
                 tools:ignore="ContentDescription" />
 
             <TextView
-                android:id="@+id/tvStoreRentUser"
+                android:id="@+id/tvCondition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imgRentedBikesUser"
-                android:layout_marginStart="10dp"
+                android:layout_below="@+id/tvBikeStore"
                 android:layout_marginTop="5dp"
-                android:text="@string/tv_rentedBikeStoreNameUser"
+                android:layout_toEndOf="@+id/imgShowBikeFull"
+                android:text="@string/tv_bikeCondFull"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:ignore="RtlSymmetry" />
 
             <TextView
-                android:id="@+id/tvCondRentUser"
+                android:id="@+id/tvModel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvBikeStoreRentUser"
-                android:layout_marginStart="10dp"
+                android:layout_below="@+id/tvCondition"
                 android:layout_marginTop="5dp"
-                android:text="@string/tv_rentedBikeConditionUser"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="RtlSymmetry" />
-
-            <TextView
-                android:id="@+id/tvModelRentUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvCondRentUser"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/tv_rentedBikeModelUser"
+                android:layout_toEndOf="@+id/imgShowBikeFull"
+                android:text="@string/tv_bikeModelFull"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:ignore="NotSibling,RtlSymmetry" />
 
             <TextView
-                android:id="@+id/tvManufactRentUser"
+                android:id="@+id/tvManufact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvModelRentUser"
-                android:layout_marginStart="10dp"
+                android:layout_below="@+id/tvModel"
                 android:layout_marginTop="5dp"
-                android:text="@string/tv_rentedBikeManufacturerUser"
+                android:layout_toEndOf="@+id/imgShowBikeFull"
+                android:text="@string/tv_bikeManufactFull"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:ignore="RtlSymmetry" />
 
             <TextView
-                android:id="@+id/tvPriceRentUser"
+                android:id="@+id/tvPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvManufactRentUser"
-                android:layout_marginStart="20dp"
+                android:layout_below="@+id/tvManufact"
                 android:layout_marginTop="5dp"
-                android:text="@string/tv_rentedBikePriceUser"
+                android:layout_toEndOf="@+id/imgShowBikeFull"
+                android:text="@string/tv_bikePriceFull"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:ignore="RtlSymmetry" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tvDateRentUser"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvBikeStoreNameFull"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvPriceRentUser"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="205dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:text="@string/tv_rentedBikeDateRent"
-                android:textColor="#000000"
-                android:textSize="18sp"
+                android:layout_marginEnd="5dp"
+                android:background="#e6f7ff"
+                android:paddingStart="5dp"
+                android:textAlignment="center"
                 android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="18sp"
                 tools:ignore="RtlSymmetry" />
 
             <TextView
-                android:id="@+id/tvBikeStoreRentUser"
+                android:id="@+id/tvBikeCondFull"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imgRentedBikesUser"
-                android:layout_marginStart="160dp"
-                android:layout_marginEnd="10dp"
+                android:layout_below="@+id/tvBikeStoreNameFull"
+                android:layout_marginStart="205dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
                 android:background="#e6f7ff"
                 android:paddingStart="5dp"
                 android:textColor="#000000"
@@ -120,13 +125,13 @@
                 tools:ignore="RtlSymmetry" />
 
             <TextView
-                android:id="@+id/tvBikeCondRentUser"
+                android:id="@+id/tvBikeModelFull"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvBikeStoreRentUser"
-                android:layout_marginStart="160dp"
+                android:layout_below="@+id/tvBikeCondFull"
+                android:layout_marginStart="205dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="5dp"
                 android:background="#e6f7ff"
                 android:paddingStart="5dp"
                 android:textColor="#000000"
@@ -134,13 +139,13 @@
                 tools:ignore="RtlSymmetry" />
 
             <TextView
-                android:id="@+id/tvBikeModelRentUser"
+                android:id="@+id/tvBikeManufactFull"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvBikeCondRentUser"
-                android:layout_marginStart="160dp"
+                android:layout_below="@+id/tvBikeModelFull"
+                android:layout_marginStart="205dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="5dp"
                 android:background="#e6f7ff"
                 android:paddingStart="5dp"
                 android:textColor="#000000"
@@ -148,47 +153,19 @@
                 tools:ignore="RtlSymmetry" />
 
             <TextView
-                android:id="@+id/tvBikeManufactRentUser"
+                android:id="@+id/tvBikePriceFull"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvBikeModelRentUser"
-                android:layout_marginStart="160dp"
+                android:layout_below="@+id/tvBikeManufactFull"
+                android:layout_marginStart="205dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
-                android:background="#e6f7ff"
-                android:paddingStart="5dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                tools:ignore="RtlSymmetry" />
-
-            <TextView
-                android:id="@+id/tvBikePriceRentUser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvBikeManufactRentUser"
-                android:layout_marginStart="160dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
-                android:background="#e6f7ff"
-                android:paddingStart="10dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="RtlSymmetry" />
-
-            <TextView
-                android:id="@+id/tvBikeDateRentUser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvBikePriceRentUser"
-                android:layout_marginStart="160dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
                 android:background="#e6f7ff"
-                android:paddingStart="10dp"
+                android:paddingStart="5dp"
                 android:textColor="#000000"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 tools:ignore="RtlSymmetry" />
         </RelativeLayout>
 
