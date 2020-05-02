@@ -44,7 +44,6 @@ public class CustomerPageShareBikes extends AppCompatActivity {
 
         //initialise the variables
         tVCustomPageShare = (TextView) findViewById(R.id.tvCustomPageShare);
-        //tViewDMCustomer = (TextView)findViewById(R.id.tvDMCustomer
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -83,13 +82,15 @@ public class CustomerPageShareBikes extends AppCompatActivity {
                             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                                 int id = item.getItemId();
                                 switch (id) {
+                                    //Activity of adding Bikes to be shared
                                     case R.id.userAdd_shareBikes:
                                         Toast.makeText(CustomerPageShareBikes.this, "Add bikes to share", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(CustomerPageShareBikes.this, ShareBikesCustomer.class));
                                         break;
+                                    //Show the customer's own bikes added available to be shared
                                     case R.id.userShow_ownShareBikes:
                                         Toast.makeText(CustomerPageShareBikes.this, "Show Bikes Shared", Toast.LENGTH_SHORT).show();
-                                        Intent intentShowBikes = new Intent(CustomerPageShareBikes.this, BikesImageShowShareBikesOwn.class);
+                                        Intent intentShowBikes = new Intent(CustomerPageShareBikes.this, BikesImageShowSharedBikesOwner.class);
                                         intentShowBikes.putExtra("CFNameShare", custom_data.getfName_Customer());
                                         intentShowBikes.putExtra("CLNameShare", custom_data.getlName_Customer());
                                         intentShowBikes.putExtra("CIdShare", currentUser.getUid());

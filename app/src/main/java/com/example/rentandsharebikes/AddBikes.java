@@ -42,7 +42,7 @@ import java.util.Objects;
 
 public class AddBikes extends AppCompatActivity {
 
-    static final int REQUEST_IMAGE_GET = 2;
+    private static final int REQUEST_IMAGE_GET = 2;
     private static final int IMAGE_CAPTURE_CODE = 1001;
     private static final int PERMISSION_CODE = 1000;
 

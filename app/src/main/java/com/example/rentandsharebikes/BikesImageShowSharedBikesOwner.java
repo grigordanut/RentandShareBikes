@@ -11,9 +11,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,18 +28,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikesImageShowShareBikesOwn extends AppCompatActivity implements BikesAdapterShowShareBikesOwn.OnItemClickListener{
+public class BikesImageShowSharedBikesOwner extends AppCompatActivity implements BikesAdapterShowSharedBikesOwner.OnItemClickListener {
 
-    private DatabaseReference databaseRefShare;
+    //Display data from database
     private FirebaseStorage bikesStorageShare;
+    private DatabaseReference databaseRefShare;
 
-    private DatabaseReference databaseRefDeleteBike;
+    //Delete data from database
     private FirebaseStorage bikesStorageDelete;
+    private DatabaseReference databaseRefDeleteBike;
 
     private ValueEventListener shareBikesEventListener;
 
     private RecyclerView bikesListRecyclerView;
-    private BikesAdapterShowShareBikesOwn bikesAdapterShowShareBikesOwn;
+    private BikesAdapterShowSharedBikesOwner bikesAdapterShowSharedBikesOwner;
 
     private TextView tVCustomerShareBikes;
 
@@ -56,7 +56,10 @@ public class BikesImageShowShareBikesOwn extends AppCompatActivity implements Bi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bikes_image_show_share_bikes_own);
+        setContentView(R.layout.activity_bikes_image_show_shared_bikes_owner);
+
+        bikesStorageShare = FirebaseStorage.getInstance();
+        databaseRefShare = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
         tVCustomerShareBikes = (TextView) findViewById(R.id.tvBikesImageShowBikesSharedOwn);
 
@@ -95,40 +98,40 @@ public class BikesImageShowShareBikesOwn extends AppCompatActivity implements Bi
 //        });
     }
 
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onStart() {
         super.onStart();
-        loadBikesListAdmin();
+        loadSharedBikesOwner();
     }
 
-    private void loadBikesListAdmin() {
-        //initialize the bike storage database
-        bikesStorageShare = FirebaseStorage.getInstance();
-        databaseRefShare = FirebaseDatabase.getInstance().getReference("Share Bikes");
-
+    public void loadSharedBikesOwner(){
         shareBikesEventListener = databaseRefShare.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 shareBikesList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     ShareBikes share_Bikes = postSnapshot.getValue(ShareBikes.class);
-                    assert share_Bikes != null;
 
-                    share_Bikes.setShareBike_Key(postSnapshot.getKey());
-                    shareBikesList.add(share_Bikes);
-                    tVCustomerShareBikes.setText(shareBikesList.size() + " Bikes added by " + customShareFirst_Name+" "+customShareLast_Name);
+                    assert share_Bikes != null;
+                    if(share_Bikes.getShareBikes_CustomId().equals(customShare_Id)){
+                        share_Bikes.setShareBike_Key(postSnapshot.getKey());
+                        shareBikesList.add(share_Bikes);
+                        tVCustomerShareBikes.setText(shareBikesList.size() + " Bikes added by " + customShareFirst_Name+" "+customShareLast_Name);
+                    }
                 }
-                bikesAdapterShowShareBikesOwn = new BikesAdapterShowShareBikesOwn(BikesImageShowShareBikesOwn.this, shareBikesList);
-                bikesListRecyclerView.setAdapter(bikesAdapterShowShareBikesOwn);
-                bikesAdapterShowShareBikesOwn.setOnItmClickListener(BikesImageShowShareBikesOwn.this);
+
+                bikesAdapterShowSharedBikesOwner = new BikesAdapterShowSharedBikesOwner(BikesImageShowSharedBikesOwner.this,shareBikesList);
+                bikesListRecyclerView.setAdapter(bikesAdapterShowSharedBikesOwner);
+                bikesAdapterShowSharedBikesOwner.setOnItmClickListener(BikesImageShowSharedBikesOwner.this);
                 progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikesImageShowShareBikesOwn.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikesImageShowSharedBikesOwner.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -144,7 +147,7 @@ public class BikesImageShowShareBikesOwn extends AppCompatActivity implements Bi
             public void onClick(DialogInterface dialog, int which) {
 
                 if (which == 0) {
-                    Intent intent = new Intent(BikesImageShowShareBikesOwn.this, UpdateBikeShareDetails.class);
+                    Intent intent = new Intent(BikesImageShowSharedBikesOwner.this, UpdateBikeSharedDetails.class);
                     ShareBikes selected_Bike = shareBikesList.get(position);
                     intent.putExtra("BCondUpdate", selected_Bike.getShareBike_Condition());
                     intent.putExtra("BModelUpdate", selected_Bike.getShareBike_Model());
@@ -160,7 +163,7 @@ public class BikesImageShowShareBikesOwn extends AppCompatActivity implements Bi
                     bikesStorageDelete = FirebaseStorage.getInstance();
                     databaseRefDeleteBike = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
-                    AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowShareBikesOwn.this);
+                    AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowSharedBikesOwner.this);
                     builderAlert.setMessage("Are sure to delete this Bike?");
                     builderAlert.setCancelable(true);
                     builderAlert.setPositiveButton(
@@ -169,12 +172,12 @@ public class BikesImageShowShareBikesOwn extends AppCompatActivity implements Bi
                                 public void onClick(DialogInterface dialog, int id) {
                                     ShareBikes selected_Bike = shareBikesList.get(position);
                                     final String selectedKeyBike = selected_Bike.getShareBike_Key();
-                                    StorageReference imageReference = bikesStorageShare.getReferenceFromUrl(selected_Bike.getShareBike_Image());
+                                    StorageReference imageReference = bikesStorageDelete.getReferenceFromUrl(selected_Bike.getShareBike_Image());
                                     imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             databaseRefDeleteBike.child(selectedKeyBike).removeValue();
-                                            Toast.makeText(BikesImageShowShareBikesOwn.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(BikesImageShowSharedBikesOwner.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }

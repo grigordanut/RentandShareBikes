@@ -15,12 +15,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class BikesAdapterShowAllSharedBikes extends RecyclerView.Adapter<BikesAdapterShowAllSharedBikes.ImageViewHolder>{
+public class BikesAdapterShowSharedBikesOwner extends RecyclerView.Adapter<BikesAdapterShowSharedBikesOwner.ImageViewHolder> {
+
     private Context bikesContext;
     private List<ShareBikes> bikesUploads;
 
+    private OnItemClickListener clickListener;
 
-    public BikesAdapterShowAllSharedBikes(Context bikes_context, List<ShareBikes> bikes_uploads){
+    public BikesAdapterShowSharedBikesOwner(Context bikes_context, List<ShareBikes> bikes_uploads){
         bikesContext = bikes_context;
         bikesUploads = bikes_uploads;
     }
@@ -56,7 +58,7 @@ public class BikesAdapterShowAllSharedBikes extends RecyclerView.Adapter<BikesAd
         return bikesUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder {
+    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public ImageView imageSharedBikesUser;
         public TextView tvSharedBikeCondUser;
@@ -74,6 +76,26 @@ public class BikesAdapterShowAllSharedBikes extends RecyclerView.Adapter<BikesAd
             tvSharedBikeManufactUser = itemView.findViewById(R.id.tvBikeManufactShare);
             tvSharedBikePriceUser = itemView.findViewById(R.id.tvBikePriceShare);
             tvSharedBikeDateAvUser = itemView.findViewById(R.id.tvDateAvShare);
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            if (clickListener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    clickListener.onItemClick(position);
+                }
+            }
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItmClickListener(OnItemClickListener listener) {
+        clickListener = listener;
     }
 }

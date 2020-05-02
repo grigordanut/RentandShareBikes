@@ -50,7 +50,7 @@ import static com.google.firebase.storage.FirebaseStorage.getInstance;
 
 public class UpdateBikeDetails extends AppCompatActivity {
 
-    static final int REQUEST_IMAGE_GET = 2;
+    private static final int REQUEST_IMAGE_GET = 2;
     private static final int IMAGE_CAPTURE_CODE = 1001;
     private static final int PERMISSION_CODE = 1000;
 
@@ -138,7 +138,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
         ivUpdateBike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteOldEventPicture();
+                deleteOldBikePicture();
                 openGallery();
             }
         });
@@ -147,7 +147,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
         buttonUpTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteOldEventPicture();
+                deleteOldBikePicture();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.CAMERA) ==
                             PackageManager.PERMISSION_DENIED ||
@@ -247,7 +247,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    private void deleteOldEventPicture() {
+    private void deleteOldBikePicture() {
         progressDialog.show();
 
         StorageReference storageRefDelete = getInstance().getReferenceFromUrl(bike_updateImage);
@@ -361,7 +361,6 @@ public class UpdateBikeDetails extends AppCompatActivity {
     }
 
     private void uploadBikesWithOldPicture() {
-
         progressDialog.dismiss();
 
         if (validateBikeDetails()){

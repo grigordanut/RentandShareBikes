@@ -53,9 +53,10 @@ import java.util.Objects;
 
 import static com.google.firebase.storage.FirebaseStorage.getInstance;
 
-public class UpdateBikeShareDetails extends AppCompatActivity {
 
-    static final int REQUEST_IMAGE_GET = 2;
+public class UpdateBikeSharedDetails extends AppCompatActivity {
+
+    private static final int REQUEST_IMAGE_GET = 2;
     private static final int IMAGE_CAPTURE_CODE = 1001;
     private static final int PERMISSION_CODE = 1000;
 
@@ -101,13 +102,13 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_bike_share_details);
+        setContentView(R.layout.activity_update_bike_shared_details);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        progressDialog = new ProgressDialog(UpdateBikeShareDetails.this);
+        progressDialog = new ProgressDialog(UpdateBikeSharedDetails.this);
 
-        storageRefUpShare = FirebaseStorage.getInstance().getReference("Share Bikes");
+        storageRefUpShare = getInstance().getReference("Share Bikes");
         databaseRefUpShare = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
         tVUpShareBikes = (TextView) findViewById(R.id.tvUpShareBikes);
@@ -172,7 +173,7 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
         ivUpShareBike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteOldEventPicture();
+                deleteOldShareBikePicture();
                 openGallery();
             }
         });
@@ -181,7 +182,7 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
         buttonUpShareTPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteOldEventPicture();
+                deleteOldShareBikePicture();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.CAMERA) ==
                             PackageManager.PERMISSION_DENIED ||
@@ -206,11 +207,11 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
                 //show progress Dialog
                 progressDialog.show();
                 if (shareUpTask != null && shareUpTask.isInProgress()) {
-                    Toast.makeText(UpdateBikeShareDetails.this, "Update bike in progress", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateBikeSharedDetails.this, "Update bike in progress", Toast.LENGTH_SHORT).show();
                 }
                 else {
-
-                    updateShareBikesNew();
+                    updateBikesShareWithNewPicture();
+                    //updateShareBikesNew();
 //                    if (imageUpShareUri == null) {
 //                        updateShareBikesWithOldPicture();
 //                    }
@@ -222,28 +223,9 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
         });
     }
 
-    public void deleteOldEventPicture() {
-        progressDialog.show();
-
-        StorageReference stRefDeleteShareBike = getInstance().getReferenceFromUrl(bike_shareUpImage);
-        stRefDeleteShareBike.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(UpdateBikeShareDetails.this, "Previous image deleted", Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(UpdateBikeShareDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
-            }
-        });
-    }
-
     private void selectShareUpAvDate() {
         Calendar calendar = Calendar.getInstance();
-        DatePickerDialog dialog = new DatePickerDialog(UpdateBikeShareDetails.this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog dialog = new DatePickerDialog(UpdateBikeSharedDetails.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 String date_year = String.valueOf(year);
@@ -306,7 +288,7 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
                 imageUpShareUri = data.getData();
                 Bitmap thumbnail = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUpShareUri);
                 ivUpShareBike.setImageBitmap(thumbnail);
-                Toast.makeText(UpdateBikeShareDetails.this, "Image picked from Gallery", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateBikeSharedDetails.this, "Image picked from Gallery", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "Exception: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -320,10 +302,29 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
+    public void deleteOldShareBikePicture(){
+        progressDialog.show();
+
+        StorageReference storageReferShareUp = getInstance().getReferenceFromUrl(bike_shareUpImage);
+        storageReferShareUp.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(UpdateBikeSharedDetails.this, "Previous image was deleted", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(UpdateBikeSharedDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        });
+    }
 
 
 
-    public void updateShareBikesNew(){
+    //Upload a new Bicycle into the Bicycles table
+    public void updateBikesShareWithNewPicture() {
         progressDialog.dismiss();
 
         final String etFName_ShareBikeVal = etUpFNameShareBike.getText().toString().trim();
@@ -338,7 +339,7 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
         final String etDateAv_ShareBikeVal = etUpDateAvShareBike.getText().toString().trim();
 
         if (imageUpShareUri == null) {
-            Toast.makeText(UpdateBikeShareDetails.this, "Please add a picture", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UpdateBikeSharedDetails.this, "Please add a picture", Toast.LENGTH_SHORT).show();
         }
 
         else if (TextUtils.isEmpty(etFName_ShareBikeVal)) {
@@ -371,8 +372,8 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
         } else if (TextUtils.isEmpty(etDateAv_ShareBikeVal)) {
             alertDialogAvailableDateEmpty();
         }
-
-        else{
+        //Add a new Bike into the Bike's table
+        else {
             etUpFName_ShareBike = etUpFNameShareBike.getText().toString().trim();
             etUpLName_ShareBike = etUpLNameShareBike.getText().toString().trim();
             etUpPNo_ShareBike = etUpPNoShareBike.getText().toString().trim();
@@ -384,105 +385,7 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
             etUpPrice_ShareBike = Double.parseDouble(etUpPriceShareBike.getText().toString().trim());
             etUpDateAv_ShareBike = etUpDateAvShareBike.getText().toString().trim();
 
-            progressDialog.setTitle("The updated Share Bike is Uploading");
-            progressDialog.show();
-
-            final StorageReference fileRefUpdate = storageRefUpShare.child(System.currentTimeMillis()+getFileExtension(imageUpShareUri));
-            shareUpTask = fileRefUpdate.putFile(imageUpShareUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    fileRefUpdate.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(final Uri uri) {
-                            databaseRefUpShare = FirebaseDatabase.getInstance().getReference().child("Share Bikes");
-
-                            Query query = databaseRefUpShare.orderByChild("shareBike_Key").equalTo(bike_KeyUpShare);
-                            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                        ds.getRef().child("shareCus_FirstName").setValue(etUpFName_ShareBike);
-                                        ds.getRef().child("shareCus_LastName").setValue(etUpLName_ShareBike);
-                                        ds.getRef().child("shareCus_PhoneNo").setValue(etUpPNo_ShareBike);
-                                        ds.getRef().child("shareCus_EmailAdd").setValue(etUpEmail_ShareBike);
-
-                                        ds.getRef().child("shareBike_Condition").setValue(tVUpCond_ShareBike);
-                                        ds.getRef().child("shareBike_Model").setValue(etUpModel_ShareBike);
-                                        ds.getRef().child("shareBike_Manufact").setValue(etUpManufact_ShareBike);
-                                        ds.getRef().child("shareBike_Price").setValue(String.valueOf(etUpPrice_ShareBike));
-                                        ds.getRef().child("shareBike_DateAv").setValue(etUpDateAv_ShareBike);
-                                        ds.getRef().child("shareBike_Image").setValue(uri.toString());
-                                    }
-                                    progressDialog.dismiss();
-                                    Toast.makeText(UpdateBikeShareDetails.this, "The Bike Share will be updated", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(UpdateBikeShareDetails.this, CustomerPageShareBikes.class));
-                                    finish();
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    Toast.makeText(UpdateBikeShareDetails.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-
-                        }
-                    });
-                    progressDialog.dismiss();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    progressDialog.dismiss();
-                    Toast.makeText(UpdateBikeShareDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                    //show upload Progress
-                    double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
-                    progressDialog.setMessage("Uploaded: " + (int) progress + "%");
-                    progressDialog.setProgress((int) progress);
-                }
-            });
-        }
-    }
-
-    public void alertDialogBikeShareUpCond(){
-        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Select the Bike Condition");
-        alertDialogBuilder.setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
-
-        androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-
-
-
-
-    //Upload a new Bicycle into the Share Bicycles table
-    public void updateShareBikesWithNewPicture() {
-        progressDialog.dismiss();
-
-        //Update the bike into the Share Bike's table
-        if (validateShareBikesDetails()) {
-
-            etUpFName_ShareBike = etUpFNameShareBike.getText().toString().trim();
-            etUpLName_ShareBike = etUpLNameShareBike.getText().toString().trim();
-            etUpPNo_ShareBike = etUpPNoShareBike.getText().toString().trim();
-            etUpEmail_ShareBike = etUpEmailShareBike.getText().toString().trim();
-
-            tVUpCond_ShareBike = tVUpCondShareBike.getText().toString().trim();
-            etUpModel_ShareBike = etUpModelShareBike.getText().toString().trim();
-            etUpManufact_ShareBike = etUpManufactShareBike.getText().toString().trim();
-            etUpPrice_ShareBike = Double.parseDouble(etUpPriceShareBike.getText().toString().trim());
-            etUpDateAv_ShareBike = etUpDateAvShareBike.getText().toString().trim();
-
-            progressDialog.setTitle("The updated Share Bike is Uploading");
+            progressDialog.setTitle("The Bike is Updating");
             progressDialog.show();
             final StorageReference fileReference = storageRefUpShare.child(System.currentTimeMillis() + "." + getFileExtension(imageUpShareUri));
             shareUpTask = fileReference.putFile(imageUpShareUri)
@@ -494,17 +397,16 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
                                 public void onSuccess(final Uri uri) {
                                     databaseRefUpShare = FirebaseDatabase.getInstance().getReference().child("Share Bikes");
 
-                                    Query query = databaseRefUpShare.orderByChild("shareBike_Key").equalTo(bike_KeyUpShare);
+                                    Query query = databaseRefUpShare.orderByChild("bike_Key").equalTo(bike_KeyUpShare);
                                     query.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                                 ds.getRef().child("shareCus_FirstName").setValue(etUpFName_ShareBike);
-                                                ds.getRef().child("shareCus_LastName").setValue(etUpFName_ShareBike);
-                                                ds.getRef().child("shareCus_FirstName").setValue(etUpFName_ShareBike);
-                                                ds.getRef().child("shareCus_PhoneNo").setValue(etUpLName_ShareBike);
+                                                ds.getRef().child("shareCus_LastName").setValue(etUpLName_ShareBike);
                                                 ds.getRef().child("shareCus_PhoneNo").setValue(etUpPNo_ShareBike);
                                                 ds.getRef().child("shareCus_EmailAdd").setValue(etUpEmail_ShareBike);
+
                                                 ds.getRef().child("shareBike_Condition").setValue(tVUpCond_ShareBike);
                                                 ds.getRef().child("shareBike_Model").setValue(etUpModel_ShareBike);
                                                 ds.getRef().child("shareBike_Manufact").setValue(etUpManufact_ShareBike);
@@ -513,17 +415,16 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
                                                 ds.getRef().child("shareBike_Image").setValue(uri.toString());
                                             }
                                             progressDialog.dismiss();
-                                            Toast.makeText(UpdateBikeShareDetails.this, "The Bike Share will be updated", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(UpdateBikeShareDetails.this, CustomerPageShareBikes.class));
+                                            Toast.makeText(UpdateBikeSharedDetails.this, "Bike Store Updated", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(UpdateBikeSharedDetails.this, CustomerPageShareBikes.class));
                                             finish();
                                         }
 
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                                            Toast.makeText(UpdateBikeShareDetails.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(UpdateBikeSharedDetails.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     });
-
                                 }
                             });
                             progressDialog.dismiss();
@@ -533,7 +434,7 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(UpdateBikeShareDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UpdateBikeSharedDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -547,6 +448,7 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
                     });
         }
     }
+
 
 
     public void updateShareBikesWithOldPicture(){
@@ -576,12 +478,19 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
 
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         ds.getRef().child("shareCus_FirstName").setValue(etUpFName_ShareBike);
-                        ds.getRef().child("shareCus_LastName").setValue(etUpFName_ShareBike);
-                        ds.getRef().child("shareCus_FirstName").setValue(etUpFName_ShareBike);
-                        ds.getRef().child("shareCus_PhoneNo").setValue(etUpLName_ShareBike);
-                        ds.getRef().child("shareCus_PhoneNo").setValue(etUpPNo_ShareBike);
+
+                        ds.getRef().child("shareCus_LastName").setValue(etUpLName_ShareBike);
+
+                        ds.getRef().child("shareCus_PhoneNo").setValue(etUpFName_ShareBike);
+
+                        ds.getRef().child("shareCus_EmailAdd").setValue(etUpLName_ShareBike);
+
+                        ds.getRef().child("shareBike_Condition").setValue(etUpPNo_ShareBike);
+
                         ds.getRef().child("shareCus_EmailAdd").setValue(etUpEmail_ShareBike);
+
                         ds.getRef().child("shareBike_Condition").setValue(tVUpCond_ShareBike);
+
                         ds.getRef().child("shareBike_Model").setValue(etUpModel_ShareBike);
                         ds.getRef().child("shareBike_Manufact").setValue(etUpManufact_ShareBike);
                         ds.getRef().child("shareBike_Price").setValue(String.valueOf(etUpPrice_ShareBike));
@@ -646,8 +555,21 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
             result = true;
         }
 
-
         return result;
+    }
+
+    public void alertDialogBikeShareUpCond(){
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Select the Bike Condition");
+        alertDialogBuilder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+                });
+
+        androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private static final String[] bikeUpdateCondition = new String[]{"Brand New", "Used Bike"};
@@ -656,7 +578,7 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
     //Pick the share bike available date
     private void selectShareAvailableDate() {
         Calendar calendar = Calendar.getInstance();
-        DatePickerDialog dialog = new DatePickerDialog(UpdateBikeShareDetails.this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog dialog = new DatePickerDialog(UpdateBikeSharedDetails.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 String date_year = String.valueOf(year);
@@ -713,14 +635,14 @@ public class UpdateBikeShareDetails extends AppCompatActivity {
                         etUpLNameShareBike.setText(custom_data.getlName_Customer());
                         etUpPNoShareBike.setText(custom_data.getPhoneNumb_Customer());
                         etUpEmailShareBike.setText(custom_data.getEmail_Customer());
-                        //customId_UpShareBikes = custom_Details.getUid();
+                        customId_UpShareBikes = custom_Details.getUid();
                     }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(UpdateBikeShareDetails.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateBikeSharedDetails.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
     }
