@@ -195,7 +195,7 @@ public class ShareBikesCustomer extends AppCompatActivity {
 
     private void alertDialogAvailableDateEmpty(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("The collection day cannot be empty.");
+        alertDialogBuilder.setMessage("The available  day cannot be empty.");
         alertDialogBuilder.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -306,7 +306,7 @@ public class ShareBikesCustomer extends AppCompatActivity {
             Toast.makeText(ShareBikesCustomer.this, "Please add a picture", Toast.LENGTH_SHORT).show();
         }
         else if(TextUtils.isEmpty(tVCond_ShareBikeVal)){
-            tVCondShareBike.setError("Please select Bike Condition");
+            alertDialogBikeShareCond();
             tVCondShareBike.requestFocus();
         }
         else if (TextUtils.isEmpty(etModel_ShareBikeVal)) {
@@ -397,6 +397,19 @@ public class ShareBikesCustomer extends AppCompatActivity {
         }
     }
 
+    public void alertDialogBikeShareCond(){
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Select the Bike Condition");
+        alertDialogBuilder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+                });
+
+        androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 
     @Override
     public void onStart() {

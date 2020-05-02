@@ -5,16 +5,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/holo_blue_bright"
-    tools:context=".BikesImageShowBikesToRentMain">
+    tools:context=".BikesImageShowBikesListMainAll">
 
     <TextView
-        android:id="@+id/tvBikeImageListMain"
+        android:id="@+id/tvBikeImageBikesListMainAll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
-        android:text="@string/tv_bikesImageShowBikesToRentMain"
+        android:text="@string/tv_bikesImageShowBikesListMainAll"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="20sp" />

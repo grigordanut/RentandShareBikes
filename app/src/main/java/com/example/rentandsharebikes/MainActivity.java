@@ -40,18 +40,27 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 switch (id){
+                    //Log into My Account
                     case R.id.myAccount:
                         Toast.makeText(MainActivity.this, "My Account",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, LoginCustomer.class));
                         break;
+                    //Show the list of Bike Stores available
                     case R.id.bikeStoreAv:
                         Toast.makeText(MainActivity.this, "Bike Stores",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, BikeStoreImageShowStoresListMain.class));
                         break;
+                    //Show the list of Bikes available from main page ordered by Bike Stores
                     case R.id.bikeAvToRent:
                         Toast.makeText(MainActivity.this, "Bikes to Rent",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, BikeStoreImageShowBikesListMain.class));
                         break;
+                    //Show the list of all Bikes available from main page
+                    case R.id.bikeAvToRentAll:
+                        Toast.makeText(MainActivity.this, "Bikes to Rent All",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, BikesImageShowBikesListMainAll.class));
+                        break;
+                    //Bikes available to share
                     case R.id.bikeAvToShare:
                         Toast.makeText(MainActivity.this, "Bikes available to Share",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, BikesImageShowAllSharedBikes.class));

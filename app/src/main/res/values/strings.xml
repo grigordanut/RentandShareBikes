@@ -78,14 +78,17 @@
     <!--    Bikes Image Show Bikes List Customer-->
     <string name="tv_bikesImageShowBikesListCustomer">List of Bikes</string>
 
+    <!--    Bikes Image Show Bikes List Main Page-->
+    <string name="tv_bikesImageShowBikesListMain">List of Bikes</string>
+
+    <!--    Bikes Image Show Bikes List Main All-->
+    <string name="tv_bikesImageShowBikesListMainAll">List of Bikes</string>
+
     <!--    Bikes Image Show Bikes Rented Admin-->
     <string name="tv_bikesImageShowBikesRentedAdmin">List of rented Bikes</string>
 
     <!--    Bikes Image Show Bikes Rented Customer-->
     <string name="tv_bikesImageShowBikesRentedCustomer">List of Bikes</string>
-
-    <!--    Bikes Image Show Bikes To Rent Main-->
-    <string name="tv_bikesImageShowBikesToRentMain">List of Bikes</string>
 
 
     <!--    Bikes Image Show Own Shared Bikes-->
@@ -271,7 +274,15 @@
     <string name="tv_bikeCondFull">Condition: </string>
     <string name="tv_bikeModelFull">Model: </string>
     <string name="tv_bikeManufactFull">Factory: </string>
-    <string name="tv_bikePriceFull">Price/Day: </string>
+    <string name="tv_bikePriceFull">Price/Hour: € </string>
+
+    <!--    Image Bikes Available Main-->
+    <string name="tv_bikeStoreNameMain">Bike Store Name: </string>
+    <string name="tv_bikeCondMain">Condition: </string>
+    <string name="tv_bikeModelMain">Model: </string>
+    <string name="tv_bikeManufactMain">Factory: </string>
+    <string name="tv_bikePriceMain">Price/Hour: € </string>
+
 
     <!--    Image Bikes Customer-->
 
@@ -357,7 +368,8 @@
     <!--    Menu Drawer Main-->
     <string name="menu_myAccount">My Account</string>
     <string name="menu_storesAvailable">Stores Available</string>
-    <string name="menu_bikesAvToRent">Bike to Rent</string>
+    <string name="menu_bikesAvToRent">Bike Available</string>
+    <string name="menu_bikesAvToRentAll">Bike Available All</string>
     <string name="menu_bikesAvToShare">Bike to Share</string>
     <string name="menu_settings">Settings</string>
 

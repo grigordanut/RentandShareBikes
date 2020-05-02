@@ -97,10 +97,10 @@ public class BikesAdapterShowBikesRentedCustom extends RecyclerView.Adapter<Bike
     public interface OnItemClickListener {
         void onItemClick(int position);
 
-        void alertDialogStoreLocation(int position);
+        void alertDialogShowRentedBikesOptions(int position);
     }
 
-    public void setOnItmClickListener(BikesAdapterShowBikesRentedCustom.OnItemClickListener listener){
+    public void setOnItmClickListener(OnItemClickListener listener){
         clickListener = listener;
     }
 }

@@ -84,18 +84,22 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                                 int id = item.getItemId();
                                 switch (id) {
+                                    //Show the list of Bike Stores available
                                     case R.id.userShow_storesList:
                                         Toast.makeText(CustomerPageRentBikes.this, "Bike Stores", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageShowStoresListCustomer.class));
                                         break;
+                                    //Show the list of Bikes available from customer page ordered by Bike Stores
                                     case R.id.userShow_bikesList:
                                         Toast.makeText(CustomerPageRentBikes.this, "Bikes Available", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageShowBikesListCustom.class));
                                         break;
+                                    //The activity of renting bikes by the customer
                                     case R.id.userRent_bikes:
                                         Toast.makeText(CustomerPageRentBikes.this, "Rent Bikes", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageRentBikesCustom.class));
                                         break;
+                                    //Show the list of Bikes rented by customer
                                     case R.id.userShow_bikesRented:
                                         Toast.makeText(CustomerPageRentBikes.this, "Show Bikes Rented", Toast.LENGTH_SHORT).show();
                                         Intent intentRent = new Intent(CustomerPageRentBikes.this, BikesImageShowBikesRentedCustom.class);
@@ -104,7 +108,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                         intentRent.putExtra("CId", currentUser.getUid());
                                         startActivity(intentRent);
                                         break;
-
+                                    //The activity of returning rented bikes by the customer
                                     case R.id.userReturn_bikes:
                                         Toast.makeText(CustomerPageRentBikes.this, "Return Bikes", Toast.LENGTH_SHORT).show();
                                         Intent intentReturn = new Intent(CustomerPageRentBikes.this, BikesImageReturnBikesRented.class);

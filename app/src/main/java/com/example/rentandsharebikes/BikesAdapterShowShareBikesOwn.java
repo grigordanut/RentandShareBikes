@@ -15,14 +15,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class BikesAdapterShowOwnSharedBikes extends RecyclerView.Adapter<BikesAdapterShowOwnSharedBikes.ImageViewHolder> {
+public class BikesAdapterShowShareBikesOwn extends RecyclerView.Adapter<BikesAdapterShowShareBikesOwn.ImageViewHolder>{
 
     private Context bikesContext;
     private List<ShareBikes> bikesUploads;
 
     private OnItemClickListener clickListener;
 
-    public BikesAdapterShowOwnSharedBikes(Context bikes_context, List<ShareBikes> bikes_uploads){
+    public BikesAdapterShowShareBikesOwn(Context bikes_context, List<ShareBikes> bikes_uploads){
         bikesContext = bikes_context;
         bikesUploads = bikes_uploads;
     }

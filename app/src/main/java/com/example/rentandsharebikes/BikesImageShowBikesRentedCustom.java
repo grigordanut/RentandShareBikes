@@ -10,21 +10,16 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +77,7 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
     //Action on bikes onClick
     @Override
     public void onItemClick(int position) {
-        alertDialogStoreLocation(position);
+        alertDialogShowRentedBikesOptions(position);
     }
 
     @SuppressLint("SetTextI18n")
@@ -126,19 +121,20 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
     }
 
     @Override
-    public void alertDialogStoreLocation(final int position) {
+    public void alertDialogShowRentedBikesOptions(final int position) {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         final String [] options = {"Return this Bike", "Back to Rent Page"};
         alertDialogBuilder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(which == 0){
+                    if(which == 0){
                     alertDialogBuilder.setMessage("Are sure to return this Bike?");
                     alertDialogBuilder.setCancelable(true);
                     alertDialogBuilder.setPositiveButton(
                             "Yes",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+
                                     RentBikes selected_Bike = rentBikesList.get(position);
                                     Intent intent = new Intent (BikesImageShowBikesRentedCustom.this, ReturnRentedBikes.class);
                                     intent.putExtra("BStoreSame",selected_Bike.getStoreLocation_RentBikes());
@@ -161,28 +157,12 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
                 if (which == 1){
                     Toast.makeText(BikesImageShowBikesRentedCustom.this, "Go back to main page", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(BikesImageShowBikesRentedCustom.this, RentBikesCustomer.class));
-
                     AlertDialog alert1 = alertDialogBuilder.create();
                     alert1.show();
                 }
 
             }
         });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-
-    private void alertDialogReturnDateEmpty(){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("The returning day cannot be empty.");
-        alertDialogBuilder.setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        //selectReturnDate();
-                    }
-                });
-
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }

@@ -18,6 +18,11 @@
             android:title="@string/menu_bikesAvToRent" />
 
         <item
+            android:id="@+id/bikeAvToRentAll"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menu_bikesAvToRentAll" />
+
+        <item
             android:id="@+id/bikeAvToShare"
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/menu_bikesAvToShare" />

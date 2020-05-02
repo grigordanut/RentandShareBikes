@@ -11,7 +11,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikesImageShowOwnSharedBikes extends AppCompatActivity implements BikesAdapterShowOwnSharedBikes.OnItemClickListener {
+public class BikesImageShowShareBikesOwn extends AppCompatActivity implements BikesAdapterShowShareBikesOwn.OnItemClickListener{
+
     private DatabaseReference databaseRefShare;
     private FirebaseStorage bikesStorageShare;
 
@@ -38,7 +41,7 @@ public class BikesImageShowOwnSharedBikes extends AppCompatActivity implements B
     private ValueEventListener shareBikesEventListener;
 
     private RecyclerView bikesListRecyclerView;
-    private BikesAdapterShowOwnSharedBikes bikesAdapterShowOwnSharedBikes;
+    private BikesAdapterShowShareBikesOwn bikesAdapterShowShareBikesOwn;
 
     private TextView tVCustomerShareBikes;
 
@@ -50,13 +53,12 @@ public class BikesImageShowOwnSharedBikes extends AppCompatActivity implements B
 
     private ProgressDialog progressDialog;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bikes_image_show_own_shared_bikes);
+        setContentView(R.layout.activity_bikes_image_show_share_bikes_own);
 
-        tVCustomerShareBikes = (TextView) findViewById(R.id.tvBikesImageShowOwnSharedBikes);
+        tVCustomerShareBikes = (TextView) findViewById(R.id.tvBikesImageShowBikesSharedOwn);
 
         getIntent().hasExtra("CFNameShare");
         customShareFirst_Name = Objects.requireNonNull(getIntent().getExtras()).getString("CFNameShare");
@@ -75,16 +77,32 @@ public class BikesImageShowOwnSharedBikes extends AppCompatActivity implements B
         shareBikesList = new ArrayList<>();
 
         progressDialog.show();
+
+//        buttonAddMoreBikes = (Button) findViewById(R.id.btnAddMoreBikes);
+//        buttonAddMoreBikes.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(BikesImageShowBikesListAdmin.this, BikeStoreImageAddBikesAdmin.class));
+//            }
+//        });
+//
+//        buttonBackAdminPageBikes = (Button) findViewById(R.id.btnBackAdminPageBikes);
+//        buttonBackAdminPageBikes.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(BikesImageShowBikesListAdmin.this, AdminPage.class));
+//            }
+//        });
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onStart() {
         super.onStart();
-        loadBikeSharedCustomer();
+        loadBikesListAdmin();
     }
 
-    private void loadBikeSharedCustomer() {
+    private void loadBikesListAdmin() {
         //initialize the bike storage database
         bikesStorageShare = FirebaseStorage.getInstance();
         databaseRefShare = FirebaseDatabase.getInstance().getReference("Share Bikes");
@@ -96,28 +114,25 @@ public class BikesImageShowOwnSharedBikes extends AppCompatActivity implements B
                 shareBikesList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     ShareBikes share_Bikes = postSnapshot.getValue(ShareBikes.class);
-
                     assert share_Bikes != null;
-                    if (share_Bikes.getShareBikes_CustomId().equals(customShare_Id)) {
-                        share_Bikes.setShareBike_Key(postSnapshot.getKey());
-                        shareBikesList.add(share_Bikes);
-                        tVCustomerShareBikes.setText(shareBikesList.size() + " bikes added by " + customShareFirst_Name + " " + customShareLast_Name);
-                    }
+
+                    share_Bikes.setShareBike_Key(postSnapshot.getKey());
+                    shareBikesList.add(share_Bikes);
+                    tVCustomerShareBikes.setText(shareBikesList.size() + " Bikes added by " + customShareFirst_Name+" "+customShareLast_Name);
                 }
-                bikesAdapterShowOwnSharedBikes = new BikesAdapterShowOwnSharedBikes(BikesImageShowOwnSharedBikes.this, shareBikesList);
-                bikesListRecyclerView.setAdapter(bikesAdapterShowOwnSharedBikes);
-                bikesAdapterShowOwnSharedBikes.setOnItmClickListener(BikesImageShowOwnSharedBikes.this);
+                bikesAdapterShowShareBikesOwn = new BikesAdapterShowShareBikesOwn(BikesImageShowShareBikesOwn.this, shareBikesList);
+                bikesListRecyclerView.setAdapter(bikesAdapterShowShareBikesOwn);
+                bikesAdapterShowShareBikesOwn.setOnItmClickListener(BikesImageShowShareBikesOwn.this);
                 progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikesImageShowOwnSharedBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikesImageShowShareBikesOwn.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    //Action of the menu onClick
     @Override
     public void onItemClick(final int position) {
         final String[] options = {"Update Bike", "Delete Bike"};
@@ -129,16 +144,23 @@ public class BikesImageShowOwnSharedBikes extends AppCompatActivity implements B
             public void onClick(DialogInterface dialog, int which) {
 
                 if (which == 0) {
-                    Intent intent = new Intent(BikesImageShowOwnSharedBikes.this, UpdateBikeShareDetails.class);
+                    Intent intent = new Intent(BikesImageShowShareBikesOwn.this, UpdateBikeShareDetails.class);
                     ShareBikes selected_Bike = shareBikesList.get(position);
-                    intent.putExtra("BSharedKey", selected_Bike.getShareBike_Key());
+                    intent.putExtra("BCondUpdate", selected_Bike.getShareBike_Condition());
+                    intent.putExtra("BModelUpdate", selected_Bike.getShareBike_Model());
+                    intent.putExtra("BManufUpdate", selected_Bike.getShareBike_Manufact());
+                    intent.putExtra("BPriceUpdate", String.valueOf(selected_Bike.getShareBike_Price()));
+                    intent.putExtra("BImgUpdate", selected_Bike.getShareBike_Image());
+                    intent.putExtra("BDateAvUpdate", selected_Bike.getShareBike_DateAv());
+                    intent.putExtra("CIdUpdate", selected_Bike.getShareBikes_CustomId());
+                    intent.putExtra("BKeyUpdate", selected_Bike.getShareBike_Key());
                     startActivity(intent);
                 }
                 if(which ==1){
                     bikesStorageDelete = FirebaseStorage.getInstance();
                     databaseRefDeleteBike = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
-                    AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowOwnSharedBikes.this);
+                    AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowShareBikesOwn.this);
                     builderAlert.setMessage("Are sure to delete this Bike?");
                     builderAlert.setCancelable(true);
                     builderAlert.setPositiveButton(
@@ -152,7 +174,7 @@ public class BikesImageShowOwnSharedBikes extends AppCompatActivity implements B
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             databaseRefDeleteBike.child(selectedKeyBike).removeValue();
-                                            Toast.makeText(BikesImageShowOwnSharedBikes.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(BikesImageShowShareBikesOwn.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }

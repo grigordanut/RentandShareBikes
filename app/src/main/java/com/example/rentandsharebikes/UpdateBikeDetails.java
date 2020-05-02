@@ -169,13 +169,11 @@ public class UpdateBikeDetails extends AppCompatActivity {
         buttonSaveBikeUpdated.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //show progress Dialog
-                //progressDialog.show();
+                //progressDialog.dismiss();
                 if (updateBikeTaskUp != null && updateBikeTaskUp.isInProgress()) {
                     Toast.makeText(UpdateBikeDetails.this, "Update bike in progress", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (imageUriUp == null) {
-                        //Toast.makeText(UpdateBikeDetails.this, "Please add a new picture", Toast.LENGTH_SHORT).show();
+                    if (imageUriUp == null){
                         uploadBikesWithOldPicture();
                     }
                     else{
@@ -271,15 +269,40 @@ public class UpdateBikeDetails extends AppCompatActivity {
     //Upload a new Bicycle into the Bicycles table
     public void updateBikesWithNewPicture() {
         progressDialog.dismiss();
-        if (validate()) {
 
-            //Add a new Bike into the Bike's table
+        final String updateBike_ConditionVal = tViewUpBikeCond.getText().toString().trim();
+        final String updateBike_ModelVal = etUpBikeModel.getText().toString().trim();
+        final String updateBike_ManufactVal = etUpBikeManufact.getText().toString().trim();
+        final String updateBike_PriceVal = etUpBikePrice.getText().toString().trim();
+
+        if (imageUriUp == null) {
+            Toast.makeText(UpdateBikeDetails.this, "Please add a new picture", Toast.LENGTH_SHORT).show();
+        }
+        else if(TextUtils.isEmpty(updateBike_ConditionVal)){
+            alertDialogBikeCond();
+            tViewUpBikeCond.requestFocus();
+        }
+        else if (TextUtils.isEmpty(updateBike_ModelVal)) {
+            etUpBikeModel.setError("Please add the Model of Bicycle");
+            etUpBikeModel.requestFocus();
+        }
+        else if (TextUtils.isEmpty(updateBike_ManufactVal)) {
+            etUpBikeManufact.setError("Please add the Manufacturer");
+            etUpBikeManufact.requestFocus();
+        }
+        else if (TextUtils.isEmpty(updateBike_PriceVal)) {
+            etUpBikePrice.setError("Please add the Price/Day ");
+            etUpBikePrice.requestFocus();
+        }
+        //Add a new Bike into the Bike's table
+        else {
+
             etUpBike_Cond = tViewUpBikeCond.getText().toString().trim();
             etUpBike_Model = etUpBikeModel.getText().toString().trim();
             etUpBike_Manufact = etUpBikeManufact.getText().toString().trim();
             etUpBike_Price = Double.parseDouble(etUpBikePrice.getText().toString().trim());
 
-            progressDialog.setTitle("The Bike is Uploading");
+            progressDialog.setTitle("The Bike is Updating");
             progressDialog.show();
             final StorageReference fileReference = storageRefUpdate.child(System.currentTimeMillis() + "." + getFileExtension(imageUriUp));
             updateBikeTaskUp = fileReference.putFile(imageUriUp)
@@ -303,7 +326,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
                                                 ds.getRef().child("bike_Image").setValue(uri.toString());
                                             }
                                             progressDialog.dismiss();
-                                            Toast.makeText(UpdateBikeDetails.this, "The Bike will be updated", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(UpdateBikeDetails.this, "Bike Store Updated", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(UpdateBikeDetails.this, AdminPage.class));
                                             finish();
                                         }
@@ -339,7 +362,9 @@ public class UpdateBikeDetails extends AppCompatActivity {
 
     private void uploadBikesWithOldPicture() {
 
-        if (validate()){
+        progressDialog.dismiss();
+
+        if (validateBikeDetails()){
             progressDialog.setMessage("The Bike is Updating");
             progressDialog.show();
 
@@ -371,28 +396,27 @@ public class UpdateBikeDetails extends AppCompatActivity {
                     Toast.makeText(UpdateBikeDetails.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
+            progressDialog.dismiss();
         }
-
     }
 
-
-    public boolean validate() {
+    public boolean validateBikeDetails() {
         boolean result = false;
-        final String updateBike_ConditionVal = tViewUpBikeCond.getText().toString().trim();
-        final String updateBike_ModelVal = etUpBikeModel.getText().toString().trim();
-        final String updateBike_ManufactVal = etUpBikeManufact.getText().toString().trim();
-        final String updateBike_PriceVal = etUpBikePrice.getText().toString().trim();
+        final String upBike_ConditionVal = tViewUpBikeCond.getText().toString().trim();
+        final String upBike_ModelVal = etUpBikeModel.getText().toString().trim();
+        final String upBike_ManufactVal = etUpBikeManufact.getText().toString().trim();
+        final String upBike_PriceVal = etUpBikePrice.getText().toString().trim();
 
-        if (TextUtils.isEmpty(updateBike_ConditionVal)) {
+        if (TextUtils.isEmpty(upBike_ConditionVal)) {
             alertDialogBikeCond();
             tViewUpBikeCond.requestFocus();
-        } else if (TextUtils.isEmpty(updateBike_ModelVal)) {
+        } else if (TextUtils.isEmpty(upBike_ModelVal)) {
             etUpBikeModel.setError("Please add the Model of Bicycle");
             etUpBikeModel.requestFocus();
-        } else if (TextUtils.isEmpty(updateBike_ManufactVal)) {
+        } else if (TextUtils.isEmpty(upBike_ManufactVal)) {
             etUpBikeManufact.setError("Please add the Manufacturer");
             etUpBikeManufact.requestFocus();
-        } else if (TextUtils.isEmpty(updateBike_PriceVal)) {
+        } else if (TextUtils.isEmpty(upBike_PriceVal)) {
             etUpBikePrice.setError("Please add the Price/Day ");
             etUpBikePrice.requestFocus();
         } else {
@@ -417,4 +441,75 @@ public class UpdateBikeDetails extends AppCompatActivity {
     }
 
     private static final String[] updateBikeCondition = new String[]{"Brand New", "Used Bike"};
+
+
+
+    //Upload a new Bicycle into the Bicycles table
+    public void updateBikesWithNewRobish() {
+        progressDialog.dismiss();
+        if (validateBikeDetails()) {
+
+            //Add a new Bike into the Bike's table
+            etUpBike_Cond = tViewUpBikeCond.getText().toString().trim();
+            etUpBike_Model = etUpBikeModel.getText().toString().trim();
+            etUpBike_Manufact = etUpBikeManufact.getText().toString().trim();
+            etUpBike_Price = Double.parseDouble(etUpBikePrice.getText().toString().trim());
+
+            progressDialog.setTitle("The Bike is Uploading");
+            progressDialog.show();
+            final StorageReference fileReference = storageRefUpdate.child(System.currentTimeMillis() + "." + getFileExtension(imageUriUp));
+            updateBikeTaskUp = fileReference.putFile(imageUriUp)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(final Uri uri) {
+                                    databaseRefUpdate = FirebaseDatabase.getInstance().getReference().child("Bikes");
+
+                                    Query query = databaseRefUpdate.orderByChild("bike_Key").equalTo(bike_KeyUp);
+                                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                                ds.getRef().child("bike_Condition").setValue(etUpBike_Cond);
+                                                ds.getRef().child("bike_Model").setValue(etUpBike_Model);
+                                                ds.getRef().child("bike_Manufacturer").setValue(etUpBike_Manufact);
+                                                ds.getRef().child("bike_Price").setValue(String.valueOf(etUpBike_Price));
+                                                ds.getRef().child("bike_Image").setValue(uri.toString());
+                                            }
+                                            progressDialog.dismiss();
+                                            Toast.makeText(UpdateBikeDetails.this, "The Bike will be updated", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(UpdateBikeDetails.this, AdminPage.class));
+                                            finish();
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            Toast.makeText(UpdateBikeDetails.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    progressDialog.dismiss();
+                                }
+                            });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(UpdateBikeDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                            //show upload Progress
+                            double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
+                            progressDialog.setMessage("Uploaded: " + (int) progress + "%");
+                            progressDialog.setProgress((int) progress);
+                        }
+                    });
+        }
+    }
 }

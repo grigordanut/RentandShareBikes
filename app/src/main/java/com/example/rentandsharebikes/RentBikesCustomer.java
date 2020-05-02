@@ -99,19 +99,6 @@ public class RentBikesCustomer extends AppCompatActivity {
         //initialise variables
         tVRentBikes = (TextView) findViewById(R.id.tvRentBikes);
 
-//        LocalDate localDate = null;
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-//            localDate = LocalDate.now();
-//        }
-//        DateTimeFormatter formatter = null;
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-//            formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-//        }
-//        String insertDate = null;
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-//            insertDate = localDate.format(formatter);
-//        }
-
         LocalDateTime date = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         String dateRent = date.format(formatter);

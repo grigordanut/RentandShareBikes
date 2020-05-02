@@ -24,14 +24,6 @@ public class BikeStoreAdapterReturnBikeDifferentStore extends RecyclerView.Adapt
 
     private OnItemClickListener clickListener;
 
-    private FirebaseStorage bikeStorage;
-    private DatabaseReference databaseReference;
-    private ValueEventListener bikesEventListener;
-
-    private List<Bikes> bikesList;
-
-    private int numberBikesAvailable;
-
     public BikeStoreAdapterReturnBikeDifferentStore(Context bikeStore_context, List<BikeStore> bikeStore_uploads) {
         bikeStoreContext = bikeStore_context;
         bikeStoreUploads = bikeStore_uploads;

@@ -84,8 +84,9 @@ public class BikeStoreAdapterShowBikesListMain extends RecyclerView.Adapter<Bike
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(bikeStoreContext, BikesImageShowBikesToRentMain.class);
-                intent.putExtra("SName",uploadCurrent.getBikeStore_Location());
+                //Show Bikes available to rent ordered by Bike Stores
+                Intent intent = new Intent(bikeStoreContext, BikesImageShowBikesListMainPage.class);
+                intent.putExtra("SNameMain",uploadCurrent.getBikeStore_Location());
                 bikeStoreContext.startActivity(intent);
             }
         });
