@@ -41,26 +41,32 @@ public class AdminPage extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 switch (id){
+                    //Add new Bike Stores
                     case R.id.adminAdd_bikeStores:
                         Toast.makeText(AdminPage.this, "Add Bike Stores",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, CalculateCoordinates.class));
                         break;
+                    //Show the list of Bike Stores available
                     case R.id.adminShow_bikeStores:
                         Toast.makeText(AdminPage.this, "Show Bike Stores",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikeStoreImageShowStoresListAdmin.class));
                         break;
+                    //Add Bikes to the Bike Stores available
                     case R.id.adminAdd_bikesToStore:
                         Toast.makeText(AdminPage.this, "Add Bikes to Store",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikeStoreImageAddBikesAdmin.class));
                         break;
+                    //Show the list of Bikes available ordered by Bike Stores
                     case R.id.adminShow_bikesList:
                         Toast.makeText(AdminPage.this, "Show Bikes List",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikeStoreImageShowBikesListAdmin.class));
                         break;
+                    //Show the full list of Bikes available
                     case R.id.adminShow_bikesListFull:
                         Toast.makeText(AdminPage.this, "Show Full List of Bikes",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikesImageShowBikesListAdminFull.class));
                         break;
+                    //Show the full list of rented Bikes
                     case R.id.adminShow_bikesRented:
                         Toast.makeText(AdminPage.this, "Rented Bikes",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikesImageShowBikesRentedAdmin.class));

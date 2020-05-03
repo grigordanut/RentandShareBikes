@@ -34,7 +34,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <Button
-        android:id="@+id/btnAddMoreStores"
+        android:id="@+id/btnAddMoreShareBikes"
         android:layout_width="160dp"
         android:layout_height="40dp"
         android:layout_below="@+id/evRecyclerView"

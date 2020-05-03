@@ -141,9 +141,9 @@ public class AddBikeStore extends AppCompatActivity {
 
                         startActivity(new Intent(AddBikeStore.this, AdminPage.class));
 
-                        Toast.makeText(AddBikeStore.this, "Bike Store Added", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AddBikeStore.this, "Bike Store Added", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(AddBikeStore.this, "Filed to add Bike Store", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AddBikeStore.this, "Filed to add Bike Store", Toast.LENGTH_SHORT).show();
                     }
                     progressDialog.dismiss();
                 }

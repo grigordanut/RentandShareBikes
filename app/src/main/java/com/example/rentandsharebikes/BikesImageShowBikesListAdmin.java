@@ -45,9 +45,11 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
     private Button buttonAddMoreBikes, buttonBackAdminPageBikes;
 
     String bikeStore_Name = "";
+    String bikeStore_Key = "";
 
     private ProgressDialog progressDialog;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,9 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
 
         getIntent().hasExtra("SName");
         bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
+
+        getIntent().hasExtra("SKey");
+        bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
 
         textViewBikesImageList = (TextView) findViewById(R.id.tvBikeImageList);
         textViewBikesImageList.setText("No bikes available in " +bikeStore_Name+ " store");
@@ -165,7 +170,7 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if (bikes.getBikeStoreName().equals(bikeStore_Name)) {
+                    if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
                         bikes.setBike_Key(postSnapshot.getKey());
                         bikesList.add(bikes);
                         textViewBikesImageList.setText(bikesList.size()+" Bikes available in "+bikeStore_Name+" store");

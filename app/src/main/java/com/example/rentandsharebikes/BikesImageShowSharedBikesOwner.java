@@ -11,7 +11,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,23 +83,22 @@ public class BikesImageShowSharedBikesOwner extends AppCompatActivity implements
 
         progressDialog.show();
 
-//        buttonAddMoreBikes = (Button) findViewById(R.id.btnAddMoreBikes);
-//        buttonAddMoreBikes.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(BikesImageShowBikesListAdmin.this, BikeStoreImageAddBikesAdmin.class));
-//            }
-//        });
-//
-//        buttonBackAdminPageBikes = (Button) findViewById(R.id.btnBackAdminPageBikes);
-//        buttonBackAdminPageBikes.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(BikesImageShowBikesListAdmin.this, AdminPage.class));
-//            }
-//        });
-    }
+        Button buttonAddSBikes = (Button) findViewById(R.id.btnAddMoreShareBikes);
+        buttonAddSBikes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(BikesImageShowSharedBikesOwner.this, ShareBikesCustomer.class));
+            }
+        });
 
+        Button buttonBackSBikesPage = (Button) findViewById(R.id.btnBackShareBikesPage);
+        buttonBackSBikesPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(BikesImageShowSharedBikesOwner.this, CustomerPageShareBikes.class));
+            }
+        });
+    }
 
     @SuppressLint("SetTextI18n")
     @Override

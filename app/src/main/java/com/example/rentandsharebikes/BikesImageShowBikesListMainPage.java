@@ -39,7 +39,9 @@ public class BikesImageShowBikesListMainPage extends AppCompatActivity implement
 
     private List<Bikes> bikesListMain;
 
-    String bikeStore_Name = "";
+    String bikeStore_NameMain = "";
+    String bikeStore_KeyMain = "";
+
 
     private ProgressDialog progressDialog;
 
@@ -50,10 +52,13 @@ public class BikesImageShowBikesListMainPage extends AppCompatActivity implement
         setContentView(R.layout.activity_bikes_image_show_bikes_list_main_page);
 
         getIntent().hasExtra("SNameMain");
-        bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SNameMain");
+        bikeStore_NameMain = Objects.requireNonNull(getIntent().getExtras()).getString("SNameMain");
+
+        getIntent().hasExtra("SKeyMain");
+        bikeStore_KeyMain = Objects.requireNonNull(getIntent().getExtras()).getString("SKeyMain");
 
         textViewBikesImageMain = (TextView) findViewById(R.id.tvBikeImageBikesListMainPage);
-        textViewBikesImageMain.setText("No bikes available in " +bikeStore_Name+ " store");
+        textViewBikesImageMain.setText("No bikes available in " +bikeStore_NameMain+ " store");
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -84,10 +89,10 @@ public class BikesImageShowBikesListMainPage extends AppCompatActivity implement
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if (bikes.getBikeStoreName().equals(bikeStore_Name)) {
+                    if (bikes.getBikeStoreKey().equals(bikeStore_KeyMain)) {
                         bikes.setBike_Key(postSnapshot.getKey());
                         bikesListMain.add(bikes);
-                        textViewBikesImageMain.setText(bikesListMain.size()+" bikes available in "+bikeStore_Name+" store");
+                        textViewBikesImageMain.setText(bikesListMain.size()+" bikes available in "+bikeStore_NameMain+" store");
                     }
                 }
                 bikesAdapterShowBikesListMainPage = new BikesAdapterShowBikesListMainPage(BikesImageShowBikesListMainPage.this,bikesListMain);

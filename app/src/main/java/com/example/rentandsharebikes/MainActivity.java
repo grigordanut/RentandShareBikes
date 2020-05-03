@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,8 +13,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    //Display data from Bikes table database
+    private FirebaseStorage firebaseStBikes;
+    private DatabaseReference databaseRefBikes;
+    private ValueEventListener bikesEventListener;
+
+    //Display data from Bike Stores database
+    private FirebaseStorage firebaseStBikeSores;
+    private DatabaseReference databaseRefBikeStores;
+    private ValueEventListener bikeStoresEventListener;
+
+    private List<Bikes> bikesList;
+    private List<BikeStore> bikeStoresList;
+
+    private int numberBikesAvailable;
+    private int numberStoresAvailable;
+
+    private TextView tVMainBikesAv, tVMainStoresAv;
     //Declaring some objects
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -24,8 +52,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        bikesList = new ArrayList<>();
+        bikeStoresList = new ArrayList<>();
+
+        tVMainStoresAv = (TextView) findViewById(R.id.tvMainStoresAv);
+        tVMainBikesAv = (TextView) findViewById(R.id.tvMainBikesAv);
+
         drawerLayout = findViewById(R.id.activity_main);
-        drawerToggle = new ActionBarDrawerToggle(this,drawerLayout, R.string.open_mainActivity, R.string.close_mainActivity);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_mainActivity, R.string.close_mainActivity);
 
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
@@ -39,25 +73,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                switch (id){
+                switch (id) {
                     //Log into My Account
                     case R.id.myAccount:
-                        Toast.makeText(MainActivity.this, "My Account",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "My Account", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, LoginCustomer.class));
                         break;
                     //Show the list of Bike Stores available
                     case R.id.bikeStoreAv:
-                        Toast.makeText(MainActivity.this, "Bike Stores",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Bike Stores", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, BikeStoreImageShowStoresListMain.class));
                         break;
                     //Show the list of Bikes available from main page ordered by Bike Stores
                     case R.id.bikeAvToRent:
-                        Toast.makeText(MainActivity.this, "Bikes to Rent",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Bikes to Rent", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, BikeStoreImageShowBikesListMain.class));
                         break;
                     //Show the list of all Bikes available from main page
                     case R.id.bikeAvToRentAll:
-                        Toast.makeText(MainActivity.this, "Bikes to Rent All",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Bikes to Rent All", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, BikesImageShowBikesListMainAll.class));
                         break;
                     //Bikes available to share
@@ -66,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 //                        startActivity(new Intent(MainActivity.this, BikesImageShowAllSharedBikes.class));
                         break;
                     case R.id.settings:
-                        Toast.makeText(MainActivity.this, "Bikes to share",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Bikes to share", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, AdminPage.class));
                         break;
                     default:
@@ -90,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-        if(drawerToggle.onOptionsItemSelected(item)) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
@@ -102,5 +136,66 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadNumberBikeStoresAvailable();
+        loadNumberBikeAvailable();
+    }
+
+
+    private void loadNumberBikeStoresAvailable() {
+        //initialize the bike storage database
+        firebaseStBikeSores = FirebaseStorage.getInstance();
+        databaseRefBikeStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
+
+        bikeStoresEventListener = databaseRefBikeStores.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikeStoresList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    BikeStore bike_Stores = postSnapshot.getValue(BikeStore.class);
+                    assert bike_Stores != null;
+                    bike_Stores.setStoreKey(postSnapshot.getKey());
+                    bikeStoresList.add(bike_Stores);
+                    numberStoresAvailable = bikeStoresList.size();
+                    tVMainStoresAv.setText(String.valueOf(numberStoresAvailable));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(MainActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void loadNumberBikeAvailable() {
+        //initialize the bike storage database
+        firebaseStBikes = FirebaseStorage.getInstance();
+        databaseRefBikes = FirebaseDatabase.getInstance().getReference("Bikes");
+
+        bikesEventListener = databaseRefBikes.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikesList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Bikes bikes = postSnapshot.getValue(Bikes.class);
+                    assert bikes != null;
+                    bikes.setBike_Key(postSnapshot.getKey());
+                    bikesList.add(bikes);
+                    numberBikesAvailable = bikesList.size();
+                    tVMainBikesAv.setText(String.valueOf(numberBikesAvailable));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(MainActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -64,6 +64,7 @@ public class AddBikes extends AppCompatActivity {
     private double eTextBike_Price;
 
     String bikeStore_Name = "";
+    String bikeStore_Key = "";
     String bike_Key = "";
 
     private ProgressDialog progressDialog;
@@ -77,6 +78,9 @@ public class AddBikes extends AppCompatActivity {
 
         getIntent().hasExtra("SName");
         bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
+
+        getIntent().hasExtra("SKey");
+        bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
 
         tViewWelcomeAddBikes = (TextView) findViewById(R.id.tvWelcomeAddBikes);
         tViewWelcomeAddBikes.setText("Add Bicycles to " + bikeStore_Name + " store");
@@ -259,7 +263,7 @@ public class AddBikes extends AppCompatActivity {
                                     String addBike_id = databaseReference.push().getKey();
                                     bike_Key = addBike_id;
 
-                                    Bikes bikes = new Bikes(eTextBike_Condition, eTextBike_Model, eTextBike_Manufact, eTextBike_Price, uri.toString(), bikeStore_Name, bike_Key);
+                                    Bikes bikes = new Bikes(eTextBike_Condition, eTextBike_Model, eTextBike_Manufact, eTextBike_Price, uri.toString(), bikeStore_Name, bikeStore_Key,  bike_Key);
 
                                     assert addBike_id != null;
                                     databaseReference.child(addBike_id).setValue(bikes);

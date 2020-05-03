@@ -36,7 +36,8 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
 
     private List<Bikes> bikesList;
 
-    String bikeStore_Name = "";
+    String bikeStore_NameRent = "";
+    String bikeStore_KeyRent = "";
 
     private ProgressDialog progressDialog;
 
@@ -46,11 +47,14 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bikes_image_show_bikes_list_customer);
 
-        getIntent().hasExtra("SName");
-        bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
+        getIntent().hasExtra("SNameRent");
+        bikeStore_NameRent = Objects.requireNonNull(getIntent().getExtras()).getString("SNameRent");
+
+        getIntent().hasExtra("SKeyRent");
+        bikeStore_KeyRent = Objects.requireNonNull(getIntent().getExtras()).getString("SKeyRent");
 
         textViewBikesImageList = (TextView) findViewById(R.id.tvBikeImageList);
-        textViewBikesImageList.setText("No bikes available in " +bikeStore_Name+ " store");
+        textViewBikesImageList.setText("No bikes available in " +bikeStore_NameRent+ " store");
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -109,10 +113,10 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if (bikes.getBikeStoreName().equals(bikeStore_Name)) {
+                    if (bikes.getBikeStoreKey().equals(bikeStore_KeyRent)) {
                         bikes.setBike_Key(postSnapshot.getKey());
                         bikesList.add(bikes);
-                        textViewBikesImageList.setText(bikesList.size()+" bikes available in "+bikeStore_Name+" store");
+                        textViewBikesImageList.setText(bikesList.size()+" bikes available in "+bikeStore_NameRent+" store");
                     }
                 }
                 bikesAdapterShowBikesListCustomer = new BikesAdapterShowBikesListCustomer(BikesImageShowBikesListCustomer.this, bikesList);

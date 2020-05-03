@@ -85,6 +85,7 @@ public class BikeStoreAdapterShowBikesListAdmin extends RecyclerView.Adapter<Bik
             public void onClick(View v) {
                 Intent intent = new Intent(bikeStoreContext, BikesImageShowBikesListAdmin.class);
                 intent.putExtra("SName",uploadCurrent.getBikeStore_Location());
+                intent.putExtra("SKey",uploadCurrent.getStoreKey());
                 bikeStoreContext.startActivity(intent);
             }
         });

@@ -87,6 +87,7 @@ public class BikeStoreAdapterShowBikesListMain extends RecyclerView.Adapter<Bike
                 //Show Bikes available to rent ordered by Bike Stores
                 Intent intent = new Intent(bikeStoreContext, BikesImageShowBikesListMainPage.class);
                 intent.putExtra("SNameMain",uploadCurrent.getBikeStore_Location());
+                intent.putExtra("SKeyMain",uploadCurrent.getStoreKey());
                 bikeStoreContext.startActivity(intent);
             }
         });

@@ -207,17 +207,15 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
                 //show progress Dialog
                 progressDialog.show();
                 if (shareUpTask != null && shareUpTask.isInProgress()) {
-                    Toast.makeText(UpdateBikeSharedDetails.this, "Update bike in progress", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateBikeSharedDetails.this, "Update share bike in progress", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    updateBikesShareWithNewPicture();
-                    //updateShareBikesNew();
-//                    if (imageUpShareUri == null) {
-//                        updateShareBikesWithOldPicture();
-//                    }
-//                    else{
-//                        updateShareBikesWithNewPicture();
-//                    }
+                    if (imageUpShareUri == null){
+                        upBikesSharedWithOldPicture();
+                    }
+                    else{
+                        upBikesSharedWithNewPicture();
+                    }
                 }
             }
         });
@@ -320,11 +318,8 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
             }
         });
     }
-
-
-
     //Upload a new Bicycle into the Bicycles table
-    public void updateBikesShareWithNewPicture() {
+    public void upBikesSharedWithNewPicture() {
         progressDialog.dismiss();
 
         final String etFName_ShareBikeVal = etUpFNameShareBike.getText().toString().trim();
@@ -397,7 +392,7 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
                                 public void onSuccess(final Uri uri) {
                                     databaseRefUpShare = FirebaseDatabase.getInstance().getReference().child("Share Bikes");
 
-                                    Query query = databaseRefUpShare.orderByChild("bike_Key").equalTo(bike_KeyUpShare);
+                                    Query query = databaseRefUpShare.orderByChild("shareBike_Key").equalTo(bike_KeyUpShare);
                                     query.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -415,7 +410,7 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
                                                 ds.getRef().child("shareBike_Image").setValue(uri.toString());
                                             }
                                             progressDialog.dismiss();
-                                            Toast.makeText(UpdateBikeSharedDetails.this, "Bike Store Updated", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(UpdateBikeSharedDetails.this, "The Shared Bike will be updated", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(UpdateBikeSharedDetails.this, CustomerPageShareBikes.class));
                                             finish();
                                         }
@@ -449,14 +444,10 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
         }
     }
 
-
-
-    public void updateShareBikesWithOldPicture(){
+    public void upBikesSharedWithOldPicture(){
+        progressDialog.dismiss();
 
         if (validateShareBikesDetails()){
-
-            progressDialog.setTitle("The updated Share Bike is Uploading");
-            progressDialog.show();
 
             etUpFName_ShareBike = etUpFNameShareBike.getText().toString().trim();
             etUpLName_ShareBike = etUpLNameShareBike.getText().toString().trim();
@@ -469,44 +460,40 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
             etUpPrice_ShareBike = Double.parseDouble(etUpPriceShareBike.getText().toString().trim());
             etUpDateAv_ShareBike = etUpDateAvShareBike.getText().toString().trim();
 
+            progressDialog.setTitle("The Share Bike is Updating");
+            progressDialog.show();
+
             databaseRefUpShare = FirebaseDatabase.getInstance().getReference().child("Share Bikes");
 
             Query query = databaseRefUpShare.orderByChild("shareBike_Key").equalTo(bike_KeyUpShare);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         ds.getRef().child("shareCus_FirstName").setValue(etUpFName_ShareBike);
-
                         ds.getRef().child("shareCus_LastName").setValue(etUpLName_ShareBike);
-
-                        ds.getRef().child("shareCus_PhoneNo").setValue(etUpFName_ShareBike);
-
-                        ds.getRef().child("shareCus_EmailAdd").setValue(etUpLName_ShareBike);
-
-                        ds.getRef().child("shareBike_Condition").setValue(etUpPNo_ShareBike);
-
+                        ds.getRef().child("shareCus_PhoneNo").setValue(etUpPNo_ShareBike);
                         ds.getRef().child("shareCus_EmailAdd").setValue(etUpEmail_ShareBike);
 
                         ds.getRef().child("shareBike_Condition").setValue(tVUpCond_ShareBike);
-
                         ds.getRef().child("shareBike_Model").setValue(etUpModel_ShareBike);
                         ds.getRef().child("shareBike_Manufact").setValue(etUpManufact_ShareBike);
                         ds.getRef().child("shareBike_Price").setValue(String.valueOf(etUpPrice_ShareBike));
                         ds.getRef().child("shareBike_DateAv").setValue(etUpDateAv_ShareBike);
                     }
                     progressDialog.dismiss();
+                    Toast.makeText(UpdateBikeSharedDetails.this, "The Shared Bike will be updated", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(UpdateBikeSharedDetails.this, CustomerPageShareBikes.class));
+                    finish();
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                    Toast.makeText(UpdateBikeSharedDetails.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
             progressDialog.dismiss();
         }
-
     }
 
     public boolean validateShareBikesDetails() {

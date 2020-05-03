@@ -86,6 +86,7 @@ public class BikeStoreAdapterRentBikesCustom extends RecyclerView.Adapter<BikeSt
             public void onClick(View v) {
                 Intent intent = new Intent(bikeStoreContext, BikesImageRentBikesCustomer.class);
                 intent.putExtra("SName",uploadCurrent.getBikeStore_Location());
+                intent.putExtra("SKey",uploadCurrent.getStoreKey());
                 bikeStoreContext.startActivity(intent);
             }
         });

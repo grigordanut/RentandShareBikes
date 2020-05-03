@@ -8,6 +8,7 @@ public class RentBikes {
     private String phoneNo_RentBikes;
     private String email_RentBikes;
     private String storeLocation_RentBikes;
+    private String storeKey_RentBikes;
     private String bikeCond_RentBikes;
     private String bikeModel_RentBikes;
     private String bikeManufact_RentBikes;
@@ -21,15 +22,17 @@ public class RentBikes {
     }
 
     public RentBikes(String date_RentBikes, String fName_RentBikes, String lName_RentBikes, String phoneNo_RentBikes,
-                     String email_RentBikes, String storeLocation_RentBikes, String bikeCond_RentBikes,
-                     String bikeModel_RentBikes, String bikeManufact_RentBikes, double bikePrice_RentBikes,
-                     String bikeImage_RentBike, String customerId_RentBikes, String bike_RentKey) {
+                     String email_RentBikes, String storeLocation_RentBikes, String storeKey_RentBikes,
+                     String bikeCond_RentBikes, String bikeModel_RentBikes, String bikeManufact_RentBikes,
+                     double bikePrice_RentBikes, String bikeImage_RentBike, String customerId_RentBikes,
+                     String bike_RentKey) {
         this.date_RentBikes = date_RentBikes;
         this.fName_RentBikes = fName_RentBikes;
         this.lName_RentBikes = lName_RentBikes;
         this.phoneNo_RentBikes = phoneNo_RentBikes;
         this.email_RentBikes = email_RentBikes;
         this.storeLocation_RentBikes = storeLocation_RentBikes;
+        this.storeKey_RentBikes = storeKey_RentBikes;
         this.bikeCond_RentBikes = bikeCond_RentBikes;
         this.bikeModel_RentBikes = bikeModel_RentBikes;
         this.bikeManufact_RentBikes = bikeManufact_RentBikes;
@@ -87,6 +90,14 @@ public class RentBikes {
         this.storeLocation_RentBikes = storeLocation_RentBikes;
     }
 
+    public String getStoreKey_RentBikes() {
+        return storeKey_RentBikes;
+    }
+
+    public void setStoreKey_RentBikes(String storeKey_RentBikes) {
+        this.storeKey_RentBikes = storeKey_RentBikes;
+    }
+
     public String getBikeCond_RentBikes() {
         return bikeCond_RentBikes;
     }
@@ -142,17 +153,4 @@ public class RentBikes {
     public void setBike_RentKey(String bike_RentKey) {
         this.bike_RentKey = bike_RentKey;
     }
-
-    //    @Exclude
-//    public String getRentBikesKey(){
-//        return rentBikesKey;
-//    }
-//
-//    @Exclude
-//    public void setRentBikesKey(String rentBikesKey){
-//        this.rentBikesKey = rentBikesKey;
-//    }
-//
-//    public class NONE{
-//    }
 }

@@ -58,7 +58,8 @@ public class BikesAdapterRentBikesCustomer extends RecyclerView.Adapter<BikesAda
                 intent.putExtra("BModel",uploadCurrent.getBike_Model());
                 intent.putExtra("BManufact",uploadCurrent.getBike_Manufacturer());
                 intent.putExtra("BImage",uploadCurrent.getBike_Image());
-                intent.putExtra("BStore",uploadCurrent.getBikeStoreName());
+                intent.putExtra("BStoreName",uploadCurrent.getBikeStoreName());
+                intent.putExtra("BStoreKey",uploadCurrent.getBikeStoreKey());
                 intent.putExtra("BPrice",String.valueOf(uploadCurrent.getBike_Price()));
                 intent.putExtra("BKey",uploadCurrent.getBike_Key());
                 bikesContext.startActivity(intent);

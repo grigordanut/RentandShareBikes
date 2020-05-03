@@ -70,13 +70,9 @@ public class BikesImageShowBikesRentedAdmin extends AppCompatActivity {
                 rentBikesList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     RentBikes rent_Bikes = postSnapshot.getValue(RentBikes.class);
-
                     assert rent_Bikes != null;
-                    //if (rent_Bikes.getCustomerId_RentBikes().equals(customer_Id)) {
                     rent_Bikes.setBike_RentKey(postSnapshot.getKey());
                     rentBikesList.add(rent_Bikes);
-                    //textViewBikesImageList.setText(bikesList.size()+" bikes available in "+bikeStore_Name+" store");
-                    //}
                 }
                 bikesAdapterShowBikesRentedAdmin = new BikesAdapterShowBikesRentedAdmin(BikesImageShowBikesRentedAdmin.this, rentBikesList);
                 bikesListRecyclerView.setAdapter(bikesAdapterShowBikesRentedAdmin);

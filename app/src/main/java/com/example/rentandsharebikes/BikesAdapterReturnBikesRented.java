@@ -56,8 +56,12 @@ public class BikesAdapterReturnBikesRented extends RecyclerView.Adapter<BikesAda
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent (bikesContext, ReturnRentedBikes.class);
-                intent.putExtra("BStoreSame",uploadCurrent.getStoreLocation_RentBikes());
-                intent.putExtra("BKey",uploadCurrent.getBike_RentKey());
+                //Bike Store name of rented Bike
+                intent.putExtra("BStoreNameSame",uploadCurrent.getStoreLocation_RentBikes());
+                //Bike Store key of rented bike
+                intent.putExtra("BStoreKeySame",uploadCurrent.getStoreKey_RentBikes());
+                //Bike key of rented bike
+                intent.putExtra("BikeRentedKey",uploadCurrent.getBike_RentKey());
                 bikesContext.startActivity(intent);
             }
         });

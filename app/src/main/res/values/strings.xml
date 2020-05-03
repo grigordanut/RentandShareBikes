@@ -158,7 +158,10 @@
     <!--    Main Activity Layout Page-->
     <string name="open_mainActivity">Open</string>
     <string name="close_mainActivity">Close</string>
-    <string name="tv_mainPage">Welcome to Rent and Share Bikes</string>
+    <string name="tv_mainPage1">Welcome to</string>
+    <string name="tv_mainPage2">Rent and Share Bikes</string>
+    <string name="tv_mainPageMulti">The company offers services of renting and sharing bikes</string>
+    <string name="registered">&amp;reg;</string>
 
     <!--    Register Customer-->
     <string name="tv_regCustomer">Please Enter your Register details</string>
@@ -324,8 +327,7 @@
     <string name="tv_storeAddressReturn">Store Address: </string>
 
     <!--    Main Header-->
-    <string name="tv_menuMain">Master Android Chanel on Youtube
-                                    \n\nThis is Navigation Drawer Example</string>
+
 
     <!--    Menu Resources-->
     <!--    Menu Admin-->

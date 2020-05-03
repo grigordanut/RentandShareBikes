@@ -73,6 +73,7 @@ public class RentBikesCustomer extends AppCompatActivity {
     private ImageView ivRentBikes;
 
     String bike_StoreNameRentBikes = "";
+    String bike_StoreKeyRentBikes = "";
     String bike_CondRentBikes = "";
     String bike_ModelRentBikes = "";
     String bike_ManufactRentBikes = "";
@@ -127,7 +128,8 @@ public class RentBikesCustomer extends AppCompatActivity {
             bike_ManufactRentBikes = bundle.getString("BManufact");
             bike_PriceRentBikes = bundle.getString("BPrice");
             bike_ImageRentBikes = bundle.getString("BImage");
-            bike_StoreNameRentBikes = bundle.getString("BStore");
+            bike_StoreNameRentBikes = bundle.getString("BStoreName");
+            bike_StoreKeyRentBikes = bundle.getString("BStoreKey");
             bikeKey_RentBike = bundle.getString("BKey");
         }
 
@@ -158,8 +160,6 @@ public class RentBikesCustomer extends AppCompatActivity {
             }
         });
     }
-
-
 
     private void uploadRentBikeData(){
 
@@ -205,9 +205,10 @@ public class RentBikesCustomer extends AppCompatActivity {
             String rent_BikesId = databaseRefRentBikes.push().getKey();
             bikeKey_RentedBike = rent_BikesId;
 
-            RentBikes rent_Bikes = new RentBikes(eTextDate_RentBike, etFName_RentBikes,
-                    etLName_RentBikes, etPhoneNo_RentBikes, etEmail_RentBikes, tVStoreName_RentBikes, tVCond_RentBikes,
-                    tVModel_RentBikes, tVManufact_RentBikes, tVPrice_rentBikes, bike_ImageRentBikes, bike_CusIdRentBikes, bikeKey_RentedBike);
+            RentBikes rent_Bikes = new RentBikes(eTextDate_RentBike, etFName_RentBikes, etLName_RentBikes,
+                    etPhoneNo_RentBikes, etEmail_RentBikes, tVStoreName_RentBikes, bike_StoreKeyRentBikes,
+                    tVCond_RentBikes, tVModel_RentBikes, tVManufact_RentBikes, tVPrice_rentBikes, bike_ImageRentBikes,
+                    bike_CusIdRentBikes, bikeKey_RentedBike);
 
             assert rent_BikesId != null;
             databaseRefRentBikes.child(rent_BikesId).setValue(rent_Bikes).addOnCompleteListener(new OnCompleteListener<Void>() {

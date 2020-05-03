@@ -11,19 +11,111 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/wall"
+        android:textAlignment="center"
         tools:context=".MainActivity"
         tools:showIn="@layout/activity_main">
 
         <TextView
-            android:id="@+id/tvDrawerMenuMain"
-            android:layout_marginTop="20dp"
+            android:id="@+id/tvWelcomeMain1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="@string/tv_mainPage1"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tvWelcomeMain2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvWelcomeMain1"
+            android:layout_margin="20dp"
+            android:text="@string/tv_mainPage2"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tvMainPage"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_below="@+id/tvWelcomeMain2"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:text="@string/tv_menuMain"
+            android:inputType="textMultiLine"
+            android:text="@string/tv_mainPageMulti"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            tools:ignore="TextViewEdits" />
+
+        <TextView
+            android:id="@+id/tvMainStores"
+            android:layout_width="240dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tvMainPage"
+            android:layout_alignStart="@+id/tvWelcomeMain1"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            android:text="Bike Stores Available"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tvMainStoresAv"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tvMainPage"
+            android:layout_alignEnd="@+id/tvWelcomeMain1"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:background="#ffffff"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tvMainBikes"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/tvMainStores"
+            android:layout_alignStart="@+id/tvWelcomeMain1"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="Bike to rent Available"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tvMainBikesAv"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tvMainStoresAv"
+            android:layout_alignEnd="@+id/tvWelcomeMain1"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:background="#ffffff"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tvTradeMark"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/tvMainBikes"
+            android:layout_alignStart="@+id/tvWelcomeMain1"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="60dp"
+            android:text="\u00AE"
+            android:textAlignment="center"
             android:textSize="30sp"
-            tools:ignore="HardcodedText"/>
+            tools:ignore="HardcodedText" />
+
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -31,9 +123,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:itemTextColor="@drawable/drawer_item_color"
         app:headerLayout="@layout/main_header"
         app:itemTextAppearance="?android:textAppearanceMedium"
+        app:itemTextColor="@drawable/drawer_item_color"
         app:menu="@menu/menu_drawer_main" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

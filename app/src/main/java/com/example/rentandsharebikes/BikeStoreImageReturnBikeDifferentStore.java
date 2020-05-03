@@ -33,8 +33,10 @@ public class BikeStoreImageReturnBikeDifferentStore extends AppCompatActivity im
     public List<BikeStore> bikeStoreList;
 
     private ProgressDialog progressDialog;
-
-    String bike_StoreReturnBikesSame,  bike_StoreReturnBikesDiff, bike_KeyReturnBikeSame;
+     //old
+    //String bike_StoreNameReturnBikesSame, bike_StoreKeyReturnBikesSame,  bike_StoreReturnBikesDiff, bike_KeyReturnBikeSame;
+    //New
+    String bike_StoreNameReturnBikesSame, bike_StoreKeyReturnBikesSame, bike_KeyReturnBikeSame;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -44,8 +46,10 @@ public class BikeStoreImageReturnBikeDifferentStore extends AppCompatActivity im
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
-            bike_StoreReturnBikesSame = bundle.getString("BStoreSame");
-            bike_KeyReturnBikeSame = bundle.getString("BKey");
+            //Receive data from ReturnRentedBikes
+            bike_StoreNameReturnBikesSame = bundle.getString("BStoreNameSame");
+            bike_StoreKeyReturnBikesSame = bundle.getString("BStoreKeySame");
+            bike_KeyReturnBikeSame = bundle.getString("BikeRentedKey");
         }
 
         textViewBikeStoresImageReturnBikeDiffStore = (TextView)findViewById(R.id.tvBikeStoresReturnDiffStore);
@@ -99,11 +103,16 @@ public class BikeStoreImageReturnBikeDifferentStore extends AppCompatActivity im
     //Action of the menu onClick
     @Override
     public void onItemClick(int position) {
+
+        //Send data to ReturnRentedBikes
         Intent intent = new Intent(BikeStoreImageReturnBikeDifferentStore.this, ReturnRentedBikes.class);
         BikeStore selected_BikeStore = bikeStoreList.get(position);
-        intent.putExtra("BStoreDiff", selected_BikeStore.getBikeStore_Location());
-        intent.putExtra("BStoreSame", bike_StoreReturnBikesSame);
-        intent.putExtra("BKey", bike_KeyReturnBikeSame);
+        intent.putExtra("BStoreNameDiff", selected_BikeStore.getBikeStore_Location());
+        intent.putExtra("BStoreKeyDiff", selected_BikeStore.getStoreKey());
+
+        intent.putExtra("BStoreNameSame", bike_StoreNameReturnBikesSame);
+        intent.putExtra("BStoreKeySame",bike_StoreKeyReturnBikesSame);
+        intent.putExtra("BikeRentedKey", bike_KeyReturnBikeSame);
         startActivity(intent);
     }
 }

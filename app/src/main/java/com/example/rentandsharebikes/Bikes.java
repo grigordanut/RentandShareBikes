@@ -8,19 +8,23 @@ public class Bikes {
     private double bike_Price;
     private String bike_Image;
     private String bikeStoreName;
+    private String bikeStoreKey;
     private String bike_Key;
 
     public Bikes(){
 
     }
 
-    public Bikes(String bike_Condition, String bike_Model, String bike_Manufacturer, double bike_Price, String bike_Image, String bikeStoreName, String bike_Key) {
+
+    public Bikes(String bike_Condition, String bike_Model, String bike_Manufacturer, double bike_Price,
+                 String bike_Image, String bikeStoreName, String bikeStoreKey, String bike_Key) {
         this.bike_Condition = bike_Condition;
         this.bike_Model = bike_Model;
         this.bike_Manufacturer = bike_Manufacturer;
         this.bike_Price = bike_Price;
         this.bike_Image = bike_Image;
         this.bikeStoreName = bikeStoreName;
+        this.bikeStoreKey = bikeStoreKey;
         this.bike_Key = bike_Key;
     }
 
@@ -70,6 +74,14 @@ public class Bikes {
 
     public void setBikeStoreName(String bikeStoreName) {
         this.bikeStoreName = bikeStoreName;
+    }
+
+    public String getBikeStoreKey() {
+        return bikeStoreKey;
+    }
+
+    public void setBikeStoreKey(String bikeStoreKey) {
+        this.bikeStoreKey = bikeStoreKey;
     }
 
     public String getBike_Key() {
