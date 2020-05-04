@@ -2,6 +2,7 @@ package com.example.rentandsharebikes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class BikesAdapterShowSharedBikesOwner extends RecyclerView.Adapter<BikesAdapterShowSharedBikesOwner.ImageViewHolder> {
+public class BikesAdapterShowSharedBikesToUpdate extends RecyclerView.Adapter<BikesAdapterShowSharedBikesToUpdate.ImageViewHolder>{
 
     private Context bikesContext;
     private List<ShareBikes> bikesUploads;
 
-    public BikesAdapterShowSharedBikesOwner(Context bikes_context, List<ShareBikes> bikes_uploads){
+    public BikesAdapterShowSharedBikesToUpdate(Context bikes_context, List<ShareBikes> bikes_uploads){
         bikesContext = bikes_context;
         bikesUploads = bikes_uploads;
     }
@@ -49,6 +50,22 @@ public class BikesAdapterShowSharedBikesOwner extends RecyclerView.Adapter<Bikes
                 .fit()
                 .centerCrop()
                 .into(holder.imageSharedBikesUser);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(bikesContext, UpdateBikeSharedDetails.class);
+                intent.putExtra("BCondUpdate",uploadCurrent.getShareBike_Condition());
+                intent.putExtra("BModelUpdate",uploadCurrent.getShareBike_Model());
+                intent.putExtra("BManufUpdate",uploadCurrent.getShareBike_Manufact());
+                intent.putExtra("BPriceUpdate",String.valueOf(uploadCurrent.getShareBike_Price()));
+                intent.putExtra("BImgUpdate",uploadCurrent.getShareBike_Image());
+                intent.putExtra("BDateAvUpdate",uploadCurrent.getShareBike_DateAv());
+                intent.putExtra("CIdUpdate", uploadCurrent.getShareBikes_CustomId());
+                intent.putExtra("BKeyUpdate", uploadCurrent.getShareBike_Key());
+                bikesContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -56,7 +73,7 @@ public class BikesAdapterShowSharedBikesOwner extends RecyclerView.Adapter<Bikes
         return bikesUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder {
+    public class ImageViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView imageSharedBikesUser;
         public TextView tvSharedBikeCondUser;

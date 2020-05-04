@@ -9,35 +9,31 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikesImageShowSharedBikesNoOwner extends AppCompatActivity implements BikesAdapterShowSharedBikesNoOwner.OnItemClickListener{
+public class BikesImageShowSharedBikesMain extends AppCompatActivity implements BikesAdapterShowSharedBikesMain.OnItemClickListener {
 
     //Display data from Share Bikes database
     private FirebaseStorage firebaseStDisplaySharedBikes;
     private DatabaseReference databaseRefDisplaySharedBikes;
     private ValueEventListener displayShareBikesEventListener;
-    private TextView tVBikesImgShowBikesSNoOwn;
+    private TextView tVBikesImgShowBikesSMain;
 
     private RecyclerView bikesListRecyclerView;
-    private BikesAdapterShowSharedBikesNoOwner bikesAdapterShowSharedBikesNoOwner;
+    private BikesAdapterShowSharedBikesMain bikesAdapterShowSharedBikesMain;
 
     private List<ShareBikes> sharedBikesList;
 
@@ -48,12 +44,9 @@ public class BikesImageShowSharedBikesNoOwner extends AppCompatActivity implemen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bikes_image_show_shared_bikes_no_owner);
+        setContentView(R.layout.activity_bikes_image_show_shared_bikes_main);
 
-        getIntent().hasExtra("CIdNoOwner");
-        customShareAll_Id = Objects.requireNonNull(getIntent().getExtras()).getString("CIdNoOwner");
-
-        tVBikesImgShowBikesSNoOwn = (TextView)findViewById(R.id.tvBikesImgShowBikesSNoOwn);
+        tVBikesImgShowBikesSMain = (TextView)findViewById(R.id.tvBikesImgShowBikesSMain);
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -69,10 +62,10 @@ public class BikesImageShowSharedBikesNoOwner extends AppCompatActivity implemen
     @Override
     public void onStart() {
         super.onStart();
-        loadSharedBikesNoOwner();
+        loadSharedBikesMain();
     }
 
-    public void loadSharedBikesNoOwner() {
+    public void loadSharedBikesMain() {
         //Display the list of the bikes from Share Bikes database
         firebaseStDisplaySharedBikes = FirebaseStorage.getInstance();
         databaseRefDisplaySharedBikes = FirebaseDatabase.getInstance().getReference("Share Bikes");
@@ -88,26 +81,26 @@ public class BikesImageShowSharedBikesNoOwner extends AppCompatActivity implemen
                     if (!share_Bikes.getShareBikes_CustomId().equals(customShareAll_Id)) {
                         share_Bikes.setShareBike_Key(postSnapshot.getKey());
                         sharedBikesList.add(share_Bikes);
-                        tVBikesImgShowBikesSNoOwn.setText(sharedBikesList.size()+" bikes available to be shared");
+                        tVBikesImgShowBikesSMain.setText(sharedBikesList.size()+" bikes available to be shared");
                     }
                 }
 
-                bikesAdapterShowSharedBikesNoOwner = new BikesAdapterShowSharedBikesNoOwner(BikesImageShowSharedBikesNoOwner.this, sharedBikesList);
-                bikesListRecyclerView.setAdapter(bikesAdapterShowSharedBikesNoOwner);
-                bikesAdapterShowSharedBikesNoOwner.setOnItmClickListener(BikesImageShowSharedBikesNoOwner.this);
+                bikesAdapterShowSharedBikesMain = new BikesAdapterShowSharedBikesMain(BikesImageShowSharedBikesMain.this, sharedBikesList);
+                bikesListRecyclerView.setAdapter(bikesAdapterShowSharedBikesMain);
+                bikesAdapterShowSharedBikesMain.setOnItmClickListener(BikesImageShowSharedBikesMain.this);
                 progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikesImageShowSharedBikesNoOwner.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikesImageShowSharedBikesMain.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
     public void onItemClick(final int position) {
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowSharedBikesNoOwner.this);
+        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowSharedBikesMain.this);
         builderAlert.setMessage("Contact the owner if you like to share this bike");
         builderAlert.setCancelable(true);
         builderAlert.setPositiveButton(

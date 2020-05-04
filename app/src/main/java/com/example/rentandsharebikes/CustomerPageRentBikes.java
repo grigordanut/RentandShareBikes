@@ -21,30 +21,45 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class CustomerPageRentBikes extends AppCompatActivity {
+
     //Declaring some objects
     private DrawerLayout drawerLayoutUserRent;
     private ActionBarDrawerToggle drawerToggleUserRent;
     private NavigationView navigationViewUserRent;
 
+    //Display data from Bikes table database
+    private FirebaseStorage firebaseStBikesRentCustom;
+    private DatabaseReference databaseRefBikesRentCustom;
+    private ValueEventListener bikesRentCustomEventListener;
+
+    //Access customer database
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private DatabaseReference databaseReference;
 
-    private TextView tVCustomPageRent;
+    private TextView tVCustomPageRent, tVCustomPageRentPerDetails, tVCustomerBikesRented;
 
+    private List<Bikes> bikesListRentCustom;
+    private int numberBikesRentedCustom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_page_rent_bikes);
 
+        bikesListRentCustom = new ArrayList<>();
+
         //initialise the variables
         tVCustomPageRent = (TextView) findViewById(R.id.tvCustomPageRent);
-        //tViewDMCustomer = (TextView)findViewById(R.id.tvDMCustomer
+        tVCustomPageRentPerDetails = (TextView)findViewById(R.id.tvCustomPageRentPerDetails);
+        tVCustomerBikesRented = (TextView)findViewById(R.id.tvCustomerBikesRented);
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -76,7 +91,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                     assert custom_data != null;
                     if (Objects.requireNonNull(custom_Details.getEmail()).equalsIgnoreCase(custom_data.getEmail_Customer())) {
                         tVCustomPageRent.setText("Welcome: " + custom_data.getfName_Customer() + " " + custom_data.getlName_Customer());
-
+                        tVCustomPageRentPerDetails.setText("Phone: \n"+custom_data.getPhoneNumb_Customer()+"\n\nEmail: \n"+custom_data.getEmail_Customer());
 
                         //Adding Click Events to our navigation drawer item
                         navigationViewUserRent.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -165,5 +180,37 @@ public class CustomerPageRentBikes extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadBikeRentCustom();
+    }
+
+    private void loadBikeRentCustom() {
+        //initialize the bike storage database
+        firebaseStBikesRentCustom = FirebaseStorage.getInstance();
+        databaseRefBikesRentCustom = FirebaseDatabase.getInstance().getReference("Bikes");
+
+        bikesRentCustomEventListener = databaseRefBikesRentCustom.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikesListRentCustom.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Bikes bikes = postSnapshot.getValue(Bikes.class);
+                    assert bikes != null;
+                    bikes.setBike_Key(postSnapshot.getKey());
+                    bikesListRentCustom.add(bikes);
+                    numberBikesRentedCustom = bikesListRentCustom.size();
+                    tVCustomerBikesRented.setText(String.valueOf(numberBikesRentedCustom));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(CustomerPageRentBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

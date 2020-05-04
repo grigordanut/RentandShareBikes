@@ -525,7 +525,7 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
             etUpEmailShareBike.setError("Please enter the Email Address");
             etUpEmailShareBike.requestFocus();
         } else if (TextUtils.isEmpty(tVCond_ShareBikeVal)) {
-            tVUpCondShareBike.setError("Please select Bike Condition");
+            alertDialogBikeShareUpCond();
             tVUpCondShareBike.requestFocus();
         } else if (TextUtils.isEmpty(etModel_ShareBikeVal)) {
             etUpModelShareBike.setError("Please add the Model of Bicycle");
@@ -546,7 +546,8 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
     }
 
     public void alertDialogBikeShareUpCond(){
-        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        androidx.appcompat.app.AlertDialog.Builder
+        alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Select the Bike Condition");
         alertDialogBuilder.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
@@ -581,7 +582,7 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
 
     private void alertDialogAvailableDateEmpty() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("The available  day cannot be empty.");
+        alertDialogBuilder.setMessage("The available day cannot be empty.");
         alertDialogBuilder.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
                     @Override

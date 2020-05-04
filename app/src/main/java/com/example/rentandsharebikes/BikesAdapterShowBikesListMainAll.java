@@ -60,8 +60,7 @@ public class BikesAdapterShowBikesListMainAll extends RecyclerView.Adapter<Bikes
         return bikesUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
-            View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener{
+    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView imBikeAvMain;
         public TextView tVBikeStoreAvMain;
@@ -81,7 +80,6 @@ public class BikesAdapterShowBikesListMainAll extends RecyclerView.Adapter<Bikes
             tVBikePriceAvMain = itemView.findViewById(R.id.tvBikePriceAvMain);
 
             itemView.setOnClickListener(this);
-            itemView.setOnCreateContextMenuListener(this);
         }
 
         @Override
@@ -92,23 +90,6 @@ public class BikesAdapterShowBikesListMainAll extends RecyclerView.Adapter<Bikes
                     clickListener.onItemClick(position);
                 }
             }
-        }
-
-        //create onItem click menu
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            if (clickListener != null) {
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    switch (item.getItemId()) {
-                    }
-                }
-            }
-            return false;
         }
     }
 

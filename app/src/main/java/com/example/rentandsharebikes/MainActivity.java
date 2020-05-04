@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         bikesListAvRent = new ArrayList<>();
         bikesListAvShare = new ArrayList<>();
 
-
         tVMainStoresAv = (TextView) findViewById(R.id.tvMainStoresAv);
         tVMainBikesAvRent = (TextView) findViewById(R.id.tvMainBikesRentAv);
         tVMainBikesAvShare = (TextView) findViewById(R.id.tvMainBikesShareAv);
@@ -107,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     //Bikes available to share
                     case R.id.bikeAvToShare:
-//                        Toast.makeText(MainActivity.this, "Bikes available to Share",Toast.LENGTH_SHORT).show();
-//                        startActivity(new Intent(MainActivity.this, BikesImageShowAllSharedBikes.class));
+                        Toast.makeText(MainActivity.this, "Bikes available to Share",Toast.LENGTH_SHORT).show();
+                        //startActivity(new Intent(MainActivity.this, BikesImageShowAllSharedBikes.class));
                         break;
                     case R.id.settings:
                         Toast.makeText(MainActivity.this, "Bikes to share", Toast.LENGTH_SHORT).show();

@@ -97,7 +97,7 @@ public class BikesImageShowBikesListMainPage extends AppCompatActivity implement
                 }
                 bikesAdapterShowBikesListMainPage = new BikesAdapterShowBikesListMainPage(BikesImageShowBikesListMainPage.this,bikesListMain);
                 bikesListRecyclerView.setAdapter(bikesAdapterShowBikesListMainPage);
-
+                bikesAdapterShowBikesListMainPage.setOnItmClickListener(BikesImageShowBikesListMainPage.this);
                 progressDialog.dismiss();
             }
 

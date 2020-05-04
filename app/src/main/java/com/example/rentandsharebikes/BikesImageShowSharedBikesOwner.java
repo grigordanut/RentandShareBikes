@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikesImageShowSharedBikesOwner extends AppCompatActivity implements BikesAdapterShowSharedBikesOwner.OnItemClickListener {
+public class BikesImageShowSharedBikesOwner extends AppCompatActivity {
 
     //Display data from database
     private FirebaseStorage bikesStorageShare;
@@ -39,7 +39,6 @@ public class BikesImageShowSharedBikesOwner extends AppCompatActivity implements
     //Delete data from database
     private FirebaseStorage bikesStorageDelete;
     private DatabaseReference databaseRefDeleteBike;
-
     private ValueEventListener shareBikesEventListener;
 
     private RecyclerView bikesListRecyclerView;
@@ -126,7 +125,6 @@ public class BikesImageShowSharedBikesOwner extends AppCompatActivity implements
 
                 bikesAdapterShowSharedBikesOwner = new BikesAdapterShowSharedBikesOwner(BikesImageShowSharedBikesOwner.this,shareBikesList);
                 bikesListRecyclerView.setAdapter(bikesAdapterShowSharedBikesOwner);
-                bikesAdapterShowSharedBikesOwner.setOnItmClickListener(BikesImageShowSharedBikesOwner.this);
                 progressDialog.dismiss();
             }
 
@@ -135,72 +133,5 @@ public class BikesImageShowSharedBikesOwner extends AppCompatActivity implements
                 Toast.makeText(BikesImageShowSharedBikesOwner.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    public void onItemClick(final int position) {
-        final String[] options = {"Update Bike", "Delete Bike"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select an option");
-        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                if (which == 0) {
-                    Intent intent = new Intent(BikesImageShowSharedBikesOwner.this, UpdateBikeSharedDetails.class);
-                    ShareBikes selected_Bike = shareBikesList.get(position);
-                    intent.putExtra("BCondUpdate", selected_Bike.getShareBike_Condition());
-                    intent.putExtra("BModelUpdate", selected_Bike.getShareBike_Model());
-                    intent.putExtra("BManufUpdate", selected_Bike.getShareBike_Manufact());
-                    intent.putExtra("BPriceUpdate", String.valueOf(selected_Bike.getShareBike_Price()));
-                    intent.putExtra("BImgUpdate", selected_Bike.getShareBike_Image());
-                    intent.putExtra("BDateAvUpdate", selected_Bike.getShareBike_DateAv());
-                    intent.putExtra("CIdUpdate", selected_Bike.getShareBikes_CustomId());
-                    intent.putExtra("BKeyUpdate", selected_Bike.getShareBike_Key());
-                    startActivity(intent);
-                }
-                if(which ==1){
-                    bikesStorageDelete = FirebaseStorage.getInstance();
-                    databaseRefDeleteBike = FirebaseDatabase.getInstance().getReference("Share Bikes");
-
-                    AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowSharedBikesOwner.this);
-                    builderAlert.setMessage("Are sure to delete this Bike?");
-                    builderAlert.setCancelable(true);
-                    builderAlert.setPositiveButton(
-                            "Yes",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    ShareBikes selected_Bike = shareBikesList.get(position);
-                                    final String selectedKeyBike = selected_Bike.getShareBike_Key();
-                                    StorageReference imageReference = bikesStorageDelete.getReferenceFromUrl(selected_Bike.getShareBike_Image());
-                                    imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            databaseRefDeleteBike.child(selectedKeyBike).removeValue();
-                                            Toast.makeText(BikesImageShowSharedBikesOwner.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            });
-
-                    builderAlert.setNegativeButton(
-                            "No",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-                    AlertDialog alert1 = builderAlert.create();
-                    alert1.show();
-
-                }
-            }
-        });
-
-        final AlertDialog alertDialog = builder.create();
-
-        alertDialog.show();
     }
 }

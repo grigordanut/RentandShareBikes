@@ -38,7 +38,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/btn_delete_round_corners"
-        android:text="@string/btn_addMoreBikes"
+        android:text="@string/btn_addMoreBikesAdminFull"
         android:textSize="14sp"
         tools:ignore="ButtonStyle" />
 
@@ -51,7 +51,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/btn_delete_round_corners"
-        android:text="@string/btn_backToAdminPageBikes"
+        android:text="@string/btn_backToAdminPageBikesFull"
         android:textSize="14sp"
         tools:ignore="ButtonStyle" />
 

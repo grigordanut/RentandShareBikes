@@ -30,7 +30,7 @@ public class BikesAdapterShowSharedBikesNoOwner extends RecyclerView.Adapter<Bik
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(bikesContext).inflate(R.layout.image_bikes_shared_customer,parent, false);
+        View view = LayoutInflater.from(bikesContext).inflate(R.layout.image_bikes_shared_available_full,parent, false);
         return new ImageViewHolder(view);
     }
 
@@ -39,18 +39,21 @@ public class BikesAdapterShowSharedBikesNoOwner extends RecyclerView.Adapter<Bik
     public void onBindViewHolder(ImageViewHolder holder, int position) {
 
         final ShareBikes uploadCurrent = bikesUploads.get(position);
-        holder.tvSharedBikeCondUser.setText(uploadCurrent.getShareBike_Condition());
-        holder.tvSharedBikeModelUser.setText(uploadCurrent.getShareBike_Model());
-        holder.tvSharedBikeManufactUser.setText(uploadCurrent.getShareBike_Manufact());
-        holder.tvSharedBikePriceUser.setText(String.valueOf(uploadCurrent.getShareBike_Price()));
-        holder.tvSharedBikeDateAvUser.setText(uploadCurrent.getShareBike_DateAv());
+        holder.tvSharedBikesUserNameFull.setText(uploadCurrent.getShareCus_FirstName()+uploadCurrent.getShareCus_LastName());
+        holder.tvSharedBikesUserPhoneFull.setText(uploadCurrent.getShareCus_PhoneNo());
+        holder.tvSharedBikesUserEmailFull.setText(uploadCurrent.getShareCus_EmailAdd());
+        holder.tvSharedBikeCondUserFull.setText(uploadCurrent.getShareBike_Condition());
+        holder.tvSharedBikeModelUserFull.setText(uploadCurrent.getShareBike_Model());
+        holder.tvSharedBikeManufactUserFull.setText(uploadCurrent.getShareBike_Manufact());
+        holder.tvSharedBikePriceUserFull.setText(String.valueOf(uploadCurrent.getShareBike_Price()));
+        holder.tvSharedBikeDateAvUserFull.setText(uploadCurrent.getShareBike_DateAv());
 
         Picasso.get()
                 .load(uploadCurrent.getShareBike_Image())
                 .placeholder(R.mipmap.ic_launcher)
                 .fit()
                 .centerCrop()
-                .into(holder.imageSharedBikesUser);
+                .into(holder.imageSharedBikesUserFull);
     }
 
     @Override
@@ -60,22 +63,28 @@ public class BikesAdapterShowSharedBikesNoOwner extends RecyclerView.Adapter<Bik
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public ImageView imageSharedBikesUser;
-        public TextView tvSharedBikeCondUser;
-        public TextView tvSharedBikeModelUser;
-        public TextView tvSharedBikeManufactUser;
-        public TextView tvSharedBikePriceUser;
-        public TextView tvSharedBikeDateAvUser;
+        public ImageView imageSharedBikesUserFull;
+        public TextView tvSharedBikesUserNameFull;
+        public TextView tvSharedBikesUserPhoneFull;
+        public TextView tvSharedBikesUserEmailFull;
+        public TextView tvSharedBikeCondUserFull;
+        public TextView tvSharedBikeModelUserFull;
+        public TextView tvSharedBikeManufactUserFull;
+        public TextView tvSharedBikePriceUserFull;
+        public TextView tvSharedBikeDateAvUserFull;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
 
-            imageSharedBikesUser = itemView.findViewById(R.id.imgSharedBikesCustom);
-            tvSharedBikeCondUser = itemView.findViewById(R.id.tvBikeConditionShare);
-            tvSharedBikeModelUser = itemView.findViewById(R.id.tvBikeModelShare);
-            tvSharedBikeManufactUser = itemView.findViewById(R.id.tvBikeManufactShare);
-            tvSharedBikePriceUser = itemView.findViewById(R.id.tvBikePriceShare);
-            tvSharedBikeDateAvUser = itemView.findViewById(R.id.tvDateAvShare);
+            imageSharedBikesUserFull = itemView.findViewById(R.id.imgSBikesCustomFull);
+            tvSharedBikesUserNameFull = itemView.findViewById(R.id.tvSharedBikeCustomNameFull);
+            tvSharedBikesUserPhoneFull = itemView.findViewById(R.id.tvCustomPhoneShareFull);
+            tvSharedBikesUserEmailFull = itemView.findViewById(R.id.tvCustomEmailShareFull);
+            tvSharedBikeCondUserFull = itemView.findViewById(R.id.tvBikeCondShareFull);
+            tvSharedBikeModelUserFull = itemView.findViewById(R.id.tvBikeModelShareFull);
+            tvSharedBikeManufactUserFull = itemView.findViewById(R.id.tvBikeManufactShareFull);
+            tvSharedBikePriceUserFull = itemView.findViewById(R.id.tvBikePriceShareFull);
+            tvSharedBikeDateAvUserFull = itemView.findViewById(R.id.tvDateAvShareFull);
 
             itemView.setOnClickListener(this);
         }
