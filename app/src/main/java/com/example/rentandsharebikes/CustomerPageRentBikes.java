@@ -117,6 +117,12 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                         intentReturn.putExtra("CId", currentUser.getUid());
                                         startActivity(intentReturn);
                                         break;
+
+                                    case R.id.userScan_Barcode:
+                                        Toast.makeText(CustomerPageRentBikes.this, "Return Bikes", Toast.LENGTH_SHORT).show();
+                                        Intent intentScan = new Intent(CustomerPageRentBikes.this, Scanner.class);
+                                        startActivity(intentScan);
+                                        break;
                                     default:
                                         return true;
                                 }

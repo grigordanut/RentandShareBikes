@@ -26,6 +26,11 @@
             android:id="@+id/userReturn_bikes"
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/mDUser_returnBikesRent" />
+
+        <item
+        android:id="@+id/userScan_Barcode"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="@string/mDUser_scanBarcode" />
     </group>
 
 </menu>

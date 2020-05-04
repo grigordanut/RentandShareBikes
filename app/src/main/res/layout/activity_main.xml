@@ -19,77 +19,94 @@
             android:id="@+id/tvWelcomeMain1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:text="@string/tv_mainPage1"
             android:textAlignment="center"
-            android:textSize="24sp"
-            tools:ignore="HardcodedText" />
+            android:textSize="24sp"/>
 
         <TextView
             android:id="@+id/tvWelcomeMain2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvWelcomeMain1"
-            android:layout_margin="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:text="@string/tv_mainPage2"
             android:textAlignment="center"
-            android:textSize="24sp"
-            tools:ignore="HardcodedText" />
+            android:textSize="24sp"/>
 
         <TextView
             android:id="@+id/tvMainPage"
             android:layout_width="wrap_content"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:layout_below="@+id/tvWelcomeMain2"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:inputType="textMultiLine"
-            android:text="@string/tv_mainPageMulti"
+            android:text="@string/tv_mainPageInfo"
             android:textAlignment="center"
             android:textSize="24sp"
             tools:ignore="TextViewEdits" />
 
         <TextView
+            android:id="@+id/tvMainDetails"
+            android:layout_width="match_parent"
+            android:paddingTop="10dp"
+            android:layout_height="165dp"
+            android:layout_below="@+id/tvMainPage"
+            android:layout_marginStart="20dp"
+            android:paddingStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="#f2f2f2"
+            android:inputType="textMultiLine"
+            android:textColor="#000000"
+            android:text="@string/tv_mainPageDetails"
+            android:textSize="24sp"
+            tools:ignore="RtlSymmetry,TextViewEdits" />
+
+        <TextView
             android:id="@+id/tvMainStores"
             android:layout_width="240dp"
             android:layout_height="30dp"
-            android:layout_below="@+id/tvMainPage"
+            android:layout_below="@+id/tvMainDetails"
             android:layout_alignStart="@+id/tvWelcomeMain1"
             android:layout_marginTop="20dp"
             android:layout_marginStart="10dp"
-            android:text="Bike Stores Available"
-            android:textSize="24sp"
-            tools:ignore="HardcodedText" />
+            android:text="@string/tv_mainBikeStores"
+            android:textSize="24sp"/>
 
         <TextView
             android:id="@+id/tvMainStoresAv"
             android:layout_width="50dp"
             android:layout_height="30dp"
-            android:layout_below="@+id/tvMainPage"
+            android:layout_below="@+id/tvMainDetails"
             android:layout_alignEnd="@+id/tvWelcomeMain1"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:background="#ffffff"
+            android:text="@string/tv_mainBikeStoresAv"
             android:textAlignment="center"
             android:textSize="24sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText" />
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvMainBikes"
+            android:id="@+id/tvMainBikesRent"
             android:layout_width="240dp"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_below="@+id/tvMainStores"
             android:layout_alignStart="@+id/tvWelcomeMain1"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            android:text="Bike to rent Available"
-            android:textSize="24sp"
-            tools:ignore="HardcodedText" />
+            android:text="@string/tv_mainBikesRent"
+            android:textSize="24sp"/>
 
         <TextView
-            android:id="@+id/tvMainBikesAv"
+            android:id="@+id/tvMainBikesRentAv"
             android:layout_width="50dp"
             android:layout_height="30dp"
             android:layout_below="@+id/tvMainStoresAv"
@@ -98,23 +115,47 @@
             android:layout_marginEnd="10dp"
             android:background="#ffffff"
             android:textAlignment="center"
+            android:text="@string/tv_mainBikesRentAv"
             android:textSize="24sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText" />
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvMainBikesShare"
+            android:layout_width="260dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tvMainBikesRent"
+            android:layout_alignStart="@+id/tvWelcomeMain1"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/tv_mainBikesShare"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/tvMainBikesShareAv"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tvMainBikesRentAv"
+            android:layout_alignEnd="@+id/tvWelcomeMain1"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:background="#ffffff"
+            android:textAlignment="center"
+            android:text="@string/tv_mainBikesShareAv"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvTradeMark"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_below="@+id/tvMainBikes"
+            android:layout_below="@+id/tvMainBikesShareAv"
             android:layout_alignStart="@+id/tvWelcomeMain1"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginTop="60dp"
-            android:text="\u00AE"
+            android:layout_marginTop="30dp"
+            android:text="@string/tv_mainTradeMark"
             android:textAlignment="center"
-            android:textSize="30sp"
-            tools:ignore="HardcodedText" />
+            android:textSize="30sp"/>
 
     </RelativeLayout>
 

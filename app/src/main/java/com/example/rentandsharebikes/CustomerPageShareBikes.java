@@ -98,7 +98,9 @@ public class CustomerPageShareBikes extends AppCompatActivity {
                                         break;
                                     case R.id.userShow_shareBikesAvailable:
                                         Toast.makeText(CustomerPageShareBikes.this, "Share Bikes Available", Toast.LENGTH_SHORT).show();
-                                        //startActivity(new Intent(CustomerPageShareBikes.this, BikesImageShowAllSharedBikes.class));
+                                        Intent intentNoOwnerBikes = new Intent(CustomerPageShareBikes.this, BikesImageShowSharedBikesNoOwner.class);
+                                        intentNoOwnerBikes.putExtra("CIdNoOwner", currentUser.getUid());
+                                        startActivity(intentNoOwnerBikes);
                                         break;
                                     case R.id.userUpdate_ownShareBikes:
                                         Toast.makeText(CustomerPageShareBikes.this, "Update my Bike", Toast.LENGTH_SHORT).show();
@@ -107,6 +109,13 @@ public class CustomerPageShareBikes extends AppCompatActivity {
 //                                        intentUpdate.putExtra("CLNameShare", custom_data.getlName_Customer());
 //                                        intentUpdate.putExtra("CIdUpdate", currentUser.getUid());
 //                                        startActivity(intentUpdate);
+                                        break;
+
+                                    case R.id.userRemove_ownShareBikes:
+                                        Toast.makeText(CustomerPageShareBikes.this, "Remove shared Bikes", Toast.LENGTH_SHORT).show();
+                                        Intent intentRemoveBikes = new Intent(CustomerPageShareBikes.this, BikesImageRemoveSharedBikesOwner.class);
+                                        intentRemoveBikes.putExtra("CIdRemove", currentUser.getUid());
+                                        startActivity(intentRemoveBikes);
                                         break;
                                     default:
                                         return true;

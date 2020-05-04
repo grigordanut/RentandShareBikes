@@ -22,6 +22,11 @@
             android:id="@+id/userUpdate_ownShareBikes"
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/mDUser_updateAvailableBikesShare"/>
+
+        <item
+            android:id="@+id/userRemove_ownShareBikes"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/mDUser_removeAvailableBikesShare"/>
     </group>
 
 </menu>

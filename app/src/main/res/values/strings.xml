@@ -61,6 +61,9 @@
     <!--    Bike Store Image Show Stores List Main-->
     <string name="tv_bikeStoreImageShowStoresListMain">List of Bike Stores</string>
 
+    <!--    Bikes Image Remove Shared Bikes Owner-->
+    <string name="tv_bikeStoreImgRemoveBikesSOwner">Select the Bike to be removed</string>
+
     <!--    Bikes Image Rent Bikes Customer-->
     <string name="tv_bikesImageRentBikesCustomer">Select the Bike</string>
 
@@ -90,14 +93,14 @@
     <!--    Bikes Image Show Bikes Rented Customer-->
     <string name="tv_bikesImageShowBikesRentedCustomer">List of Bikes</string>
 
+    <!--    Bikes Image Show Bikes Rented No Owner-->
+    <string name="tv_bikeStoreImgShowBikesSNoOwner">No Bikes available to be shared</string>
 
-    <!--    Bikes Image Show Own Shared Bikes-->
+    <!--    Bikes Image Show Shared Bikes Owner-->
     <string name="tv_bikesImageShowOwnSharedBikes">List of Bikes</string>
     <string name="btn_addMoreBikesShare">Add More Bikes</string>
     <string name="btn_backToCustomPageShare">Back Main Page</string>
 
-    <!--    Bikes Image Show Own Shared Bikes-->
-    <string name="tv_bikesImageShowOwnSharedBikesToUpdate">Select the Bike</string>
 
     <!--    Calculate Coordinates-->
     <string name="tv_calculateCoordinates">Calculate Address Coordinates</string>
@@ -160,8 +163,15 @@
     <string name="close_mainActivity">Close</string>
     <string name="tv_mainPage1">Welcome to</string>
     <string name="tv_mainPage2">Rent and Share Bikes</string>
-    <string name="tv_mainPageMulti">The company offers services of renting and sharing bikes</string>
-    <string name="registered">&amp;reg;</string>
+    <string name="tv_mainPageInfo">The company offers services of renting and sharing bikes.</string>
+    <string name="tv_mainPageDetails">Phone: \n0894644545 \n\nEmail: \nrent.bikes19@gmail.com</string>
+    <string name="tv_mainBikeStores">Bike Stores Available</string>
+    <string name="tv_mainBikeStoresAv">0</string>
+    <string name="tv_mainBikesRent">Bike to rent Available</string>
+    <string name="tv_mainBikesRentAv">0</string>
+    <string name="tv_mainBikesShare">Bike to share Available</string>
+    <string name="tv_mainBikesShareAv">0</string>
+    <string name="tv_mainTradeMark">\u00AE</string>
 
     <!--    Register Customer-->
     <string name="tv_regCustomer">Please Enter your Register details</string>
@@ -360,12 +370,14 @@
     <string name="mDUser_rentBikesRent">Rent Bikes</string>
     <string name="mDUser_showBikesRentedRent">Rented Bikes</string>
     <string name="mDUser_returnBikesRent">Return Bikes</string>
+    <string name="mDUser_scanBarcode">Scan Barcode</string>
 
     <!--    Menu Drawer Customer Share Bikes-->
-    <string name="mDUser_shareBikesShare">Share Bikes</string>
+    <string name="mDUser_shareBikesShare">Add Bikes to Share</string>
     <string name="mDUser_showOwnBikesShare">Show My Bikes</string>
     <string name="mDUser_showAvailableBikesShare">Show All Bikes</string>
-    <string name="mDUser_updateAvailableBikesShare">Update My Bike</string>
+    <string name="mDUser_updateAvailableBikesShare">Update My Bikes</string>
+    <string name="mDUser_removeAvailableBikesShare">Remove My Bikes</string>
 
     <!--    Menu Drawer Main-->
     <string name="menu_myAccount">My Account</string>

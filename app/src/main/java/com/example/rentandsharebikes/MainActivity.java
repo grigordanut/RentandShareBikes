@@ -25,23 +25,31 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Display data from Bikes table database
-    private FirebaseStorage firebaseStBikes;
-    private DatabaseReference databaseRefBikes;
-    private ValueEventListener bikesEventListener;
-
     //Display data from Bike Stores database
     private FirebaseStorage firebaseStBikeSores;
     private DatabaseReference databaseRefBikeStores;
     private ValueEventListener bikeStoresEventListener;
 
-    private List<Bikes> bikesList;
+    //Display data from Bikes table database
+    private FirebaseStorage firebaseStBikesAvRent;
+    private DatabaseReference databaseRefBikesAvRent;
+    private ValueEventListener bikesAvRentEventListener;
+
+    //Display data from Share Bikes table database
+    private FirebaseStorage firebaseStBikesAvShare;
+    private DatabaseReference databaseRefBikesAvShare;
+    private ValueEventListener bikesAvShareEventListener;
+
     private List<BikeStore> bikeStoresList;
+    private List<Bikes> bikesListAvRent;
+    private List<ShareBikes> bikesListAvShare;
 
-    private int numberBikesAvailable;
+
     private int numberStoresAvailable;
+    private int numberBikesAvRent;
+    private int numberBikesAvShare;
 
-    private TextView tVMainBikesAv, tVMainStoresAv;
+    private TextView tVMainStoresAv, tVMainBikesAvRent, tVMainBikesAvShare;
     //Declaring some objects
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -52,11 +60,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bikesList = new ArrayList<>();
         bikeStoresList = new ArrayList<>();
+        bikesListAvRent = new ArrayList<>();
+        bikesListAvShare = new ArrayList<>();
+
 
         tVMainStoresAv = (TextView) findViewById(R.id.tvMainStoresAv);
-        tVMainBikesAv = (TextView) findViewById(R.id.tvMainBikesAv);
+        tVMainBikesAvRent = (TextView) findViewById(R.id.tvMainBikesRentAv);
+        tVMainBikesAvShare = (TextView) findViewById(R.id.tvMainBikesShareAv);
 
         drawerLayout = findViewById(R.id.activity_main);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_mainActivity, R.string.close_mainActivity);
@@ -141,12 +152,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        loadNumberBikeStoresAvailable();
-        loadNumberBikeAvailable();
+        loadBikeStoresAv();
+        loadBikeRentAv();
+        loadBikeShareAv();
     }
 
-
-    private void loadNumberBikeStoresAvailable() {
+    private void loadBikeStoresAv() {
         //initialize the bike storage database
         firebaseStBikeSores = FirebaseStorage.getInstance();
         databaseRefBikeStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
@@ -173,22 +184,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void loadNumberBikeAvailable() {
+    private void loadBikeRentAv() {
         //initialize the bike storage database
-        firebaseStBikes = FirebaseStorage.getInstance();
-        databaseRefBikes = FirebaseDatabase.getInstance().getReference("Bikes");
+        firebaseStBikesAvRent = FirebaseStorage.getInstance();
+        databaseRefBikesAvRent = FirebaseDatabase.getInstance().getReference("Bikes");
 
-        bikesEventListener = databaseRefBikes.addValueEventListener(new ValueEventListener() {
+        bikesAvRentEventListener = databaseRefBikesAvRent.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesList.clear();
+                bikesListAvRent.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
                     bikes.setBike_Key(postSnapshot.getKey());
-                    bikesList.add(bikes);
-                    numberBikesAvailable = bikesList.size();
-                    tVMainBikesAv.setText(String.valueOf(numberBikesAvailable));
+                    bikesListAvRent.add(bikes);
+                    numberBikesAvRent = bikesListAvRent.size();
+                    tVMainBikesAvRent.setText(String.valueOf(numberBikesAvRent));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(MainActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void loadBikeShareAv() {
+        //initialize the bike storage database
+        firebaseStBikesAvShare = FirebaseStorage.getInstance();
+        databaseRefBikesAvShare = FirebaseDatabase.getInstance().getReference("Share Bikes");
+
+        bikesAvShareEventListener = databaseRefBikesAvShare.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikesListAvShare.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    ShareBikes share_Bikes = postSnapshot.getValue(ShareBikes.class);
+                    assert share_Bikes != null;
+                    share_Bikes.setShareBike_Key(postSnapshot.getKey());
+                    bikesListAvShare.add(share_Bikes);
+                    numberBikesAvShare = bikesListAvShare.size();
+                    tVMainBikesAvShare.setText(String.valueOf(numberBikesAvShare));
                 }
             }
 
