@@ -35,7 +35,7 @@ public class AdminPage extends AppCompatActivity {
     private DatabaseReference databaseRefBikesAvRent;
     private ValueEventListener bikesAvRentEventListener;
 
-    //Display data from Bikes table database
+    //Display data from Rent Bikes table database
     private FirebaseStorage firebaseStBikesRented;
     private DatabaseReference databaseRefBikesRented;
     private ValueEventListener bikesRentedEventListener;
@@ -169,6 +169,7 @@ public class AdminPage extends AppCompatActivity {
         super.onStart();
         loadBikeStoresAv();
         loadBikeRentAv();
+        loadBikeRented();
         loadBikeShareAv();
     }
 

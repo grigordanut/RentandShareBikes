@@ -116,7 +116,7 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(UpdateBikeSharedDetails.this);
 
-        storageRefUpShare = getInstance().getReference("Share Bikes");
+        storageRefUpShare = FirebaseStorage.getInstance().getReference("Share Bikes");
         databaseRefUpShare = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
         tVUpShareBikes = (TextView) findViewById(R.id.tvUpShareBikes);

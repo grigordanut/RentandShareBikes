@@ -1,5 +1,6 @@
 package com.example.rentandsharebikes;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private int numberBikesAvRent;
     private int numberBikesAvShare;
 
-    private TextView tVMainStoresAv, tVMainBikesAvRent, tVMainBikesAvShare;
+    private TextView tVMainStoresAv, tVMainBikesRentAv, tVMainBikesShareAv;
     //Declaring some objects
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -64,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
         bikesListAvRent = new ArrayList<>();
         bikesListAvShare = new ArrayList<>();
 
-        tVMainStoresAv = (TextView) findViewById(R.id.tvMainStoresAv);
-        tVMainBikesAvRent = (TextView) findViewById(R.id.tvMainBikesRentAv);
-        tVMainBikesAvShare = (TextView) findViewById(R.id.tvMainBikesShareAv);
+        tVMainStoresAv = (TextView)findViewById(R.id.tvMainStoresAv);
+        tVMainBikesRentAv = (TextView)findViewById(R.id.tvMainBikesRentAv);
+        tVMainBikesShareAv = (TextView)findViewById(R.id.tvMainBikesShareAv);
 
         drawerLayout = findViewById(R.id.activity_main);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_mainActivity, R.string.close_mainActivity);
@@ -182,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     private void loadBikeRentAv() {
         //initialize the bike storage database
         firebaseStBikesAvRent = FirebaseStorage.getInstance();
@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                     bikes.setBike_Key(postSnapshot.getKey());
                     bikesListAvRent.add(bikes);
                     numberBikesAvRent = bikesListAvRent.size();
-                    tVMainBikesAvRent.setText(String.valueOf(numberBikesAvRent));
+                    //tVMainBikesRentAv.setText(String.valueOf(numberBikesAvRent));
                 }
             }
 
@@ -210,11 +210,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadBikeShareAv() {
-        //initialize the bike storage database
+        //Display the list of the bikes from Share Bikes database
         firebaseStBikesAvShare = FirebaseStorage.getInstance();
         databaseRefBikesAvShare = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
         bikesAvShareEventListener = databaseRefBikesAvShare.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikesListAvShare.clear();
@@ -224,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                     share_Bikes.setShareBike_Key(postSnapshot.getKey());
                     bikesListAvShare.add(share_Bikes);
                     numberBikesAvShare = bikesListAvShare.size();
-                    tVMainBikesAvShare.setText(String.valueOf(numberBikesAvShare));
+                    tVMainBikesShareAv.setText(String.valueOf(numberBikesAvShare));
                 }
             }
 

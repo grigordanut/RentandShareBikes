@@ -197,10 +197,10 @@
     <string name="et_emailLogCustomer">Email Address</string>
     <string name="tv_passLogCustomer">Password</string>
     <string name="et_passLogCustomer">Password</string>
+    <string name="cb_remLogCustomer">Remember me</string>
     <string name="tv_forgotPassCustomer">Forgotten Password</string>
     <string name="btn_logInCustomer">Log In</string>
-    <string name="btn_cancelLogCustomer">Cancel</string>
-    <string name="btn_signUpCustomer">Sign Up</string>
+    <string name="btn_signUpCustomer">Register</string>
 
     <!--    Main Activity Layout Page-->
     <string name="open_mainActivity">Open</string>
@@ -218,7 +218,7 @@
     <string name="tv_mainTradeMark">\u00AE</string>
 
     <!--    Register Customer-->
-    <string name="tv_regCustomer">Please Enter your Register details</string>
+    <string name="tv_regCustomer">Please enter your Register details</string>
     <string name="et_firstNameCustomer">First Name</string>
     <string name="et_lastNameCustomer">Last Name</string>
     <string name="et_userNameCustomer">User Name</string>
@@ -227,8 +227,7 @@
     <string name="et_passRegCustomer">Password</string>
     <string name="et_confPassRegCustomer">Confirm Password</string>
     <string name="btn_registerCustomer">Register</string>
-    <string name="btn_cancelRegCustomer">Cancel</string>
-    <string name="btn_signInRegCustomer">Sign In</string>
+    <string name="btn_signInRegCustomer">Log In</string>
 
     <!--    Rent Bikes Customer-->
     <string name="tv_rentBikes">Rent a Bike</string>

@@ -312,7 +312,6 @@ public class UpdateBikeDetails extends AppCompatActivity {
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(final Uri uri) {
-                                    databaseRefUpdate = FirebaseDatabase.getInstance().getReference().child("Bikes");
 
                                     Query query = databaseRefUpdate.orderByChild("bike_Key").equalTo(bike_KeyUp);
                                     query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -353,7 +352,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
                         public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                             //show upload Progress
                             double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
-                            progressDialog.setMessage("Uploaded: " + (int) progress + "%");
+                            progressDialog.setMessage("Updated: " + (int) progress + "%");
                             progressDialog.setProgress((int) progress);
                         }
                     });
@@ -373,7 +372,6 @@ public class UpdateBikeDetails extends AppCompatActivity {
             etUpBike_Manufact = etUpBikeManufact.getText().toString().trim();
             etUpBike_Price = Double.parseDouble(etUpBikePrice.getText().toString().trim());
 
-            databaseRefUpdate = FirebaseDatabase.getInstance().getReference().child("Bikes");
             Query query = databaseRefUpdate.orderByChild("bike_Key").equalTo(bike_KeyUp);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

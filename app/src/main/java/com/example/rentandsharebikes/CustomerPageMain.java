@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -86,9 +87,11 @@ public class CustomerPageMain extends AppCompatActivity {
 
                     assert custom_Details != null;
                     assert custom_data != null;
+
                     if (Objects.requireNonNull(custom_Details.getEmail()).equalsIgnoreCase(custom_data.getEmail_Customer())) {
                         tVCustomPageMain.setText("Welcome: " + custom_data.getfName_Customer() + " " + custom_data.getlName_Customer());
                     }
+                    //tVCustomPageMain.setText("Welcome: " + custom_data.getfName_Customer() + " " + custom_data.getlName_Customer());
                 }
             }
 
@@ -111,7 +114,13 @@ public class CustomerPageMain extends AppCompatActivity {
 
     //user log out
     private void LogOut() {
-        confirmLogOut();
+        SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("remember", "false");
+        editor.apply();
+        finish();
+        startActivity(new Intent(CustomerPageMain.this, MainActivity.class));
+        Toast.makeText(CustomerPageMain.this, "You are Log Out", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -141,31 +150,5 @@ public class CustomerPageMain extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void confirmLogOut() {
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(CustomerPageMain.this);
-        builderAlert.setMessage("Are sure to Log Out?");
-        builderAlert.setCancelable(true);
-        builderAlert.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        firebaseAuth.signOut();
-                        finish();
-                        startActivity(new Intent(CustomerPageMain.this, MainActivity.class));
-                    }
-                });
-
-        builderAlert.setNegativeButton(
-                "Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alert1 = builderAlert.create();
-        alert1.show();
     }
 }
