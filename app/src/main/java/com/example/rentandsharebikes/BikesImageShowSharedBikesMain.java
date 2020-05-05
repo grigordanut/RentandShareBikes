@@ -37,7 +37,7 @@ public class BikesImageShowSharedBikesMain extends AppCompatActivity implements 
 
     private List<ShareBikes> sharedBikesList;
 
-    String customShareAll_Id = "";
+    //String customShareAll_Id = "";
 
     private ProgressDialog progressDialog;
 
@@ -78,11 +78,11 @@ public class BikesImageShowSharedBikesMain extends AppCompatActivity implements 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     ShareBikes share_Bikes = postSnapshot.getValue(ShareBikes.class);
                     assert share_Bikes != null;
-                    if (!share_Bikes.getShareBikes_CustomId().equals(customShareAll_Id)) {
+                    //if (!share_Bikes.getShareBikes_CustomId().equals(customShareAll_Id)) {
                         share_Bikes.setShareBike_Key(postSnapshot.getKey());
                         sharedBikesList.add(share_Bikes);
                         tVBikesImgShowBikesSMain.setText(sharedBikesList.size()+" bikes available to be shared");
-                    }
+                    //}
                 }
 
                 bikesAdapterShowSharedBikesMain = new BikesAdapterShowSharedBikesMain(BikesImageShowSharedBikesMain.this, sharedBikesList);

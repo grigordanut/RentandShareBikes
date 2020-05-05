@@ -22,7 +22,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BikesImageShowSharedBikesMain"></activity>
+        <activity android:name=".BikesImageShowBikesListCustomAll" />
+        <activity android:name=".BikesImageShowSharedBikesMain" />
         <activity android:name=".BikesImageShowSharedBikesToUpdate" />
         <activity android:name=".BikesImageShowSharedBikesNoOwner" />
         <activity android:name=".BikesImageRemoveSharedBikesOwner" />

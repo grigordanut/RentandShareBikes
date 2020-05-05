@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                     //Bikes available to share
                     case R.id.bikeAvToShare:
                         Toast.makeText(MainActivity.this, "Bikes available to Share",Toast.LENGTH_SHORT).show();
-                        //startActivity(new Intent(MainActivity.this, BikesImageShowAllSharedBikes.class));
+                        startActivity(new Intent(MainActivity.this, BikesImageShowSharedBikesMain.class));
                         break;
                     case R.id.settings:
                         Toast.makeText(MainActivity.this, "Bikes to share", Toast.LENGTH_SHORT).show();

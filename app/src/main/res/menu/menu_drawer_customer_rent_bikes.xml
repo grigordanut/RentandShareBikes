@@ -13,6 +13,11 @@
             android:title="@string/mDUser_showBikesListRent" />
 
         <item
+            android:id="@+id/userShow_bikesListAll"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/mDUser_showBikesListAll" />
+
+        <item
             android:id="@+id/userRent_bikes"
             android:icon="@drawable/ic_shopping_cart_black_24dp"
             android:title="@string/mDUser_rentBikesRent" />

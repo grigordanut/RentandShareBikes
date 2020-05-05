@@ -68,13 +68,13 @@ public class ReturnRentedBikes extends AppCompatActivity {
     private TextInputEditText etFNameReturnBikes, etLNameReturnBikes;
     private TextView tVReturnBikes, tVStoreNameReturnBikes, tVCondReturnBikes, tVModelReturnBikes, tVManufactReturnBikes, tVPriceReturnBikes;
     private CheckBox cBoxRetSameStore, cBoxRetDiffStore;
-    private EditText eTDateOfRentBike, eTDateReturnBike, eTRentDurationBike, eTReturnTotalHours, etBikeStoreReturn;
+    private EditText eTDateOfRentBike, eTDateReturnBike, eTRentDurationBike, eTReturnTotalHours, eTReturnTotalPricePay, etBikeStoreReturn;
 
     //variables for data received
     private String etFName_ReturnBikes, etLName_ReturnBikes;
     private String tVDate_ReturnBikes, storeName_ReturnBikes, tVCond_ReturnBikes, tVModel_ReturnBikes, tVManufact_ReturnBikes,img_ReturnBikes;
 
-    private double tVPrice_ReturnBikes;
+    private Double tVPrice_ReturnBikes,  eTReturn_TotalPricePay;
     private Double totalHours = 0.00;
 
     private ImageView ivReturnBikes;
@@ -130,6 +130,9 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
         //Total Hours
         eTReturnTotalHours = (EditText)findViewById(R.id.etReturnTotalHours);
+        eTReturnTotalHours.setEnabled(false);
+
+        eTReturnTotalPricePay = (EditText) findViewById(R.id.etReturnTotalPricePay);
         eTReturnTotalHours.setEnabled(false);
 
         etFNameReturnBikes = (TextInputEditText) findViewById(R.id.etFirstNameReturnBikes);
@@ -390,6 +393,9 @@ public class ReturnRentedBikes extends AppCompatActivity {
                             eTRentDurationBike.setText(days+" d "+" "+hours+" h "+""+minutes+" m");
                             double totalHours = ((days*24)+hours+(minutes/60));
                             eTReturnTotalHours.setText(String.valueOf(totalHours));
+                            tVPrice_ReturnBikes = Double.parseDouble(tVPriceReturnBikes.getText().toString().trim());
+                            eTReturn_TotalPricePay = totalHours*tVPrice_ReturnBikes;
+                            eTReturnTotalPricePay.setText(String.valueOf(eTReturn_TotalPricePay));
                         }
 
                         //receive data from the other activity

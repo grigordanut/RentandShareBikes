@@ -26,38 +26,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikesImageShowBikesListCustomer extends AppCompatActivity implements BikesAdapterShowBikesListCustomer.OnItemClickListener {
+public class BikesImageShowBikesListCustomAll extends AppCompatActivity implements BikesAdapterShowBikesListCustomAll.OnItemClickListener {
 
     private FirebaseStorage bikesStorage;
     private DatabaseReference databaseReference;
     private ValueEventListener bikesEventListener;
 
     private RecyclerView bikesListRecyclerView;
-    private BikesAdapterShowBikesListCustomer bikesAdapterShowBikesListCustomer;
+    private BikesAdapterShowBikesListCustomAll bikesAdapterShowBikesListCustomAll;
 
-    private TextView textViewBikesImageList;
+    private TextView tVBikeImageShowListCustomAll;
 
     private List<Bikes> bikesList;
 
-    String bikeStore_NameRent = "";
-    String bikeStore_KeyRent = "";
-
     private ProgressDialog progressDialog;
+
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bikes_image_show_bikes_list_customer);
+        setContentView(R.layout.activity_bikes_image_show_bikes_list_custom_all);
 
-        getIntent().hasExtra("SNameRent");
-        bikeStore_NameRent = Objects.requireNonNull(getIntent().getExtras()).getString("SNameRent");
-
-        getIntent().hasExtra("SKeyRent");
-        bikeStore_KeyRent = Objects.requireNonNull(getIntent().getExtras()).getString("SKeyRent");
-
-        textViewBikesImageList = (TextView) findViewById(R.id.tvBikeImageList);
-        textViewBikesImageList.setText("No bikes available in " +bikeStore_NameRent+ " store");
+        tVBikeImageShowListCustomAll = (TextView) findViewById(R.id.tvBikeImageShowListCustomAll);
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -89,21 +80,19 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(bikeStore_KeyRent)) {
-                        bikes.setBike_Key(postSnapshot.getKey());
-                        bikesList.add(bikes);
-                        textViewBikesImageList.setText(bikesList.size()+" bikes available in "+bikeStore_NameRent+" store");
-                    }
+                    bikes.setBike_Key(postSnapshot.getKey());
+                    bikesList.add(bikes);
+                    tVBikeImageShowListCustomAll.setText(bikesList.size() + " bikes available to rent");
                 }
-                bikesAdapterShowBikesListCustomer = new BikesAdapterShowBikesListCustomer(BikesImageShowBikesListCustomer.this, bikesList);
-                bikesListRecyclerView.setAdapter(bikesAdapterShowBikesListCustomer);
-                bikesAdapterShowBikesListCustomer.setOnItmClickListener(BikesImageShowBikesListCustomer.this);
+                bikesAdapterShowBikesListCustomAll = new BikesAdapterShowBikesListCustomAll(BikesImageShowBikesListCustomAll.this, bikesList);
+                bikesListRecyclerView.setAdapter(bikesAdapterShowBikesListCustomAll);
+                bikesAdapterShowBikesListCustomAll.setOnItmClickListener(BikesImageShowBikesListCustomAll.this);
                 progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikesImageShowBikesListCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikesImageShowBikesListCustomAll.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -120,21 +109,21 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
             public void onClick(DialogInterface dialog, int which) {
 
                 if (which == 0) {
-                    Intent intent = new Intent(BikesImageShowBikesListCustomer.this, RentBikesCustomer.class);
+                    Intent intent = new Intent(BikesImageShowBikesListCustomAll.this, RentBikesCustomer.class);
                     Bikes selected_Bike = bikesList.get(position);
-                    intent.putExtra("BCondition",selected_Bike.getBike_Condition());
-                    intent.putExtra("BModel",selected_Bike.getBike_Model());
-                    intent.putExtra("BManufact",selected_Bike.getBike_Manufacturer());
-                    intent.putExtra("BImage",selected_Bike.getBike_Image());
-                    intent.putExtra("BStore",selected_Bike.getBikeStoreName());
-                    intent.putExtra("BPrice",String.valueOf(selected_Bike.getBike_Price()));
-                    intent.putExtra("BKey",selected_Bike.getBike_Key());
+                    intent.putExtra("BCondition", selected_Bike.getBike_Condition());
+                    intent.putExtra("BModel", selected_Bike.getBike_Model());
+                    intent.putExtra("BManufact", selected_Bike.getBike_Manufacturer());
+                    intent.putExtra("BImage", selected_Bike.getBike_Image());
+                    intent.putExtra("BStore", selected_Bike.getBikeStoreName());
+                    intent.putExtra("BPrice", String.valueOf(selected_Bike.getBike_Price()));
+                    intent.putExtra("BKey", selected_Bike.getBike_Key());
                     startActivity(intent);
                 }
 
                 if (which == 1) {
-                    startActivity(new Intent(BikesImageShowBikesListCustomer.this, CustomerPageRentBikes.class));
-                    Toast.makeText(BikesImageShowBikesListCustomer.this, "Back to main page", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(BikesImageShowBikesListCustomAll.this, CustomerPageRentBikes.class));
+                    Toast.makeText(BikesImageShowBikesListCustomAll.this, "Back to main page", Toast.LENGTH_SHORT).show();
                 }
             }
         });

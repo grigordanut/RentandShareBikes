@@ -46,7 +46,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
 
     private TextView tVCustomPageRent, tVCustomPageRentPerDetails, tVCustomerBikesRented;
 
-    private List<Bikes> bikesListRentCustom;
+    private List<RentBikes> bikesListRentCustom;
     private int numberBikesRentedCustom;
 
     @Override
@@ -108,6 +108,11 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                     case R.id.userShow_bikesList:
                                         Toast.makeText(CustomerPageRentBikes.this, "Bikes Available", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageShowBikesListCustom.class));
+                                        break;
+                                    //Show the list of all Bikes available from customer page
+                                    case R.id.userShow_bikesListAll:
+                                        Toast.makeText(CustomerPageRentBikes.this, "All Bikes Available", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(CustomerPageRentBikes.this, BikesImageShowBikesListCustomAll.class));
                                         break;
                                     //The activity of renting bikes by the customer
                                     case R.id.userRent_bikes:
@@ -191,19 +196,21 @@ public class CustomerPageRentBikes extends AppCompatActivity {
     private void loadBikeRentCustom() {
         //initialize the bike storage database
         firebaseStBikesRentCustom = FirebaseStorage.getInstance();
-        databaseRefBikesRentCustom = FirebaseDatabase.getInstance().getReference("Bikes");
+        databaseRefBikesRentCustom = FirebaseDatabase.getInstance().getReference("Rent Bikes");
 
         bikesRentCustomEventListener = databaseRefBikesRentCustom.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikesListRentCustom.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    bikes.setBike_Key(postSnapshot.getKey());
-                    bikesListRentCustom.add(bikes);
-                    numberBikesRentedCustom = bikesListRentCustom.size();
-                    tVCustomerBikesRented.setText(String.valueOf(numberBikesRentedCustom));
+                    RentBikes rented_Bikes = postSnapshot.getValue(RentBikes.class);
+                    assert rented_Bikes != null;
+                    if(rented_Bikes.getCustomerId_RentBikes().equals(currentUser.getUid())){
+                        rented_Bikes.setBike_RentKey(postSnapshot.getKey());
+                        bikesListRentCustom.add(rented_Bikes);
+                        numberBikesRentedCustom = bikesListRentCustom.size();
+                        tVCustomerBikesRented.setText(String.valueOf(numberBikesRentedCustom));
+                    }
                 }
             }
 

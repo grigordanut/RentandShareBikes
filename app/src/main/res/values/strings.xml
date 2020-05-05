@@ -23,9 +23,22 @@
     <string name="btn_saveBike">Save Bike</string>
 
     <!--    Admin Page-->
+    <string name="tv_adminPage">Admin Page</string>
+    <string name="tv_adminDetails">Admin personal details</string>
+    <string name="tv_adminPersonalDetails">Phone: \n0894644545 \n\nEmail: \nadmin@gmail.com</string>
+    <string name="tv_adminBikeStores">Bike Stores Available</string>
+    <string name="tv_adminBikeStoresAv">0</string>
+    <string name="tv_adminBike">Bike available to Rent</string>
+    <string name="tv_adminBikeAv">0</string>
+    <string name="tv_adminBikeRented">Rented Bikes</string>
+    <string name="tv_adminBikeRentedAv">0</string>
+    <string name="tv_adminBikeShared">Bikes available to Share</string>
+    <string name="tv_adminBikeSharedAv">0</string>
+
+
+
     <string name="open_adminPage">Open</string>
     <string name="close_adminPage">Close</string>
-    <string name="tv_adminPage">Admin Page</string>
     <string name="btn_addBikeStore">Add Bike Store</string>
     <string name="btn_showBikeStores">Show Bike Stores</string>
     <string name="btn_addBikesToStore">Add Bikes to Store</string>
@@ -86,9 +99,11 @@
     <!--    Bikes Image Show Bikes List Customer-->
     <string name="tv_bikesImageShowBikesListCustomer">List of Bikes</string>
 
+    <!--    Bikes Image Show Bikes List Custom All-->
+    <string name="tv_bikesImageShowBikesListCustomAll">No Bikes available to rent</string>
+
     <!--    Bikes Image Show Bikes List Main All-->
     <string name="tv_bikesImageShowBikesListMainAll">List of Bikes</string>
-
     <!--    Bikes Image Show Bikes List Main Page-->
     <string name="tv_bikesImageShowBikesListMain">List of Bikes</string>
 
@@ -146,7 +161,7 @@
     <string name="tv_customPageRentDetails">Your personal details</string>
     <string name="tv_customPageRentPersonalDetails">Your personal details:</string>
     <string name="tv_customPageRentPersonalAccount">Your personal Account:</string>
-    <string name="tv_customPageBikesRented">Bikes Rented</string>
+    <string name="tv_customPageBikesRented">Rented Bikes</string>
     <string name="tv_customPageBikesRentedAcc">0</string>
     <string name="tv_customPageRentAccount">Your account</string>
     <string name="open_customPageRent">Open</string>
@@ -154,6 +169,11 @@
 
     <!--    Customer Page Share Bikes-->
     <string name="tv_customPageShareBikes">Welcome</string>
+    <string name="tv_customPageSharePersonalDetails">Your personal details:</string>
+    <string name="tv_customPageSharePersonalAccount">Your personal Account:</string>
+    <string name="tv_customPageBikesShared">Bikes added to share</string>
+    <string name="tv_customPageBikesSharedAcc">0</string>
+    <string name="tv_customPageShareAccount">Your account</string>
     <string name="open_customPageShare">Open</string>
     <string name="close_customPageShare">Close</string>
 
@@ -191,9 +211,9 @@
     <string name="tv_mainPageDetails">Phone: \n0894644545 \n\nEmail: \nrent.bikes19@gmail.com</string>
     <string name="tv_mainBikeStores">Bike Stores Available</string>
     <string name="tv_mainBikeStoresAv">0</string>
-    <string name="tv_mainBikesRent">Bike to rent Available</string>
+    <string name="tv_mainBikesRent">Bike available to Rent</string>
     <string name="tv_mainBikesRentAv">0</string>
-    <string name="tv_mainBikesShare">Bike to share Available</string>
+    <string name="tv_mainBikesShare">Bike available to Share</string>
     <string name="tv_mainBikesShareAv">0</string>
     <string name="tv_mainTradeMark">\u00AE</string>
 
@@ -262,6 +282,7 @@
     <string name="img_arrowCondShare">Arrow</string>
     <string name="et_bikeModelShare">Bike Model</string>
     <string name="et_bikeManufactShare">Manufacturer</string>
+    <string name="et_bikePricePerDayShare">Price per Day</string>
     <string name="tv_bikeShareAvDate">Available From</string>
     <string name="et_bikeShareAvDate">Date avail</string>
     <string name="btn_shareBike">Save Bike</string>
@@ -417,6 +438,7 @@
     <!--    Menu Drawer Customer Rent Bikes-->
     <string name="mDUser_showStoresListRent">Bike Stores List</string>
     <string name="mDUser_showBikesListRent">Bikes Available</string>
+    <string name="mDUser_showBikesListAll">Bikes Available All</string>
     <string name="mDUser_rentBikesRent">Rent a Bike</string>
     <string name="mDUser_showBikesRentedRent">Rented Bikes</string>
     <string name="mDUser_returnBikesRent">Return Bikes</string>

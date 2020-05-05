@@ -2,9 +2,7 @@ package com.example.rentandsharebikes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,15 +15,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import static android.icu.text.DateFormat.NONE;
-
-public class BikesAdapterShowBikesListCustomer extends RecyclerView.Adapter<BikesAdapterShowBikesListCustomer.ImageViewHolder> {
+public class BikesAdapterShowBikesListCustomAll extends RecyclerView.Adapter<BikesAdapterShowBikesListCustomAll.ImageViewHolder> {
 
     private Context bikesContext;
     private List<Bikes> bikesUploads;
     private OnItemClickListener clickListener;
 
-    public BikesAdapterShowBikesListCustomer(Context bikes_context, List<Bikes> bikes_uploads){
+    public BikesAdapterShowBikesListCustomAll(Context bikes_context, List<Bikes> bikes_uploads){
         bikesContext = bikes_context;
         bikesUploads = bikes_uploads;
     }

@@ -55,6 +55,13 @@ public class BikesAdapterShowSharedBikesToUpdate extends RecyclerView.Adapter<Bi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(bikesContext, UpdateBikeSharedDetails.class);
+                //Customer Details
+                intent.putExtra("BFNameUpdate",uploadCurrent.getShareCus_FirstName());
+                intent.putExtra("BLNameUpdate",uploadCurrent.getShareCus_LastName());
+                intent.putExtra("BPhoneUpdate",uploadCurrent.getShareCus_PhoneNo());
+                intent.putExtra("BEmailUpdate",uploadCurrent.getShareCus_EmailAdd());
+
+                //Shared Bike Details
                 intent.putExtra("BCondUpdate",uploadCurrent.getShareBike_Condition());
                 intent.putExtra("BModelUpdate",uploadCurrent.getShareBike_Model());
                 intent.putExtra("BManufUpdate",uploadCurrent.getShareBike_Manufact());

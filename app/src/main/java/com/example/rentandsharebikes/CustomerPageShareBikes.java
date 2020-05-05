@@ -21,7 +21,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class CustomerPageShareBikes extends AppCompatActivity {
@@ -31,19 +34,32 @@ public class CustomerPageShareBikes extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggleUserShare;
     private NavigationView navigationViewUserShare;
 
+    //Display data from Rent Bikes table database
+    private FirebaseStorage firebaseStBikesShareCustom;
+    private DatabaseReference databaseRefBikesShareCustom;
+    private ValueEventListener bikesShareCustomEventListener;
+
+    //Access customer database
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private DatabaseReference databaseReference;
 
-    private TextView tVCustomPageShare;
+    private TextView tVCustomPageShare, tVCustomPageSharePerDetails, tVCustomerBikesShared;
+
+    private List<ShareBikes> bikesListShareCustom;
+    private int numberBikesSharedCustom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_page_share_bikes);
 
+        bikesListShareCustom = new ArrayList<>();
+
         //initialise the variables
         tVCustomPageShare = (TextView) findViewById(R.id.tvCustomPageShare);
+        tVCustomPageSharePerDetails = (TextView)findViewById(R.id.tvCustomPageSharePerDetails);
+        tVCustomerBikesShared = (TextView)findViewById(R.id.tvCustomerBikesShared);
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -75,7 +91,7 @@ public class CustomerPageShareBikes extends AppCompatActivity {
                     assert custom_data != null;
                     if (Objects.requireNonNull(custom_Details.getEmail()).equalsIgnoreCase(custom_data.getEmail_Customer())) {
                         tVCustomPageShare.setText("Welcome: " + custom_data.getfName_Customer() + " " + custom_data.getlName_Customer());
-
+                        tVCustomPageSharePerDetails.setText("Phone: \n"+custom_data.getPhoneNumb_Customer()+"\n\nEmail: \n"+custom_data.getEmail_Customer());
                         //Adding Click Events to our navigation drawer item
                         navigationViewUserShare.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                             @Override
@@ -157,5 +173,40 @@ public class CustomerPageShareBikes extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadBikeShareCustom();
+    }
+
+    private void loadBikeShareCustom() {
+        //initialize the bike storage database
+        firebaseStBikesShareCustom = FirebaseStorage.getInstance();
+        databaseRefBikesShareCustom = FirebaseDatabase.getInstance().getReference("Share Bikes");
+
+        bikesShareCustomEventListener = databaseRefBikesShareCustom.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikesListShareCustom.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    ShareBikes share_Bikes = postSnapshot.getValue(ShareBikes.class);
+                    assert share_Bikes != null;
+                    if (share_Bikes.getShareBikes_CustomId().equals(currentUser.getUid())){
+                        share_Bikes.setShareBike_Key(postSnapshot.getKey());
+                        bikesListShareCustom.add(share_Bikes);
+                        numberBikesSharedCustom = bikesListShareCustom.size();
+                        tVCustomerBikesShared.setText(String.valueOf(numberBikesSharedCustom));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(CustomerPageShareBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

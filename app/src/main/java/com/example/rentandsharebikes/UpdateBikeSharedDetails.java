@@ -88,6 +88,13 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
     private ImageView ivUpShareBike;
     private Uri imageUpShareUri;
 
+    //Customer details
+    String bike_shareFName = "";
+    String bike_shareLName = "";
+    String bike_sharePhone = "";
+    String bike_shareEmail = "";
+
+    //Bike details
     String bike_shareUpCond = "";
     String bike_shareUpModel = "";
     String bike_shareUpManufact = "";
@@ -99,6 +106,7 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +147,13 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
+            //Customer details
+            bike_shareFName = bundle.getString("BFNameUpdate");
+            bike_shareLName = bundle.getString("BLNameUpdate");
+            bike_sharePhone = bundle.getString("BPhoneUpdate");
+            bike_shareEmail = bundle.getString("BEmailUpdate");
+
+            //Bike details
             bike_shareUpCond = bundle.getString("BCondUpdate");
             bike_shareUpModel = bundle.getString("BModelUpdate");
             bike_shareUpManufact = bundle.getString("BManufUpdate");
@@ -149,7 +164,14 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
             bike_KeyUpShare = bundle.getString("BKeyUpdate");
         }
 
-        //tVUpCondShareBike.setText(bike_shareUpCond);
+        tVUpShareBikes.setText("Welcome: " + bike_shareFName + " " +bike_shareLName);
+
+        etUpFNameShareBike.setText(bike_shareFName);
+        etUpLNameShareBike.setText(bike_shareLName);
+        etUpPNoShareBike.setText(bike_sharePhone);
+        etUpEmailShareBike.setText(bike_shareEmail);
+
+        //Display Bike details
         etUpModelShareBike.setText(bike_shareUpModel);
         etUpManufactShareBike.setText(bike_shareUpManufact);
         etUpPriceShareBike.setText(String.valueOf(bike_shareUpPrice));
@@ -208,12 +230,10 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
                 progressDialog.show();
                 if (shareUpTask != null && shareUpTask.isInProgress()) {
                     Toast.makeText(UpdateBikeSharedDetails.this, "Update share bike in progress", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    if (imageUpShareUri == null){
+                } else {
+                    if (imageUpShareUri == null) {
                         upBikesSharedWithOldPicture();
-                    }
-                    else{
+                    } else {
                         upBikesSharedWithNewPicture();
                     }
                 }
@@ -300,7 +320,7 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    public void deleteOldShareBikePicture(){
+    public void deleteOldShareBikePicture() {
         progressDialog.show();
 
         StorageReference storageReferShareUp = getInstance().getReferenceFromUrl(bike_shareUpImage);
@@ -318,6 +338,7 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
             }
         });
     }
+
     //Upload a new Bicycle into the Bicycles table
     public void upBikesSharedWithNewPicture() {
         progressDialog.dismiss();
@@ -335,21 +356,16 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
 
         if (imageUpShareUri == null) {
             Toast.makeText(UpdateBikeSharedDetails.this, "Please add a picture", Toast.LENGTH_SHORT).show();
-        }
-
-        else if (TextUtils.isEmpty(etFName_ShareBikeVal)) {
+        } else if (TextUtils.isEmpty(etFName_ShareBikeVal)) {
             etUpFNameShareBike.setError("Please enter the First Name");
             etUpFNameShareBike.requestFocus();
-        }
-        else if (TextUtils.isEmpty(etLName_ShareBikeVal)) {
+        } else if (TextUtils.isEmpty(etLName_ShareBikeVal)) {
             etUpLNameShareBike.setError("Please enter the Last Name");
             etUpLNameShareBike.requestFocus();
-        }
-        else if (TextUtils.isEmpty(etPNo_ShareBikeVal)) {
+        } else if (TextUtils.isEmpty(etPNo_ShareBikeVal)) {
             etUpPNoShareBike.setError("Please enter the Phone Number");
             etUpPNoShareBike.requestFocus();
-        }
-        else if (TextUtils.isEmpty(etEmail_ShareBikeVal)) {
+        } else if (TextUtils.isEmpty(etEmail_ShareBikeVal)) {
             etUpEmailShareBike.setError("Please enter the Email Address");
             etUpEmailShareBike.requestFocus();
         } else if (TextUtils.isEmpty(tVCond_ShareBikeVal)) {
@@ -397,11 +413,15 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                                                //Update customer details
                                                 ds.getRef().child("shareCus_FirstName").setValue(etUpFName_ShareBike);
                                                 ds.getRef().child("shareCus_LastName").setValue(etUpLName_ShareBike);
                                                 ds.getRef().child("shareCus_PhoneNo").setValue(etUpPNo_ShareBike);
                                                 ds.getRef().child("shareCus_EmailAdd").setValue(etUpEmail_ShareBike);
+                                                ds.getRef().child("shareBikes_CustomId").setValue(customId_UpShareBikes);
 
+                                                //Update Bike details
                                                 ds.getRef().child("shareBike_Condition").setValue(tVUpCond_ShareBike);
                                                 ds.getRef().child("shareBike_Model").setValue(etUpModel_ShareBike);
                                                 ds.getRef().child("shareBike_Manufact").setValue(etUpManufact_ShareBike);
@@ -444,10 +464,10 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
         }
     }
 
-    public void upBikesSharedWithOldPicture(){
+    public void upBikesSharedWithOldPicture() {
         progressDialog.dismiss();
 
-        if (validateShareBikesDetails()){
+        if (validateShareBikesDetails()) {
 
             etUpFName_ShareBike = etUpFNameShareBike.getText().toString().trim();
             etUpLName_ShareBike = etUpLNameShareBike.getText().toString().trim();
@@ -545,9 +565,9 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
         return result;
     }
 
-    public void alertDialogBikeShareUpCond(){
+    public void alertDialogBikeShareUpCond() {
         androidx.appcompat.app.AlertDialog.Builder
-        alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+                alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Select the Bike Condition");
         alertDialogBuilder.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
@@ -596,42 +616,42 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        loadCustomDetailsUpShareBikes();
-    }
-
-    public void loadCustomDetailsUpShareBikes() {
-        //retrieve data from database into text views
-        databaseRefCustomUpdateShare = FirebaseDatabase.getInstance().getReference("Customers");
-        databaseRefCustomUpdateShare.addValueEventListener(new ValueEventListener() {
-            @SuppressLint({"SetTextI18n", "NewApi"})
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                //retrieve data from database
-                for (DataSnapshot dsUser : dataSnapshot.getChildren()) {
-                    final FirebaseUser custom_Details = firebaseAuth.getCurrentUser();
-
-                    final Customers custom_data = dsUser.getValue(Customers.class);
-                    assert custom_Details != null;
-                    assert custom_data != null;
-                    if (Objects.requireNonNull(custom_Details.getEmail()).equalsIgnoreCase(custom_data.getEmail_Customer())) {
-                        tVUpShareBikes.setText("Welcome: " + custom_data.getfName_Customer() + " " + custom_data.getlName_Customer());
-                        etUpFNameShareBike.setText(custom_data.getfName_Customer());
-                        etUpLNameShareBike.setText(custom_data.getlName_Customer());
-                        etUpPNoShareBike.setText(custom_data.getPhoneNumb_Customer());
-                        etUpEmailShareBike.setText(custom_data.getEmail_Customer());
-                        customId_UpShareBikes = custom_Details.getUid();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(UpdateBikeSharedDetails.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        loadCustomDetailsUpShareBikes();
+//    }
+//
+//    public void loadCustomDetailsUpShareBikes() {
+//        //retrieve data from database into text views
+//        databaseRefCustomUpdateShare = FirebaseDatabase.getInstance().getReference("Customers");
+//        databaseRefCustomUpdateShare.addValueEventListener(new ValueEventListener() {
+//            @SuppressLint({"SetTextI18n", "NewApi"})
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                //retrieve data from database
+//                for (DataSnapshot dsUser : dataSnapshot.getChildren()) {
+//                    final FirebaseUser custom_Details = firebaseAuth.getCurrentUser();
+//
+//                    final Customers custom_data = dsUser.getValue(Customers.class);
+//                    assert custom_Details != null;
+//                    assert custom_data != null;
+//                    if (Objects.requireNonNull(custom_Details.getEmail()).equalsIgnoreCase(custom_data.getEmail_Customer())) {
+//                        tVUpShareBikes.setText("Welcome: " + custom_data.getfName_Customer() + " " + custom_data.getlName_Customer());
+//                        etUpFNameShareBike.setText(custom_data.getfName_Customer());
+//                        etUpLNameShareBike.setText(custom_data.getlName_Customer());
+//                        etUpPNoShareBike.setText(custom_data.getPhoneNumb_Customer());
+//                        etUpEmailShareBike.setText(custom_data.getEmail_Customer());
+//                        customId_UpShareBikes = custom_Details.getUid();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Toast.makeText(UpdateBikeSharedDetails.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 }
