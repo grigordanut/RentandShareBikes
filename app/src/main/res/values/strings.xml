@@ -36,7 +36,6 @@
     <string name="tv_adminBikeSharedAv">0</string>
 
 
-
     <string name="open_adminPage">Open</string>
     <string name="close_adminPage">Close</string>
     <string name="btn_addBikeStore">Add Bike Store</string>
@@ -112,6 +111,9 @@
 
     <!--    Bikes Image Show Bikes Rented Customer-->
     <string name="tv_bikesImageShowBikesRentedCustomer">List of Bikes</string>
+
+    <!--    Bikes Image Show Shared Bikes Admin-->
+    <string name="tv_bikesImageShowSharedBikesAdmin">No Bikes available to be shared</string>
 
     <!--    Bikes Image Show Shared Bikes Main-->
     <string name="tv_bikeStoreImgShowBikesSMain">No Bikes available to be shared</string>
@@ -338,7 +340,7 @@
     <string name="tv_bikeCondition">Condition: </string>
     <string name="tv_bikeModel">Model: </string>
     <string name="tv_bikeManufacturer">Factory: </string>
-    <string name="tv_bikePrice">Price/hour: </string>
+    <string name="tv_bikePrice">P/hour: </string>
 
     <!--    Image Bikes Admin Full-->
     <string name="tv_bikeStoreFull">Bike Store Name: </string>
@@ -356,6 +358,7 @@
 
 
     <!--    Image Bikes Customer-->
+    <string name="tv_storeNameUser">Bike Store Name: </string>
     <string name="tv_bikeConditionUser">Bike Condition: </string>
     <string name="tv_bikeModelUser">Bike Model: </string>
     <string name="tv_bikeManufacturerUser">Bike Factory: </string>
@@ -429,10 +432,11 @@
     <!--    Menu Drawer Admin-->
     <string name="menuDAdmin_addBikeStores">Add Bike Stores</string>
     <string name="menuDAdmin_showBikeStores">Show Bike Stores</string>
-    <string name="menuDAdmin_addBikeToStores">Add Bike To Store</string>
+    <string name="menuDAdmin_addBikeToStores">Add Bikes to Stores</string>
     <string name="menuDAdmin_showBikesList">List of Bikes</string>
-    <string name="menuDAdmin_showBikesListFull">List of Bikes Full</string>
-    <string name="menuDAdmin_showBikesRented">Show Bikes Rented</string>
+    <string name="menuDAdmin_showBikesListFull">List of  all Bikes</string>
+    <string name="menuDAdmin_showBikesRented">List of Rented Bikes</string>
+    <string name="menuDAdmin_showBikesShared">List of Shared Bikes</string>
 
     <!--    Menu Drawer Customer Rent Bikes-->
     <string name="mDUser_showStoresListRent">Bike Stores List</string>

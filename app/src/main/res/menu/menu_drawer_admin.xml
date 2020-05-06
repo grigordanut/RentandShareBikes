@@ -31,6 +31,12 @@
             android:id="@+id/adminShow_bikesRented"
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/menuDAdmin_showBikesRented" />
+
+        <item
+            android:id="@+id/adminShow_bikesShared"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menuDAdmin_showBikesShared" />
+
     </group>
 
 </menu>

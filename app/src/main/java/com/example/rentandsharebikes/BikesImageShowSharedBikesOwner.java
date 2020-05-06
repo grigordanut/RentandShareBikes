@@ -54,6 +54,7 @@ public class BikesImageShowSharedBikesOwner extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,8 @@ public class BikesImageShowSharedBikesOwner extends AppCompatActivity {
 
         getIntent().hasExtra("CLNameShare");
         customShareLast_Name = Objects.requireNonNull(getIntent().getExtras()).getString("CLNameShare");
+
+        tVCustomerShareBikes.setText("No bikes added by "+customShareFirst_Name+" "+customShareLast_Name);
 
         getIntent().hasExtra("CIdShare");
         customShare_Id = Objects.requireNonNull(getIntent().getExtras()).getString("CIdShare");

@@ -124,6 +124,11 @@ public class AdminPage extends AppCompatActivity {
                         Toast.makeText(AdminPage.this, "Rented Bikes",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikesImageShowBikesRentedAdmin.class));
                         break;
+                        //Show the full list of rented Bikes
+                    case R.id.adminShow_bikesShared:
+                        Toast.makeText(AdminPage.this, "Shared Bikes",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AdminPage.this, BikesImageShowSharedBikesAdmin.class));
+                        break;
                     default:
                         return true;
                 }
@@ -142,7 +147,7 @@ public class AdminPage extends AppCompatActivity {
     //user log out
     private void LogOut(){
         finish();
-        startActivity(new Intent(AdminPage.this, LoginCustomer.class));
+        startActivity(new Intent(AdminPage.this, MainActivity.class));
     }
 
     @Override

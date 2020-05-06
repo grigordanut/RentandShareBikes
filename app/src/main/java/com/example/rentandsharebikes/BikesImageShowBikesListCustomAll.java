@@ -115,8 +115,9 @@ public class BikesImageShowBikesListCustomAll extends AppCompatActivity implemen
                     intent.putExtra("BModel", selected_Bike.getBike_Model());
                     intent.putExtra("BManufact", selected_Bike.getBike_Manufacturer());
                     intent.putExtra("BImage", selected_Bike.getBike_Image());
-                    intent.putExtra("BStore", selected_Bike.getBikeStoreName());
+                    intent.putExtra("BStoreName", selected_Bike.getBikeStoreName());
                     intent.putExtra("BPrice", String.valueOf(selected_Bike.getBike_Price()));
+                    intent.putExtra("BStoreKey",selected_Bike.getBikeStoreKey());
                     intent.putExtra("BKey", selected_Bike.getBike_Key());
                     startActivity(intent);
                 }
