@@ -6,9 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +37,7 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
 
     private ProgressDialog progressDialog;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,24 +54,6 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
         bikeStoreList = new ArrayList<BikeStore>();
 
         progressDialog.show();
-    }
-
-    //Action of the menu onClick
-    @Override
-    public void onItemClick(int position) {
-        Toast.makeText(this, "Press long click to show more action: ", Toast.LENGTH_SHORT).show();
-    }
-
-
-    @Override
-    public void onShowMapStoreClick(int position) {
-        startActivity(new Intent(BikeStoreImageShowStoresListCustomer.this, MapsActivity.class));
-    }
-
-    @Override
-    public void onGoBackClick(int position) {
-        Toast.makeText(BikeStoreImageShowStoresListCustomer.this, "Go back to Rent Page", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(BikeStoreImageShowStoresListCustomer.this, CustomerPageRentBikes.class));
     }
 
     @Override
@@ -90,7 +76,7 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
                     assert bikeStore != null;
                     bikeStore.setStoreKey(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
-                    textViewBikeStoresImageShowStoreListCustomer.setText("Bike Stores available " +bikeStoreList.size());
+                    textViewBikeStoresImageShowStoreListCustomer.setText(bikeStoreList.size()+" Bike Stores available ");
                 }
                 bikeStoreAdapterShowStoresListCustomer = new BikeStoreAdapterShowStoresListCustomer(BikeStoreImageShowStoresListCustomer.this, bikeStoreList);
                 bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoresListCustomer);
@@ -103,5 +89,33 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
                 Toast.makeText(BikeStoreImageShowStoresListCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+
+    //Action of the menu onClick
+    @Override
+    public void onItemClick(final int position) {
+        final String[] options = {"Show Google Map", "Back Main Page"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        BikeStore selected_BikeStore = bikeStoreList.get(position);
+        builder.setTitle("You selected "+selected_BikeStore.getBikeStore_Location()+" Store"+"\nSelect an option");
+        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                if (which == 0) {
+                    Toast.makeText(BikeStoreImageShowStoresListCustomer.this, "Show Bikes Stores in Google Map", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(BikeStoreImageShowStoresListCustomer.this, MapsActivity.class));
+                }
+
+                if (which == 1) {
+                    startActivity(new Intent(BikeStoreImageShowStoresListCustomer.this, CustomerPageRentBikes.class));
+                    Toast.makeText(BikeStoreImageShowStoresListCustomer.this, "Back to Customer rent page", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

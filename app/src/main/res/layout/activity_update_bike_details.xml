@@ -159,11 +159,16 @@
 
         <Button
             android:id="@+id/btnSaveBikeUp"
-            android:layout_width="280dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/bikePriceWrapperUp"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_background"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             android:layout_marginTop="10dp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
             android:text="@string/btn_updateSaveBike"
             android:textSize="24sp" />
 

@@ -28,8 +28,8 @@
             android:title="@string/menu_bikesAvToShare" />
 
         <item
-            android:id="@+id/settings"
+            android:id="@+id/contactUs"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/menu_settings" />
+            android:title="@string/menu_contactUs" />
     </group>
 </menu>

@@ -60,8 +60,7 @@ public class BikesAdapterShowBikesListAdminFull extends RecyclerView.Adapter<Bik
         return bikesUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
-            View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener{
+    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView tVBikeStoreNameFull;
         public ImageView imBikeAdminFull;
         public TextView tVBikeConAdminFull;
@@ -79,7 +78,6 @@ public class BikesAdapterShowBikesListAdminFull extends RecyclerView.Adapter<Bik
             tVBikePAdminFull = itemView.findViewById(R.id.tvBikePriceFull);
 
             itemView.setOnClickListener(this);
-            itemView.setOnCreateContextMenuListener(this);
         }
 
         @Override
@@ -91,49 +89,14 @@ public class BikesAdapterShowBikesListAdminFull extends RecyclerView.Adapter<Bik
                 }
             }
         }
-
-        //create onItem click menu
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menu.setHeaderTitle("Select an Action");
-            MenuItem doUpdate  = menu.add(NONE, 1, 1, "Update this bike");
-            MenuItem doDelete  = menu.add(NONE, 2, 2, "Delete this bike");
-
-            doUpdate.setOnMenuItemClickListener(this);
-            doDelete.setOnMenuItemClickListener(this);
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            if(clickListener !=null){
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION){
-                    switch (item.getItemId()){
-                        case 1:
-                            clickListener.onUpdateClick(position);
-                            return true;
-
-                        case 2:
-                            clickListener.onDeleteClick(position);
-                            return true;
-                    }
-                }
-            }
-
-            return false;
-        }
     }
 
     public interface OnItemClickListener {
         void onItemClick(int position);
 
-        void onUpdateClick(int position);
-
-        void onDeleteClick(int position);
-
     }
 
-    public void setOnItmClickListener(BikesAdapterShowBikesListAdminFull.OnItemClickListener listener){
+    public void setOnItmClickListener(OnItemClickListener listener){
         clickListener = listener;
     }
 }

@@ -23,7 +23,7 @@ import java.util.List;
 
 import static android.icu.text.DateFormat.NONE;
 
-public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter<BikeStoreAdapterShowStoresListCustomer.ImageViewHolder> {
+public class BikeStoreAdapterShowStoresListAdminNew extends RecyclerView.Adapter<BikeStoreAdapterShowStoresListAdminNew.ImageViewHolder> {
 
     private Context bikeStoreContext;
     private List<BikeStore> bikeStoreUploads;
@@ -38,7 +38,7 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
 
     private int numberBikesAvailable;
 
-    public BikeStoreAdapterShowStoresListCustomer(Context bikeStore_context, List<BikeStore> bikeStore_uploads) {
+    public BikeStoreAdapterShowStoresListAdminNew(Context bikeStore_context, List<BikeStore> bikeStore_uploads) {
         bikeStoreContext = bikeStore_context;
         bikeStoreUploads = bikeStore_uploads;
     }
@@ -70,7 +70,7 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if (bikes.getBikeStoreName().equals(uploadCurrent.getBikeStore_Location())) {
+                    if (bikes.getBikeStoreKey().equals(uploadCurrent.getStoreKey())) {
                         bikes.setBike_Key(postSnapshot.getKey());
                         bikesList.add(bikes);
                         numberBikesAvailable = bikesList.size();
@@ -91,7 +91,8 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
         return bikeStoreUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+            View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
         public TextView tvStoreBikeLocation;
         public TextView tvStoreBikeAddress;
         public TextView tvStoreBikeSlots;
@@ -105,6 +106,7 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
             tvStoreBikesAvailable = itemView.findViewById(R.id.tvNrAvailable);
 
             itemView.setOnClickListener(this);
+            itemView.setOnCreateContextMenuListener(this);
         }
 
         @Override
@@ -116,11 +118,56 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
                 }
             }
         }
+
+        //create onItem click menu
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.setHeaderTitle("Select an Action");
+            MenuItem doShowMapStore = menu.add(NONE, 1, 1, "Show Map Store");
+            MenuItem doUpdateStore = menu.add(NONE, 2, 2, "Update Bike Store");
+            MenuItem doDeleteStore = menu.add(NONE, 3, 3, "Delete Bike Store");
+
+            doShowMapStore.setOnMenuItemClickListener(this);
+            doUpdateStore.setOnMenuItemClickListener(this);
+            doDeleteStore.setOnMenuItemClickListener(this);
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            if (clickListener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    switch (item.getItemId()) {
+                        case 1:
+                            clickListener.onShowMapStoreClick(position);
+                            return true;
+                        case 2:
+                            clickListener.onUpdateStoreClick(position);
+                            return true;
+                        case 3:
+                            if (tvStoreBikesAvailable.getText().toString().equals(String.valueOf(0))) {
+                                clickListener.onDeleteStoreClick(position);
+                            } else {
+                                clickListener.alertDialogBikeStoreNotEmpty(position);
+                            }
+                            return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 
     public interface OnItemClickListener {
-
         void onItemClick(int position);
+
+        void onShowMapStoreClick(int position);
+
+        void onUpdateStoreClick(int position);
+
+        void onDeleteStoreClick(int position);
+
+        void alertDialogBikeStoreNotEmpty(int position);
     }
 
     public void setOnItmClickListener(OnItemClickListener listener) {

@@ -55,7 +55,7 @@
         <TextView
             android:id="@+id/tvMainDetails"
             android:layout_width="match_parent"
-            android:layout_height="165dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvMainPage"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
@@ -64,15 +64,17 @@
             android:inputType="textMultiLine"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="@string/tv_mainPageDetails"
             android:textColor="#000000"
             android:textSize="24sp"
             tools:ignore="RtlSymmetry,TextViewEdits" />
 
+        <!--Bikes Stores Available-->
         <TextView
             android:id="@+id/tvMainStores"
-            android:layout_width="240dp"
-            android:layout_height="30dp"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvMainDetails"
             android:layout_alignStart="@+id/tvWelcomeMain1"
             android:layout_marginTop="20dp"
@@ -83,7 +85,7 @@
         <TextView
             android:id="@+id/tvMainStoresAv"
             android:layout_width="60dp"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvMainDetails"
             android:layout_alignEnd="@+id/tvWelcomeMain1"
             android:layout_marginTop="20dp"
@@ -96,8 +98,8 @@
 
         <TextView
             android:id="@+id/tvMainBikesRent"
-            android:layout_width="240dp"
-            android:layout_height="30dp"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvMainStores"
             android:layout_alignStart="@+id/tvWelcomeMain1"
             android:layout_marginTop="20dp"
@@ -108,7 +110,7 @@
         <TextView
             android:id="@+id/tvMainBikesRentAv"
             android:layout_width="60dp"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvMainStoresAv"
             android:layout_alignEnd="@+id/tvWelcomeMain1"
             android:layout_marginTop="20dp"
@@ -121,8 +123,8 @@
 
         <TextView
             android:id="@+id/tvMainBikesShare"
-            android:layout_width="260dp"
-            android:layout_height="30dp"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvMainBikesRent"
             android:layout_alignStart="@+id/tvWelcomeMain1"
             android:layout_marginTop="20dp"
@@ -133,7 +135,7 @@
         <TextView
             android:id="@+id/tvMainBikesShareAv"
             android:layout_width="60dp"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvMainBikesRentAv"
             android:layout_alignEnd="@+id/tvWelcomeMain1"
             android:layout_marginTop="20dp"
@@ -147,7 +149,7 @@
         <TextView
             android:id="@+id/tvTradeMark"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvMainBikesShareAv"
             android:layout_alignStart="@+id/tvWelcomeMain1"
             android:layout_marginStart="30dp"

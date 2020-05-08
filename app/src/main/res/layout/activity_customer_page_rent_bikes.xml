@@ -58,35 +58,85 @@
             android:layout_width="match_parent"
             android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_below="@+id/tvCustomPageRentPerDetails"
             android:text="@string/tv_customPageRentPersonalAccount"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="24sp" />
 
+        <!--Bikes Stores Available-->
         <TextView
-            android:id="@+id/tvCustomRented"
+            android:id="@+id/tvCustomStores"
             android:layout_width="240dp"
             android:layout_height="30dp"
             android:layout_below="@+id/tvCustomPageRentAccount"
-            android:layout_alignStart="@+id/tvCustomPageRent"
+            android:layout_alignStart="@+id/tvCustomPageRentAccount"
             android:layout_marginTop="20dp"
-            android:layout_marginStart="10dp"
+            android:text="@string/tv_customPageBikeStores"
             android:textColor="#000000"
-            android:text="@string/tv_customPageBikesRented"
-            android:textSize="24sp"/>
-
+            android:textSize="24sp" />
         <TextView
-            android:id="@+id/tvCustomerBikesRented"
+            android:id="@+id/tvCustomStoresAv"
             android:layout_width="50dp"
             android:layout_height="30dp"
             android:layout_below="@+id/tvCustomPageRentAccount"
             android:layout_alignEnd="@+id/tvCustomPageRent"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
+            android:background="#ffffff"
+            android:text="@string/tv_customPageBikeStoresAv"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!--    Bikes Available to Rent-->
+        <TextView
+            android:id="@+id/tvCustomBikesRent"
+            android:layout_width="240dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tvCustomStores"
+            android:layout_alignStart="@+id/tvCustomPageRentAccount"
+            android:layout_marginTop="20dp"
+            android:text="@string/tv_customPageBikeRent"
+            android:textColor="#000000"
+            android:textSize="24sp" />
+        <TextView
+            android:id="@+id/tvCustomBikesRentAv"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tvCustomStoresAv"
+            android:layout_alignEnd="@+id/tvCustomPageRent"
+            android:layout_marginTop="20dp"
+            android:background="#ffffff"
+            android:text="@string/tv_customPageBikeRentAv"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!--    Bikes Rented-->
+        <TextView
+            android:id="@+id/tvCustomRented"
+            android:layout_width="240dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tvCustomBikesRent"
+            android:layout_alignStart="@+id/tvCustomPageRent"
+            android:layout_marginTop="20dp"
+            android:textColor="#000000"
+            android:text="@string/tv_customPageBikesRented"
+            android:textSize="24sp"/>
+        <TextView
+            android:id="@+id/tvCustomBikesRented"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tvCustomBikesRentAv"
+            android:layout_alignEnd="@+id/tvCustomPageRent"
+            android:layout_marginTop="20dp"
             android:textColor="#000000"
             android:background="#ffffff"
-            android:text="@string/tv_customPageBikesRentedAcc"
+            android:text="@string/tv_customPageBikesRentedAv"
             android:textAlignment="center"
             android:textSize="24sp"
             android:textStyle="bold" />

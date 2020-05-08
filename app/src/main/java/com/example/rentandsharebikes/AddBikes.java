@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -223,10 +224,10 @@ public class AddBikes extends AppCompatActivity {
         final String etBike_PriceValidation = eTextBikePrice.getText().toString().trim();
 
         if (imageUri == null) {
-            Toast.makeText(AddBikes.this, "Please add a picture", Toast.LENGTH_SHORT).show();
+            alertDialogBikePicture();
         }
         else if(TextUtils.isEmpty(tv_BikeConditionValidation)){
-            tViewBikeCondition.setError("Please select Bike Condition");
+            alertDialogBikeCond();
             tViewBikeCondition.requestFocus();
         }
         else if (TextUtils.isEmpty(etBike_ModelValidation)) {
@@ -238,7 +239,7 @@ public class AddBikes extends AppCompatActivity {
             eTextBikeManufact.requestFocus();
         }
         else if (TextUtils.isEmpty(etBike_PriceValidation)) {
-            eTextBikePrice.setError("Please add the Price/Day ");
+            eTextBikePrice.setError("Please add the Price/Hour");
             eTextBikePrice.requestFocus();
         }
 
@@ -303,4 +304,32 @@ public class AddBikes extends AppCompatActivity {
     }
 
     private static final String[] bikeCondition = new String[]{"Brand New", "Used Bike"};
+
+    public void alertDialogBikeCond(){
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Select the Bike Condition");
+        alertDialogBuilder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+                });
+
+        androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    public void alertDialogBikePicture(){
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Please add a picture");
+        alertDialogBuilder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+                });
+
+        androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 }

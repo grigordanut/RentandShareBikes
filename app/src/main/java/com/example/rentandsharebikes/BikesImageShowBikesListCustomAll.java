@@ -103,7 +103,8 @@ public class BikesImageShowBikesListCustomAll extends AppCompatActivity implemen
         final String[] options = {"Rent this Bike", "Back Main Page"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select an option");
+        Bikes selected_Bike = bikesList.get(position);
+        builder.setTitle("You selected "+selected_Bike.getBike_Model()+"\nSelect an option");
         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

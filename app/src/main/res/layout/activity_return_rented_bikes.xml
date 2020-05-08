@@ -27,27 +27,27 @@
 
         <TextView
             android:id="@+id/tvDateOfRent"
-            android:layout_width="130dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvReturnBikes"
             android:layout_alignStart="@+id/tvReturnBikes"
             android:layout_marginStart="-10dp"
             android:layout_marginTop="15dp"
-            android:text="Date of Rent"
+            android:text="@string/tv_dateRentBike"
             android:textColor="#000000"
             android:textSize="20sp" />
 
 
         <EditText
             android:id="@+id/etDateOfRentBike"
-            android:layout_width="200dp"
+            android:layout_width="215dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvReturnBikes"
             android:layout_alignEnd="@+id/tvReturnBikes"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="-10dp"
             android:background="#f2f2f2"
-            android:hint="Date Of Rent"
+            android:hint="@string/et_dateRentBike"
             android:inputType="date"
             android:textAlignment="center"
             android:textColor="#000000"
@@ -56,27 +56,26 @@
 
         <TextView
             android:id="@+id/tvDateReturn"
-            android:layout_width="130dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvDateOfRent"
             android:layout_alignStart="@+id/tvReturnBikes"
             android:layout_marginStart="-10dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:text="@string/tv_dateReturnBike"
             android:textColor="#000000"
             android:textSize="20sp" />
 
-
         <EditText
             android:id="@+id/etDateReturnBike"
-            android:layout_width="200dp"
+            android:layout_width="215dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/etDateOfRentBike"
             android:layout_alignEnd="@+id/tvReturnBikes"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="-10dp"
             android:background="#f2f2f2"
-            android:hint="Date Of Return"
+            android:hint="@string/et_dateReturnBike"
             android:inputType="date"
             android:textAlignment="center"
             android:textColor="#000000"
@@ -85,27 +84,27 @@
 
         <TextView
             android:id="@+id/tvRentDuration"
-            android:layout_width="130dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvDateReturn"
             android:layout_alignStart="@+id/tvReturnBikes"
             android:layout_marginStart="-10dp"
-            android:layout_marginTop="15dp"
-            android:text="Rent Duration"
+            android:layout_marginTop="10dp"
+            android:text="@string/tv_durationRentBike"
             android:textColor="#000000"
             android:textSize="20sp" />
 
 
         <EditText
             android:id="@+id/etRentDurationBike"
-            android:layout_width="205dp"
+            android:layout_width="215dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/etDateReturnBike"
             android:layout_alignEnd="@+id/tvReturnBikes"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="-10dp"
             android:background="#f2f2f2"
-            android:hint="Rent Duration"
+            android:hint="@string/et_durationRentBike"
             android:inputType="date"
             android:textAlignment="center"
             android:textColor="#000000"
@@ -119,8 +118,8 @@
             android:layout_below="@+id/tvRentDuration"
             android:layout_alignStart="@+id/tvReturnBikes"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
-            android:text="Total Hours"
+            android:layout_marginTop="10dp"
+            android:text="@string/tv_totalHoursRentBike"
             android:textColor="#000000"
             android:textSize="20sp" />
 
@@ -131,10 +130,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/etRentDurationBike"
             android:layout_alignEnd="@+id/tvReturnBikes"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:background="#f2f2f2"
-            android:hint="Total Hours"
+            android:hint="@string/et_totalHoursRentBike"
             android:inputType="numberDecimal"
             android:textAlignment="center"
             android:textColor="#000000"
@@ -148,8 +147,8 @@
             android:layout_below="@+id/tvReturnHours"
             android:layout_alignStart="@+id/tvReturnBikes"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
-            android:text="Total Price"
+            android:layout_marginTop="10dp"
+            android:text="@string/tv_totalPriceRentBike"
             android:textColor="#000000"
             android:textSize="20sp" />
 
@@ -160,10 +159,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/etReturnTotalHours"
             android:layout_alignEnd="@+id/tvReturnBikes"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:background="#f2f2f2"
-            android:hint="Total Price"
+            android:hint="@string/et_totalPriceRentBike"
             android:inputType="numberDecimal"
             android:textAlignment="center"
             android:textColor="#000000"
@@ -174,6 +173,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fNameWrapperReturnBikes"
             android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
             android:layout_height="55dp"
             android:layout_below="@+id/tvReturnTotalPrice"
             android:layout_marginLeft="20dp"
@@ -215,7 +215,7 @@
 
         <TextView
             android:id="@+id/tvBikeStoreReturn"
-            android:layout_width="160dp"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lNameWrapperRentBikes"
             android:layout_alignStart="@id/lNameWrapperRentBikes"
@@ -243,7 +243,7 @@
 
         <CheckBox
             android:id="@+id/cbReturnBikeSameStore"
-            android:layout_width="160dp"
+            android:layout_width="180dp"
             android:layout_height="35dp"
             android:layout_below="@id/tvBikeStoreReturn"
             android:layout_alignStart="@id/lNameWrapperRentBikes"
@@ -256,7 +256,7 @@
 
         <CheckBox
             android:id="@+id/cbReturnBikeDiffStore"
-            android:layout_width="160dp"
+            android:layout_width="180dp"
             android:layout_height="35dp"
             android:layout_below="@id/tvBikeStoreReturn"
             android:layout_alignEnd="@id/lNameWrapperRentBikes"

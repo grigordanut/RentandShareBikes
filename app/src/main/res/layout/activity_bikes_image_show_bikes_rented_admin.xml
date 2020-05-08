@@ -11,7 +11,7 @@
     tools:context=".BikesImageShowBikesRentedAdmin">
 
     <TextView
-        android:id="@+id/AdminRentBikes"
+        android:id="@+id/tvAdminRentedBikes"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_gravity="center"

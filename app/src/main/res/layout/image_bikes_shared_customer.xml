@@ -21,7 +21,7 @@
             <ImageView
                 android:id="@+id/imgSharedBikesCustom"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="250dp"
                 android:layout_margin="5dp"
                 android:background="#ffffff"
                 tools:ignore="ContentDescription" />
@@ -90,7 +90,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:ignore="RtlSymmetry" />
-
 
             <TextView
                 android:id="@+id/tvBikeConditionShare"

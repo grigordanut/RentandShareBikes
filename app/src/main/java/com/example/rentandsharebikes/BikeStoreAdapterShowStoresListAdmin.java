@@ -123,7 +123,7 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             menu.setHeaderTitle("Select an Action");
-            MenuItem doShowMapStore = menu.add(NONE, 1, 1, "Show Map Store");
+            MenuItem doShowMapStore = menu.add(NONE, 1, 1, "Show Stores on Map");
             MenuItem doUpdateStore = menu.add(NONE, 2, 2, "Update Bike Store");
             MenuItem doDeleteStore = menu.add(NONE, 3, 3, "Delete Bike Store");
 

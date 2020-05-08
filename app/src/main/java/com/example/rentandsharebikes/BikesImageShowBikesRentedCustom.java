@@ -8,9 +8,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +69,7 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
         customer_Id = Objects.requireNonNull(getIntent().getExtras()).getString("CId");
 
         tVCustomerRentBikes = (TextView) findViewById(R.id.tvCustomerRentBikes);
-        tVCustomerRentBikes.setText("No Bikes rented by: "+customerFirst_Name+" "+customerLast_Name);
+        tVCustomerRentBikes.setText("No Bikes rented by: " + customerFirst_Name + " " + customerLast_Name);
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -104,7 +111,7 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
                     if (rent_Bikes.getCustomerId_RentBikes().equals(customer_Id)) {
                         rent_Bikes.setBike_RentKey(postSnapshot.getKey());
                         rentBikesList.add(rent_Bikes);
-                        tVCustomerRentBikes.setText(rentBikesList.size()+" bikes rented by "+rent_Bikes.getfName_RentBikes()+" "+rent_Bikes.getlName_RentBikes());
+                        tVCustomerRentBikes.setText(rentBikesList.size() + " bikes rented by " + rent_Bikes.getfName_RentBikes() + " " + rent_Bikes.getlName_RentBikes());
                     }
                 }
                 bikesAdapterShowBikesRentedCustom = new BikesAdapterShowBikesRentedCustom(BikesImageShowBikesRentedCustom.this, rentBikesList);
@@ -123,22 +130,24 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
     @Override
     public void alertDialogShowRentedBikesOptions(final int position) {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        final String [] options = {"Return this Bike", "Back to Rent Page"};
+        RentBikes selected_Bike = rentBikesList.get(position);
+        alertDialogBuilder.setTitle("You selected " + selected_Bike.getBikeModel_RentBikes() + "\nSelect an option");
+        final String[] options = {"Return this Bike", "Back to Rent Page"};
         alertDialogBuilder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                    if(which == 0){
+                if (which == 0) {
                     alertDialogBuilder.setMessage("Are sure to return this Bike?");
                     alertDialogBuilder.setCancelable(true);
                     alertDialogBuilder.setPositiveButton(
                             "Yes",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-
                                     RentBikes selected_Bike = rentBikesList.get(position);
-                                    Intent intent = new Intent (BikesImageShowBikesRentedCustom.this, ReturnRentedBikes.class);
-                                    intent.putExtra("BStoreSame",selected_Bike.getStoreLocation_RentBikes());
-                                    intent.putExtra("BKey",selected_Bike.getBike_RentKey());
+                                    Intent intent = new Intent(BikesImageShowBikesRentedCustom.this, ReturnRentedBikes.class);
+                                    intent.putExtra("BStoreNameSame", selected_Bike.getStoreLocation_RentBikes());
+                                    intent.putExtra("BStoreKeySame", selected_Bike.getStoreKey_RentBikes());
+                                    intent.putExtra("BikeRentedKey", selected_Bike.getBike_RentKey());
                                     startActivity(intent);
                                 }
                             });
@@ -154,7 +163,7 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
                     AlertDialog alert1 = alertDialogBuilder.create();
                     alert1.show();
                 }
-                if (which == 1){
+                if (which == 1) {
                     Toast.makeText(BikesImageShowBikesRentedCustom.this, "Go back to main page", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(BikesImageShowBikesRentedCustom.this, RentBikesCustomer.class));
                     AlertDialog alert1 = alertDialogBuilder.create();

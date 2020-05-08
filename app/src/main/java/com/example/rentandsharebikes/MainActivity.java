@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     private List<Bikes> bikesListAvRent;
     private List<ShareBikes> bikesListAvShare;
 
-
     private int numberStoresAvailable;
     private int numberBikesAvRent;
     private int numberBikesAvShare;
@@ -110,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Bikes available to Share",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, BikesImageShowSharedBikesMain.class));
                         break;
-                    case R.id.settings:
+                    case R.id.contactUs:
                         Toast.makeText(MainActivity.this, "Bikes to share", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, AdminPage.class));
                         break;
@@ -198,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                     bikes.setBike_Key(postSnapshot.getKey());
                     bikesListAvRent.add(bikes);
                     numberBikesAvRent = bikesListAvRent.size();
-                    //tVMainBikesRentAv.setText(String.valueOf(numberBikesAvRent));
+                    tVMainBikesRentAv.setText(String.valueOf(numberBikesAvRent));
                 }
             }
 

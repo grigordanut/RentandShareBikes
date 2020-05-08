@@ -114,7 +114,8 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
         final String[] options = {"Rent this Bike", "Back Main Page"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select an option");
+        Bikes selected_Bike = bikesList.get(position);
+        builder.setTitle("You selected "+selected_Bike.getBike_Model()+"\nSelect an option");
         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -126,7 +127,8 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
                     intent.putExtra("BModel",selected_Bike.getBike_Model());
                     intent.putExtra("BManufact",selected_Bike.getBike_Manufacturer());
                     intent.putExtra("BImage",selected_Bike.getBike_Image());
-                    intent.putExtra("BStore",selected_Bike.getBikeStoreName());
+                    intent.putExtra("BStoreName",selected_Bike.getBikeStoreName());
+                    intent.putExtra("BStoreKey",selected_Bike.getBikeStoreKey());
                     intent.putExtra("BPrice",String.valueOf(selected_Bike.getBike_Price()));
                     intent.putExtra("BKey",selected_Bike.getBike_Key());
                     startActivity(intent);

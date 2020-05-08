@@ -163,7 +163,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/bikePriceWrapper"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_background"
             android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
             android:text="@string/btn_saveBike"
             android:textSize="24sp" />
 

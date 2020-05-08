@@ -37,12 +37,14 @@ public class BikesAdapterShowBikesRentedAdmin extends RecyclerView.Adapter<Bikes
     public void onBindViewHolder(ImageViewHolder holder, int position) {
 
         final RentBikes uploadCurrent = bikesUploads.get(position);
-        holder.tvRentedBikeFirstNameAdmin.setText(uploadCurrent.getfName_RentBikes()+" "+uploadCurrent.getlName_RentBikes());
-        holder.tvRentedBikeStoreNameAdmin.setText(uploadCurrent.getStoreLocation_RentBikes());
         holder.tvRentedBikeConditionAdmin.setText(uploadCurrent.getBikeCond_RentBikes());
         holder.tvRentedBikeModelAdmin.setText(uploadCurrent.getBikeModel_RentBikes());
         holder.tvRentedBikeManufacturerAdmin.setText(uploadCurrent.getBikeManufact_RentBikes());
         holder.tvRentedBikePriceAdmin.setText(String.valueOf( +uploadCurrent.getBikePrice_RentBikes()));
+        holder.tvRentedBikeStoreNameAdmin.setText(uploadCurrent.getStoreLocation_RentBikes());
+        holder.tvRentedBikeCustomNameAdmin.setText(uploadCurrent.getfName_RentBikes()+" "+uploadCurrent.getlName_RentBikes());
+        holder.tvRentedBikeCustomPhoneAdmin.setText(uploadCurrent.getPhoneNo_RentBikes());
+        holder.tvRentedBikeCustomEmailAdmin.setText(uploadCurrent.getEmail_RentBikes());
         holder.tvRentedBikeDateRentAdmin.setText(uploadCurrent.getDate_RentBikes());
 
         Picasso.get()
@@ -61,24 +63,28 @@ public class BikesAdapterShowBikesRentedAdmin extends RecyclerView.Adapter<Bikes
     public class ImageViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView imageRentedBikeAdmin;
-        public TextView tvRentedBikeFirstNameAdmin;
-        public TextView tvRentedBikeStoreNameAdmin;
         public TextView tvRentedBikeConditionAdmin;
         public TextView tvRentedBikeModelAdmin;
         public TextView tvRentedBikeManufacturerAdmin;
         public TextView tvRentedBikePriceAdmin;
+        public TextView tvRentedBikeStoreNameAdmin;
+        public TextView tvRentedBikeCustomNameAdmin;
+        public TextView tvRentedBikeCustomPhoneAdmin;
+        public TextView tvRentedBikeCustomEmailAdmin;
         public TextView tvRentedBikeDateRentAdmin;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
 
             imageRentedBikeAdmin = itemView.findViewById(R.id.imgRentedBikesAdmin);
-            tvRentedBikeFirstNameAdmin = itemView.findViewById(R.id.tvBikeFNameRentAdmin);
-            tvRentedBikeStoreNameAdmin = itemView.findViewById(R.id.tvBikeStoreRentAdmin);
             tvRentedBikeConditionAdmin = itemView.findViewById(R.id.tvBikeCondRentAdmin);
             tvRentedBikeModelAdmin = itemView.findViewById(R.id.tvBikeModelRentAdmin);
             tvRentedBikeManufacturerAdmin = itemView.findViewById(R.id.tvBikeManufactRentAdmin);
             tvRentedBikePriceAdmin = itemView.findViewById(R.id.tvBikePriceRentAdmin);
+            tvRentedBikeStoreNameAdmin = itemView.findViewById(R.id.tvBikeStoreRentAdmin);
+            tvRentedBikeCustomNameAdmin = itemView.findViewById(R.id.tvCustomNameRentAdmin);
+            tvRentedBikeCustomPhoneAdmin = itemView.findViewById(R.id.tvCustomPhoneRentAdmin);
+            tvRentedBikeCustomEmailAdmin = itemView.findViewById(R.id.tvCustomEmailRentAdmin);
             tvRentedBikeDateRentAdmin = itemView.findViewById(R.id.tvBikeDateRentAdmin);
         }
     }

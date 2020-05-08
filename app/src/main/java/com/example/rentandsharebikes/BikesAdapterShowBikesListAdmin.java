@@ -60,8 +60,7 @@ public class BikesAdapterShowBikesListAdmin extends RecyclerView.Adapter<BikesAd
         return bikesUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
-            View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener{
+    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView imBikeAdmin;
         public TextView tvBikeConAdmin;
@@ -79,58 +78,21 @@ public class BikesAdapterShowBikesListAdmin extends RecyclerView.Adapter<BikesAd
             tvBikePAdmin = itemView.findViewById(R.id.tvBikePrice);
 
             itemView.setOnClickListener(this);
-            itemView.setOnCreateContextMenuListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            if(clickListener !=null){
+            if (clickListener != null) {
                 int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION){
+                if (position != RecyclerView.NO_POSITION) {
                     clickListener.onItemClick(position);
                 }
             }
-        }
-
-        //create onItem click menu
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menu.setHeaderTitle("Select an Action");
-            MenuItem doUpdate  = menu.add(NONE, 1, 1, "Update this bike");
-            MenuItem doDelete  = menu.add(NONE, 2, 2, "Delete this bike");
-
-            doUpdate.setOnMenuItemClickListener(this);
-            doDelete.setOnMenuItemClickListener(this);
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            if(clickListener !=null){
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION){
-                    switch (item.getItemId()){
-                        case 1:
-                            clickListener.onUpdateClick(position);
-                            return true;
-
-                        case 2:
-                            clickListener.onDeleteClick(position);
-                            return true;
-                    }
-                }
-            }
-
-            return false;
         }
     }
 
     public interface OnItemClickListener {
         void onItemClick(int position);
-
-        void onUpdateClick(int position);
-
-        void onDeleteClick(int position);
-
     }
 
     public void setOnItmClickListener(OnItemClickListener listener){

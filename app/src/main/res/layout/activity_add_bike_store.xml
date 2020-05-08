@@ -139,6 +139,8 @@
             android:layout_below="@+id/WrapperBikeStoreNrSlots"
             android:layout_centerHorizontal="true"
             android:background="@drawable/btn_inverse_fading"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
             android:layout_marginTop="10dp"
             android:text="@string/btn_saveBikeStore"
             android:textSize="22sp" />

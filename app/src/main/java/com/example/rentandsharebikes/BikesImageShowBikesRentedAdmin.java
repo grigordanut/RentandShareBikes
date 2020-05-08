@@ -30,7 +30,7 @@ public class BikesImageShowBikesRentedAdmin extends AppCompatActivity {
     private RecyclerView bikesListRecyclerView;
     private BikesAdapterShowBikesRentedAdmin bikesAdapterShowBikesRentedAdmin;
 
-    private TextView tVCustomerRentBikes;
+    private TextView tVAdminRentedBikes;
 
     private List<RentBikes> rentBikesList;
 
@@ -40,6 +40,8 @@ public class BikesImageShowBikesRentedAdmin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bikes_image_show_bikes_rented_admin);
+
+        tVAdminRentedBikes = (TextView)findViewById(R.id.tvAdminRentedBikes);
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -73,6 +75,7 @@ public class BikesImageShowBikesRentedAdmin extends AppCompatActivity {
                     assert rent_Bikes != null;
                     rent_Bikes.setBike_RentKey(postSnapshot.getKey());
                     rentBikesList.add(rent_Bikes);
+                    tVAdminRentedBikes.setText(rentBikesList.size()+" Bikes rented by customers");
                 }
                 bikesAdapterShowBikesRentedAdmin = new BikesAdapterShowBikesRentedAdmin(BikesImageShowBikesRentedAdmin.this, rentBikesList);
                 bikesListRecyclerView.setAdapter(bikesAdapterShowBikesRentedAdmin);

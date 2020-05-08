@@ -22,76 +22,23 @@
             <ImageView
                 android:id="@+id/imgBikesAvMain"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="250dp"
                 android:layout_margin="5dp"
                 android:background="#ffffff"
                 tools:ignore="ContentDescription" />
 
+            <!--    Bike Store Name-->
             <TextView
                 android:id="@+id/tvStoreAvMain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgBikesAvMain"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
                 android:text="@string/tv_bikeStoreNameMain"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:ignore="RtlSymmetry" />
-
-            <TextView
-                android:id="@+id/tvCondAvMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvStoreAvMain"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/tv_bikeCondMain"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="RtlSymmetry" />
-
-            <TextView
-                android:id="@+id/tvModelAvMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvCondAvMain"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/tv_bikeModelMain"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="NotSibling,RtlSymmetry" />
-
-            <TextView
-                android:id="@+id/tvManufactAvMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvModelAvMain"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/tv_bikeManufactMain"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="RtlSymmetry" />
-
-            <TextView
-                android:id="@+id/tvPriceAvMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvManufactAvMain"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/tv_bikePriceMain"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="RtlSymmetry" />
-
             <TextView
                 android:id="@+id/tvBikeStoreAvMain"
                 android:layout_width="match_parent"
@@ -105,6 +52,19 @@
                 android:textSize="18sp"
                 tools:ignore="RtlSymmetry" />
 
+            <!--    Bike Condition-->
+            <TextView
+                android:id="@+id/tvCondAvMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvStoreAvMain"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/tv_bikeCondMain"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
             <TextView
                 android:id="@+id/tvBikeCondAvMain"
                 android:layout_width="match_parent"
@@ -118,6 +78,20 @@
                 android:textColor="#000000"
                 android:textSize="18sp"
                 tools:ignore="RtlSymmetry" />
+
+            <!--    Bike Model-->
+            <TextView
+                android:id="@+id/tvModelAvMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvCondAvMain"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/tv_bikeModelMain"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="NotSibling,RtlSymmetry" />
 
             <TextView
                 android:id="@+id/tvBikeModelAvMain"
@@ -133,6 +107,19 @@
                 android:textSize="18sp"
                 tools:ignore="RtlSymmetry" />
 
+            <!--    Bike Manufacturer-->
+            <TextView
+                android:id="@+id/tvManufactAvMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvModelAvMain"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/tv_bikeManufactMain"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
             <TextView
                 android:id="@+id/tvBikeManufactAvMain"
                 android:layout_width="match_parent"
@@ -147,6 +134,20 @@
                 android:textSize="18sp"
                 tools:ignore="RtlSymmetry" />
 
+            <!--Bike Price per Hour-->
+            <TextView
+                android:id="@+id/tvPriceAvMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvManufactAvMain"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/tv_bikePriceMain"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
             <TextView
                 android:id="@+id/tvBikePriceAvMain"
                 android:layout_width="match_parent"
@@ -155,6 +156,7 @@
                 android:layout_marginStart="160dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
                 android:background="#e6f7ff"
                 android:paddingStart="10dp"
                 android:textColor="#000000"

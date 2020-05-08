@@ -395,7 +395,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
                             eTReturnTotalHours.setText(String.valueOf(totalHours));
                             tVPrice_ReturnBikes = Double.parseDouble(tVPriceReturnBikes.getText().toString().trim());
                             eTReturn_TotalPricePay = totalHours*tVPrice_ReturnBikes;
-                            eTReturnTotalPricePay.setText(String.valueOf(eTReturn_TotalPricePay));
+                            eTReturnTotalPricePay.setText(String.valueOf("€ "+eTReturn_TotalPricePay));
                         }
 
                         //receive data from the other activity
