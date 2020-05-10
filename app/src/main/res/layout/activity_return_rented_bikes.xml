@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/tvDateOfRent"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvReturnBikes"
             android:layout_alignStart="@+id/tvReturnBikes"
@@ -56,7 +56,7 @@
 
         <TextView
             android:id="@+id/tvDateReturn"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvDateOfRent"
             android:layout_alignStart="@+id/tvReturnBikes"
@@ -84,7 +84,7 @@
 
         <TextView
             android:id="@+id/tvRentDuration"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvDateReturn"
             android:layout_alignStart="@+id/tvReturnBikes"
@@ -113,7 +113,7 @@
 
         <TextView
             android:id="@+id/tvReturnHours"
-            android:layout_width="130dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvRentDuration"
             android:layout_alignStart="@+id/tvReturnBikes"
@@ -142,7 +142,7 @@
 
         <TextView
             android:id="@+id/tvReturnTotalPrice"
-            android:layout_width="130dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvReturnHours"
             android:layout_alignStart="@+id/tvReturnBikes"
@@ -243,10 +243,11 @@
 
         <CheckBox
             android:id="@+id/cbReturnBikeSameStore"
-            android:layout_width="180dp"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_below="@id/tvBikeStoreReturn"
             android:layout_alignStart="@id/lNameWrapperRentBikes"
+            android:paddingEnd="10dp"
             android:layout_marginStart="-10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/check_box"
@@ -256,11 +257,12 @@
 
         <CheckBox
             android:id="@+id/cbReturnBikeDiffStore"
-            android:layout_width="180dp"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_below="@id/tvBikeStoreReturn"
             android:layout_alignEnd="@id/lNameWrapperRentBikes"
             android:layout_marginTop="10dp"
+            android:paddingEnd="10dp"
             android:layout_marginEnd="-10dp"
             android:background="@drawable/check_box"
             android:text="@string/cb_returnDiffRentStore"

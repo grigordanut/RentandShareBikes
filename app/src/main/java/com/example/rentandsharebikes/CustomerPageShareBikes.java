@@ -39,15 +39,22 @@ public class CustomerPageShareBikes extends AppCompatActivity {
     private DatabaseReference databaseRefBikesShareCustom;
     private ValueEventListener bikesShareCustomEventListener;
 
+    //Display data from Rent Bikes table database
+    private FirebaseStorage firebaseStBikesShareAv;
+    private DatabaseReference databaseRefBikesShareAv;
+    private ValueEventListener bikesShareAvEventListener;
+
     //Access customer database
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private DatabaseReference databaseReference;
 
-    private TextView tVCustomPageShare, tVCustomPageSharePerDetails, tVCustomerBikesShared;
+    private TextView tVCustomPageShare, tVCustomPageSharePerDetails, tVCustomerBikesShared, tVBikesShareAv;
 
     private List<ShareBikes> bikesListShareCustom;
-    private int numberBikesSharedCustom;
+    private List<ShareBikes> bikesListShareAv;
+    private int numberBikesSCustom;
+    private int numberBikesShareAv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +62,13 @@ public class CustomerPageShareBikes extends AppCompatActivity {
         setContentView(R.layout.activity_customer_page_share_bikes);
 
         bikesListShareCustom = new ArrayList<>();
+        bikesListShareAv = new ArrayList<>();
 
         //initialise the variables
         tVCustomPageShare = (TextView) findViewById(R.id.tvCustomPageShare);
         tVCustomPageSharePerDetails = (TextView)findViewById(R.id.tvCustomPageSharePerDetails);
         tVCustomerBikesShared = (TextView)findViewById(R.id.tvCustomerBikesShared);
+        tVBikesShareAv = (TextView)findViewById(R.id.tvCustomerBikesSharedAv);
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -98,7 +107,12 @@ public class CustomerPageShareBikes extends AppCompatActivity {
                             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                                 int id = item.getItemId();
                                 switch (id) {
-                                    //Activity of adding Bikes to be shared
+                                    case R.id.userShow_shareBikesAvailable:
+                                        Toast.makeText(CustomerPageShareBikes.this, "Share Bikes Available", Toast.LENGTH_SHORT).show();
+                                        Intent intentNoOwnerBikes = new Intent(CustomerPageShareBikes.this, BikesImageShowSharedBikesNoOwner.class);
+                                        intentNoOwnerBikes.putExtra("CIdNoOwner", currentUser.getUid());
+                                        startActivity(intentNoOwnerBikes);
+                                        break;
                                     case R.id.userAdd_shareBikes:
                                         Toast.makeText(CustomerPageShareBikes.this, "Add bikes to share", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(CustomerPageShareBikes.this, ShareBikesCustomer.class));
@@ -111,12 +125,6 @@ public class CustomerPageShareBikes extends AppCompatActivity {
                                         intentShowBikes.putExtra("CLNameShare", custom_data.getlName_Customer());
                                         intentShowBikes.putExtra("CIdShare", currentUser.getUid());
                                         startActivity(intentShowBikes);
-                                        break;
-                                    case R.id.userShow_shareBikesAvailable:
-                                        Toast.makeText(CustomerPageShareBikes.this, "Share Bikes Available", Toast.LENGTH_SHORT).show();
-                                        Intent intentNoOwnerBikes = new Intent(CustomerPageShareBikes.this, BikesImageShowSharedBikesNoOwner.class);
-                                        intentNoOwnerBikes.putExtra("CIdNoOwner", currentUser.getUid());
-                                        startActivity(intentNoOwnerBikes);
                                         break;
                                     case R.id.userUpdate_ownShareBikes:
                                         Toast.makeText(CustomerPageShareBikes.this, "Update my Bike", Toast.LENGTH_SHORT).show();
@@ -179,7 +187,36 @@ public class CustomerPageShareBikes extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        loadBikeShareAvailable();
         loadBikeShareCustom();
+    }
+
+    private void loadBikeShareAvailable() {
+        //initialize the bike storage database
+        firebaseStBikesShareAv = FirebaseStorage.getInstance();
+        databaseRefBikesShareAv = FirebaseDatabase.getInstance().getReference("Share Bikes");
+
+        bikesShareAvEventListener = databaseRefBikesShareAv.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikesListShareAv.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    ShareBikes share_Bikes = postSnapshot.getValue(ShareBikes.class);
+                    assert share_Bikes != null;
+                    if (!share_Bikes.getShareBikes_CustomId().equals(currentUser.getUid())){
+                        share_Bikes.setShareBike_Key(postSnapshot.getKey());
+                        bikesListShareAv.add(share_Bikes);
+                        numberBikesShareAv = bikesListShareAv.size();
+                        tVBikesShareAv.setText(String.valueOf(numberBikesShareAv));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(CustomerPageShareBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void loadBikeShareCustom() {
@@ -197,8 +234,8 @@ public class CustomerPageShareBikes extends AppCompatActivity {
                     if (share_Bikes.getShareBikes_CustomId().equals(currentUser.getUid())){
                         share_Bikes.setShareBike_Key(postSnapshot.getKey());
                         bikesListShareCustom.add(share_Bikes);
-                        numberBikesSharedCustom = bikesListShareCustom.size();
-                        tVCustomerBikesShared.setText(String.valueOf(numberBikesSharedCustom));
+                        numberBikesSCustom = bikesListShareCustom.size();
+                        tVCustomerBikesShared.setText(String.valueOf(numberBikesSCustom));
                     }
                 }
             }

@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikesImageShowSharedBikesAdmin extends AppCompatActivity implements BikesAdapterShowSharedBikesAdmin.OnItemClickListener{
+public class BikesImageShowSharedBikesAdmin extends AppCompatActivity implements BikesAdapterShowSharedBikesAdmin.OnItemClickListener {
 
     //Display data from Share Bikes database
     private FirebaseStorage firebaseStDisplaySharedBikes;
@@ -46,7 +46,7 @@ public class BikesImageShowSharedBikesAdmin extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bikes_image_show_shared_bikes_admin);
 
-        tVBikesImgShowSBikesAdmin = (TextView)findViewById(R.id.tvBikesImgShowSBikesAdmin);
+        tVBikesImgShowSBikesAdmin = (TextView) findViewById(R.id.tvBikesImgShowSBikesAdmin);
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -78,11 +78,9 @@ public class BikesImageShowSharedBikesAdmin extends AppCompatActivity implements
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     ShareBikes share_Bikes = postSnapshot.getValue(ShareBikes.class);
                     assert share_Bikes != null;
-                    //if (!share_Bikes.getShareBikes_CustomId().equals(customShareAll_Id)) {
-                        share_Bikes.setShareBike_Key(postSnapshot.getKey());
-                        sharedBikesList.add(share_Bikes);
-                        tVBikesImgShowSBikesAdmin.setText(sharedBikesList.size()+" bikes available to be shared");
-                    //}
+                    share_Bikes.setShareBike_Key(postSnapshot.getKey());
+                    sharedBikesList.add(share_Bikes);
+                    tVBikesImgShowSBikesAdmin.setText(sharedBikesList.size() + " bikes available to be shared");
                 }
 
                 bikesAdapterShowSharedBikesAdmin = new BikesAdapterShowSharedBikesAdmin(BikesImageShowSharedBikesAdmin.this, sharedBikesList);

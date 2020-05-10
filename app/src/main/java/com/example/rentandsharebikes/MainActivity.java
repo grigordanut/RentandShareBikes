@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.contactUs:
                         Toast.makeText(MainActivity.this, "Bikes to share", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this, AdminPage.class));
+                        startActivity(new Intent(MainActivity.this, ContactUs.class));
                         break;
                     default:
                         return true;

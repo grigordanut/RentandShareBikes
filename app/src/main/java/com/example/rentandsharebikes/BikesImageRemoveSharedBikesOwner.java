@@ -108,7 +108,7 @@ public class BikesImageRemoveSharedBikesOwner extends AppCompatActivity implemen
 
     @Override
     public void onItemClick(final int position) {
-        final String[] options = {"Remove this Bike", "Back to main Page"};
+        final String[] options = {"Back to Main Page", "Remove this Bike"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         ShareBikes selected_Bike = sharedBikesList.get(position);
@@ -117,46 +117,13 @@ public class BikesImageRemoveSharedBikesOwner extends AppCompatActivity implemen
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0) {
-                    progressDialog.show();
-                    firebaseStDeleteSharedBikes = FirebaseStorage.getInstance();
-                    databaseRefDeleteSharedBike = FirebaseDatabase.getInstance().getReference("Share Bikes");
-                    AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageRemoveSharedBikesOwner.this);
-                    builderAlert.setMessage("Are sure to delete this Bike?");
-                    builderAlert.setCancelable(true);
-                    builderAlert.setPositiveButton(
-                            "Yes",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    ShareBikes selected_Bike = sharedBikesList.get(position);
-                                    final String selectedKeyBike = selected_Bike.getShareBike_Key();
-                                    StorageReference imageReference = firebaseStDisplaySharedBikes.getReferenceFromUrl(selected_Bike.getShareBike_Image());
-                                    imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            databaseRefDeleteSharedBike.child(selectedKeyBike).removeValue();
-                                            Toast.makeText(BikesImageRemoveSharedBikesOwner.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
-                                            progressDialog.dismiss();
-                                        }
-                                    });
-                                }
-                            });
-
-                    builderAlert.setNegativeButton(
-                            "No",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-                    progressDialog.dismiss();
-                    AlertDialog alert1 = builderAlert.create();
-                    alert1.show();
-                }
-                if (which == 1) {
                     Toast.makeText(BikesImageRemoveSharedBikesOwner.this, "Go back to main Page", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(BikesImageRemoveSharedBikesOwner.this, CustomerPageShareBikes.class));
                     progressDialog.dismiss();
                     finish();
+                }
+                if (which == 1) {
+                    confirmDeletionShareBike(position);
                 }
             }
         });
@@ -164,5 +131,43 @@ public class BikesImageRemoveSharedBikesOwner extends AppCompatActivity implemen
         final AlertDialog alertDialog = builder.create();
 
         alertDialog.show();
+    }
+
+    public void confirmDeletionShareBike(final int position){
+        progressDialog.show();
+        firebaseStDeleteSharedBikes = FirebaseStorage.getInstance();
+        databaseRefDeleteSharedBike = FirebaseDatabase.getInstance().getReference("Share Bikes");
+        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageRemoveSharedBikesOwner.this);
+        ShareBikes selected_Bike = sharedBikesList.get(position);
+        builderAlert.setMessage("Are sure to delete "+selected_Bike.getShareBike_Model());
+        builderAlert.setCancelable(true);
+        builderAlert.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        ShareBikes selected_Bike = sharedBikesList.get(position);
+                        final String selectedKeyBike = selected_Bike.getShareBike_Key();
+                        StorageReference imageReference = firebaseStDisplaySharedBikes.getReferenceFromUrl(selected_Bike.getShareBike_Image());
+                        imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                databaseRefDeleteSharedBike.child(selectedKeyBike).removeValue();
+                                Toast.makeText(BikesImageRemoveSharedBikesOwner.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
+                            }
+                        });
+                    }
+                });
+
+        builderAlert.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        progressDialog.dismiss();
+        AlertDialog alert1 = builderAlert.create();
+        alert1.show();
     }
 }

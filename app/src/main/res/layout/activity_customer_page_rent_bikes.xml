@@ -69,8 +69,8 @@
         <!--Bikes Stores Available-->
         <TextView
             android:id="@+id/tvCustomStores"
-            android:layout_width="240dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvCustomPageRentAccount"
             android:layout_alignStart="@+id/tvCustomPageRentAccount"
             android:layout_marginTop="20dp"
@@ -80,7 +80,7 @@
         <TextView
             android:id="@+id/tvCustomStoresAv"
             android:layout_width="50dp"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvCustomPageRentAccount"
             android:layout_alignEnd="@+id/tvCustomPageRent"
             android:layout_marginTop="20dp"
@@ -94,8 +94,8 @@
         <!--    Bikes Available to Rent-->
         <TextView
             android:id="@+id/tvCustomBikesRent"
-            android:layout_width="240dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvCustomStores"
             android:layout_alignStart="@+id/tvCustomPageRentAccount"
             android:layout_marginTop="20dp"
@@ -105,7 +105,7 @@
         <TextView
             android:id="@+id/tvCustomBikesRentAv"
             android:layout_width="50dp"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvCustomStoresAv"
             android:layout_alignEnd="@+id/tvCustomPageRent"
             android:layout_marginTop="20dp"
@@ -119,8 +119,8 @@
         <!--    Bikes Rented-->
         <TextView
             android:id="@+id/tvCustomRented"
-            android:layout_width="240dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvCustomBikesRent"
             android:layout_alignStart="@+id/tvCustomPageRent"
             android:layout_marginTop="20dp"
@@ -130,7 +130,7 @@
         <TextView
             android:id="@+id/tvCustomBikesRented"
             android:layout_width="50dp"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvCustomBikesRentAv"
             android:layout_alignEnd="@+id/tvCustomPageRent"
             android:layout_marginTop="20dp"

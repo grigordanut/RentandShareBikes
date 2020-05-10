@@ -165,10 +165,8 @@
     <string name="tv_customPageRentPersonalAccount">Your personal Account:</string>
     <string name="tv_customPageBikeStores">Bikes Stores Available</string>
     <string name="tv_customPageBikeStoresAv">0</string>
-
     <string name="tv_customPageBikeRent">Bikes available to Rent</string>
     <string name="tv_customPageBikeRentAv">0</string>
-
     <string name="tv_customPageBikesRented">Rented Bikes</string>
     <string name="tv_customPageBikesRentedAv">0</string>
     <string name="tv_customPageRentAccount">Your account</string>
@@ -181,6 +179,8 @@
     <string name="tv_customPageSharePersonalAccount">Your personal Account:</string>
     <string name="tv_customPageBikesShared">Bikes added to share</string>
     <string name="tv_customPageBikesSharedAcc">0</string>
+    <string name="tv_customPageBikesSAv">Bikes available to share</string>
+    <string name="tv_customPageBikesShareAv">0</string>
     <string name="tv_customPageShareAccount">Your account</string>
     <string name="open_customPageShare">Open</string>
     <string name="close_customPageShare">Close</string>
@@ -458,9 +458,9 @@
     <string name="mDUser_scanBarcode">Scan QR Code</string>
 
     <!--    Menu Drawer Customer Share Bikes-->
+    <string name="mDUser_showAvailableBikesShare">Show Bikes Available</string>
     <string name="mDUser_shareBikesShare">Add Bikes to Share</string>
     <string name="mDUser_showOwnBikesShare">Show My Bikes</string>
-    <string name="mDUser_showAvailableBikesShare">Show All Bikes</string>
     <string name="mDUser_updateAvailableBikesShare">Update My Bikes</string>
     <string name="mDUser_removeAvailableBikesShare">Remove My Bikes</string>
 

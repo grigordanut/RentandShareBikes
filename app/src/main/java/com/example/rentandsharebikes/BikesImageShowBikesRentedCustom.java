@@ -130,38 +130,22 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
     @Override
     public void alertDialogShowRentedBikesOptions(final int position) {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        RentBikes selected_Bike = rentBikesList.get(position);
-        alertDialogBuilder.setTitle("You selected " + selected_Bike.getBikeModel_RentBikes() + "\nSelect an option");
+        RentBikes sel_Bike = rentBikesList.get(position);
+        alertDialogBuilder.setTitle("You selected " + sel_Bike.getBikeModel_RentBikes() + "\nSelect an option");
         final String[] options = {"Return this Bike", "Back to Rent Page"};
         alertDialogBuilder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0) {
-                    alertDialogBuilder.setMessage("Are sure to return this Bike?");
-                    alertDialogBuilder.setCancelable(true);
-                    alertDialogBuilder.setPositiveButton(
-                            "Yes",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    RentBikes selected_Bike = rentBikesList.get(position);
-                                    Intent intent = new Intent(BikesImageShowBikesRentedCustom.this, ReturnRentedBikes.class);
-                                    intent.putExtra("BStoreNameSame", selected_Bike.getStoreLocation_RentBikes());
-                                    intent.putExtra("BStoreKeySame", selected_Bike.getStoreKey_RentBikes());
-                                    intent.putExtra("BikeRentedKey", selected_Bike.getBike_RentKey());
-                                    startActivity(intent);
-                                }
-                            });
-
-                    alertDialogBuilder.setNegativeButton(
-                            "No",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-                    AlertDialog alert1 = alertDialogBuilder.create();
-                    alert1.show();
+                    RentBikes sel_Bike = rentBikesList.get(position);
+                    Intent intent_Ret = new Intent ( BikesImageShowBikesRentedCustom.this, ReturnRentedBikes.class);
+                    //Bike Store name of rented Bike
+                    intent_Ret.putExtra("BStoreNameSame",sel_Bike.getStoreLocation_RentBikes());
+                    //Bike Store key of rented bike
+                    intent_Ret.putExtra("BStoreKeySame",sel_Bike.getStoreKey_RentBikes());
+                    //Bike key of rented bike
+                    intent_Ret.putExtra("BikeRentedKey",sel_Bike.getBike_RentKey());
+                    startActivity(intent_Ret);
                 }
                 if (which == 1) {
                     Toast.makeText(BikesImageShowBikesRentedCustom.this, "Go back to main page", Toast.LENGTH_SHORT).show();

@@ -99,10 +99,10 @@ public class ShareBikesCustomer extends AppCompatActivity {
         storageRefShareBikes = FirebaseStorage.getInstance().getReference("Share Bikes");
         databaseRefShareBikes = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
-        tVCondShareBike = (AutoCompleteTextView)findViewById(R.id.tvShareBikeCond);
-        imgArrowCondShareBike = (ImageView)findViewById(R.id.imgArrowShareBikeCond);
+        tVCondShareBike = (AutoCompleteTextView) findViewById(R.id.tvShareBikeCond);
+        imgArrowCondShareBike = (ImageView) findViewById(R.id.imgArrowShareBikeCond);
 
-        ArrayAdapter<String> conditionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,bikeShareCondition);
+        ArrayAdapter<String> conditionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, bikeShareCondition);
         tVCondShareBike.setAdapter(conditionAdapter);
 
         imgArrowCondShareBike.setOnClickListener(new View.OnClickListener() {
@@ -112,16 +112,16 @@ public class ShareBikesCustomer extends AppCompatActivity {
             }
         });
 
-        tVShareBikes = (TextView)findViewById(R.id.tvShareBikes);
-        etFNameShareBike = (EditText)findViewById(R.id.etShareBikeFName);
-        etLNameShareBike = (EditText)findViewById(R.id.etShareBikeLName);
-        etPNoShareBike = (EditText)findViewById(R.id.etShareBikePNumber);
-        etEmailShareBike = (EditText)findViewById(R.id.etShareBikeEmail);
+        tVShareBikes = (TextView) findViewById(R.id.tvShareBikes);
+        etFNameShareBike = (EditText) findViewById(R.id.etShareBikeFName);
+        etLNameShareBike = (EditText) findViewById(R.id.etShareBikeLName);
+        etPNoShareBike = (EditText) findViewById(R.id.etShareBikePNumber);
+        etEmailShareBike = (EditText) findViewById(R.id.etShareBikeEmail);
         etModelShareBike = (EditText) findViewById(R.id.etShareBikeModel);
         etManufactShareBike = (EditText) findViewById(R.id.etShareBikeManufact);
         etPriceShareBike = (EditText) findViewById(R.id.etShareBikePriceDay);
         tVAvDateShareBike = (TextView) findViewById(R.id.tvShareBikeAvDate);
-        etDateAvShareBike = (EditText)findViewById(R.id.etShareBikeAvDate);
+        etDateAvShareBike = (EditText) findViewById(R.id.etShareBikeAvDate);
         etDateAvShareBike.setEnabled(false);
 
         ivShareBike = (ImageView) findViewById(R.id.imgViewShareBikes);
@@ -177,15 +177,15 @@ public class ShareBikesCustomer extends AppCompatActivity {
     }
 
     //Pick the share bike available date
-    private void selectShareAvailableDate(){
+    private void selectShareAvailableDate() {
         Calendar calendar = Calendar.getInstance();
         DatePickerDialog dialog = new DatePickerDialog(ShareBikesCustomer.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 String date_year = String.valueOf(year);
-                String date_month = (month+1) < 10 ? "0" + (month+1) : String.valueOf(month+1);
+                String date_month = (month + 1) < 10 ? "0" + (month + 1) : String.valueOf(month + 1);
                 String date_day = dayOfMonth < 10 ? "0" + dayOfMonth : String.valueOf(dayOfMonth);
-                String picked_Date = date_day+"/"+date_month+"/"+date_year;
+                String picked_Date = date_day + "/" + date_month + "/" + date_year;
                 etDateAvShareBike.setText(picked_Date);
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -193,7 +193,7 @@ public class ShareBikesCustomer extends AppCompatActivity {
         dialog.show();
     }
 
-    private void alertDialogAvailableDateEmpty(){
+    private void alertDialogAvailableDateEmpty() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("The available  day cannot be empty.");
         alertDialogBuilder.setPositiveButton("OK",
@@ -275,59 +275,7 @@ public class ShareBikesCustomer extends AppCompatActivity {
     public void uploadShareBikes() {
         progressDialog.dismiss();
 
-        final String etFName_ShareBikeVal = etFNameShareBike.getText().toString().trim();
-        final String etLName_ShareBikeVal = etLNameShareBike.getText().toString().trim();
-        final String etPNo_ShareBikeVal = etPNoShareBike.getText().toString().trim();
-        final String etEmail_ShareBikeVal = etEmailShareBike.getText().toString().trim();
-
-        final String tVCond_ShareBikeVal = tVCondShareBike.getText().toString().trim();
-        final String etModel_ShareBikeVal = etModelShareBike.getText().toString().trim();
-        final String etManufact_ShareBikeVal = etManufactShareBike.getText().toString().trim();
-        final String etPrice_ShareBikeVal = etPriceShareBike.getText().toString().trim();
-        final String etDateAv_ShareBikeVal = etDateAvShareBike.getText().toString().trim();
-
-        if(TextUtils.isEmpty(etFName_ShareBikeVal)){
-            etFNameShareBike.setError("Please enter the First Name");
-            etFNameShareBike.requestFocus();
-        }
-        if(TextUtils.isEmpty(etLName_ShareBikeVal)){
-            etLNameShareBike.setError("Please enter the Last Name");
-            etLNameShareBike.requestFocus();
-        }
-        if(TextUtils.isEmpty(etPNo_ShareBikeVal)){
-            etPNoShareBike.setError("Please enter the Phone Number");
-            etPNoShareBike.requestFocus();
-        }
-        if(TextUtils.isEmpty(etEmail_ShareBikeVal)){
-            etEmailShareBike.setError("Please enter the Email Address");
-            etEmailShareBike.requestFocus();
-        }
-        else if (imageShareUri == null) {
-            Toast.makeText(ShareBikesCustomer.this, "Please add a picture", Toast.LENGTH_SHORT).show();
-        }
-        else if(TextUtils.isEmpty(tVCond_ShareBikeVal)){
-            alertDialogBikeShareCond();
-            tVCondShareBike.requestFocus();
-        }
-        else if (TextUtils.isEmpty(etModel_ShareBikeVal)) {
-            etModelShareBike.setError("Please add the Model of Bicycle");
-            etModelShareBike.requestFocus();
-        }
-        else if (TextUtils.isEmpty(etManufact_ShareBikeVal)) {
-            etManufactShareBike.setError("Please add the Manufacturer");
-            etManufactShareBike.requestFocus();
-        }
-        else if (TextUtils.isEmpty(etPrice_ShareBikeVal)) {
-            etPriceShareBike.setError("Please add the Price/Day ");
-            etPriceShareBike.requestFocus();
-        }
-
-        else if(TextUtils.isEmpty(etDateAv_ShareBikeVal)){
-            alertDialogAvailableDateEmpty();
-        }
-
-        //Add a new Bike into the Bike's table
-        else {
+        if (validateShareBikesDetail()) {
             etFName_ShareBike = etFNameShareBike.getText().toString().trim();
             etLName_ShareBike = etLNameShareBike.getText().toString().trim();
             etPNo_ShareBike = etPNoShareBike.getText().toString().trim();
@@ -397,7 +345,54 @@ public class ShareBikesCustomer extends AppCompatActivity {
         }
     }
 
-    public void alertDialogBikeShareCond(){
+    private Boolean validateShareBikesDetail() {
+        boolean result = false;
+        final String etFName_ShareBikeVal = etFNameShareBike.getText().toString().trim();
+        final String etLName_ShareBikeVal = etLNameShareBike.getText().toString().trim();
+        final String etPNo_ShareBikeVal = etPNoShareBike.getText().toString().trim();
+        final String etEmail_ShareBikeVal = etEmailShareBike.getText().toString().trim();
+
+        final String tVCond_ShareBikeVal = tVCondShareBike.getText().toString().trim();
+        final String etModel_ShareBikeVal = etModelShareBike.getText().toString().trim();
+        final String etManufact_ShareBikeVal = etManufactShareBike.getText().toString().trim();
+        final String etPrice_ShareBikeVal = etPriceShareBike.getText().toString().trim();
+        final String etDateAv_ShareBikeVal = etDateAvShareBike.getText().toString().trim();
+
+        if (TextUtils.isEmpty(etFName_ShareBikeVal)) {
+            etFNameShareBike.setError("Please enter the First Name");
+            etFNameShareBike.requestFocus();
+        } else if (TextUtils.isEmpty(etLName_ShareBikeVal)) {
+            etLNameShareBike.setError("Please enter the Last Name");
+            etLNameShareBike.requestFocus();
+        } else if (TextUtils.isEmpty(etPNo_ShareBikeVal)) {
+            etPNoShareBike.setError("Please enter the Phone Number");
+            etPNoShareBike.requestFocus();
+        } else if (TextUtils.isEmpty(etEmail_ShareBikeVal)) {
+            etEmailShareBike.setError("Please enter the Email Address");
+            etEmailShareBike.requestFocus();
+        } else if (imageShareUri == null) {
+            Toast.makeText(ShareBikesCustomer.this, "Please add a picture", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(tVCond_ShareBikeVal)) {
+            alertDialogBikeShareCond();
+            tVCondShareBike.requestFocus();
+        } else if (TextUtils.isEmpty(etModel_ShareBikeVal)) {
+            etModelShareBike.setError("Please add the Model of Bicycle");
+            etModelShareBike.requestFocus();
+        } else if (TextUtils.isEmpty(etManufact_ShareBikeVal)) {
+            etManufactShareBike.setError("Please add the Manufacturer");
+            etManufactShareBike.requestFocus();
+        } else if (TextUtils.isEmpty(etPrice_ShareBikeVal)) {
+            etPriceShareBike.setError("Please add the Price/Day ");
+            etPriceShareBike.requestFocus();
+        } else if (TextUtils.isEmpty(etDateAv_ShareBikeVal)) {
+            alertDialogAvailableDateEmpty();
+        } else {
+            result = true;
+        }
+        return result;
+    }
+
+    public void alertDialogBikeShareCond() {
         androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Select the Bike Condition");
         alertDialogBuilder.setPositiveButton("OK",
@@ -417,7 +412,7 @@ public class ShareBikesCustomer extends AppCompatActivity {
         loadCustomerDetailsShareBikes();
     }
 
-    public void loadCustomerDetailsShareBikes(){
+    public void loadCustomerDetailsShareBikes() {
         //retrieve data from database into text views
         databaseRefCustomer = FirebaseDatabase.getInstance().getReference("Customers");
         databaseRefCustomer.addValueEventListener(new ValueEventListener() {
@@ -432,8 +427,8 @@ public class ShareBikesCustomer extends AppCompatActivity {
                     final Customers custom_data = dsUser.getValue(Customers.class);
                     assert custom_Details != null;
                     assert custom_data != null;
-                    if (Objects.requireNonNull(custom_Details.getEmail()).equalsIgnoreCase(custom_data.getEmail_Customer())){
-                        tVShareBikes.setText("Welcome: "+custom_data.getfName_Customer()+" "+custom_data.getlName_Customer());
+                    if (Objects.requireNonNull(custom_Details.getEmail()).equalsIgnoreCase(custom_data.getEmail_Customer())) {
+                        tVShareBikes.setText("Welcome: " + custom_data.getfName_Customer() + " " + custom_data.getlName_Customer());
                         etFNameShareBike.setText(custom_data.getfName_Customer());
                         etLNameShareBike.setText(custom_data.getlName_Customer());
                         etPNoShareBike.setText(custom_data.getPhoneNumb_Customer());
@@ -449,5 +444,6 @@ public class ShareBikesCustomer extends AppCompatActivity {
             }
         });
     }
+
     private static final String[] bikeShareCondition = new String[]{"Brand New", "Used Bike"};
 }

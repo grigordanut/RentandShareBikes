@@ -31,7 +31,6 @@ public class GeoLocation {
                         StringBuilder stringBuilderLatitude = new StringBuilder();
                         StringBuilder stringBuilderLongitude = new StringBuilder();
 
-
                         stringBuilderLatitude.append(address.getLatitude()).append("\n");
                         stringBuilderLongitude.append(address.getLongitude()).append("\n");
                         //result = stringBuilder.toString();
@@ -46,12 +45,6 @@ public class GeoLocation {
                     if (resultLatitude != null && resultLongitude != null){
                         message.what = 1;
                         Bundle bundle = new Bundle();
-
-                        //resultLatitude = "Address  :   "+locationAddress+
-                                //"\n\n\nLatitude\n"+resultLatitude;
-                        //resultLongitude = "Address  :   "+locationAddress+
-                                //"\n\n\nLongitude\n"+resultLongitude;
-
                         bundle.putString("locationAddress",locationAddress);
                         bundle.putString("addressLat", resultLatitude);
                         bundle.putString("addressLong", resultLongitude);

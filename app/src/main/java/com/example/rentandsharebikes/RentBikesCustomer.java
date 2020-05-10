@@ -99,30 +99,29 @@ public class RentBikesCustomer extends AppCompatActivity {
 
         //initialise variables
         tVRentBikes = (TextView) findViewById(R.id.tvRentBikes);
+        eTextDateRentBike = (EditText) findViewById(R.id.etDateRentBike);
+        eTextDateRentBike.setEnabled(false);
 
         LocalDateTime date = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         String dateRent = date.format(formatter);
-
-
-        eTextDateRentBike =(EditText) findViewById(R.id.etDateRentBike);
-        eTextDateRentBike.setEnabled(false);
         eTextDateRentBike.setText(dateRent);
 
         etFNameRentBikes = (TextInputEditText) findViewById(R.id.etFirstNameRentBikes);
-        etLNameRentBikes = (TextInputEditText)findViewById(R.id.etLastNameRentBikes);
-        etPhoneNoRentBikes = (TextInputEditText)findViewById(R.id.etPhoneNoRentBikes);
-        etEmailRentBikes = (TextInputEditText)findViewById(R.id.etEmailRentBikes);
+        etLNameRentBikes = (TextInputEditText) findViewById(R.id.etLastNameRentBikes);
+        etPhoneNoRentBikes = (TextInputEditText) findViewById(R.id.etPhoneNoRentBikes);
+        etEmailRentBikes = (TextInputEditText) findViewById(R.id.etEmailRentBikes);
 
         ivRentBikes = (ImageView) findViewById(R.id.imgShowRentBikes);
-        tVStoreNameRentBikes = (TextView)findViewById(R.id.tvRentBikesStoreName);
-        tVCondRentBikes = (TextView)findViewById(R.id.tvRentBikesCond);
-        tVModelRentBikes = (TextView)findViewById(R.id.tvRentBikesModel);
-        tVManufactRentBikes = (TextView)findViewById(R.id.tvRentBikesManufact);
-        tVPriceRentBikes = (TextView)findViewById(R.id.tvRentBikesPrice);
+        tVStoreNameRentBikes = (TextView) findViewById(R.id.tvRentBikesStoreName);
+        tVCondRentBikes = (TextView) findViewById(R.id.tvRentBikesCond);
+        tVModelRentBikes = (TextView) findViewById(R.id.tvRentBikesModel);
+        tVManufactRentBikes = (TextView) findViewById(R.id.tvRentBikesManufact);
+        tVPriceRentBikes = (TextView) findViewById(R.id.tvRentBikesPrice);
 
+        //receive data from the other activity
         Bundle bundle = getIntent().getExtras();
-        if(bundle != null){
+        if (bundle != null) {
             bike_CondRentBikes = bundle.getString("BCondition");
             bike_ModelRentBikes = bundle.getString("BModel");
             bike_ManufactRentBikes = bundle.getString("BManufact");
@@ -133,7 +132,6 @@ public class RentBikesCustomer extends AppCompatActivity {
             bikeKey_RentBike = bundle.getString("BKey");
         }
 
-        //receive data from the other activity
         Picasso.get()
                 .load(bike_ImageRentBikes)
                 .placeholder(R.mipmap.ic_launcher)
@@ -151,45 +149,19 @@ public class RentBikesCustomer extends AppCompatActivity {
         buttonRentBike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(bikesRentTask !=null && bikesRentTask.isInProgress()){
+                if (bikesRentTask != null && bikesRentTask.isInProgress()) {
                     Toast.makeText(RentBikesCustomer.this, "Rent bike in progress", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     uploadRentBikeData();
                 }
             }
         });
     }
 
-    private void uploadRentBikeData(){
-
-        final String etFName_RentBikesVal = Objects.requireNonNull(etFNameRentBikes.getText()).toString().trim();
-        final String etLName_RentBikesVal = Objects.requireNonNull(etLNameRentBikes.getText()).toString().trim();
-        final String etPhoneNo_RentBikesVal = Objects.requireNonNull(etPhoneNoRentBikes.getText()).toString().trim();
-        final String etEmail_RentBikesVal = Objects.requireNonNull(etEmailRentBikes.getText()).toString().trim();
-
-        if(TextUtils.isEmpty(etFName_RentBikesVal)) {
-            etFNameRentBikes.setError("First name cannot be empty");
-            etFNameRentBikes.requestFocus();
-        }
-        else if(TextUtils.isEmpty(etLName_RentBikesVal)) {
-            etLNameRentBikes.setError("Last name cannot be empty");
-            etLNameRentBikes.requestFocus();
-        }
-
-        else if(TextUtils.isEmpty(etPhoneNo_RentBikesVal)) {
-            etPhoneNoRentBikes.setError("Last name cannot be empty");
-            etPhoneNoRentBikes.requestFocus();
-        }
-
-        else if(TextUtils.isEmpty(etEmail_RentBikesVal)) {
-            etEmailRentBikes.setError("Last name cannot be empty");
-            etEmailRentBikes.requestFocus();
-        }
-
-        else{
+    private void uploadRentBikeData() {
+        progressDialog.dismiss();
+        if(validateBikeRentDetails()){
             eTextDate_RentBike = eTextDateRentBike.getText().toString().trim();
-            //Customer details
             etFName_RentBikes = etFNameRentBikes.getText().toString().trim();
             etLName_RentBikes = etLNameRentBikes.getText().toString().trim();
             etPhoneNo_RentBikes = etPhoneNoRentBikes.getText().toString().trim();
@@ -199,22 +171,20 @@ public class RentBikesCustomer extends AppCompatActivity {
             tVModel_RentBikes = tVModelRentBikes.getText().toString().trim();
             tVManufact_RentBikes = tVManufactRentBikes.getText().toString().trim();
             tVPrice_rentBikes = Double.parseDouble(tVPriceRentBikes.getText().toString().trim());
-
             progressDialog.setTitle("The bike is rented");
             progressDialog.show();
             String rent_BikesId = databaseRefRentBikes.push().getKey();
             bikeKey_RentedBike = rent_BikesId;
-
             RentBikes rent_Bikes = new RentBikes(eTextDate_RentBike, etFName_RentBikes, etLName_RentBikes,
                     etPhoneNo_RentBikes, etEmail_RentBikes, tVStoreName_RentBikes, bike_StoreKeyRentBikes,
                     tVCond_RentBikes, tVModel_RentBikes, tVManufact_RentBikes, tVPrice_rentBikes, bike_ImageRentBikes,
                     bike_CusIdRentBikes, bikeKey_RentedBike);
-
             assert rent_BikesId != null;
-            databaseRefRentBikes.child(rent_BikesId).setValue(rent_Bikes).addOnCompleteListener(new OnCompleteListener<Void>() {
+            databaseRefRentBikes.child(rent_BikesId).setValue(rent_Bikes)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         progressDialog.dismiss();
                         startActivity(new Intent(RentBikesCustomer.this, CustomerPageRentBikes.class));
                         Toast.makeText(RentBikesCustomer.this, "Rent Bike successfully", Toast.LENGTH_SHORT).show();
@@ -232,6 +202,35 @@ public class RentBikesCustomer extends AppCompatActivity {
                     });
         }
     }
+
+    private Boolean validateBikeRentDetails() {
+
+        boolean result = false;
+
+        final String etFName_RentBikesVal = Objects.requireNonNull(etFNameRentBikes.getText()).toString().trim();
+        final String etLName_RentBikesVal = Objects.requireNonNull(etLNameRentBikes.getText()).toString().trim();
+        final String etPhoneNo_RentBikesVal = Objects.requireNonNull(etPhoneNoRentBikes.getText()).toString().trim();
+        final String etEmail_RentBikesVal = Objects.requireNonNull(etEmailRentBikes.getText()).toString().trim();
+
+        if (TextUtils.isEmpty(etFName_RentBikesVal)) {
+            etFNameRentBikes.setError("First name cannot be empty");
+            etFNameRentBikes.requestFocus();
+        } else if (TextUtils.isEmpty(etLName_RentBikesVal)) {
+            etLNameRentBikes.setError("Last name cannot be empty");
+            etLNameRentBikes.requestFocus();
+        } else if (TextUtils.isEmpty(etPhoneNo_RentBikesVal)) {
+            etPhoneNoRentBikes.setError("Last name cannot be empty");
+            etPhoneNoRentBikes.requestFocus();
+        } else if (TextUtils.isEmpty(etEmail_RentBikesVal)) {
+            etEmailRentBikes.setError("Last name cannot be empty");
+            etEmailRentBikes.requestFocus();
+        } else {
+            result = true;
+        }
+
+        return result;
+    }
+
     private void deleteBikeData() {
         databaseRefRentBikesRemove = FirebaseDatabase.getInstance().getReference().child("Bikes");
         Query query = databaseRefRentBikesRemove.orderByChild("bike_Key").equalTo(bikeKey_RentBike);
@@ -257,15 +256,13 @@ public class RentBikesCustomer extends AppCompatActivity {
         loadCustomerDetailsRentBikes();
     }
 
-    public void loadCustomerDetailsRentBikes(){
-        //retrieve data from database into text views
+    public void loadCustomerDetailsRentBikes() {
+        //retrieve data from firebase database
         databaseRefCustomer = FirebaseDatabase.getInstance().getReference("Customers");
         databaseRefCustomer.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NewApi"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                //retrieve data from database
                 for (DataSnapshot dsUser : dataSnapshot.getChildren()) {
                     final FirebaseUser custom_Details = firebaseAuth.getCurrentUser();
 
@@ -273,7 +270,7 @@ public class RentBikesCustomer extends AppCompatActivity {
 
                     assert custom_Details != null;
                     assert custom_data != null;
-                    if (Objects.requireNonNull(custom_Details.getEmail()).equalsIgnoreCase(custom_data.getEmail_Customer())){
+                    if (Objects.requireNonNull(custom_Details.getEmail()).equalsIgnoreCase(custom_data.getEmail_Customer())) {
                         tVRentBikes.setText("Welcome: "+custom_data.getfName_Customer()+" "+custom_data.getlName_Customer());
                         etFNameRentBikes.setText(custom_data.getfName_Customer());
                         etLNameRentBikes.setText(custom_data.getlName_Customer());
@@ -287,48 +284,6 @@ public class RentBikesCustomer extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(RentBikesCustomer.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void deleteEventPicture(){
-        progressDialog.show();
-//        eventsStorage = getInstance();
-//        databaseReference = FirebaseDatabase.getInstance().getReference("Events");
-        StorageReference storageReference = getInstance().getReferenceFromUrl(bike_ImageRentBikes);
-        storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                progressDialog.dismiss();
-                Toast.makeText(RentBikesCustomer.this, "Bike Deleted", Toast.LENGTH_SHORT).show();
-
-                databaseRefBikes = FirebaseDatabase.getInstance().getReference().child("Bikes");
-
-                Query query = databaseRefBikes.orderByChild("bike_key").equalTo(tVStoreName_RentBikes);
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            ds.getRef().removeValue();
-                        }
-                        progressDialog.dismiss();
-                        Toast.makeText(RentBikesCustomer.this, "Bike removed", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RentBikesCustomer.this, CustomerPageRentBikes.class));
-                        finish();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(RentBikesCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(RentBikesCustomer.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
             }
         });
     }

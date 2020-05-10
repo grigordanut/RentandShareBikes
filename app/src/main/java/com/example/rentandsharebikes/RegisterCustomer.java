@@ -30,7 +30,7 @@ public class RegisterCustomer extends AppCompatActivity {
     private TextInputEditText emailRegCustom;
     private TextInputEditText passRegCustom;
     private TextInputEditText confPassRegCustom;
-    private String firstName_regCustom, lastName_regCustom,userName_regCustom, phoneNr_RegCustom, email_regCustom, pass_regCustom, confPass_regCustom;
+    private String firstName_regCustom, lastName_regCustom, userName_regCustom, phoneNr_RegCustom, email_regCustom, pass_regCustom, confPass_regCustom;
 
     private ProgressDialog progressDialog;
 
@@ -68,96 +68,82 @@ public class RegisterCustomer extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                firstName_regCustom = firstNameRegCustom.getText().toString().trim();
-                lastName_regCustom = lastNameRegCustom.getText().toString().trim();
-                userName_regCustom = userNameRegCustom.getText().toString().trim();
-                phoneNr_RegCustom = phoneNrRegCustom.getText().toString().trim();
-                email_regCustom = emailRegCustom.getText().toString().trim();
-                pass_regCustom = passRegCustom.getText().toString().trim();
-                confPass_regCustom = confPassRegCustom.getText().toString().trim();
-
-                if (TextUtils.isEmpty(firstName_regCustom)) {
-                    firstNameRegCustom.setError("First Name can be empty");
-                    firstNameRegCustom.requestFocus();
-                }
-
-                else if (TextUtils.isEmpty(lastName_regCustom)) {
-                    lastNameRegCustom.setError("Last Name cannot be empty");
-                    lastNameRegCustom.requestFocus();
-                }
-
-                else if (userName_regCustom.isEmpty()){
-                    userNameRegCustom.setError("User Name cannot be empty");
-                    userNameRegCustom.requestFocus();
-                }
-
-                else if (phoneNr_RegCustom.isEmpty()){
-                    phoneNrRegCustom.setError("User Name cannot be empty");
-                    phoneNrRegCustom.requestFocus();
-                }
-
-                else if (email_regCustom.isEmpty()) {
-                    emailRegCustom.setError("Email Address cannot be empty");
-                    emailRegCustom.requestFocus();
-                }
-
-                else if (!Patterns.EMAIL_ADDRESS.matcher(email_regCustom).matches()) {
-                    Toast.makeText(RegisterCustomer.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
-                    emailRegCustom.setError("Enter a valid Email Address");
-                    emailRegCustom.requestFocus();
-                }
-
-                else if (pass_regCustom.isEmpty()) {
-                    passRegCustom.setError("Password cannot be empty");
-                    passRegCustom.requestFocus();
-                }
-
-                else if (pass_regCustom.length()>0 && pass_regCustom.length()<6) {
-                    passRegCustom.setError("The password is too short, enter minimum 6 character long");
-                    Toast.makeText(RegisterCustomer.this, "The password is too short, enter minimum 6 character long", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (confPass_regCustom.isEmpty()) {
-                    confPassRegCustom.setError("Confirm Password cannot be empty");
-                    confPassRegCustom.requestFocus();
-                }
-
-                else if (!pass_regCustom.equals(confPass_regCustom)) {
-                    Toast.makeText(RegisterCustomer.this, "Confirm Password does not match Password", Toast.LENGTH_SHORT).show();
-                    confPassRegCustom.setError("The Password does not match");
-                    confPassRegCustom.requestFocus();
-                }
-
-                else {
-                    //clear input text fields
-                    firstNameRegCustom.setText("");
-                    lastNameRegCustom.setText("");
-                    userNameRegCustom.setText("");
-                    phoneNrRegCustom.setText("");
-                    emailRegCustom.setText("");
-                    passRegCustom.setText("");
-                    confPassRegCustom.setText("");
-
+                if (validateUserRegData()) {
                     progressDialog.setMessage("Register User Details");
                     progressDialog.show();
 
-                    firebaseAuth.createUserWithEmailAndPassword(email_regCustom, pass_regCustom).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    firebaseAuth.createUserWithEmailAndPassword(email_regCustom, pass_regCustom)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            sendEmailVerification();
-                        }
+                            if (task.isSuccessful()) {
+                                sendEmailVerification();
+                                //clear input text fields
+                                firstNameRegCustom.setText("");
+                                lastNameRegCustom.setText("");
+                                userNameRegCustom.setText("");
+                                phoneNrRegCustom.setText("");
+                                emailRegCustom.setText("");
+                                passRegCustom.setText("");
+                                confPassRegCustom.setText("");
 
-                        else {
-                            progressDialog.dismiss();
-                            Toast.makeText(RegisterCustomer.this, "Registration Failed, this email address was already used.", Toast.LENGTH_SHORT).show();
-                        }
+                            } else {
+                                progressDialog.dismiss();
+                                Toast.makeText(RegisterCustomer.this, "Registration Failed, this email address was already used.", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
                 }
             }
         });
+    }
+
+    private Boolean validateUserRegData() {
+        boolean result = false;
+        firstName_regCustom = firstNameRegCustom.getText().toString().trim();
+        lastName_regCustom = lastNameRegCustom.getText().toString().trim();
+        userName_regCustom = userNameRegCustom.getText().toString().trim();
+        phoneNr_RegCustom = phoneNrRegCustom.getText().toString().trim();
+        email_regCustom = emailRegCustom.getText().toString().trim();
+        pass_regCustom = passRegCustom.getText().toString().trim();
+        confPass_regCustom = confPassRegCustom.getText().toString().trim();
+
+        if (TextUtils.isEmpty(firstName_regCustom)) {
+            firstNameRegCustom.setError("First Name can be empty");
+            firstNameRegCustom.requestFocus();
+        } else if (TextUtils.isEmpty(lastName_regCustom)) {
+            lastNameRegCustom.setError("Last Name cannot be empty");
+            lastNameRegCustom.requestFocus();
+        } else if (userName_regCustom.isEmpty()) {
+            userNameRegCustom.setError("User Name cannot be empty");
+            userNameRegCustom.requestFocus();
+        } else if (phoneNr_RegCustom.isEmpty()) {
+            phoneNrRegCustom.setError("User Name cannot be empty");
+            phoneNrRegCustom.requestFocus();
+        } else if (email_regCustom.isEmpty()) {
+            emailRegCustom.setError("Email Address cannot be empty");
+            emailRegCustom.requestFocus();
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email_regCustom).matches()) {
+            Toast.makeText(RegisterCustomer.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+            emailRegCustom.setError("Enter a valid Email Address");
+            emailRegCustom.requestFocus();
+        } else if (pass_regCustom.isEmpty()) {
+            passRegCustom.setError("Password cannot be empty");
+            passRegCustom.requestFocus();
+        } else if (pass_regCustom.length() > 0 && pass_regCustom.length() < 6) {
+            passRegCustom.setError("The password is too short, enter minimum 6 character long");
+            Toast.makeText(RegisterCustomer.this, "The password is too short, enter minimum 6 character long", Toast.LENGTH_SHORT).show();
+        } else if (confPass_regCustom.isEmpty()) {
+            confPassRegCustom.setError("Confirm Password cannot be empty");
+            confPassRegCustom.requestFocus();
+        } else if (!pass_regCustom.equals(confPass_regCustom)) {
+            Toast.makeText(RegisterCustomer.this, "Confirm Password does not match Password", Toast.LENGTH_SHORT).show();
+            confPassRegCustom.setError("The Password does not match");
+            confPassRegCustom.requestFocus();
+        } else {
+            result = true;
+        }
+        return result;
     }
 
     private void sendEmailVerification() {
@@ -166,25 +152,23 @@ public class RegisterCustomer extends AppCompatActivity {
             firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    sendCustomerData();
-                    progressDialog.dismiss();
-                    Toast.makeText(RegisterCustomer.this, "User Registered, Email verification was sent", Toast.LENGTH_SHORT).show();
-                    firebaseAuth.signOut();
-                    finish();
-                    startActivity(new Intent(RegisterCustomer.this, LoginCustomer.class));
-                }
-                else {
-                    progressDialog.dismiss();
-                    Toast.makeText(RegisterCustomer.this, "Verification email has not been sent", Toast.LENGTH_SHORT).show();
-                }
+                    if (task.isSuccessful()) {
+                        sendUserRegData();
+                        progressDialog.dismiss();
+                        Toast.makeText(RegisterCustomer.this, "User Registered, Email verification was sent", Toast.LENGTH_SHORT).show();
+                        firebaseAuth.signOut();
+                        finish();
+                        startActivity(new Intent(RegisterCustomer.this, LoginCustomer.class));
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(RegisterCustomer.this, "Verification email has not been sent", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }
     }
 
-    private void sendCustomerData(){
-
+    private void sendUserRegData() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         assert user != null;
         String userID = user.getUid();

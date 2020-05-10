@@ -4,6 +4,11 @@
     <group android:checkableBehavior="single">
 
         <item
+            android:id="@+id/userShow_shareBikesAvailable"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/mDUser_showAvailableBikesShare"/>
+
+        <item
             android:id="@+id/userAdd_shareBikes"
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/mDUser_shareBikesShare"/>
@@ -12,11 +17,6 @@
             android:id="@+id/userShow_ownShareBikes"
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/mDUser_showOwnBikesShare"/>
-
-        <item
-            android:id="@+id/userShow_shareBikesAvailable"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/mDUser_showAvailableBikesShare"/>
 
         <item
             android:id="@+id/userUpdate_ownShareBikes"

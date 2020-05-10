@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -86,10 +87,10 @@ public class AddBikes extends AppCompatActivity {
         tViewWelcomeAddBikes = (TextView) findViewById(R.id.tvWelcomeAddBikes);
         tViewWelcomeAddBikes.setText("Add Bicycles to " + bikeStore_Name + " store");
 
-        tViewBikeCondition = (AutoCompleteTextView)findViewById(R.id.tvBikeCondition);
-        imgArrowBikeCondition = (ImageView)findViewById(R.id.imgBikeCondition);
+        tViewBikeCondition = (AutoCompleteTextView) findViewById(R.id.tvBikeCondition);
+        imgArrowBikeCondition = (ImageView) findViewById(R.id.imgBikeCondition);
 
-        ArrayAdapter<String> conditionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,bikeCondition);
+        ArrayAdapter<String> conditionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, bikeCondition);
         tViewBikeCondition.setAdapter(conditionAdapter);
 
         imgArrowBikeCondition.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +146,7 @@ public class AddBikes extends AppCompatActivity {
                 if (bikesUploadTask != null && bikesUploadTask.isInProgress()) {
                     Toast.makeText(AddBikes.this, "Upload in progress", Toast.LENGTH_SHORT).show();
                 } else {
-                    uploadBikes();
+                    uploadBikesDetails();
                 }
             }
         });
@@ -215,36 +216,11 @@ public class AddBikes extends AppCompatActivity {
     }
 
     //Upload a new Bicycle into the Bicycles table
-    public void uploadBikes() {
+    public void uploadBikesDetails() {
         progressDialog.dismiss();
 
-        final String tv_BikeConditionValidation = tViewBikeCondition.getText().toString().trim();
-        final String etBike_ModelValidation = eTextBikeModel.getText().toString().trim();
-        final String etBike_ManufactValidation = eTextBikeManufact.getText().toString().trim();
-        final String etBike_PriceValidation = eTextBikePrice.getText().toString().trim();
-
-        if (imageUri == null) {
-            alertDialogBikePicture();
-        }
-        else if(TextUtils.isEmpty(tv_BikeConditionValidation)){
-            alertDialogBikeCond();
-            tViewBikeCondition.requestFocus();
-        }
-        else if (TextUtils.isEmpty(etBike_ModelValidation)) {
-            eTextBikeModel.setError("Please add the Model of Bicycle");
-            eTextBikeModel.requestFocus();
-        }
-        else if (TextUtils.isEmpty(etBike_ManufactValidation)) {
-            eTextBikeManufact.setError("Please add the Manufacturer");
-            eTextBikeManufact.requestFocus();
-        }
-        else if (TextUtils.isEmpty(etBike_PriceValidation)) {
-            eTextBikePrice.setError("Please add the Price/Hour");
-            eTextBikePrice.requestFocus();
-        }
-
-        //Add a new Bike into the Bike's table
-        else {
+        //Add new Bike into the Bike's table
+        if (validateBikeDetails()) {
 
             eTextBike_Condition = tViewBikeCondition.getText().toString().trim();
             eTextBike_Model = eTextBikeModel.getText().toString().trim();
@@ -264,7 +240,8 @@ public class AddBikes extends AppCompatActivity {
                                     String addBike_id = databaseReference.push().getKey();
                                     bike_Key = addBike_id;
 
-                                    Bikes bikes = new Bikes(eTextBike_Condition, eTextBike_Model, eTextBike_Manufact, eTextBike_Price, uri.toString(), bikeStore_Name, bikeStore_Key,  bike_Key);
+                                    Bikes bikes = new Bikes(eTextBike_Condition, eTextBike_Model, eTextBike_Manufact, eTextBike_Price,
+                                            uri.toString(), bikeStore_Name, bikeStore_Key, bike_Key);
 
                                     assert addBike_id != null;
                                     databaseReference.child(addBike_id).setValue(bikes);
@@ -294,7 +271,7 @@ public class AddBikes extends AppCompatActivity {
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                            //show upload Progress
+                            //show upload progress
                             double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
                             progressDialog.setMessage("Uploaded: " + (int) progress + "%");
                             progressDialog.setProgress((int) progress);
@@ -305,9 +282,37 @@ public class AddBikes extends AppCompatActivity {
 
     private static final String[] bikeCondition = new String[]{"Brand New", "Used Bike"};
 
-    public void alertDialogBikeCond(){
-        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Select the Bike Condition");
+    private Boolean validateBikeDetails() {
+        boolean result = false;
+
+        final String tv_BikeConditionValidation = tViewBikeCondition.getText().toString().trim();
+        final String etBike_ModelValidation = eTextBikeModel.getText().toString().trim();
+        final String etBike_ManufactValidation = eTextBikeManufact.getText().toString().trim();
+        final String etBike_PriceValidation = eTextBikePrice.getText().toString().trim();
+
+        if (imageUri == null) {
+            alertDialogBikePicture();
+        } else if (TextUtils.isEmpty(tv_BikeConditionValidation)) {
+            alertDialogBikeCond();
+            tViewBikeCondition.requestFocus();
+        } else if (TextUtils.isEmpty(etBike_ModelValidation)) {
+            eTextBikeModel.setError("Please add the Model of Bicycle");
+            eTextBikeModel.requestFocus();
+        } else if (TextUtils.isEmpty(etBike_ManufactValidation)) {
+            eTextBikeManufact.setError("Please add the Manufacturer");
+            eTextBikeManufact.requestFocus();
+        } else if (TextUtils.isEmpty(etBike_PriceValidation)) {
+            eTextBikePrice.setError("Please add the Price/Hour");
+            eTextBikePrice.requestFocus();
+        } else {
+            result = true;
+        }
+        return result;
+    }
+
+    public void alertDialogBikeCond() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Select the Bike condition");
         alertDialogBuilder.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -315,12 +320,12 @@ public class AddBikes extends AppCompatActivity {
                     }
                 });
 
-        androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 
-    public void alertDialogBikePicture(){
-        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+    public void alertDialogBikePicture() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Please add a picture");
         alertDialogBuilder.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
@@ -329,7 +334,7 @@ public class AddBikes extends AppCompatActivity {
                     }
                 });
 
-        androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 }

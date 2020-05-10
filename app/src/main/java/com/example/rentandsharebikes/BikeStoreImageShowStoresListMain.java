@@ -75,7 +75,7 @@ public class BikeStoreImageShowStoresListMain extends AppCompatActivity implemen
                     assert bikeStore != null;
                     bikeStore.setStoreKey(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
-                    tVBikeStoresImaShowStoreListMain.setText("Bike Stores available " + bikeStoreList.size());
+                    tVBikeStoresImaShowStoreListMain.setText(bikeStoreList.size()+" Bike Stores available" );
                 }
                 bikeStoreAdapterShowStoresListMain = new BikeStoreAdapterShowStoresListMain(BikeStoreImageShowStoresListMain.this, bikeStoreList);
                 bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoresListMain);
@@ -93,10 +93,15 @@ public class BikeStoreImageShowStoresListMain extends AppCompatActivity implemen
     //Action of the menu onClick
     @Override
     public void onItemClick(final int position) {
-        final String[] options = {"Show Map","Back Main Page"};
+        showOptionMenuMain(position);
+    }
+
+    public void showOptionMenuMain(final int position){
+        final String[] options = {"Show Google Maps","Back Main Page"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select an option");
+        BikeStore selected_store = bikeStoreList.get(position);
+        builder.setTitle("You selected "+selected_store.getBikeStore_Location()+" Store"+"\nSelect an option");
         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

@@ -133,6 +133,10 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
     //Action on bikes onClick
     @Override
     public void onItemClick(final int position) {
+        showOptionMenu(position);
+    }
+
+    public void showOptionMenu(final int position){
         final String [] options = {"Update this Bike", "Delete this Bike"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item,options);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -143,55 +147,62 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
             public void onClick(DialogInterface dialog, int which) {
 
                 if(which == 0){
-                    Intent intent = new Intent(BikesImageShowBikesListAdmin.this, UpdateBikeDetails.class);
-                    Bikes selected_Bike = bikesList.get(position);
-                    intent.putExtra("BCondition",selected_Bike.getBike_Condition());
-                    intent.putExtra("BModel",selected_Bike.getBike_Model());
-                    intent.putExtra("BManufact",selected_Bike.getBike_Manufacturer());
-                    intent.putExtra("BPrice",String.valueOf(selected_Bike.getBike_Price()));
-                    intent.putExtra("BImage",selected_Bike.getBike_Image());
-                    intent.putExtra("BKey",selected_Bike.getBike_Key());
-                    startActivity(intent);
+                    updateBikes(position);
                 }
-
                 if (which ==1){
-                    AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowBikesListAdmin.this);
-                    Bikes selected_Bike = bikesList.get(position);
-                    builderAlert.setMessage("Are sure to delete the "+selected_Bike.getBike_Model()+" Bike?");
-                    builderAlert.setCancelable(true);
-                    builderAlert.setPositiveButton(
-                            "Yes",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    Bikes selected_Bike = bikesList.get(position);
-                                    final String selectedKeyBike = selected_Bike.getBike_Key();
-                                    StorageReference imageReference = bikesStorage.getReferenceFromUrl(selected_Bike.getBike_Image());
-                                    imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            databaseReference.child(selectedKeyBike).removeValue();
-                                            Toast.makeText(BikesImageShowBikesListAdmin.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            });
-
-                    builderAlert.setNegativeButton(
-                            "No",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-                    AlertDialog alert1 = builderAlert.create();
-                    alert1.show();
-
+                    confirmDeletion(position);
                 }
             }
         });
 
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    public void updateBikes(final int position){
+        Intent intent = new Intent(BikesImageShowBikesListAdmin.this, UpdateBikeDetails.class);
+        Bikes selected_Bike = bikesList.get(position);
+        intent.putExtra("BCondition",selected_Bike.getBike_Condition());
+        intent.putExtra("BModel",selected_Bike.getBike_Model());
+        intent.putExtra("BManufact",selected_Bike.getBike_Manufacturer());
+        intent.putExtra("BPrice",String.valueOf(selected_Bike.getBike_Price()));
+        intent.putExtra("BImage",selected_Bike.getBike_Image());
+        intent.putExtra("BKey",selected_Bike.getBike_Key());
+        startActivity(intent);
+    }
+
+
+    public void confirmDeletion(final int position){
+        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowBikesListAdmin.this);
+        Bikes selected_Bike = bikesList.get(position);
+        builderAlert.setMessage("Are sure to delete the "+selected_Bike.getBike_Model()+" Bike?");
+        builderAlert.setCancelable(true);
+        builderAlert.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Bikes selected_Bike = bikesList.get(position);
+                        final String selectedKeyBike = selected_Bike.getBike_Key();
+                        StorageReference imageReference = bikesStorage.getReferenceFromUrl(selected_Bike.getBike_Image());
+                        imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                databaseReference.child(selectedKeyBike).removeValue();
+                                Toast.makeText(BikesImageShowBikesListAdmin.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+
+        builderAlert.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert1 = builderAlert.create();
+        alert1.show();
     }
 }

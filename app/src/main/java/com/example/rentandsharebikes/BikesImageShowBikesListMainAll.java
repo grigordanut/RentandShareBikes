@@ -23,7 +23,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikesImageShowBikesListMainAll extends AppCompatActivity implements BikesAdapterShowBikesListMainAll.OnItemClickListener{
+public class BikesImageShowBikesListMainAll extends AppCompatActivity implements BikesAdapterShowBikesListMainAll.OnItemClickListener {
 
     //Access Bikes table from database
     private DatabaseReference databaseRefMainAll;
@@ -66,7 +66,7 @@ public class BikesImageShowBikesListMainAll extends AppCompatActivity implements
         loadBikesListMainPageAll();
     }
 
-    public void loadBikesListMainPageAll(){
+    public void loadBikesListMainPageAll() {
         //initialize the bike storage database
         bikesStorageMainAll = FirebaseStorage.getInstance();
         databaseRefMainAll = FirebaseDatabase.getInstance().getReference("Bikes");
@@ -76,16 +76,14 @@ public class BikesImageShowBikesListMainAll extends AppCompatActivity implements
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikesListMainAll.clear();
-                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    //if (bikes.getBikeStoreName().equals(bikeStore_Name)) {
-                        bikes.setBike_Key(postSnapshot.getKey());
-                        bikesListMainAll.add(bikes);
-                        tVBikesImageMainAll.setText(bikesListMainAll.size()+" bikes available to rent ");
-                    //}
+                    bikes.setBike_Key(postSnapshot.getKey());
+                    bikesListMainAll.add(bikes);
+                    tVBikesImageMainAll.setText(bikesListMainAll.size() + " Bikes available to rent ");
                 }
-                bikesAdapterShowBikesListMainAll = new BikesAdapterShowBikesListMainAll(BikesImageShowBikesListMainAll.this,bikesListMainAll);
+                bikesAdapterShowBikesListMainAll = new BikesAdapterShowBikesListMainAll(BikesImageShowBikesListMainAll.this, bikesListMainAll);
                 bikesListRecyclerView.setAdapter(bikesAdapterShowBikesListMainAll);
                 bikesAdapterShowBikesListMainAll.setOnItmClickListener(BikesImageShowBikesListMainAll.this);
                 progressDialog.dismiss();
