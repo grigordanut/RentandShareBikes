@@ -98,7 +98,6 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
         //initialize the bike storage database
         bikesStorageRemoveBike = FirebaseStorage.getInstance();
         databaseRefRemoveBike = FirebaseDatabase.getInstance().getReference("Rent Bikes");
-
         bikesEventListener = databaseRefRemoveBike.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -111,10 +110,12 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
                     if (rent_Bikes.getCustomerId_RentBikes().equals(customer_Id)) {
                         rent_Bikes.setBike_RentKey(postSnapshot.getKey());
                         rentBikesList.add(rent_Bikes);
-                        tVCustomerRentBikes.setText(rentBikesList.size() + " bikes rented by " + rent_Bikes.getfName_RentBikes() + " " + rent_Bikes.getlName_RentBikes());
+                        tVCustomerRentBikes.setText(rentBikesList.size() + " bikes rented by "
+                                + rent_Bikes.getfName_RentBikes() + " " + rent_Bikes.getlName_RentBikes());
                     }
                 }
-                bikesAdapterShowBikesRentedCustom = new BikesAdapterShowBikesRentedCustom(BikesImageShowBikesRentedCustom.this, rentBikesList);
+                bikesAdapterShowBikesRentedCustom = new BikesAdapterShowBikesRentedCustom(
+                        BikesImageShowBikesRentedCustom.this, rentBikesList);
                 bikesListRecyclerView.setAdapter(bikesAdapterShowBikesRentedCustom);
                 bikesAdapterShowBikesRentedCustom.setOnItmClickListener(BikesImageShowBikesRentedCustom.this);
                 progressDialog.dismiss();
