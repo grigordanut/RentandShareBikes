@@ -15,11 +15,25 @@
         tools:showIn="@layout/activity_customer_page_share_bikes">
 
         <TextView
-            android:id="@+id/tvCustomPageShare"
+            android:id="@+id/tvCustomShareService"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/tv_customPageShareService"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tvCustomPageShare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvCustomShareService"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:text="@string/tv_customPageShareBikes"
             android:textAlignment="center"
@@ -82,7 +96,7 @@
 
         <TextView
             android:id="@+id/tvCustomerBikesSharedAv"
-            android:layout_width="50dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvCustomPageShareAccount"
             android:layout_alignEnd="@+id/tvCustomPageShare"
@@ -107,7 +121,7 @@
 
         <TextView
             android:id="@+id/tvCustomerBikesShared"
-            android:layout_width="50dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvCustomerBikesSharedAv"
             android:layout_alignEnd="@+id/tvCustomPageShare"

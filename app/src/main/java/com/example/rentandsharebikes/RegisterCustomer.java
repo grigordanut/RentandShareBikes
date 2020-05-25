@@ -1,6 +1,8 @@
 package com.example.rentandsharebikes;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -89,7 +91,7 @@ public class RegisterCustomer extends AppCompatActivity {
 
                             } else {
                                 progressDialog.dismiss();
-                                Toast.makeText(RegisterCustomer.this, "Registration Failed, this email address was already used.", Toast.LENGTH_SHORT).show();
+                                alertDialogEmailUsed();
                             }
                         }
                     });
@@ -155,10 +157,7 @@ public class RegisterCustomer extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         sendUserRegData();
                         progressDialog.dismiss();
-                        Toast.makeText(RegisterCustomer.this, "User Registered, Email verification was sent", Toast.LENGTH_SHORT).show();
-                        firebaseAuth.signOut();
-                        finish();
-                        startActivity(new Intent(RegisterCustomer.this, LoginCustomer.class));
+                        alertDialogUserRegistered();
                     } else {
                         progressDialog.dismiss();
                         Toast.makeText(RegisterCustomer.this, "Verification email has not been sent", Toast.LENGTH_SHORT).show();
@@ -174,5 +173,41 @@ public class RegisterCustomer extends AppCompatActivity {
         String userID = user.getUid();
         Customers customs = new Customers(firstName_regCustom, lastName_regCustom, userName_regCustom, phoneNr_RegCustom, email_regCustom);
         databaseReference.child(userID).setValue(customs);
+    }
+
+    private void alertDialogUserRegistered(){
+        AlertDialog.Builder builderAlert = new AlertDialog.Builder(RegisterCustomer.this);
+        builderAlert.setMessage("Hi "+firstName_regCustom+ " "+lastName_regCustom+" you are successfully registered, Email verification was sent. Please verify your email before Log in");
+        builderAlert.setCancelable(true);
+        builderAlert.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        firebaseAuth.signOut();
+                        finish();
+                        startActivity(new Intent(RegisterCustomer.this, LoginCustomer.class));
+                    }
+                });
+
+        AlertDialog alert1 = builderAlert.create();
+        alert1.show();
+    }
+
+    private void alertDialogEmailUsed(){
+        AlertDialog.Builder builderAlert = new AlertDialog.Builder(RegisterCustomer.this);
+        builderAlert.setMessage("Registration failed, the email: \n"+email_regCustom+" was already used to open an account on this app.");
+        builderAlert.setCancelable(true);
+        builderAlert.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        emailRegCustom.requestFocus();
+                    }
+                });
+
+        AlertDialog alert1 = builderAlert.create();
+        alert1.show();
     }
 }

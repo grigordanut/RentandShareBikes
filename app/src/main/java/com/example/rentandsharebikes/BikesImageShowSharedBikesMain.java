@@ -98,7 +98,7 @@ public class BikesImageShowSharedBikesMain extends AppCompatActivity implements 
     @Override
     public void onItemClick(final int position) {
         AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowSharedBikesMain.this);
-        builderAlert.setMessage("Contact the owner if you like to share this bike");
+        builderAlert.setMessage("Register and Log into your account to access the:\nRent and Share Bikes services.");
         builderAlert.setCancelable(true);
         builderAlert.setPositiveButton(
                 "Ok",

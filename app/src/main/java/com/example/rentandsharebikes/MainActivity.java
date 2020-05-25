@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private int numberBikesAvShare;
 
     private TextView tVMainStoresAv, tVMainBikesRentAv, tVMainBikesShareAv;
+
     //Declaring some objects
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -86,31 +87,25 @@ public class MainActivity extends AppCompatActivity {
                 switch (id) {
                     //Log into My Account
                     case R.id.myAccount:
-                        Toast.makeText(MainActivity.this, "My Account", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, LoginCustomer.class));
                         break;
                     //Show the list of Bike Stores available
                     case R.id.bikeStoreAv:
-                        Toast.makeText(MainActivity.this, "Bike Stores", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, BikeStoreImageShowStoresListMain.class));
                         break;
                     //Show the list of Bikes available from main page ordered by Bike Stores
                     case R.id.bikeAvToRent:
-                        Toast.makeText(MainActivity.this, "Bikes to Rent", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, BikeStoreImageShowBikesListMain.class));
                         break;
                     //Show the list of all Bikes available from main page
                     case R.id.bikeAvToRentAll:
-                        Toast.makeText(MainActivity.this, "Bikes to Rent All", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, BikesImageShowBikesListMainAll.class));
                         break;
                     //Bikes available to share
                     case R.id.bikeAvToShare:
-                        Toast.makeText(MainActivity.this, "Bikes available to Share",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, BikesImageShowSharedBikesMain.class));
                         break;
                     case R.id.contactUs:
-                        Toast.makeText(MainActivity.this, "Bikes to share", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, ContactUs.class));
                         break;
                     default:

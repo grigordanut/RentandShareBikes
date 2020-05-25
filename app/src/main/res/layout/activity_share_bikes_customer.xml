@@ -260,7 +260,7 @@
 
         <EditText
             android:id="@+id/etShareBikeAvDate"
-            android:layout_width="140dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/bikePriceWrapperShare"
             android:layout_alignEnd="@+id/bikePriceWrapperShare"
@@ -268,6 +268,7 @@
             android:layout_marginEnd="10dp"
             android:background="#f2f2f2"
             android:hint="@string/et_bikeShareAvDate"
+            android:paddingStart="10dp"
             android:inputType="date"
             android:paddingEnd="10dp"
             android:textAlignment="center"

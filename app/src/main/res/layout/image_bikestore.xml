@@ -17,23 +17,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-<!--            <TextView-->
-<!--                android:id="@+id/tvNumber"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="10dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:text="@string/tv_storeNumber"-->
-<!--                android:textColor="#000000"-->
-<!--                android:textSize="18sp"-->
-<!--                android:textStyle="bold" />-->
-
             <TextView
                 android:id="@+id/tvPlace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="11dp"
+                android:layout_marginTop="6dp"
                 android:text="@string/tv_storeLocation"
                 android:textColor="#000000"
                 android:textSize="18sp"
@@ -69,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvSlots"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="6dp"
                 android:text="@string/tv_numberAvailable"
                 android:textColor="#000000"
                 android:textSize="18sp"
@@ -77,25 +66,12 @@
 
         </RelativeLayout>
 
-<!--        <TextView-->
-<!--            android:id="@+id/tvStoreNumber"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="145dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:layout_marginEnd="10dp"-->
-<!--            android:background="#e6f7ff"-->
-<!--            android:paddingStart="5dp"-->
-<!--            android:textColor="#000000"-->
-<!--            android:textSize="18sp"-->
-<!--            tools:ignore="RtlSymmetry" />-->
-
         <TextView
             android:id="@+id/tvStorePlace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="145dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:background="#e6f7ff"
             android:paddingStart="5dp"
@@ -108,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="145dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="35dp"
             android:layout_marginEnd="10dp"
             android:background="#e6f7ff"
             android:paddingStart="5dp"
@@ -121,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="145dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="65dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:background="#e6f7ff"
@@ -135,15 +111,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="145dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="95dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:background="#e6f7ff"
-            android:paddingStart="5dp"
-            android:textStyle="bold"
+            android:paddingStart="10dp"
             android:text="@string/tv_numberBikesAvailable"
             android:textColor="#000000"
             android:textSize="18sp"
+            android:textStyle="bold"
             tools:ignore="HardcodedText,RtlSymmetry" />
 
     </androidx.cardview.widget.CardView>

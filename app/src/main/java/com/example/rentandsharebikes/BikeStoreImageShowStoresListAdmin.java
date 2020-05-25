@@ -112,7 +112,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
     //Action of the menu onClick
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(this, "Press long click to show more action: ", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Press long click to show more actions: ", Toast.LENGTH_SHORT).show();
     }
 
 

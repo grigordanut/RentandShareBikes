@@ -33,10 +33,8 @@ public class BikeStoreImageReturnBikeDifferentStore extends AppCompatActivity im
     public List<BikeStore> bikeStoreList;
 
     private ProgressDialog progressDialog;
-     //old
-    //String bike_StoreNameReturnBikesSame, bike_StoreKeyReturnBikesSame,  bike_StoreReturnBikesDiff, bike_KeyReturnBikeSame;
-    //New
-    String bike_StoreNameReturnBikesSame, bike_StoreKeyReturnBikesSame, bike_KeyReturnBikeSame;
+
+    String bike_Image, bike_StoreNameReturnBikesSame, bike_StoreKeyReturnBikesSame, bike_KeyReturnBikeSame;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -47,6 +45,7 @@ public class BikeStoreImageReturnBikeDifferentStore extends AppCompatActivity im
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             //Receive data from ReturnRentedBikes
+            bike_Image = bundle.getString("BikeImage");
             bike_StoreNameReturnBikesSame = bundle.getString("BStoreNameSame");
             bike_StoreKeyReturnBikesSame = bundle.getString("BStoreKeySame");
             bike_KeyReturnBikeSame = bundle.getString("BikeRentedKey");
@@ -85,7 +84,7 @@ public class BikeStoreImageReturnBikeDifferentStore extends AppCompatActivity im
                     assert bikeStore != null;
                     bikeStore.setStoreKey(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
-                    textViewBikeStoresImageReturnBikeDiffStore.setText("Bike Stores available " +bikeStoreList.size());
+                    textViewBikeStoresImageReturnBikeDiffStore.setText(bikeStoreList.size()+" Bike Stores available");
                 }
                 bikeStoreAdapterReturnBikeDifferentStore = new BikeStoreAdapterReturnBikeDifferentStore (BikeStoreImageReturnBikeDifferentStore.this, bikeStoreList);
                 bikeStoreRecyclerView.setAdapter(bikeStoreAdapterReturnBikeDifferentStore);
@@ -110,7 +109,8 @@ public class BikeStoreImageReturnBikeDifferentStore extends AppCompatActivity im
         intent.putExtra("BStoreNameDiff", selected_BikeStore.getBikeStore_Location());
         intent.putExtra("BStoreKeyDiff", selected_BikeStore.getStoreKey());
 
-        intent.putExtra("BStoreNameSame", bike_StoreNameReturnBikesSame);
+        intent.putExtra("BikeImage",bike_Image);
+        intent.putExtra("BStoreNameSame",bike_StoreNameReturnBikesSame);
         intent.putExtra("BStoreKeySame",bike_StoreKeyReturnBikesSame);
         intent.putExtra("BikeRentedKey", bike_KeyReturnBikeSame);
         startActivity(intent);

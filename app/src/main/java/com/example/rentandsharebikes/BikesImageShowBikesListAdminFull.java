@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikesImageShowBikesListAdminFull extends AppCompatActivity implements BikesAdapterShowBikesListAdminFull.OnItemClickListener{
+public class BikesImageShowBikesListAdminFull extends AppCompatActivity implements BikesAdapterShowBikesListAdminFull.OnItemClickListener {
 
     private DatabaseReference databaseReference;
     private FirebaseStorage bikesStorage;
@@ -49,13 +49,11 @@ public class BikesImageShowBikesListAdminFull extends AppCompatActivity implemen
 
     private ProgressDialog progressDialog;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bikes_image_show_bikes_list_admin_full);
-
-//        getIntent().hasExtra("SName");
-//        bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
 
         textViewBikesImageList = (TextView) findViewById(R.id.tvBikeImageListFull);
         textViewBikesImageList.setText("No bikes available");
@@ -108,7 +106,7 @@ public class BikesImageShowBikesListAdminFull extends AppCompatActivity implemen
                     assert bikes != null;
                     bikes.setBike_Key(postSnapshot.getKey());
                     bikesList.add(bikes);
-                    textViewBikesImageList.setText(bikesList.size()+" Bikes available");
+                    textViewBikesImageList.setText(bikesList.size() + " Bikes available");
                 }
                 bikesListAdapterAdminFull = new BikesAdapterShowBikesListAdminFull(BikesImageShowBikesListAdminFull.this, bikesList);
                 bikesListRecyclerView.setAdapter(bikesListAdapterAdminFull);
@@ -126,19 +124,18 @@ public class BikesImageShowBikesListAdminFull extends AppCompatActivity implemen
     //Action on bikes onClick
     @Override
     public void onItemClick(final int position) {
-        final String [] options = {"Update this Bike", "Delete this Bike"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item,options);
+        final String[] options = {"Update this Bike", "Delete this Bike"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         Bikes selected_Bike = bikesList.get(position);
-        builder.setTitle("You selected "+selected_Bike.getBike_Model()+"\nSelect an option");
+        builder.setTitle("You selected " + selected_Bike.getBike_Model() + "\nSelect an option");
         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(which == 0){
+                if (which == 0) {
                     updateBikeDetails(position);
                 }
-
-                if (which == 1){
+                if (which == 1) {
                     confirmBikeDeletion(position);
                 }
             }
@@ -148,19 +145,19 @@ public class BikesImageShowBikesListAdminFull extends AppCompatActivity implemen
         alertDialog.show();
     }
 
-    public void updateBikeDetails(final int position){
+    public void updateBikeDetails(final int position) {
         Intent intent = new Intent(BikesImageShowBikesListAdminFull.this, UpdateBikeDetails.class);
         Bikes selected_Bike = bikesList.get(position);
-        intent.putExtra("BCondition",selected_Bike.getBike_Condition());
-        intent.putExtra("BModel",selected_Bike.getBike_Model());
-        intent.putExtra("BManufact",selected_Bike.getBike_Manufacturer());
-        intent.putExtra("BPrice",String.valueOf(selected_Bike.getBike_Price()));
-        intent.putExtra("BImage",selected_Bike.getBike_Image());
-        intent.putExtra("BKey",selected_Bike.getBike_Key());
+        intent.putExtra("BCondition", selected_Bike.getBike_Condition());
+        intent.putExtra("BModel", selected_Bike.getBike_Model());
+        intent.putExtra("BManufact", selected_Bike.getBike_Manufacturer());
+        intent.putExtra("BPrice", String.valueOf(selected_Bike.getBike_Price()));
+        intent.putExtra("BImage", selected_Bike.getBike_Image());
+        intent.putExtra("BKey", selected_Bike.getBike_Key());
         startActivity(intent);
     }
 
-    public void confirmBikeDeletion(final int position){
+    public void confirmBikeDeletion(final int position) {
         AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowBikesListAdminFull.this);
         builderAlert.setMessage("Are sure to delete this Bike?");
         builderAlert.setCancelable(true);

@@ -33,9 +33,11 @@ import java.util.Objects;
 
 public class AddBikeStore extends AppCompatActivity {
 
-    private DatabaseReference databaseRefCheck;
-    private DatabaseReference databaseRefUpload;
-    private ValueEventListener bikeStoreEventListener;
+    //Retrieve data from Bike Store
+    private DatabaseReference databaseRefStoresCheck;
+
+    //Add data to Bike Stores
+    private DatabaseReference databaseRefStores;
 
     private EditText etStoreLocation, etStoreAddress, etStoreLatitude, etStoreLongitude, etStoreNumberSlots;
 
@@ -47,6 +49,7 @@ public class AddBikeStore extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     public List<BikeStore> bikeStoreList;
+    public List<BikeStore> bikeStoreListCheck;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -55,6 +58,7 @@ public class AddBikeStore extends AppCompatActivity {
         setContentView(R.layout.activity_add_bike_store);
 
         bikeStoreList = new ArrayList<>();
+        bikeStoreListCheck = new ArrayList<>();
 
         getIntent().hasExtra("Address");
         String store_Address = Objects.requireNonNull(getIntent().getExtras()).getString("Address");
@@ -77,21 +81,39 @@ public class AddBikeStore extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
 
-        databaseRefUpload = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
-        databaseRefCheck = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
-
         Button buttonSaveBikeStore = findViewById(R.id.btnSaveBikeStore);
         buttonSaveBikeStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadBikeSoreData();
+                checkBikesStoreName();
+            }
+        });
+    }
+
+    private void checkBikesStoreName() {
+        final String etStore_LocCheckStore = etStoreLocation.getText().toString().trim();
+        databaseRefStoresCheck = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
+        databaseRefStoresCheck.orderByChild("bikeStore_Location").equalTo(etStore_LocCheckStore)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    alertDialogStoreExist();
+                } else {
+                    loadBikeSoreData();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(AddBikeStore.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void loadBikeSoreData() {
+
         progressDialog.dismiss();
-        if(validateBikeStoreDetails()) {
+        if (validateBikeStoreDetails()) {
             etStore_Location = etStoreLocation.getText().toString().trim();
             etStore_Address = etStoreAddress.getText().toString().trim();
             etStore_Latitude = Double.parseDouble(Objects.requireNonNull(etStoreLatitude.getText()).toString().trim());
@@ -100,12 +122,13 @@ public class AddBikeStore extends AppCompatActivity {
 
             progressDialog.setMessage("Add Bike Store");
             progressDialog.show();
-            String storeID = databaseRefUpload.push().getKey();
 
+            databaseRefStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
             BikeStore bike_store = new BikeStore(etStore_Location, etStore_Address, etStore_Latitude, etStore_Longitude, etStore_NrSlots);
 
+            String storeID = databaseRefStores.push().getKey();
             assert storeID != null;
-            databaseRefUpload.child(storeID).setValue(bike_store).addOnCompleteListener(new OnCompleteListener<Void>() {
+            databaseRefStores.child(storeID).setValue(bike_store).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
@@ -132,7 +155,7 @@ public class AddBikeStore extends AppCompatActivity {
         }
     }
 
-    private Boolean validateBikeStoreDetails(){
+    private Boolean validateBikeStoreDetails() {
         //validate Bike Store details
         boolean result = false;
         final String store_LocationVal = etStoreLocation.getText().toString().trim();
@@ -156,10 +179,25 @@ public class AddBikeStore extends AppCompatActivity {
         } else if (TextUtils.isEmpty(store_NrSlotsVal)) {
             etStoreNumberSlots.setError("Please enter the number of slots");
             etStoreNumberSlots.requestFocus();
-        }else{
+        } else {
             result = true;
         }
 
         return result;
+    }
+
+    public void alertDialogStoreExist() {
+        final String etStore_LocCheckAlert = etStoreLocation.getText().toString().trim();
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("The Bike Store " + etStore_LocCheckAlert + " already exist");
+        alertDialogBuilder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

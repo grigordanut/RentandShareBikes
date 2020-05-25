@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -86,5 +88,28 @@ public class ChangePassword extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_change_password_custom, menu);
+        return true;
+    }
+
+    private void goBackPassCustom(){
+        finish();
+        startActivity(new Intent(ChangePassword.this, CustomerPageMain.class));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.changePassCustomGoBack:{
+                goBackPassCustom();
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

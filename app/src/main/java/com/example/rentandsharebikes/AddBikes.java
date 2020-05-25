@@ -104,9 +104,6 @@ public class AddBikes extends AppCompatActivity {
         eTextBikeManufact = (EditText) findViewById(R.id.etBikeManufacturer);
         eTextBikePrice = (EditText) findViewById(R.id.etBikePricePerDay);
 
-        storageReference = FirebaseStorage.getInstance().getReference("Bikes");
-        databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
-
         progressDialog = new ProgressDialog(AddBikes.this);
 
         ivAddBike = (ImageView) findViewById(R.id.imgViewAddBikes);
@@ -218,7 +215,6 @@ public class AddBikes extends AppCompatActivity {
     //Upload a new Bicycle into the Bicycles table
     public void uploadBikesDetails() {
         progressDialog.dismiss();
-
         //Add new Bike into the Bike's table
         if (validateBikeDetails()) {
 
@@ -227,7 +223,10 @@ public class AddBikes extends AppCompatActivity {
             eTextBike_Manufact = eTextBikeManufact.getText().toString().trim();
             eTextBike_Price = Double.parseDouble(eTextBikePrice.getText().toString().trim());
 
-            progressDialog.setTitle("The Bike is Uploading");
+            storageReference = FirebaseStorage.getInstance().getReference("Bikes");
+            databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
+
+            progressDialog.setTitle("The Bike is uploading");
             progressDialog.show();
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             bikesUploadTask = fileReference.putFile(imageUri)

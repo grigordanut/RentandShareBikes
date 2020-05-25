@@ -33,7 +33,7 @@
             android:title="@string/mDUser_returnBikesRent" />
 
         <item
-        android:id="@+id/userScan_Barcode"
+        android:id="@+id/userScan_QRCode"
         android:icon="@drawable/ic_launcher_foreground"
         android:title="@string/mDUser_scanBarcode" />
     </group>

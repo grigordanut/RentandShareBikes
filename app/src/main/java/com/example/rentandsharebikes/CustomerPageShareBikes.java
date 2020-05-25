@@ -108,18 +108,15 @@ public class CustomerPageShareBikes extends AppCompatActivity {
                                 int id = item.getItemId();
                                 switch (id) {
                                     case R.id.userShow_shareBikesAvailable:
-                                        Toast.makeText(CustomerPageShareBikes.this, "Share Bikes Available", Toast.LENGTH_SHORT).show();
                                         Intent intentNoOwnerBikes = new Intent(CustomerPageShareBikes.this, BikesImageShowSharedBikesNoOwner.class);
                                         intentNoOwnerBikes.putExtra("CIdNoOwner", currentUser.getUid());
                                         startActivity(intentNoOwnerBikes);
                                         break;
                                     case R.id.userAdd_shareBikes:
-                                        Toast.makeText(CustomerPageShareBikes.this, "Add bikes to share", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(CustomerPageShareBikes.this, ShareBikesCustomer.class));
                                         break;
                                     //Show the customer's own bikes added available to be shared
                                     case R.id.userShow_ownShareBikes:
-                                        Toast.makeText(CustomerPageShareBikes.this, "Show Bikes Shared", Toast.LENGTH_SHORT).show();
                                         Intent intentShowBikes = new Intent(CustomerPageShareBikes.this, BikesImageShowSharedBikesOwner.class);
                                         intentShowBikes.putExtra("CFNameShare", custom_data.getfName_Customer());
                                         intentShowBikes.putExtra("CLNameShare", custom_data.getlName_Customer());
@@ -127,14 +124,11 @@ public class CustomerPageShareBikes extends AppCompatActivity {
                                         startActivity(intentShowBikes);
                                         break;
                                     case R.id.userUpdate_ownShareBikes:
-                                        Toast.makeText(CustomerPageShareBikes.this, "Update my Bike", Toast.LENGTH_SHORT).show();
                                         Intent intentUpdate = new Intent(CustomerPageShareBikes.this, BikesImageShowSharedBikesToUpdate.class);
                                         intentUpdate.putExtra("CIdUpdate", currentUser.getUid());
                                         startActivity(intentUpdate);
                                         break;
-
                                     case R.id.userRemove_ownShareBikes:
-                                        Toast.makeText(CustomerPageShareBikes.this, "Remove shared Bikes", Toast.LENGTH_SHORT).show();
                                         Intent intentRemoveBikes = new Intent(CustomerPageShareBikes.this, BikesImageRemoveSharedBikesOwner.class);
                                         intentRemoveBikes.putExtra("CIdRemove", currentUser.getUid());
                                         startActivity(intentRemoveBikes);
@@ -182,7 +176,6 @@ public class CustomerPageShareBikes extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onStart() {

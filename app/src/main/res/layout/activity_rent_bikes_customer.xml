@@ -24,29 +24,31 @@
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="22sp" />
+
         <TextView
             android:id="@+id/tvDateRent"
-            android:layout_width="130dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/tvRentBikes"
             android:layout_below="@+id/tvRentBikes"
-            android:layout_marginStart="10dp"
+            android:layout_alignStart="@+id/tvRentBikes"
             android:layout_marginTop="10dp"
             android:text="@string/tv_dateRentBikes"
             android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/etDateRentBike"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvRentBikes"
             android:layout_alignEnd="@+id/tvRentBikes"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="-10dp"
+            android:layout_marginTop="10dp"
             android:background="#f2f2f2"
             android:hint="@string/et_dateRentBikes"
             android:inputType="date"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="20sp"
@@ -139,12 +141,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/emailWrapperRentBikes"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
             android:text="@string/tv_rentBikesDetails"
             android:textAlignment="center"
             android:textColor="#000000"
-            android:textSize="22sp" />
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <RelativeLayout
             android:id="@+id/relRentBikeDetails"

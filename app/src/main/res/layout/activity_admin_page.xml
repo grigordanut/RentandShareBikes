@@ -58,7 +58,7 @@
 
         <TextView
             android:id="@+id/tvAdminStores"
-            android:layout_width="270dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvAdminPersonalDetails"
             android:layout_alignStart="@+id/tvWelcomeAdmin"
@@ -83,7 +83,7 @@
 
         <TextView
             android:id="@+id/tvAdminBikesRent"
-            android:layout_width="270dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvAdminStores"
             android:layout_alignStart="@+id/tvWelcomeAdmin"
@@ -108,7 +108,7 @@
 
         <TextView
             android:id="@+id/tvAdminBikesRented"
-            android:layout_width="270dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvAdminBikesRent"
             android:layout_alignStart="@+id/tvWelcomeAdmin"
@@ -133,7 +133,7 @@
 
         <TextView
             android:id="@+id/tvAdminBikesShare"
-            android:layout_width="270dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvAdminBikesRented"
             android:layout_alignStart="@+id/tvWelcomeAdmin"

@@ -11,6 +11,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -142,5 +144,28 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
         });
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_show_bikes_custom, menu);
+        return true;
+    }
+
+    private void goBackBikesCustom(){
+        finish();
+        startActivity(new Intent(BikesImageShowBikesListCustomer.this, CustomerPageRentBikes.class));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.showBikesCustomGoBack:{
+                goBackBikesCustom();
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

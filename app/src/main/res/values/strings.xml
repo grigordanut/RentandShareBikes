@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Rent and Share Bikes</string>
-    <string name="action_settings">Settings</string>
 
     <!--Layout Resources-->
     <!--    Add Bike Store-->
@@ -154,11 +153,12 @@
 
     <!--    Customer Page Main-->
     <string name="tv_customPageMain">Welcome</string>
-    <string name="tv_customPageServices">Select the service</string>
+    <string name="tv_customPageServices">Select a service</string>
     <string name="btn_rentBikesCustomer">Renting Bikes</string>
     <string name="btn_shareBikeCustomer">Sharing Bikes</string>
 
     <!--    Customer Page Rent Bikes-->
+    <string name="tv_customPageRentService">Bicycle renting service</string>
     <string name="tv_customPageRentBikes">Welcome</string>
     <string name="tv_customPageRentDetails">Your personal details</string>
     <string name="tv_customPageRentPersonalDetails">Your personal details:</string>
@@ -174,6 +174,7 @@
     <string name="close_customPageRent">Close</string>
 
     <!--    Customer Page Share Bikes-->
+    <string name="tv_customPageShareService">Bicycle sharing service</string>
     <string name="tv_customPageShareBikes">Welcome</string>
     <string name="tv_customPageSharePersonalDetails">Your personal details:</string>
     <string name="tv_customPageSharePersonalAccount">Your personal Account:</string>
@@ -200,7 +201,7 @@
     <string name="btn_saveChangesEditProfile">Save Changes</string>
 
     <!--    Login Customer-->
-    <string name="tv_loginCustomer">Please Enter your Log In details</string>
+    <string name="tv_loginCustomer">Please enter your Log In details</string>
     <string name="tv_emailLogCustomer">Email Address</string>
     <string name="et_emailLogCustomer">Email Address</string>
     <string name="tv_passLogCustomer">Password</string>
@@ -250,7 +251,7 @@
     <string name="tv_rentBikeCondition">Condition: </string>
     <string name="tv_rentBikeModel">Model: </string>
     <string name="tv_rentBikeManufacturer">Factory: </string>
-    <string name="tv_rentBikePrice">Price/Hour: </string>
+    <string name="tv_rentBikePrice">Price/Hour: € </string>
     <string name="btn_rentBike">Rent This Bike</string>
 
     <!--    Reset Password-->
@@ -282,7 +283,7 @@
     <string name="tv_returnBikeCondition">Condition: </string>
     <string name="tv_returnBikeModel">Model: </string>
     <string name="tv_returnBikeFactory">Factory: </string>
-    <string name="tv_returnBikePrice">Price/hour: </string>
+    <string name="tv_returnBikePrice">Price/Hour: € </string>
     <string name="btn_returnBike">Return this Bike</string>
 
     <!--    Scanner-->
@@ -311,7 +312,7 @@
     <string name="et_updateBikeModel">Bike Model</string>
     <string name="et_updateBikeManufac">Manufacturer</string>
     <string name="et_updateBikePricePerDay">Price per hour</string>
-    <string name="btn_updateSaveBike">Save Bike Updated</string>
+    <string name="btn_updateSaveBike">Save Updated Bike</string>
 
     <!--    Update Bike Shared Details-->
     <string name="tv_welcomeUpShareBikes">Update Shared Bikes Details</string>
@@ -326,7 +327,7 @@
     <string name="et_bikeManufactUpShare">Manufacturer</string>
     <string name="tv_bikeShareUpAvDate">Available From</string>
     <string name="et_bikeShareUpAvDate">Date avail</string>
-    <string name="btn_shareUpBike">Save Bike</string>
+    <string name="btn_shareUpBike">Save Updated Bike</string>
 
     <!--    Update Bike Store Details-->
     <string name="tv_updateStoreDetails">Update Bike Store Details</string>
@@ -349,14 +350,14 @@
     <string name="tv_bikeCondition">Condition: </string>
     <string name="tv_bikeModel">Model: </string>
     <string name="tv_bikeManufacturer">Factory: </string>
-    <string name="tv_bikePrice">P/hour: </string>
+    <string name="tv_bikePrice">Price/Hour: € </string>
 
     <!--    Image Bikes Admin Full-->
     <string name="tv_bikeStoreFull">Bike Store Name: </string>
     <string name="tv_bikeCondFull">Condition: </string>
     <string name="tv_bikeModelFull">Model: </string>
     <string name="tv_bikeManufactFull">Factory: </string>
-    <string name="tv_bikePriceFull">P/Hour: € </string>
+    <string name="tv_bikePriceFull">Price/Hour: € </string>
 
     <!--    Image Bikes Available Main-->
     <string name="tv_bikeStoreNameMain">Bike Store Name: </string>
@@ -370,13 +371,13 @@
     <string name="tv_bikeConditionUser">Bike Condition: </string>
     <string name="tv_bikeModelUser">Bike Model: </string>
     <string name="tv_bikeManufacturerUser">Bike Factory: </string>
-    <string name="tv_bikePriceUser">Price/Hour:€ </string>
+    <string name="tv_bikePriceUser">Price/Hour: € </string>
 
     <!--    Image Bikes Rented Admin-->
     <string name="tv_rentedBikeConditionAdmin">Condition: </string>
     <string name="tv_rentedBikeModelAdmin">Model: </string>
     <string name="tv_rentedBikeManufacturerAdmin">Factory: </string>
-    <string name="tv_rentedBikePriceAdmin">P/Hour: €</string>
+    <string name="tv_rentedBikePriceAdmin">Price/Hour: €</string>
     <string name="tv_rentedBikeUserNameAdmin">Customer Name: </string>
     <string name="tv_rentedBikeUserPhoneAdmin">Phone Number: </string>
     <string name="tv_rentedBikeUserEmailAdmin">Email: </string>
@@ -388,14 +389,14 @@
     <string name="tv_rentedBikeConditionUser">Bike Condition: </string>
     <string name="tv_rentedBikeModelUser">Bike Model: </string>
     <string name="tv_rentedBikeManufacturerUser">Bike Factory: </string>
-    <string name="tv_rentedBikePriceUser">Price/Hour: </string>
+    <string name="tv_rentedBikePriceUser">Price/Hour: € </string>
     <string name="tv_rentedBikeDateRent">Date of Rent: </string>
 
     <!--    Image Bikes Shared Customer-->
     <string name="tv_sharedBikesCustomCond">Bike Condition: </string>
     <string name="tv_sharedBikesCustomModel">Bike Model: </string>
     <string name="tv_sharedBikesCustomManufact">Bike Factory: </string>
-    <string name="tv_sharedBikesCustomPrice">Price/Day: </string>
+    <string name="tv_sharedBikesCustomPrice">Price/Day: € </string>
     <string name="tv_sharedBikesCustomDateAv">Available From: </string>
 
     <!--    Image Bikes Shared No Owner -->
@@ -405,7 +406,7 @@
     <string name="tv_sharedBikesCustCondFull">Bike Condition: </string>
     <string name="tv_sharedBikesCustModelFull">Bike Model: </string>
     <string name="tv_sharedBikesCustManufactFull">Bike Factory: </string>
-    <string name="tv_sharedBikesCustPriceFull">Price/Day: </string>
+    <string name="tv_sharedBikesCustPriceFull">Price/Day: € </string>
     <string name="tv_sharedBikesCustDateAvFull">Available From: </string>
 
     <!--    Image Bike Store-->
@@ -421,11 +422,13 @@
 
     <!--    Main Header-->
 
-
     <!--    Menu Resources-->
     <!--    Menu Admin-->
     <string name="menu_adminSettings">Admin</string>
     <string name="menu_adminLogOut">Log Out</string>
+
+    <!--    Menu Show Bikes Custom-->
+    <string name="menuPasswordCustom_goBack">Go Back</string>
 
     <!--    Menu Customer Main Page-->
     <string name="menuUser_MainSettings">User Details</string>
@@ -471,6 +474,18 @@
     <string name="menu_bikesAvToRentAll">Bike Available All</string>
     <string name="menu_bikesAvToShare">Bike to Share</string>
     <string name="menu_contactUs">Contact Us</string>
+
+    <!--    Menu Edit Details Custom-->
+    <string name="menuEditCustom_goBack">Go Back</string>
+
+    <!--    Menu Main-->
+    <string name="action_settings">Settings</string>
+
+    <!--    Menu Show Bikes Custom-->
+    <string name="menuBikesCustom_goBack">Go Back</string>
+
+    <!--    Menu Show Bikes Main-->
+    <string name="menuMain_goBack">Go Back</string>
 
     <!--    Manifest File-->
     <string name="title_activity_maps">Map</string>

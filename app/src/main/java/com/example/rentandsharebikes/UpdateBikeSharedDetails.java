@@ -383,7 +383,7 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
         } else if (TextUtils.isEmpty(etDateAv_ShareBikeVal)) {
             alertDialogAvailableDateEmpty();
         }
-        //Add a new Bike into the Bike's table
+        //Add a new Bike into the Share Bike's table
         else {
             etUpFName_ShareBike = etUpFNameShareBike.getText().toString().trim();
             etUpLName_ShareBike = etUpLNameShareBike.getText().toString().trim();
@@ -425,7 +425,7 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
                                                 ds.getRef().child("shareBike_Condition").setValue(tVUpCond_ShareBike);
                                                 ds.getRef().child("shareBike_Model").setValue(etUpModel_ShareBike);
                                                 ds.getRef().child("shareBike_Manufact").setValue(etUpManufact_ShareBike);
-                                                ds.getRef().child("shareBike_Price").setValue(String.valueOf(etUpPrice_ShareBike));
+                                                ds.getRef().child("shareBike_Price").setValue(etUpPrice_ShareBike);
                                                 ds.getRef().child("shareBike_DateAv").setValue(etUpDateAv_ShareBike);
                                                 ds.getRef().child("shareBike_Image").setValue(uri.toString());
                                             }
@@ -498,7 +498,7 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
                         ds.getRef().child("shareBike_Condition").setValue(tVUpCond_ShareBike);
                         ds.getRef().child("shareBike_Model").setValue(etUpModel_ShareBike);
                         ds.getRef().child("shareBike_Manufact").setValue(etUpManufact_ShareBike);
-                        ds.getRef().child("shareBike_Price").setValue(String.valueOf(etUpPrice_ShareBike));
+                        ds.getRef().child("shareBike_Price").setValue(etUpPrice_ShareBike);
                         ds.getRef().child("shareBike_DateAv").setValue(etUpDateAv_ShareBike);
                     }
                     progressDialog.dismiss();

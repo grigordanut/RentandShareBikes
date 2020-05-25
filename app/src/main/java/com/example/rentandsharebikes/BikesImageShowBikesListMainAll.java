@@ -100,7 +100,7 @@ public class BikesImageShowBikesListMainAll extends AppCompatActivity implements
     @Override
     public void onItemClick(int position) {
         AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowBikesListMainAll.this);
-        builderAlert.setMessage("Register and Log into your account to access the:\nRenting and Share Bikes services");
+        builderAlert.setMessage("Register and Log into your account to access the:\nRent and Share Bikes services.");
         builderAlert.setCancelable(true);
         builderAlert.setPositiveButton(
                 "Ok",

@@ -9,7 +9,10 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -112,7 +115,7 @@ public class BikesImageShowBikesListMainPage extends AppCompatActivity implement
     @Override
     public void onItemClick(int position) {
         AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowBikesListMainPage.this);
-        builderAlert.setMessage("Register and Log into your account to access the:\nRenting and Share Bikes services");
+        builderAlert.setMessage("Register and Log into your account to access the:\nRent and Share Bikes services.");
         builderAlert.setCancelable(true);
         builderAlert.setPositiveButton(
                 "Ok",
@@ -124,5 +127,28 @@ public class BikesImageShowBikesListMainPage extends AppCompatActivity implement
 
         AlertDialog alert1 = builderAlert.create();
         alert1.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_show_bikes_main, menu);
+        return true;
+    }
+
+    private void goBackBikesMain(){
+        finish();
+        startActivity(new Intent(BikesImageShowBikesListMainPage.this, MainActivity.class));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.showBikesMainGoBack:{
+                goBackBikesMain();
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

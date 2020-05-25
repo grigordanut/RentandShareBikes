@@ -1,6 +1,8 @@
 package com.example.rentandsharebikes;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -151,7 +153,6 @@ public class LoginCustomer extends AppCompatActivity {
             }
         });
 
-
         // Password
         passLogCustom.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -217,8 +218,25 @@ public class LoginCustomer extends AppCompatActivity {
             startActivity(new Intent(LoginCustomer.this, CustomerPageMain.class));
         } else {
             progressDialog.dismiss();
-            Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
-            firebaseAuth.signOut();
+            alertDialogEmailUsed();
         }
+    }
+
+    private void alertDialogEmailUsed(){
+        AlertDialog.Builder builderAlert = new AlertDialog.Builder(LoginCustomer.this);
+        builderAlert.setMessage("Please verify and confirm your email address before you Log in");
+        builderAlert.setCancelable(true);
+        builderAlert.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        firebaseAuth.signOut();
+                        finish();
+                    }
+                });
+
+        AlertDialog alert1 = builderAlert.create();
+        alert1.show();
     }
 }

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -116,5 +118,28 @@ public class EditCustomerProfile extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_edit_details_custom, menu);
+        return true;
+    }
+
+    private void goBackEditCustom(){
+        finish();
+        startActivity(new Intent(EditCustomerProfile.this, CustomerPageMain.class));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.editDetailsCustomGoBack:{
+                goBackEditCustom();
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

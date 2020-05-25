@@ -37,10 +37,9 @@
             android:textColor="#000000"
             android:textSize="20sp" />
 
-
         <EditText
             android:id="@+id/etDateOfRentBike"
-            android:layout_width="215dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvReturnBikes"
             android:layout_alignEnd="@+id/tvReturnBikes"
@@ -49,6 +48,8 @@
             android:background="#f2f2f2"
             android:hint="@string/et_dateRentBike"
             android:inputType="date"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="20sp"
@@ -68,7 +69,7 @@
 
         <EditText
             android:id="@+id/etDateReturnBike"
-            android:layout_width="215dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/etDateOfRentBike"
             android:layout_alignEnd="@+id/tvReturnBikes"
@@ -77,6 +78,8 @@
             android:background="#f2f2f2"
             android:hint="@string/et_dateReturnBike"
             android:inputType="date"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="20sp"
@@ -94,18 +97,19 @@
             android:textColor="#000000"
             android:textSize="20sp" />
 
-
         <EditText
             android:id="@+id/etRentDurationBike"
-            android:layout_width="215dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/etDateReturnBike"
             android:layout_alignEnd="@+id/tvReturnBikes"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="-10dp"
+            android:layout_marginEnd="10dp"
             android:background="#f2f2f2"
             android:hint="@string/et_durationRentBike"
             android:inputType="date"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="20sp"
@@ -131,7 +135,7 @@
             android:layout_below="@+id/etRentDurationBike"
             android:layout_alignEnd="@+id/tvReturnBikes"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="10dp"
             android:background="#f2f2f2"
             android:hint="@string/et_totalHoursRentBike"
             android:inputType="numberDecimal"
@@ -160,7 +164,7 @@
             android:layout_below="@+id/etReturnTotalHours"
             android:layout_alignEnd="@+id/tvReturnBikes"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="10dp"
             android:background="#f2f2f2"
             android:hint="@string/et_totalPriceRentBike"
             android:inputType="numberDecimal"
@@ -173,10 +177,10 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fNameWrapperReturnBikes"
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
             android:layout_height="55dp"
             android:layout_below="@+id/tvReturnTotalPrice"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:textColorHint="#000000">
 
@@ -220,6 +224,7 @@
             android:layout_below="@+id/lNameWrapperRentBikes"
             android:layout_alignStart="@id/lNameWrapperRentBikes"
             android:layout_marginTop="10dp"
+            android:layout_marginStart="-5dp"
             android:text="@string/tv_returnBikeStore"
             android:textAlignment="textStart"
             android:textColor="#000000"
@@ -232,6 +237,7 @@
             android:layout_below="@id/lNameWrapperRentBikes"
             android:layout_alignEnd="@id/lNameWrapperRentBikes"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="-5dp"
             android:background="#f2f2f2"
             android:hint="@string/et_returnBikeStore"
             android:inputType="text"
@@ -247,10 +253,10 @@
             android:layout_height="35dp"
             android:layout_below="@id/tvBikeStoreReturn"
             android:layout_alignStart="@id/lNameWrapperRentBikes"
-            android:paddingEnd="10dp"
             android:layout_marginStart="-10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/check_box"
+            android:paddingEnd="10dp"
             android:text="@string/cb_returnSameAsRentStore"
             android:textSize="18sp"
             tools:ignore="RtlSymmetry" />
@@ -262,9 +268,9 @@
             android:layout_below="@id/tvBikeStoreReturn"
             android:layout_alignEnd="@id/lNameWrapperRentBikes"
             android:layout_marginTop="10dp"
-            android:paddingEnd="10dp"
             android:layout_marginEnd="-10dp"
             android:background="@drawable/check_box"
+            android:paddingEnd="10dp"
             android:text="@string/cb_returnDiffRentStore"
             android:textSize="18sp"
             tools:ignore="RtlSymmetry" />
@@ -279,6 +285,7 @@
             android:layout_marginRight="20dp"
             android:text="@string/tv_returnBikeDetails"
             android:textAlignment="center"
+            android:textStyle="bold"
             android:textColor="#000000"
             android:textSize="22sp" />
 
@@ -423,7 +430,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvReturnBikesManufact"
-                android:layout_marginStart="210dp"
+                android:layout_marginStart="260dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:background="#e6f7ff"
@@ -440,7 +447,7 @@
             android:layout_height="40dp"
             android:layout_below="@+id/relReturnBikeDetails"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/btn_background"

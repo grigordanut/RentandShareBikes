@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,13 +21,10 @@ import com.google.zxing.Result;
 
 public class Scanner extends AppCompatActivity {
 
-    private static final int REQUEST_IMAGE_GET = 2;
-    private static final int IMAGE_CAPTURE_CODE = 1001;
     private static final int PERMISSION_CODE = 1000;
     CodeScanner codeScanner;
     CodeScannerView scannerView;
     TextView resultData;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +49,12 @@ public class Scanner extends AppCompatActivity {
         scannerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 openCamera();
-                //codeScanner.startPreview();
             }
         });
-
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     @Override
     protected void onResume() {
         super.onResume();
@@ -76,7 +72,6 @@ public class Scanner extends AppCompatActivity {
             openCamera();
         }
     }
-
     public void openCamera() {
         codeScanner.startPreview();
     }

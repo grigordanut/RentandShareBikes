@@ -157,7 +157,7 @@
             android:layout_marginEnd="35dp"
             android:background="@drawable/btn_background"
             android:text="@string/btn_logInCustomer"
-            android:textColor="#FFFF"
+            android:textColor="#ffffff"
             android:textStyle="bold"
             android:textSize="22sp"
             tools:ignore="RtlHardcoded" />
@@ -173,7 +173,7 @@
             android:background="@drawable/btn_background"
             android:text="@string/btn_signUpCustomer"
             android:textStyle="bold"
-            android:textColor="#FFFF"
+            android:textColor="#ffffff"
             android:textSize="22sp" />
 
     </LinearLayout>

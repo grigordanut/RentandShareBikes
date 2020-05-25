@@ -121,27 +121,22 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                 switch (id) {
                                     //Show the list of Bike Stores available
                                     case R.id.userShow_storesList:
-                                        Toast.makeText(CustomerPageRentBikes.this, "Bike Stores", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageShowStoresListCustomer.class));
                                         break;
                                     //Show the list of Bikes available from customer page ordered by Bike Stores
                                     case R.id.userShow_bikesList:
-                                        Toast.makeText(CustomerPageRentBikes.this, "Bikes Available", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageShowBikesListCustom.class));
                                         break;
                                     //Show the list of all Bikes available from customer page
                                     case R.id.userShow_bikesListAll:
-                                        Toast.makeText(CustomerPageRentBikes.this, "All Bikes Available", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(CustomerPageRentBikes.this, BikesImageShowBikesListCustomAll.class));
                                         break;
                                     //The activity of renting bikes by the customer
                                     case R.id.userRent_bikes:
-                                        Toast.makeText(CustomerPageRentBikes.this, "Rent Bikes", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageRentBikesCustom.class));
                                         break;
                                     //Show the list of Bikes rented by customer
                                     case R.id.userShow_bikesRented:
-                                        Toast.makeText(CustomerPageRentBikes.this, "Show Bikes Rented", Toast.LENGTH_SHORT).show();
                                         Intent intentRent = new Intent(CustomerPageRentBikes.this, BikesImageShowBikesRentedCustom.class);
                                         intentRent.putExtra("CFName", custom_data.getfName_Customer());
                                         intentRent.putExtra("CLName", custom_data.getlName_Customer());
@@ -150,16 +145,14 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                         break;
                                     //The activity of returning rented bikes by the customer
                                     case R.id.userReturn_bikes:
-                                        Toast.makeText(CustomerPageRentBikes.this, "Return Bikes", Toast.LENGTH_SHORT).show();
                                         Intent intentReturn = new Intent(CustomerPageRentBikes.this, BikesImageReturnBikesRented.class);
                                         intentReturn.putExtra("CFName", custom_data.getfName_Customer());
                                         intentReturn.putExtra("CLName", custom_data.getlName_Customer());
                                         intentReturn.putExtra("CId", currentUser.getUid());
                                         startActivity(intentReturn);
                                         break;
-
-                                    case R.id.userScan_Barcode:
-                                        Toast.makeText(CustomerPageRentBikes.this, "Return Bikes", Toast.LENGTH_SHORT).show();
+                                    //The activity of scanning the QR code
+                                    case R.id.userScan_QRCode:
                                         Intent intentScan = new Intent(CustomerPageRentBikes.this, Scanner.class);
                                         startActivity(intentScan);
                                         break;
