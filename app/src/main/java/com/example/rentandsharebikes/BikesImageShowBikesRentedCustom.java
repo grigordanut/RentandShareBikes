@@ -140,6 +140,8 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
                 if (which == 0) {
                     RentBikes sel_Bike = rentBikesList.get(position);
                     Intent intent_Ret = new Intent ( BikesImageShowBikesRentedCustom.this, ReturnRentedBikes.class);
+                    //Bike image of rented Bike
+                    intent_Ret.putExtra("BikeImage",sel_Bike.getBikeImage_RentBike());
                     //Bike Store name of rented Bike
                     intent_Ret.putExtra("BStoreNameSame",sel_Bike.getStoreLocation_RentBikes());
                     //Bike Store key of rented bike

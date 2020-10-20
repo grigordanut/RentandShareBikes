@@ -21,8 +21,8 @@ import static android.icu.text.DateFormat.NONE;
 
 public class BikesAdapterShowBikesListCustomer extends RecyclerView.Adapter<BikesAdapterShowBikesListCustomer.ImageViewHolder> {
 
-    private Context bikesContext;
-    private List<Bikes> bikesUploads;
+    private final Context bikesContext;
+    private final List<Bikes> bikesUploads;
     private OnItemClickListener clickListener;
 
     public BikesAdapterShowBikesListCustomer(Context bikes_context, List<Bikes> bikes_uploads){

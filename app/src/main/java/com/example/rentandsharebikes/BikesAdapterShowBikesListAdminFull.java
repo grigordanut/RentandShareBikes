@@ -20,8 +20,9 @@ import java.util.List;
 import static android.icu.text.DateFormat.NONE;
 
 public class BikesAdapterShowBikesListAdminFull extends RecyclerView.Adapter<BikesAdapterShowBikesListAdminFull.ImageViewHolder> {
-    private Context bikesContext;
-    private List<Bikes> bikesUploads;
+
+    private final Context bikesContext;
+    private final List<Bikes> bikesUploads;
     private OnItemClickListener clickListener;
 
     public BikesAdapterShowBikesListAdminFull(Context bikes_context, List<Bikes> bikes_uploads){

@@ -20,8 +20,8 @@ import java.util.List;
 
 public class BikesAdapterShowBikesRentedAdmin extends RecyclerView.Adapter<BikesAdapterShowBikesRentedAdmin.ImageViewHolder> {
 
-    private Context bikesContext;
-    private List<RentBikes> bikesUploads;
+    private final Context bikesContext;
+    private final List<RentBikes> bikesUploads;
 
     public BikesAdapterShowBikesRentedAdmin(Context bikes_context, List<RentBikes> bikes_uploads) {
         bikesContext = bikes_context;

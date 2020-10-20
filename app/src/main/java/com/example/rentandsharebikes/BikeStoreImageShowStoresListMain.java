@@ -74,7 +74,7 @@ public class BikeStoreImageShowStoresListMain extends AppCompatActivity implemen
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     BikeStore bikeStore = postSnapshot.getValue(BikeStore.class);
                     assert bikeStore != null;
-                    bikeStore.setStoreKey(postSnapshot.getKey());
+                    bikeStore.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
                     tVBikeStoresImaShowStoreListMain.setText(bikeStoreList.size()+" Bike Stores available" );
                 }

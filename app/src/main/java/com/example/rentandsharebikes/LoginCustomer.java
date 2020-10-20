@@ -28,8 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginCustomer extends AppCompatActivity {
 
-    private TextInputEditText emailLogCustom;
-    private TextInputEditText passLogCustom;
+    private TextInputEditText emailLogCustom, passLogCustom;
     private CheckBox rememberCheckBox;
 
     private String email_logCustom, pass_logCustom;

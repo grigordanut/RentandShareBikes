@@ -3,6 +3,7 @@ package com.example.rentandsharebikes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -22,68 +23,78 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class UpdateBikeStoreDetails extends AppCompatActivity {
-    private DatabaseReference databaseReference;
 
-    private EditText etNewStoreAddress, etNewStoreLatitude, etNewStoreLongitude, etNewStoreNoSlots;
-    private TextView tvNewStoreLocation;
-    private String tvNewStore_Location, etNewStore_Address;
-    private int etNewStore_NoSlots;
+    //Save updated Bike Store data to database
+    private DatabaseReference databaseRefStoreUpload;
 
-    private double etNewStore_Latitude, etNewStore_Longitude;
+    //Save updated Bike data to database
+    private DatabaseReference databaseRefBikeCheck;
+
+    //Save updated Bike data to database
+    private DatabaseReference databaseRefBikeUpload;
+
+    private TextView tvStoreUp;
+
+    private EditText etStoreLocationUp, etStoreAddressUp, etStoreLatitudeUp, etStoreLongitudeUp, etStoreNoSlotsUp;
+
+    private String etStore_LocationUp, etStore_AddressUp;
+    private int etStore_NoSlotsUp;
+
+    private double etStore_LatitudeUp, etStore_LongitudeUp;
 
     private ProgressDialog progressDialog;
-    String store_Location = "";
-    String store_Address = "";
-    String updateStore_Latitude = "";
-    String updateStore_Longitude = "";
-    String updateStore_NrSlots = "";
 
+    private String store_LocationUp = "";
+    private String store_AddressUp = "";
+    private String store_LatitudeUp = "";
+    private String store_LongitudeUp = "";
+    private String store_NrSlotsUp = "";
+    private String store_KeyUp = "";
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_bike_store_details);
 
-        getIntent().hasExtra("SLocation");
-        store_Location = (getIntent().getExtras()).getString("SLocation");
-        tvNewStoreLocation = (TextView) findViewById(R.id.tvUpdateStoreLocation);
-        tvNewStoreLocation.setText(store_Location);
-
-        tvNewStoreLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialogStoreLocation();
-            }
-        });
-
-        getIntent().hasExtra("SAddress");
-        store_Address = (getIntent().getExtras()).getString("SAddress");
-        etNewStoreAddress = (EditText) findViewById(R.id.etUpdateStoreAddress);
-        etNewStoreAddress.setText(store_Address);
-
-        getIntent().hasExtra("SLatitude");
-        updateStore_Latitude = (getIntent().getExtras()).getString("SLatitude");
-        etNewStoreLatitude = (EditText) findViewById(R.id.etUpdateStoreLatitude);
-        etNewStoreLatitude.setText(String.valueOf(updateStore_Latitude));
-
-        getIntent().hasExtra("SLongitude");
-        updateStore_Longitude = (getIntent().getExtras()).getString("SLongitude");
-        etNewStoreLongitude = (EditText) findViewById(R.id.etUpdateStoreLongitude);
-        etNewStoreLongitude.setText(String.valueOf(updateStore_Longitude));
-
-        getIntent().hasExtra("SNoSlots");
-        updateStore_NrSlots = getIntent().getExtras().getString("SNoSlots");
-        etNewStoreNoSlots = (EditText) findViewById(R.id.etUpdateStoreNoSlots);
-        etNewStoreNoSlots.setText(String.valueOf(updateStore_NrSlots));
-
         progressDialog = new ProgressDialog(this);
 
-        Button btnSaveBikeStoreUpdates = findViewById(R.id.btnSaveStoreUpdates);
+        tvStoreUp = findViewById(R.id.tvStoreUpdate);
+
+        etStoreLocationUp = findViewById(R.id.etStoreLocationUpdate);
+        etStoreAddressUp = findViewById(R.id.etStoreAddressUpdate);
+        etStoreLatitudeUp = findViewById(R.id.etStoreLatitudeUpdate);
+        etStoreLongitudeUp = findViewById(R.id.etStoreLongitudeUpdate);
+        etStoreNoSlotsUp = findViewById(R.id.etStoreNoSlotsUpdate);
+
+        Bundle bundleStore = getIntent().getExtras();
+        if (bundleStore != null) {
+            store_LocationUp = bundleStore.getString("SLocation");
+            store_AddressUp = bundleStore.getString("SAddress");
+            store_LatitudeUp = bundleStore.getString("SLatitude");
+            store_LongitudeUp = bundleStore.getString("SLongitude");
+            store_NrSlotsUp = bundleStore.getString("SNoSlots");
+            store_KeyUp = bundleStore.getString("SKey");
+        }
+
+        tvStoreUp.setText("Update " + store_LocationUp + " Bike Store details");
+
+        etStoreLocationUp.setText(store_LocationUp);
+        etStoreAddressUp.setText(store_AddressUp);
+        etStoreLatitudeUp.setText(store_LatitudeUp);
+        etStoreLongitudeUp.setText(store_LongitudeUp);
+        etStoreNoSlotsUp.setText(store_NrSlotsUp);
+
+        Button btnSaveBikeStoreUpdates = findViewById(R.id.btnSaveStoreUpdate);
         btnSaveBikeStoreUpdates.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updateBikeBikesStoreName();
                 updateBikeStoreDetails();
             }
         });
@@ -91,46 +102,29 @@ public class UpdateBikeStoreDetails extends AppCompatActivity {
 
     public void updateBikeStoreDetails() {
 
-        final String newStore_AddressVal = etNewStoreAddress.getText().toString().trim();
-        final String newStore_LatitudeVal = etNewStoreLatitude.getText().toString().trim();
-        final String newStore_LongitudeVal = etNewStoreLongitude.getText().toString().trim();
-        final String newStore_NrSlotsVal = etNewStoreNoSlots.getText().toString();
+        if (validateBikeStoreDetailsUp()) {
 
-        if (TextUtils.isEmpty(newStore_AddressVal)) {
-            etNewStoreAddress.setError("Please enter store Address");
-            etNewStoreAddress.requestFocus();
-        } else if (TextUtils.isEmpty(newStore_LatitudeVal)) {
-            etNewStoreLatitude.setError("Please enter store Latitude");
-            etNewStoreLatitude.requestFocus();
-        } else if (TextUtils.isEmpty(newStore_LongitudeVal)) {
-            etNewStoreLongitude.setError("Please enter store Longitude");
-            etNewStoreLongitude.requestFocus();
-        } else if (TextUtils.isEmpty(newStore_NrSlotsVal)) {
-            etNewStoreNoSlots.setError("Please enter the number of slots");
-            etNewStoreNoSlots.requestFocus();
-        }
-        else{
+            etStore_LocationUp = etStoreLocationUp.getText().toString().trim();
+            etStore_AddressUp = etStoreAddressUp.getText().toString().trim();
+            etStore_LatitudeUp = Double.parseDouble(etStoreLatitudeUp.getText().toString().trim());
+            etStore_LongitudeUp = Double.parseDouble(etStoreLongitudeUp.getText().toString().trim());
+            etStore_NoSlotsUp = Integer.parseInt(etStoreNoSlotsUp.getText().toString().trim());
+
             progressDialog.setMessage("Update the Bike Store");
             progressDialog.show();
 
-            tvNewStore_Location = tvNewStoreLocation.getText().toString().trim();
-            etNewStore_Address = etNewStoreAddress.getText().toString().trim();
-            etNewStore_Latitude = Double.parseDouble(Objects.requireNonNull(etNewStoreLatitude.getText()).toString().trim());
-            etNewStore_Longitude = Double.parseDouble(etNewStoreLongitude.getText().toString().trim());
-            etNewStore_NoSlots = Integer.parseInt(etNewStoreNoSlots.getText().toString());
-
-            databaseReference = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
-
-            Query query = databaseReference.orderByChild("bikeStore_Location").equalTo(store_Location);
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseRefStoreUpload = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
+            Query queryStore = databaseRefStoreUpload.orderByChild("bikeStore_Key").equalTo(store_KeyUp);
+            //Query query = databaseRefStoreUpload.orderByChild("bikeStore_Location").equalTo(store_LocationUp);
+            queryStore.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        ds.getRef().child("bikeStore_Address").setValue(etNewStore_Address);
-                        ds.getRef().child("bikeStore_Latitude").setValue(etNewStore_Latitude);
-                        ds.getRef().child("bikeStore_Location").setValue(tvNewStore_Location);
-                        ds.getRef().child("bikeStore_Longitude").setValue(etNewStore_Longitude);
-                        ds.getRef().child("bikeStore_NumberSlots").setValue(etNewStore_NoSlots);
+                        ds.getRef().child("bikeStore_Location").setValue(etStore_LocationUp);
+                        ds.getRef().child("bikeStore_Address").setValue(etStore_AddressUp);
+                        ds.getRef().child("bikeStore_Latitude").setValue(etStore_LatitudeUp);
+                        ds.getRef().child("bikeStore_Longitude").setValue(etStore_LatitudeUp);
+                        ds.getRef().child("bikeStore_NumberSlots").setValue(etStore_NoSlotsUp);
                     }
                     progressDialog.dismiss();
                     Toast.makeText(UpdateBikeStoreDetails.this, "Bike Store Updated", Toast.LENGTH_SHORT).show();
@@ -146,17 +140,69 @@ public class UpdateBikeStoreDetails extends AppCompatActivity {
         }
     }
 
-    public void alertDialogStoreLocation() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("The Store Location cannot be modified because is stored in Bikes table ");
-        alertDialogBuilder.setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
+    private Boolean validateBikeStoreDetailsUp() {
+        boolean result = false;
+
+        final String bikeStore_LocationVal = etStoreLocationUp.getText().toString().trim();
+        final String bikeStore_AddressVal = etStoreAddressUp.getText().toString().trim();
+        final String bikeStore_LatitudeVal = etStoreLatitudeUp.getText().toString().trim();
+        final String bikeStore_LongitudeVal = etStoreLongitudeUp.getText().toString().trim();
+        final String bikeStore_NrSlotsVal = etStoreNoSlotsUp.getText().toString().trim();
+
+        if (TextUtils.isEmpty(bikeStore_LocationVal)) {
+            etStoreLocationUp.setError("Please enter store Location");
+            etStoreLocationUp.requestFocus();
+        } else if (TextUtils.isEmpty(bikeStore_AddressVal)) {
+            etStoreAddressUp.setError("Please enter store Address");
+            etStoreAddressUp.requestFocus();
+        } else if (TextUtils.isEmpty(bikeStore_LatitudeVal)) {
+            etStoreLatitudeUp.setError("Please enter store Latitude");
+            etStoreLatitudeUp.requestFocus();
+        } else if (TextUtils.isEmpty(bikeStore_LongitudeVal)) {
+            etStoreLongitudeUp.setError("Please enter store Longitude");
+            etStoreLongitudeUp.requestFocus();
+        } else if (TextUtils.isEmpty(bikeStore_NrSlotsVal)) {
+            etStoreNoSlotsUp.setError("Please enter the number of slots");
+            etStoreNoSlotsUp.requestFocus();
+        } else {
+            result = true;
+        }
+        return result;
+    }
+
+    private void updateBikeBikesStoreName() {
+        databaseRefBikeCheck = FirebaseDatabase.getInstance().getReference().child("Bikes");
+        databaseRefBikeCheck.orderByChild("bikeStoreName").equalTo(store_LocationUp)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+
+                            final String etBike_BikeStoreLocCheck = etStoreLocationUp.getText().toString().trim();
+                            databaseRefBikeUpload = FirebaseDatabase.getInstance().getReference().child("Bikes");
+                            databaseRefBikeUpload.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot dsBike : dataSnapshot.getChildren()) {
+                                        dsBike.getRef().child("bikeStoreName").setValue(etBike_BikeStoreLocCheck);
+                                    }
+                                    progressDialog.dismiss();
+                                    Toast.makeText(UpdateBikeStoreDetails.this, "Bike Store Updated", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(UpdateBikeStoreDetails.this, AdminPage.class));
+                                    finish();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    Toast.makeText(UpdateBikeStoreDetails.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(UpdateBikeStoreDetails.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
     }
 }

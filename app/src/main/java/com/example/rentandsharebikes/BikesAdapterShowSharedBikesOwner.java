@@ -17,8 +17,8 @@ import java.util.List;
 
 public class BikesAdapterShowSharedBikesOwner extends RecyclerView.Adapter<BikesAdapterShowSharedBikesOwner.ImageViewHolder> {
 
-    private Context bikesContext;
-    private List<ShareBikes> bikesUploads;
+    private final Context bikesContext;
+    private final List<ShareBikes> bikesUploads;
 
     public BikesAdapterShowSharedBikesOwner(Context bikes_context, List<ShareBikes> bikes_uploads){
         bikesContext = bikes_context;
@@ -56,7 +56,7 @@ public class BikesAdapterShowSharedBikesOwner extends RecyclerView.Adapter<Bikes
         return bikesUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder {
+    public static class ImageViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView imageSharedBikesUser;
         public TextView tvSharedBikeCondUser;

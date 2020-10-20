@@ -61,7 +61,7 @@ public class BikeStoreImageShowBikesListMain extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     BikeStore bikeStore = postSnapshot.getValue(BikeStore.class);
                     assert bikeStore != null;
-                    bikeStore.setStoreKey(postSnapshot.getKey());
+                    bikeStore.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
                 }
                 bikeStoreAdapterShowBikesListMain = new BikeStoreAdapterShowBikesListMain(BikeStoreImageShowBikesListMain.this, bikeStoreList);

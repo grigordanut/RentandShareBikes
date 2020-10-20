@@ -65,7 +65,7 @@ public class BikeStoreAdapterShowBikesListAdmin extends RecyclerView.Adapter<Bik
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(uploadCurrent.getStoreKey())) {
+                    if (bikes.getBikeStoreKey().equals(uploadCurrent.getBikeStore_Key())) {
                         bikes.setBike_Key(postSnapshot.getKey());
                         bikesList.add(bikes);
                         numberBikesAvailable = bikesList.size();
@@ -85,7 +85,7 @@ public class BikeStoreAdapterShowBikesListAdmin extends RecyclerView.Adapter<Bik
             public void onClick(View v) {
                 Intent intent = new Intent(bikeStoreContext, BikesImageShowBikesListAdmin.class);
                 intent.putExtra("SName",uploadCurrent.getBikeStore_Location());
-                intent.putExtra("SKey",uploadCurrent.getStoreKey());
+                intent.putExtra("SKey",uploadCurrent.getBikeStore_Key());
                 bikeStoreContext.startActivity(intent);
             }
         });
@@ -96,7 +96,7 @@ public class BikeStoreAdapterShowBikesListAdmin extends RecyclerView.Adapter<Bik
         return bikeStoreUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder {
+    public static class ImageViewHolder extends RecyclerView.ViewHolder {
         public TextView tvStoreBikeLocation;
         public TextView tvStoreBikeAddress;
         public TextView tvStoreBikeSlots;

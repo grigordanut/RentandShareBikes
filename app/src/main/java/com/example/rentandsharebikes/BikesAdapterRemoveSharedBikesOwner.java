@@ -17,8 +17,8 @@ import java.util.List;
 
 public class BikesAdapterRemoveSharedBikesOwner extends RecyclerView.Adapter<BikesAdapterRemoveSharedBikesOwner.ImageViewHolder>{
 
-    private Context bikesContext;
-    private List<ShareBikes> bikesUploads;
+    private final Context bikesContext;
+    private final List<ShareBikes> bikesUploads;
 
     private OnItemClickListener clickListener;
 

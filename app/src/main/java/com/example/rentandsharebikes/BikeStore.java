@@ -9,19 +9,19 @@ public class BikeStore {
     private double bikeStore_Latitude;
     private double bikeStore_Longitude;
     private int bikeStore_NumberSlots;
-
-    private String storeKey;
+    private String bikeStore_Key;
 
     public BikeStore(){
 
     }
 
-    public BikeStore(String bikeStore_Location, String bikeStore_Address, double bikeStore_Latitude, double bikeStore_Longitude, int bikeStore_NumberSlots) {
+    public BikeStore(String bikeStore_Location, String bikeStore_Address, double bikeStore_Latitude, double bikeStore_Longitude, int bikeStore_NumberSlots, String bikeStore_Key) {
         this.bikeStore_Location = bikeStore_Location;
         this.bikeStore_Address = bikeStore_Address;
         this.bikeStore_Latitude = bikeStore_Latitude;
         this.bikeStore_Longitude = bikeStore_Longitude;
         this.bikeStore_NumberSlots = bikeStore_NumberSlots;
+        this.bikeStore_Key = bikeStore_Key;
     }
 
     public String getBikeStore_Location() {
@@ -64,16 +64,25 @@ public class BikeStore {
         this.bikeStore_NumberSlots = bikeStore_NumberSlots;
     }
 
-    @Exclude
-    public String getStoreKey(){
-        return storeKey;
+    public String getBikeStore_Key() {
+        return bikeStore_Key;
     }
 
-    @Exclude
-    public void setStoreKey(String storeKey){
-        this.storeKey = storeKey;
+    public void setBikeStore_Key(String bikeStore_Key) {
+        this.bikeStore_Key = bikeStore_Key;
     }
 
-    public class NONE{
-    }
+    //    //Exclude
+//    @Exclude
+//    public String getBikeStore_Key(){
+//        return bikeStore_Key;
+//    }
+//
+//    @Exclude
+//    public void setBikeStore_Key(String bikeStore_Key){
+//        this.bikeStore_Key = bikeStore_Key;
+//    }
+//
+//    public class NONE{
+//    }
 }

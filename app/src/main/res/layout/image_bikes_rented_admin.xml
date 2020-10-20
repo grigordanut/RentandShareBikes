@@ -34,14 +34,13 @@
                 android:text="@string/tv_rentedBikeConditionAdmin"
                 android:textColor="#000000"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="RtlSymmetry" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvBikeCondRentAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="205dp"
+                android:layout_marginStart="215dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:background="#e6f7ff"
@@ -60,8 +59,7 @@
                 android:text="@string/tv_rentedBikeModelAdmin"
                 android:textColor="#000000"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="NotSibling,RtlSymmetry" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvBikeModelRentAdmin"
@@ -87,8 +85,7 @@
                 android:text="@string/tv_rentedBikeManufacturerAdmin"
                 android:textColor="#000000"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="RtlSymmetry" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvBikeManufactRentAdmin"
@@ -114,8 +111,7 @@
                 android:text="@string/tv_rentedBikePriceAdmin"
                 android:textColor="#000000"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="RtlSymmetry" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvBikePriceRentAdmin"
@@ -143,8 +139,7 @@
                 android:text="@string/tv_rentedBikeStoreNameAdmin"
                 android:textColor="#000000"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="RtlSymmetry" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvBikeStoreRentAdmin"
@@ -159,7 +154,7 @@
                 android:textSize="18sp"
                 tools:ignore="RtlSymmetry" />
 
-            <!--    Customer Name-->
+            <!--Customer Name-->
             <TextView
                 android:id="@+id/tvNameRentAdmin"
                 android:layout_width="wrap_content"
@@ -198,8 +193,7 @@
                 android:text="@string/tv_rentedBikeUserPhoneAdmin"
                 android:textColor="#000000"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="RtlSymmetry" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvCustomPhoneRentAdmin"
@@ -215,8 +209,7 @@
                 android:textSize="18sp"
                 tools:ignore="RtlSymmetry" />
 
-
-            <!--    Customer Email-->
+            <!--Customer Email-->
             <TextView
                 android:id="@+id/tvEmailRentAdmin"
                 android:layout_width="wrap_content"
@@ -244,8 +237,7 @@
                 android:textSize="18sp"
                 tools:ignore="RtlSymmetry" />
 
-
-            <!--    Date of Rent-->
+            <!--Date of Rent-->
             <TextView
                 android:id="@+id/tvDateRentAdmin"
                 android:layout_width="wrap_content"
@@ -269,11 +261,11 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
-                android:textAlignment="center"
                 android:background="#e6f7ff"
-                android:textStyle="bold"
+                android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 tools:ignore="RtlSymmetry" />
         </RelativeLayout>
 

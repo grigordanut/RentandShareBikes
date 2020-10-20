@@ -30,7 +30,6 @@ public class CustomerPageMain extends AppCompatActivity {
 
     //Variable to access current user database
     private FirebaseAuth firebaseAuth;
-    private FirebaseUser currentUser;
     private DatabaseReference databaseReference;
 
     private TextView tVCustomPageMain;
@@ -42,10 +41,9 @@ public class CustomerPageMain extends AppCompatActivity {
 
         //initialise the variables
         tVCustomPageMain = (TextView) findViewById(R.id.tvCustomPageMain);
-        //tViewDMCustomer = (TextView)findViewById(R.id.tvDMCustomer
 
         firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = firebaseAuth.getCurrentUser();
+        //currentUser = firebaseAuth.getCurrentUser();
 
         Button buttonRentBikes = (Button) findViewById(R.id.btnRentBikeCustom);
         buttonRentBikes.setOnClickListener(new View.OnClickListener() {
@@ -88,10 +86,9 @@ public class CustomerPageMain extends AppCompatActivity {
                     assert custom_Details != null;
                     assert custom_data != null;
 
-                    if (Objects.requireNonNull(custom_Details.getEmail()).equalsIgnoreCase(custom_data.getEmail_Customer())) {
+                    if(custom_Details.getUid().equals(dsUser.getKey())){
                         tVCustomPageMain.setText("Welcome: " + custom_data.getfName_Customer() + " " + custom_data.getlName_Customer());
                     }
-                    //tVCustomPageMain.setText("Welcome: " + custom_data.getfName_Customer() + " " + custom_data.getlName_Customer());
                 }
             }
 
@@ -132,21 +129,15 @@ public class CustomerPageMain extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.editProfile: {
-                editProfile();
-            }
+        if (item.getItemId() == R.id.editProfile) {
+            editProfile();
         }
 
-        switch (item.getItemId()) {
-            case R.id.changePassword: {
-                changePassword();
-            }
+        if (item.getItemId() == R.id.changePassword) {
+            changePassword();
         }
-        switch (item.getItemId()) {
-            case R.id.logOutUser: {
-                LogOut();
-            }
+        if (item.getItemId() == R.id.logOutUser) {
+            LogOut();
         }
 
         return super.onOptionsItemSelected(item);

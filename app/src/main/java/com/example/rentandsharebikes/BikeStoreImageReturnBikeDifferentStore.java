@@ -82,7 +82,7 @@ public class BikeStoreImageReturnBikeDifferentStore extends AppCompatActivity im
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     BikeStore bikeStore = postSnapshot.getValue(BikeStore.class);
                     assert bikeStore != null;
-                    bikeStore.setStoreKey(postSnapshot.getKey());
+                    bikeStore.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
                     textViewBikeStoresImageReturnBikeDiffStore.setText(bikeStoreList.size()+" Bike Stores available");
                 }
@@ -107,7 +107,7 @@ public class BikeStoreImageReturnBikeDifferentStore extends AppCompatActivity im
         Intent intent = new Intent(BikeStoreImageReturnBikeDifferentStore.this, ReturnRentedBikes.class);
         BikeStore selected_BikeStore = bikeStoreList.get(position);
         intent.putExtra("BStoreNameDiff", selected_BikeStore.getBikeStore_Location());
-        intent.putExtra("BStoreKeyDiff", selected_BikeStore.getStoreKey());
+        intent.putExtra("BStoreKeyDiff", selected_BikeStore.getBikeStore_Key());
 
         intent.putExtra("BikeImage",bike_Image);
         intent.putExtra("BStoreNameSame",bike_StoreNameReturnBikesSame);

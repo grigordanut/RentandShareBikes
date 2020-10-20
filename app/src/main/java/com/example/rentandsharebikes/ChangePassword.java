@@ -3,6 +3,7 @@ package com.example.rentandsharebikes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +24,6 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Objects;
 
 public class ChangePassword extends AppCompatActivity {
-
 
     private TextInputEditText oldPassword, newPassword;
     private String old_Password, new_Password;
@@ -102,12 +102,11 @@ public class ChangePassword extends AppCompatActivity {
         startActivity(new Intent(ChangePassword.this, CustomerPageMain.class));
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.changePassCustomGoBack:{
-                goBackPassCustom();
-            }
+        if (item.getItemId() == R.id.changePassCustomGoBack) {
+            goBackPassCustom();
         }
 
         return super.onOptionsItemSelected(item);

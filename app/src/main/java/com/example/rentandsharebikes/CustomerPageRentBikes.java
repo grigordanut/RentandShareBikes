@@ -90,7 +90,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
         drawerLayoutUserRent.addDrawerListener(drawerToggleUserRent);
         drawerToggleUserRent.syncState();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         navigationViewUserRent = findViewById(R.id.navViewCustomRent);
 
@@ -102,19 +102,20 @@ public class CustomerPageRentBikes extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //retrieve data from database
-                for (final DataSnapshot dsUser : dataSnapshot.getChildren()) {
-                    final FirebaseUser custom_Details = firebaseAuth.getCurrentUser();
+                for (DataSnapshot ds_User : dataSnapshot.getChildren()) {
+                    final FirebaseUser user_Db = firebaseAuth.getCurrentUser();
 
-                    final Customers custom_data = dsUser.getValue(Customers.class);
+                    final Customers custom_Data = ds_User.getValue(Customers.class);
 
-                    assert custom_Details != null;
-                    assert custom_data != null;
-                    if (Objects.requireNonNull(custom_Details.getEmail()).equalsIgnoreCase(custom_data.getEmail_Customer())) {
-                        tVCustomPageRent.setText("Welcome: " + custom_data.getfName_Customer() + " " + custom_data.getlName_Customer());
-                        tVCustomPageRentPerDetails.setText("Phone: \n"+custom_data.getPhoneNumb_Customer()+"\n\nEmail: \n"+custom_data.getEmail_Customer());
+                    assert user_Db != null;
+                    assert custom_Data != null;
+                    if (user_Db.getUid().equalsIgnoreCase(ds_User.getKey())) {
+                        tVCustomPageRent.setText("Welcome: " + custom_Data.getfName_Customer() + " " + custom_Data.getlName_Customer());
+                        tVCustomPageRentPerDetails.setText("Phone: \n"+custom_Data.getPhoneNumb_Customer()+"\n\nEmail: \n"+custom_Data.getEmail_Customer());
 
                         //Adding Click Events to our navigation drawer item
                         navigationViewUserRent.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                            @SuppressLint("NonConstantResourceId")
                             @Override
                             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                                 int id = item.getItemId();
@@ -138,17 +139,17 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                     //Show the list of Bikes rented by customer
                                     case R.id.userShow_bikesRented:
                                         Intent intentRent = new Intent(CustomerPageRentBikes.this, BikesImageShowBikesRentedCustom.class);
-                                        intentRent.putExtra("CFName", custom_data.getfName_Customer());
-                                        intentRent.putExtra("CLName", custom_data.getlName_Customer());
-                                        intentRent.putExtra("CId", currentUser.getUid());
+                                        intentRent.putExtra("CFName", custom_Data.getfName_Customer());
+                                        intentRent.putExtra("CLName", custom_Data.getlName_Customer());
+                                        intentRent.putExtra("CId", user_Db.getUid());
                                         startActivity(intentRent);
                                         break;
                                     //The activity of returning rented bikes by the customer
                                     case R.id.userReturn_bikes:
                                         Intent intentReturn = new Intent(CustomerPageRentBikes.this, BikesImageReturnBikesRented.class);
-                                        intentReturn.putExtra("CFName", custom_data.getfName_Customer());
-                                        intentReturn.putExtra("CLName", custom_data.getlName_Customer());
-                                        intentReturn.putExtra("CId", currentUser.getUid());
+                                        intentReturn.putExtra("CFName", custom_Data.getfName_Customer());
+                                        intentReturn.putExtra("CLName", custom_Data.getlName_Customer());
+                                        intentReturn.putExtra("CId", user_Db.getUid());
                                         startActivity(intentReturn);
                                         break;
                                     //The activity of scanning the QR code
@@ -184,6 +185,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -220,7 +222,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     BikeStore bike_Stores = postSnapshot.getValue(BikeStore.class);
                     assert bike_Stores != null;
-                    bike_Stores.setStoreKey(postSnapshot.getKey());
+                    bike_Stores.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoresListCustom.add(bike_Stores);
                     numberStoresAvCustom = bikeStoresListCustom.size();
                     tVCustomStoresAv.setText(String.valueOf(numberStoresAvCustom));

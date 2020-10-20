@@ -48,26 +48,27 @@ public class AddBikes extends AppCompatActivity {
     private static final int IMAGE_CAPTURE_CODE = 1001;
     private static final int PERMISSION_CODE = 1000;
 
-    private StorageReference storageReference;
-    private DatabaseReference databaseReference;
-    private StorageTask bikesUploadTask;
+    //Save Bike data to database
+    private StorageReference stRefBikeUpload;
+    private DatabaseReference dbRefBikeUpload;
+    private StorageTask stTaskBikeUpload;
 
     private ImageView ivAddBike;
     private Uri imageUri;
 
-    private EditText eTextBikeModel, eTextBikeManufact, eTextBikePrice;
+    private EditText eTBikeModel, eTBikeManufact, eTBikePrice;
     private TextView tViewWelcomeAddBikes;
-    private AutoCompleteTextView tViewBikeCondition;
+    private AutoCompleteTextView tVBikeCondition;
     private ImageView imgArrowBikeCondition;
     private Button buttonSaveBike;
     private ImageButton buttonTakePicture;
 
-    private String eTextBike_Condition, eTextBike_Model, eTextBike_Manufact;
-    private double eTextBike_Price;
+    private String bike_Condition, bike_Model, bike_Manufact;
+    private double bike_Price;
 
-    String bikeStore_Name = "";
-    String bikeStore_Key = "";
-    String bike_Key = "";
+    private String store_Name = "";
+    private String store_Key = "";
+    private String bike_Key = "";
 
     private ProgressDialog progressDialog;
 
@@ -78,33 +79,33 @@ public class AddBikes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bikes);
 
+        progressDialog = new ProgressDialog(AddBikes.this);
+
         getIntent().hasExtra("SName");
-        bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
+        store_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
 
         getIntent().hasExtra("SKey");
-        bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
+        store_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
 
         tViewWelcomeAddBikes = (TextView) findViewById(R.id.tvWelcomeAddBikes);
-        tViewWelcomeAddBikes.setText("Add Bicycles to " + bikeStore_Name + " store");
+        tViewWelcomeAddBikes.setText("Add Bicycles to " + store_Name + " store");
 
-        tViewBikeCondition = (AutoCompleteTextView) findViewById(R.id.tvBikeCondition);
+        tVBikeCondition = (AutoCompleteTextView) findViewById(R.id.tvBikeCondition);
         imgArrowBikeCondition = (ImageView) findViewById(R.id.imgBikeCondition);
 
         ArrayAdapter<String> conditionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, bikeCondition);
-        tViewBikeCondition.setAdapter(conditionAdapter);
+        tVBikeCondition.setAdapter(conditionAdapter);
 
         imgArrowBikeCondition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tViewBikeCondition.showDropDown();
+                tVBikeCondition.showDropDown();
             }
         });
 
-        eTextBikeModel = (EditText) findViewById(R.id.etBikeModel);
-        eTextBikeManufact = (EditText) findViewById(R.id.etBikeManufacturer);
-        eTextBikePrice = (EditText) findViewById(R.id.etBikePricePerDay);
-
-        progressDialog = new ProgressDialog(AddBikes.this);
+        eTBikeModel = (EditText) findViewById(R.id.etBikeModel);
+        eTBikeManufact = (EditText) findViewById(R.id.etBikeManufacturer);
+        eTBikePrice = (EditText) findViewById(R.id.etBikePricePerDay);
 
         ivAddBike = (ImageView) findViewById(R.id.imgViewAddBikes);
         ivAddBike.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +117,7 @@ public class AddBikes extends AppCompatActivity {
 
         buttonTakePicture = (ImageButton) findViewById(R.id.btnTakePicture);
         buttonTakePicture.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ObsoleteSdkInt")
             @Override
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -139,8 +141,7 @@ public class AddBikes extends AppCompatActivity {
         buttonSaveBike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog.show();
-                if (bikesUploadTask != null && bikesUploadTask.isInProgress()) {
+                if (stTaskBikeUpload != null && stTaskBikeUpload.isInProgress()) {
                     Toast.makeText(AddBikes.this, "Upload in progress", Toast.LENGTH_SHORT).show();
                 } else {
                     uploadBikesDetails();
@@ -169,18 +170,15 @@ public class AddBikes extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_CODE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] ==
-                        PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted
-                    openCamera();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
-                    // permission deniedDisable the
-                    // functionality that depends on this permission.
-                }
+        if (requestCode == PERMISSION_CODE) {// If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED) {
+                // permission was granted
+                openCamera();
+            } else {
+                Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                // permission deniedDisable the
+                // functionality that depends on this permission.
             }
         }
     }
@@ -188,10 +186,6 @@ public class AddBikes extends AppCompatActivity {
     @SuppressLint("MissingSuperCall")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            ivAddBike.setImageURI(imageUri);
-            Toast.makeText(getApplicationContext(), "Image captured by Camera", Toast.LENGTH_SHORT).show();
-        }
 
         if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
             try {
@@ -203,6 +197,11 @@ public class AddBikes extends AppCompatActivity {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "Exception: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
+        }
+
+        else if (resultCode == RESULT_OK) {
+            ivAddBike.setImageURI(imageUri);
+            Toast.makeText(getApplicationContext(), "Image captured by Camera", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -218,36 +217,37 @@ public class AddBikes extends AppCompatActivity {
         //Add new Bike into the Bike's table
         if (validateBikeDetails()) {
 
-            eTextBike_Condition = tViewBikeCondition.getText().toString().trim();
-            eTextBike_Model = eTextBikeModel.getText().toString().trim();
-            eTextBike_Manufact = eTextBikeManufact.getText().toString().trim();
-            eTextBike_Price = Double.parseDouble(eTextBikePrice.getText().toString().trim());
+            bike_Condition = tVBikeCondition.getText().toString().trim();
+            bike_Model = eTBikeModel.getText().toString().trim();
+            bike_Manufact = eTBikeManufact.getText().toString().trim();
+            bike_Price = Double.parseDouble(eTBikePrice.getText().toString().trim());
 
-            storageReference = FirebaseStorage.getInstance().getReference("Bikes");
-            databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
+            //Upload bike data to Bikes table
+            stRefBikeUpload = FirebaseStorage.getInstance().getReference("Bikes");
+            dbRefBikeUpload = FirebaseDatabase.getInstance().getReference("Bikes");
 
             progressDialog.setTitle("The Bike is uploading");
             progressDialog.show();
-            final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
-            bikesUploadTask = fileReference.putFile(imageUri)
+            final StorageReference fileReference = stRefBikeUpload.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+            stTaskBikeUpload = fileReference.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    String addBike_id = databaseReference.push().getKey();
+                                    String addBike_id = dbRefBikeUpload.push().getKey();
                                     bike_Key = addBike_id;
 
-                                    Bikes bikes = new Bikes(eTextBike_Condition, eTextBike_Model, eTextBike_Manufact, eTextBike_Price,
-                                            uri.toString(), bikeStore_Name, bikeStore_Key, bike_Key);
+                                    Bikes bikes = new Bikes(bike_Condition, bike_Model, bike_Manufact, bike_Price,
+                                            uri.toString(), store_Name, store_Key, bike_Key);
 
                                     assert addBike_id != null;
-                                    databaseReference.child(addBike_id).setValue(bikes);
+                                    dbRefBikeUpload.child(addBike_id).setValue(bikes);
 
-                                    eTextBikeModel.setText("");
-                                    eTextBikeManufact.setText("");
-                                    eTextBikePrice.setText("");
+                                    eTBikeModel.setText("");
+                                    eTBikeManufact.setText("");
+                                    eTBikePrice.setText("");
                                     ivAddBike.setImageResource(R.drawable.add_bikes_picture);
 
                                     Intent add_Bikes = new Intent(AddBikes.this, AdminPage.class);
@@ -284,25 +284,25 @@ public class AddBikes extends AppCompatActivity {
     private Boolean validateBikeDetails() {
         boolean result = false;
 
-        final String tv_BikeConditionValidation = tViewBikeCondition.getText().toString().trim();
-        final String etBike_ModelValidation = eTextBikeModel.getText().toString().trim();
-        final String etBike_ManufactValidation = eTextBikeManufact.getText().toString().trim();
-        final String etBike_PriceValidation = eTextBikePrice.getText().toString().trim();
+        final String bike_ConditionVal = tVBikeCondition.getText().toString().trim();
+        final String bike_ModelVal = eTBikeModel.getText().toString().trim();
+        final String bike_ManufactVal = eTBikeManufact.getText().toString().trim();
+        final String bike_PriceVal = eTBikePrice.getText().toString().trim();
 
         if (imageUri == null) {
             alertDialogBikePicture();
-        } else if (TextUtils.isEmpty(tv_BikeConditionValidation)) {
+        } else if (TextUtils.isEmpty(bike_ConditionVal)) {
             alertDialogBikeCond();
-            tViewBikeCondition.requestFocus();
-        } else if (TextUtils.isEmpty(etBike_ModelValidation)) {
-            eTextBikeModel.setError("Please add the Model of Bicycle");
-            eTextBikeModel.requestFocus();
-        } else if (TextUtils.isEmpty(etBike_ManufactValidation)) {
-            eTextBikeManufact.setError("Please add the Manufacturer");
-            eTextBikeManufact.requestFocus();
-        } else if (TextUtils.isEmpty(etBike_PriceValidation)) {
-            eTextBikePrice.setError("Please add the Price/Hour");
-            eTextBikePrice.requestFocus();
+            tVBikeCondition.requestFocus();
+        } else if (TextUtils.isEmpty(bike_ModelVal)) {
+            eTBikeModel.setError("Please add the Model of Bicycle");
+            eTBikeModel.requestFocus();
+        } else if (TextUtils.isEmpty(bike_ManufactVal)) {
+            eTBikeManufact.setError("Please add the Manufacturer");
+            eTBikeManufact.requestFocus();
+        } else if (TextUtils.isEmpty(bike_PriceVal)) {
+            eTBikePrice.setError("Please add the Price/Hour");
+            eTBikePrice.requestFocus();
         } else {
             result = true;
         }

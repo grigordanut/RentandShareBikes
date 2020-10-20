@@ -92,7 +92,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     BikeStore bikeStore = postSnapshot.getValue(BikeStore.class);
                     assert bikeStore != null;
-                    bikeStore.setStoreKey(postSnapshot.getKey());
+                    bikeStore.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
                     textViewBikeStoresImageShowStoreListAdmin.setText(bikeStoreList.size()+" Bike Stores available");
                 }
@@ -131,6 +131,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
         intent.putExtra("SLatitude", String.valueOf(selected_BikeStore.getBikeStore_Latitude()));
         intent.putExtra("SLongitude", String.valueOf(selected_BikeStore.getBikeStore_Longitude()));
         intent.putExtra("SNoSlots", String.valueOf(selected_BikeStore.getBikeStore_NumberSlots()));
+        intent.putExtra("SKey", selected_BikeStore.getBikeStore_Key());
         startActivity(intent);
     }
 
@@ -146,7 +147,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         BikeStore selectedBikeStore = bikeStoreList.get(position);
-                        String selectedKeyStore = selectedBikeStore.getStoreKey();
+                        String selectedKeyStore = selectedBikeStore.getBikeStore_Key();
                         databaseReference.child(selectedKeyStore).removeValue();
                         Toast.makeText(BikeStoreImageShowStoresListAdmin.this, "The Bike Store " + selectedBikeStore.getBikeStore_Location() + " has been deleted successfully", Toast.LENGTH_SHORT).show();
 

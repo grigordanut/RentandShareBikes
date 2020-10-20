@@ -66,7 +66,7 @@ public class BikeStoreAdapterShowStoresListMain extends RecyclerView.Adapter<Bik
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(uploadCurrent.getStoreKey())) {
+                    if (bikes.getBikeStoreKey().equals(uploadCurrent.getBikeStore_Key())) {
                         bikes.setBike_Key(postSnapshot.getKey());
                         bikesList.add(bikes);
                         numberBikesAvailable = bikesList.size();

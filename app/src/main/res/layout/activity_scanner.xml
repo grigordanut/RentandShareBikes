@@ -27,7 +27,7 @@
         android:layout_height="360dp"
         android:layout_below="@+id/tvScanCode"
         android:layout_marginEnd="15dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:frameAspectRatioHeight="1"
         app:frameAspectRatioWidth="1"
         app:frameColor="@android:color/white"
@@ -61,14 +61,14 @@
 
     <TextView
         android:id="@+id/resultsOfQr"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@+id/btnOpenLock"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:textAlignment="center"
         android:textColor="#000000"
-        android:textSize="24sp"
+        android:textSize="22sp"
         tools:ignore="HardcodedText" />
 
 </RelativeLayout>

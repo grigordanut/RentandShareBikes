@@ -18,8 +18,8 @@ import java.util.List;
 
 public class BikesAdapterReturnBikesRented extends RecyclerView.Adapter<BikesAdapterReturnBikesRented.ImageViewHolder> {
 
-    private Context bikesContext;
-    private List<RentBikes> bikesUploads;
+    private final Context bikesContext;
+    private final List<RentBikes> bikesUploads;
 
     public BikesAdapterReturnBikesRented(Context bikes_context, List<RentBikes> bikes_uploads){
         bikesContext = bikes_context;
@@ -75,7 +75,7 @@ public class BikesAdapterReturnBikesRented extends RecyclerView.Adapter<BikesAda
         return bikesUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder {
+    public static class ImageViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView imageRentedBikeUser;
         public TextView tvRentedBikeStoreNameUser;

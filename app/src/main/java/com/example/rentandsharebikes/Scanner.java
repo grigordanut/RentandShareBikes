@@ -5,12 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.TextView;
 
@@ -40,7 +38,10 @@ public class Scanner extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        resultData.setText(result.getText());
+                        //resultData.setText(result.getText());
+                        //Log.d("tag","secret "+result.getText());
+                        Intent intent = new Intent(getApplicationContext(),LockActivity.class);
+                        startActivity(intent);
                     }
                 });
             }

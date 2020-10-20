@@ -34,15 +34,6 @@
     <string name="tv_adminBikeShared">Bikes available to Share</string>
     <string name="tv_adminBikeSharedAv">0</string>
 
-
-    <string name="open_adminPage">Open</string>
-    <string name="close_adminPage">Close</string>
-    <string name="btn_addBikeStore">Add Bike Store</string>
-    <string name="btn_showBikeStores">Show Bike Stores</string>
-    <string name="btn_addBikesToStore">Add Bikes to Store</string>
-    <string name="btn_showBikesList">Show Bikes List</string>
-    <string name="btn_showCoordinates">Show Coordinates</string>
-
     <!--    Bike Store Image Add Bikes Admin-->
     <string name="tv_bikeStoreImageAddBikes">Select the Bike Store</string>
 
@@ -212,8 +203,6 @@
     <string name="btn_signUpCustomer">Register</string>
 
     <!--    Main Activity Layout Page-->
-    <string name="open_mainActivity">Open</string>
-    <string name="close_mainActivity">Close</string>
     <string name="tv_mainPage1">Welcome to</string>
     <string name="tv_mainPage2">Rent and Share Bikes</string>
     <string name="tv_mainPageInfo">The company offers services of renting and sharing bikes.</string>
@@ -330,7 +319,7 @@
     <string name="btn_shareUpBike">Save Updated Bike</string>
 
     <!--    Update Bike Store Details-->
-    <string name="tv_updateStoreDetails">Update Bike Store Details</string>
+    <string name="tv_updateStoreDetails">Update Bike Store details</string>
     <string name="tv_updateStoreLocation">Bike Store Location</string>
     <string name="et_updateStoreLocation">Bike Store Location</string>
     <string name="tv_updateStoreAddress">Bike Store Address</string>
@@ -427,8 +416,8 @@
     <string name="menu_adminSettings">Admin</string>
     <string name="menu_adminLogOut">Log Out</string>
 
-    <!--    Menu Show Bikes Custom-->
-    <string name="menuPasswordCustom_goBack">Go Back</string>
+    <!--    Menu Change Password Custom-->
+    <string name="menu_PasswordCustom_goBack">Go Back</string>
 
     <!--    Menu Customer Main Page-->
     <string name="menuUser_MainSettings">User Details</string>
@@ -443,6 +432,8 @@
     <string name="menuUser_ShareGoBack">Go Back</string>
 
     <!--    Menu Drawer Admin-->
+    <string name="open_adminPage">Open</string>
+    <string name="close_adminPage">Close</string>
     <string name="menuDAdmin_addBikeStores">Add Bike Stores</string>
     <string name="menuDAdmin_showBikeStores">Show Bike Stores</string>
     <string name="menuDAdmin_addBikeToStores">Add Bikes to Stores</string>
@@ -468,6 +459,8 @@
     <string name="mDUser_removeAvailableBikesShare">Remove My Bikes</string>
 
     <!--    Menu Drawer Main-->
+    <string name="open_mainActivity">Open</string>
+    <string name="close_mainActivity">Close</string>
     <string name="menu_myAccount">My Account</string>
     <string name="menu_storesAvailable">Stores Available</string>
     <string name="menu_bikesAvToRent">Bike Available</string>

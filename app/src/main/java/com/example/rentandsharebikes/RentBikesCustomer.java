@@ -4,29 +4,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,13 +36,8 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
-import java.net.URL;
-import java.text.DateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Objects;
 
 import static com.google.firebase.storage.FirebaseStorage.getInstance;
@@ -242,7 +229,6 @@ public class RentBikesCustomer extends AppCompatActivity {
                 }
             });
         }
-
     }
 
     private Boolean validateBikeRentDetails() {
@@ -313,20 +299,20 @@ public class RentBikesCustomer extends AppCompatActivity {
             @SuppressLint({"SetTextI18n", "NewApi"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dsUser : dataSnapshot.getChildren()) {
-                    final FirebaseUser custom_Details = firebaseAuth.getCurrentUser();
+                for (DataSnapshot ds_user : dataSnapshot.getChildren()) {
+                    FirebaseUser user_Details = firebaseAuth.getCurrentUser();
 
-                    final Customers custom_data = dsUser.getValue(Customers.class);
+                    Customers customer = ds_user.getValue(Customers.class);
 
-                    assert custom_Details != null;
-                    assert custom_data != null;
-                    if (Objects.requireNonNull(custom_Details.getEmail()).equalsIgnoreCase(custom_data.getEmail_Customer())) {
-                        tVRentBikes.setText("Welcome: "+custom_data.getfName_Customer()+" "+custom_data.getlName_Customer());
-                        etFNameRentBikes.setText(custom_data.getfName_Customer());
-                        etLNameRentBikes.setText(custom_data.getlName_Customer());
-                        etPhoneNoRentBikes.setText(custom_data.getPhoneNumb_Customer());
-                        etEmailRentBikes.setText(custom_data.getEmail_Customer());
-                        bike_CusIdRentBikes = custom_Details.getUid();
+                    assert user_Details != null;
+                    assert customer != null;
+                    if (user_Details.getUid().equals(ds_user.getKey())) {
+                        tVRentBikes.setText("Welcome: "+customer.getfName_Customer()+" "+customer.getlName_Customer());
+                        etFNameRentBikes.setText(customer.getfName_Customer());
+                        etLNameRentBikes.setText(customer.getlName_Customer());
+                        etPhoneNoRentBikes.setText(customer.getPhoneNumb_Customer());
+                        etEmailRentBikes.setText(customer.getEmail_Customer());
+                        bike_CusIdRentBikes = user_Details.getUid();
                     }
                 }
             }

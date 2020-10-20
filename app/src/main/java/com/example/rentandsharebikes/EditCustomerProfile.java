@@ -63,21 +63,21 @@ public class EditCustomerProfile extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 progressDialog.show();
                 //retrieve data from database
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                for (DataSnapshot ds_User : dataSnapshot.getChildren()) {
+                    FirebaseUser user_Db = firebaseAuth.getCurrentUser();
 
-                    Customers customers = child.getValue(Customers.class);
+                    Customers custom_Data = ds_User.getValue(Customers.class);
 
                     progressDialog.dismiss();
-                    assert user != null;
-                    assert customers != null;
-                    if (user.getUid().equals(child.getKey())){
-                        newFirstName.setText(customers.getfName_Customer());
-                        newLastName.setText(customers.getlName_Customer());
-                        newUserName.setText(customers.getuName_Customer());
-                        newPhone.setText(customers.getPhoneNumb_Customer());
-                        newEmail.setText(customers.getEmail_Customer());
-                        textViewEditProfile.setText("Edit profile of: " +customers.getfName_Customer()+" "+customers.getlName_Customer());
+                    assert user_Db != null;
+                    assert custom_Data != null;
+                    if (user_Db.getUid().equals(ds_User.getKey())){
+                        newFirstName.setText(custom_Data.getfName_Customer());
+                        newLastName.setText(custom_Data.getlName_Customer());
+                        newUserName.setText(custom_Data.getuName_Customer());
+                        newPhone.setText(custom_Data.getPhoneNumb_Customer());
+                        newEmail.setText(custom_Data.getEmail_Customer());
+                        textViewEditProfile.setText("Edit profile of: " +custom_Data.getfName_Customer()+" "+custom_Data.getlName_Customer());
                     }
                 }
             }
@@ -132,6 +132,7 @@ public class EditCustomerProfile extends AppCompatActivity {
         startActivity(new Intent(EditCustomerProfile.this, CustomerPageMain.class));
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

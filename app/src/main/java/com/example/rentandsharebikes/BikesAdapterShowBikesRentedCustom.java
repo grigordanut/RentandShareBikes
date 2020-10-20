@@ -17,8 +17,8 @@ import java.util.List;
 
 public class BikesAdapterShowBikesRentedCustom extends RecyclerView.Adapter<BikesAdapterShowBikesRentedCustom.ImageViewHolder> {
 
-    private Context bikesContext;
-    private List<RentBikes> bikesUploads;
+    private final Context bikesContext;
+    private final List<RentBikes> bikesUploads;
     private OnItemClickListener clickListener;
 
     public BikesAdapterShowBikesRentedCustom(Context bikes_context, List<RentBikes> bikes_uploads){

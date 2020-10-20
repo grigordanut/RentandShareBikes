@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity implements BikeStoreAdapterShowStoresListCustomer.OnItemClickListener {
+
     private TextView textViewBikeStoresImageShowStoreListCustomer;
 
     private DatabaseReference databaseReference;
@@ -74,7 +75,7 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     BikeStore bikeStore = postSnapshot.getValue(BikeStore.class);
                     assert bikeStore != null;
-                    bikeStore.setStoreKey(postSnapshot.getKey());
+                    bikeStore.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
                     textViewBikeStoresImageShowStoreListCustomer.setText(bikeStoreList.size()+" Bike Stores available ");
                 }

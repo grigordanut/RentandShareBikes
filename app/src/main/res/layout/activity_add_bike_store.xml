@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
+    tools:context=".AddBikeStore"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="30dp"
-        tools:context=".AddBikeStore">
+        android:paddingBottom="30dp">
 
         <TextView
             android:id="@+id/tvAddBikeStores"
@@ -138,12 +138,12 @@
             android:layout_height="50dp"
             android:layout_below="@+id/WrapperBikeStoreNrSlots"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/btn_inverse_fading"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
             android:layout_marginTop="10dp"
+            android:background="@drawable/btn_inverse_fading"
             android:text="@string/btn_saveBikeStore"
-            android:textSize="22sp" />
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 </ScrollView>

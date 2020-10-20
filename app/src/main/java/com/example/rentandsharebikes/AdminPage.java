@@ -1,5 +1,6 @@
 package com.example.rentandsharebikes;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,25 +26,21 @@ import java.util.List;
 
 public class AdminPage extends AppCompatActivity {
 
-    //Display data from Bike Stores database
-    private FirebaseStorage firebaseStBikeSores;
-    private DatabaseReference databaseRefBikeStores;
-    private ValueEventListener bikeStoresEventListener;
+    //Retrieve data from Bike Stores database
+    private DatabaseReference dbRefBikeStoresAv;
+    private ValueEventListener evListenerBikeStoreAv;
 
-    //Display data from Bikes table database
-    private FirebaseStorage firebaseStBikesAvRent;
-    private DatabaseReference databaseRefBikesAvRent;
-    private ValueEventListener bikesAvRentEventListener;
+    //Retrieve data from Bikes database
+    private DatabaseReference dbRefBikesRentAv;
+    private ValueEventListener evListenerBikesRentAv;
 
-    //Display data from Rent Bikes table database
-    private FirebaseStorage firebaseStBikesRented;
-    private DatabaseReference databaseRefBikesRented;
-    private ValueEventListener bikesRentedEventListener;
+    //Retrieve data from Rent Bikes database
+    private DatabaseReference dbRefBikesRent;
+    private ValueEventListener eventListenerBikesRent;
 
-    //Display data from Share Bikes table database
-    private FirebaseStorage firebaseStBikesAvShare;
-    private DatabaseReference databaseRefBikesAvShare;
-    private ValueEventListener bikesAvShareEventListener;
+    //Retrieve data from Share Bikes database
+    private DatabaseReference dbRefBikesShareAv;
+    private ValueEventListener eventListenerBikeShareAv;
 
     private List<BikeStore> bikeStoresList;
     private List<Bikes> bikesListAvRent;
@@ -67,16 +64,27 @@ public class AdminPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_page);
 
+        //Retrieve data from Bike Store table
+        dbRefBikeStoresAv = FirebaseDatabase.getInstance().getReference("Bike Stores");
+
+        //Retrieve data from Bikes table
+        dbRefBikesRentAv = FirebaseDatabase.getInstance().getReference("Bikes");
+
+        //Retrieve data from Rent Bikes table
+        dbRefBikesRent = FirebaseDatabase.getInstance().getReference("Rent Bikes");
+
+        //Retrieve data Share Bikes table
+        dbRefBikesShareAv = FirebaseDatabase.getInstance().getReference("Share Bikes");
+
         bikeStoresList = new ArrayList<>();
         bikesListAvRent = new ArrayList<>();
         bikesListRented = new ArrayList<>();
         bikesListAvShare = new ArrayList<>();
 
-        tVAdminStoresAv = (TextView) findViewById(R.id.tvAdminStoresAv);
-        tVAdminBikesRentAv = (TextView) findViewById(R.id.tvAdminBikesRentAv);
-        tVAdminBikesRented = (TextView) findViewById(R.id.tvAdminBikesRentedAv);
-        tVAdminBikesShareAv = (TextView) findViewById(R.id.tvAdminBikesShareAv);
-
+        tVAdminStoresAv = findViewById(R.id.tvAdminStoresAv);
+        tVAdminBikesRentAv = findViewById(R.id.tvAdminBikesRentAv);
+        tVAdminBikesRented = findViewById(R.id.tvAdminBikesRentedAv);
+        tVAdminBikesShareAv = findViewById(R.id.tvAdminBikesShareAv);
 
         drawerLayoutAdmin = findViewById(R.id.activity_admin_page);
         drawerToggleAdmin = new ActionBarDrawerToggle(this,drawerLayoutAdmin, R.string.open_adminPage, R.string.close_adminPage);
@@ -90,6 +98,7 @@ public class AdminPage extends AppCompatActivity {
 
         //Adding Click Events to our navigation drawer item
         navigationViewAdmin.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
@@ -124,7 +133,7 @@ public class AdminPage extends AppCompatActivity {
                         Toast.makeText(AdminPage.this, "Rented Bikes",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikesImageShowBikesRentedAdmin.class));
                         break;
-                        //Show the full list of rented Bikes
+                    //Show the full list of rented Bikes
                     case R.id.adminShow_bikesShared:
                         Toast.makeText(AdminPage.this, "Shared Bikes",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikesImageShowSharedBikesAdmin.class));
@@ -160,10 +169,8 @@ public class AdminPage extends AppCompatActivity {
             return true;
         }
 
-        switch (item.getItemId()) {
-            case R.id.logOutUser:{
-                LogOut();
-            }
+        if (item.getItemId() == R.id.logOutUser) {
+            LogOut();
         }
 
         return super.onOptionsItemSelected(item);
@@ -178,19 +185,16 @@ public class AdminPage extends AppCompatActivity {
         loadBikeShareAv();
     }
 
+    //Display the Bike Stores available
     private void loadBikeStoresAv() {
-        //initialize the bike storage database
-        firebaseStBikeSores = FirebaseStorage.getInstance();
-        databaseRefBikeStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
-
-        bikeStoresEventListener = databaseRefBikeStores.addValueEventListener(new ValueEventListener() {
+        evListenerBikeStoreAv = dbRefBikeStoresAv.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikeStoresList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     BikeStore bike_Stores = postSnapshot.getValue(BikeStore.class);
                     assert bike_Stores != null;
-                    bike_Stores.setStoreKey(postSnapshot.getKey());
+                    bike_Stores.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoresList.add(bike_Stores);
                     numberStoresAvailable = bikeStoresList.size();
                     tVAdminStoresAv.setText(String.valueOf(numberStoresAvailable));
@@ -204,13 +208,10 @@ public class AdminPage extends AppCompatActivity {
         });
     }
 
-
+    //Display the Bikes available to rent
     private void loadBikeRentAv() {
-        //initialize the bike storage database
-        firebaseStBikesAvRent = FirebaseStorage.getInstance();
-        databaseRefBikesAvRent = FirebaseDatabase.getInstance().getReference("Bikes");
 
-        bikesAvRentEventListener = databaseRefBikesAvRent.addValueEventListener(new ValueEventListener() {
+        evListenerBikesRentAv = dbRefBikesRentAv.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikesListAvRent.clear();
@@ -231,12 +232,10 @@ public class AdminPage extends AppCompatActivity {
         });
     }
 
+    //Display the Bikes rented by customers
     private void loadBikeRented() {
-        //initialize the bike storage database
-        firebaseStBikesRented = FirebaseStorage.getInstance();
-        databaseRefBikesRented = FirebaseDatabase.getInstance().getReference("Rent Bikes");
 
-        bikesRentedEventListener = databaseRefBikesRented.addValueEventListener(new ValueEventListener() {
+        eventListenerBikesRent = dbRefBikesRent.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikesListRented.clear();
@@ -257,12 +256,10 @@ public class AdminPage extends AppCompatActivity {
         });
     }
 
+    //Display the Bike Shares available
     private void loadBikeShareAv() {
-        //initialize the bike storage database
-        firebaseStBikesAvShare = FirebaseStorage.getInstance();
-        databaseRefBikesAvShare = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
-        bikesAvShareEventListener = databaseRefBikesAvShare.addValueEventListener(new ValueEventListener() {
+        eventListenerBikeShareAv = dbRefBikesShareAv.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikesListAvShare.clear();

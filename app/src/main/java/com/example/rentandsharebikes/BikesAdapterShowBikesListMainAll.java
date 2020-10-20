@@ -19,8 +19,8 @@ import java.util.List;
 
 public class BikesAdapterShowBikesListMainAll extends RecyclerView.Adapter<BikesAdapterShowBikesListMainAll.ImageViewHolder> {
 
-    private Context bikesContext;
-    private List<Bikes> bikesUploads;
+    private final Context bikesContext;
+    private final List<Bikes> bikesUploads;
 
     private OnItemClickListener clickListener;
 

@@ -421,19 +421,19 @@ public class ShareBikesCustomer extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //retrieve data from database
-                for (DataSnapshot dsUser : dataSnapshot.getChildren()) {
-                    final FirebaseUser custom_Details = firebaseAuth.getCurrentUser();
+                for (DataSnapshot ds_User : dataSnapshot.getChildren()) {
+                    FirebaseUser user_Db = firebaseAuth.getCurrentUser();
 
-                    final Customers custom_data = dsUser.getValue(Customers.class);
-                    assert custom_Details != null;
-                    assert custom_data != null;
-                    if (Objects.requireNonNull(custom_Details.getEmail()).equalsIgnoreCase(custom_data.getEmail_Customer())) {
-                        tVShareBikes.setText("Welcome: " + custom_data.getfName_Customer() + " " + custom_data.getlName_Customer());
-                        etFNameShareBike.setText(custom_data.getfName_Customer());
-                        etLNameShareBike.setText(custom_data.getlName_Customer());
-                        etPNoShareBike.setText(custom_data.getPhoneNumb_Customer());
-                        etEmailShareBike.setText(custom_data.getEmail_Customer());
-                        customId_ShareBikes = custom_Details.getUid();
+                    Customers custom_Data = ds_User.getValue(Customers.class);
+                    assert user_Db != null;
+                    assert custom_Data != null;
+                    if (user_Db.getUid().equals(ds_User.getKey())) {
+                        tVShareBikes.setText("Welcome: " + custom_Data.getfName_Customer() + " " + custom_Data.getlName_Customer());
+                        etFNameShareBike.setText(custom_Data.getfName_Customer());
+                        etLNameShareBike.setText(custom_Data.getlName_Customer());
+                        etPNoShareBike.setText(custom_Data.getPhoneNumb_Customer());
+                        etEmailShareBike.setText(custom_Data.getEmail_Customer());
+                        customId_ShareBikes = user_Db.getUid();
                     }
                 }
             }

@@ -61,7 +61,7 @@ public class BikeStoreImageRentBikesCustom extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     BikeStore bikeStore = postSnapshot.getValue(BikeStore.class);
                     assert bikeStore != null;
-                    bikeStore.setStoreKey(postSnapshot.getKey());
+                    bikeStore.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
                 }
                 bikeStoreAdapterRentBikesCustom = new BikeStoreAdapterRentBikesCustom(BikeStoreImageRentBikesCustom.this, bikeStoreList);

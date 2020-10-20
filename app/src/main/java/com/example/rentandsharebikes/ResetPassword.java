@@ -3,6 +3,7 @@ package com.example.rentandsharebikes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -43,13 +44,11 @@ public class ResetPassword extends AppCompatActivity {
                 String email_ResetPass = emailResetPass.getText().toString().trim();
 
                  //check the input fields
-                if (email_ResetPass.equals("")){
-                    Toast.makeText(ResetPassword.this, "Please enter your registered email ID",Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(email_ResetPass)){
                     emailResetPass.setError("The Email address can not be empty");
                 }
 
                 else if(!Patterns.EMAIL_ADDRESS.matcher(email_ResetPass).matches()){
-                    Toast.makeText(ResetPassword.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
                     emailResetPass.setError("Enter a valid Email Address");
                 }
 
@@ -73,7 +72,7 @@ public class ResetPassword extends AppCompatActivity {
         });
 
         textViewEmailResetPass = (TextView) findViewById(R.id.text_dummy_hint_emailResetPass);
-        // Email Address
+        //Email Address
         emailResetPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Adding Click Events to our navigation drawer item
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, BikesImageShowSharedBikesMain.class));
                         break;
                     case R.id.contactUs:
-                        startActivity(new Intent(MainActivity.this, ContactUs.class));
+                        startActivity(new Intent(MainActivity.this, AdminPage.class));
                         break;
                     default:
                         return true;
@@ -163,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     BikeStore bike_Stores = postSnapshot.getValue(BikeStore.class);
                     assert bike_Stores != null;
-                    bike_Stores.setStoreKey(postSnapshot.getKey());
+                    bike_Stores.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoresList.add(bike_Stores);
                     numberStoresAvailable = bikeStoresList.size();
                     tVMainStoresAv.setText(String.valueOf(numberStoresAvailable));

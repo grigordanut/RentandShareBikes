@@ -164,7 +164,7 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
             bike_KeyUpShare = bundle.getString("BKeyUpdate");
         }
 
-        tVUpShareBikes.setText("Welcome: " + bike_shareFName + " " +bike_shareLName);
+        tVUpShareBikes.setText("Welcome: " + bike_shareFName + " " + bike_shareLName);
 
         etUpFNameShareBike.setText(bike_shareFName);
         etUpLNameShareBike.setText(bike_shareLName);
@@ -614,44 +614,4 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
-
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        loadCustomDetailsUpShareBikes();
-//    }
-//
-//    public void loadCustomDetailsUpShareBikes() {
-//        //retrieve data from database into text views
-//        databaseRefCustomUpdateShare = FirebaseDatabase.getInstance().getReference("Customers");
-//        databaseRefCustomUpdateShare.addValueEventListener(new ValueEventListener() {
-//            @SuppressLint({"SetTextI18n", "NewApi"})
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                //retrieve data from database
-//                for (DataSnapshot dsUser : dataSnapshot.getChildren()) {
-//                    final FirebaseUser custom_Details = firebaseAuth.getCurrentUser();
-//
-//                    final Customers custom_data = dsUser.getValue(Customers.class);
-//                    assert custom_Details != null;
-//                    assert custom_data != null;
-//                    if (Objects.requireNonNull(custom_Details.getEmail()).equalsIgnoreCase(custom_data.getEmail_Customer())) {
-//                        tVUpShareBikes.setText("Welcome: " + custom_data.getfName_Customer() + " " + custom_data.getlName_Customer());
-//                        etUpFNameShareBike.setText(custom_data.getfName_Customer());
-//                        etUpLNameShareBike.setText(custom_data.getlName_Customer());
-//                        etUpPNoShareBike.setText(custom_data.getPhoneNumb_Customer());
-//                        etUpEmailShareBike.setText(custom_data.getEmail_Customer());
-//                        customId_UpShareBikes = custom_Details.getUid();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Toast.makeText(UpdateBikeSharedDetails.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 }

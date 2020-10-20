@@ -61,7 +61,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
     private ValueEventListener showRentedBikesEventListener;
 
     //Remove bikes from Rent Bikes database
-    private FirebaseStorage firebaseStRemoveRentBikes;
     private DatabaseReference databaseRefRemoveRentBikes;
 
     //Return bikes to Bikes database
@@ -226,8 +225,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
                 }
             }
         });
-
-        progressDialog.show();
     }
 
     public void returnRentedBike() {
@@ -244,7 +241,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
             tVManufact_ReturnBikes = tVManufactReturnBikes.getText().toString().trim();
             tVPrice_ReturnBikes = Double.parseDouble(tVPriceReturnBikes.getText().toString().trim());
 
-            storageRefReturnBikes = getInstance().getReference("Bikes");
+            storageRefReturnBikes = FirebaseStorage.getInstance().getReference("Bikes");
             databaseRefReturnBikes = FirebaseDatabase.getInstance().getReference("Bikes");
 
             progressDialog.setTitle("The bike is returning");
@@ -345,7 +342,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
         super.onStart();
         loadCustomerDetailsRentBikes();
         loadBikesListReturn();
-        progressDialog.dismiss();
     }
 
     //Display customer details
@@ -358,18 +354,18 @@ public class ReturnRentedBikes extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //retrieve data from database
-                for (DataSnapshot dsUser : dataSnapshot.getChildren()) {
-                    final FirebaseUser custom_Details = firebaseAuth.getCurrentUser();
+                for (DataSnapshot ds_User : dataSnapshot.getChildren()) {
+                    FirebaseUser user_Db = firebaseAuth.getCurrentUser();
 
-                    final Customers custom_data = dsUser.getValue(Customers.class);
+                    Customers custom_Data = ds_User.getValue(Customers.class);
 
-                    assert custom_Details != null;
-                    assert custom_data != null;
-                    if (Objects.requireNonNull(custom_Details.getEmail()).equalsIgnoreCase(custom_data.getEmail_Customer())) {
-                        tVReturnBikes.setText("Welcome: " + custom_data.getfName_Customer() + " " + custom_data.getlName_Customer());
-                        etFNameReturnBikes.setText(custom_data.getfName_Customer());
-                        etLNameReturnBikes.setText(custom_data.getlName_Customer());
-                        bike_CusIdRentedBikes = custom_Details.getUid();
+                    assert user_Db != null;
+                    assert custom_Data != null;
+                    if (user_Db.getUid().equals(ds_User.getKey())) {
+                        tVReturnBikes.setText("Welcome: " + custom_Data.getfName_Customer() + " " + custom_Data.getlName_Customer());
+                        etFNameReturnBikes.setText(custom_Data.getfName_Customer());
+                        etLNameReturnBikes.setText(custom_Data.getlName_Customer());
+                        bike_CusIdRentedBikes = user_Db.getUid();
                     }
                 }
             }

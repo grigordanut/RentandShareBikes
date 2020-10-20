@@ -66,7 +66,7 @@ public class BikeStoreAdapterAddBikesAdmin extends RecyclerView.Adapter<BikeStor
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Bikes bikes = postSnapshot.getValue(Bikes.class);
                     assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(uploadCurrent.getStoreKey())) {
+                    if (bikes.getBikeStoreKey().equals(uploadCurrent.getBikeStore_Key())) {
                         bikes.setBike_Key(postSnapshot.getKey());
                         bikesList.add(bikes);
                         numberBikesAvailable = bikesList.size();
@@ -86,7 +86,7 @@ public class BikeStoreAdapterAddBikesAdmin extends RecyclerView.Adapter<BikeStor
             public void onClick(View v) {
                 Intent intent = new Intent(bikeStoreContext,AddBikes.class);
                 intent.putExtra("SName",uploadCurrent.getBikeStore_Location());
-                intent.putExtra("SKey",uploadCurrent.getStoreKey());
+                intent.putExtra("SKey",uploadCurrent.getBikeStore_Key());
                 bikeStoreContext.startActivity(intent);
             }
         });

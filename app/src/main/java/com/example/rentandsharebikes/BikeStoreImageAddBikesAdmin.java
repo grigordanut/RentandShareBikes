@@ -29,7 +29,6 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +60,7 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     BikeStore bikeStore = postSnapshot.getValue(BikeStore.class);
                     assert bikeStore != null;
-                    bikeStore.setStoreKey(postSnapshot.getKey());
+                    bikeStore.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoreList.add(bikeStore);
                 }
                 bikeStoreAdapterAddBikesAdmin = new BikeStoreAdapterAddBikesAdmin(BikeStoreImageAddBikesAdmin.this, bikeStoreList);

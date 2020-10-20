@@ -15,7 +15,6 @@ public class Bikes {
 
     }
 
-
     public Bikes(String bike_Condition, String bike_Model, String bike_Manufacturer, double bike_Price,
                  String bike_Image, String bikeStoreName, String bikeStoreKey, String bike_Key) {
         this.bike_Condition = bike_Condition;

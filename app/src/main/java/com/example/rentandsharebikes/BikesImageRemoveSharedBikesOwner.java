@@ -64,7 +64,6 @@ public class BikesImageRemoveSharedBikesOwner extends AppCompatActivity implemen
         sharedBikesList = new ArrayList<>();
 
         progressDialog.show();
-
     }
 
     @SuppressLint("SetTextI18n")
