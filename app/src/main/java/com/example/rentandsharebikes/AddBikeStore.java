@@ -1,6 +1,5 @@
 package com.example.rentandsharebikes;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -24,7 +23,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -33,10 +31,10 @@ import java.util.Objects;
 
 public class AddBikeStore extends AppCompatActivity {
 
-    //Retrieve data from Bike Store database
+    //Declare Bike Store database variables (Retrieve data)
     private DatabaseReference dbRefStoreCheck;
 
-    //Add data to Bike Stores database
+    //Declare Bike Store database variables (Upload data)
     private DatabaseReference dbRefStoreUpload;
 
     private EditText etStoreLocation, etStoreAddress, etStoreLatitude, etStoreLongitude, etStoreNumberSlots;
@@ -48,8 +46,8 @@ public class AddBikeStore extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
-    private List<BikeStore> bikeStoreList;
-    private List<BikeStore> bikeStoreListCheck;
+    private List<BikeStores> bikeStoresList;
+    private List<BikeStores> bikeStoresListCheck;
 
     private String store_Key;
 
@@ -59,13 +57,13 @@ public class AddBikeStore extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bike_store);
 
-        bikeStoreList = new ArrayList<>();
-        bikeStoreListCheck = new ArrayList<>();
+        bikeStoresList = new ArrayList<>();
+        bikeStoresListCheck = new ArrayList<>();
 
         //Retrieve Bike Store data from Bike Stores table
         dbRefStoreCheck = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
-        //Save Bike Store data into Bike Stores table
+        //Create Bike Store Store table into database
         dbRefStoreUpload = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
         //Receive Bike Store address details from other activity
@@ -142,7 +140,7 @@ public class AddBikeStore extends AppCompatActivity {
             String storeID = dbRefStoreUpload.push().getKey();
             store_Key = storeID;
             assert storeID != null;
-            BikeStore bike_store = new BikeStore(etStore_Location, etStore_Address, etStore_Latitude, etStore_Longitude, etStore_NrSlots, store_Key);
+            BikeStores bike_store = new BikeStores(etStore_Location, etStore_Address, etStore_Latitude, etStore_Longitude, etStore_NrSlots, store_Key);
 
             dbRefStoreUpload.child(storeID).setValue(bike_store).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override

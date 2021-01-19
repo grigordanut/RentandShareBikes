@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
     tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
+    tools:layout_editor_absoluteY="0dp"
+    tools:context=".ContactUs">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".ContactUs">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvContactUs"

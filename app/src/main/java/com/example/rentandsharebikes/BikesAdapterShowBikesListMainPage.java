@@ -41,7 +41,6 @@ public class BikesAdapterShowBikesListMainPage extends RecyclerView.Adapter<Bike
     public void onBindViewHolder(ImageViewHolder holder, int position) {
 
         Bikes uploadCurrent = bikesUploads.get(position);
-        holder.tVBikeStoreAvMain.setText(uploadCurrent.getBikeStoreName());
         holder.tVBikeCondAvMain.setText(uploadCurrent.getBike_Condition());
         holder.tVBikeModelAvMain.setText(uploadCurrent.getBike_Model());
         holder.tVBikeManAvMain.setText(uploadCurrent.getBike_Manufacturer());
@@ -63,7 +62,6 @@ public class BikesAdapterShowBikesListMainPage extends RecyclerView.Adapter<Bike
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView imBikeAvMain;
-        public TextView tVBikeStoreAvMain;
         public TextView tVBikeCondAvMain;
         public TextView tVBikeModelAvMain;
         public TextView tVBikeManAvMain;
@@ -73,7 +71,6 @@ public class BikesAdapterShowBikesListMainPage extends RecyclerView.Adapter<Bike
             super(itemView);
 
             imBikeAvMain = itemView.findViewById(R.id.imgBikesAvMain);
-            tVBikeStoreAvMain = itemView.findViewById(R.id.tvBikeStoreAvMain);
             tVBikeCondAvMain = itemView.findViewById(R.id.tvBikeCondAvMain);
             tVBikeModelAvMain = itemView.findViewById(R.id.tvBikeModelAvMain);
             tVBikeManAvMain = itemView.findViewById(R.id.tvBikeManufactAvMain);

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference databaseRefBikesAvShare;
     private ValueEventListener bikesAvShareEventListener;
 
-    private List<BikeStore> bikeStoresList;
+    private List<BikeStores> bikeStoresList;
     private List<Bikes> bikesListAvRent;
     private List<ShareBikes> bikesListAvShare;
 
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikeStoresList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStore bike_Stores = postSnapshot.getValue(BikeStore.class);
+                    BikeStores bike_Stores = postSnapshot.getValue(BikeStores.class);
                     assert bike_Stores != null;
                     bike_Stores.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoresList.add(bike_Stores);

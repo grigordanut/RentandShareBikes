@@ -45,8 +45,6 @@ public class BikesImageShowBikesListAdminFull extends AppCompatActivity implemen
 
     private Button buttonAddMoreBikesFull, buttonBackAdminPageBikesFull;
 
-    String bikeStore_Name = "";
-
     private ProgressDialog progressDialog;
 
     @SuppressLint("SetTextI18n")

@@ -26,7 +26,7 @@ import static android.icu.text.DateFormat.NONE;
 public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<BikeStoreAdapterShowStoresListAdmin.ImageViewHolder>{
 
     private Context bikeStoreContext;
-    private List<BikeStore> bikeStoreUploads;
+    private List<BikeStores> bikeStoresUploads;
 
     private OnItemClickListener clickListener;
 
@@ -38,9 +38,9 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
 
     private int numberBikesAvailable;
 
-    public BikeStoreAdapterShowStoresListAdmin(Context bikeStore_context, List<BikeStore> bikeStore_uploads) {
+    public BikeStoreAdapterShowStoresListAdmin(Context bikeStore_context, List<BikeStores> bikeStores_uploads) {
         bikeStoreContext = bikeStore_context;
-        bikeStoreUploads = bikeStore_uploads;
+        bikeStoresUploads = bikeStores_uploads;
     }
 
     @NonNull
@@ -52,7 +52,7 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
 
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, int position) {
-        final BikeStore uploadCurrent = bikeStoreUploads.get(position);
+        final BikeStores uploadCurrent = bikeStoresUploads.get(position);
         holder.tvStoreBikeLocation.setText(uploadCurrent.getBikeStore_Location());
         holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
         holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
@@ -88,7 +88,7 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
 
     @Override
     public int getItemCount() {
-        return bikeStoreUploads.size();
+        return bikeStoresUploads.size();
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,

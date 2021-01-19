@@ -56,7 +56,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
 
     private TextView tVCustomPageRent, tVCustomPageRentPerDetails,tVCustomStoresAv, tVCustomBikesRentAv, tVCustomBikesRented;
 
-    private List<BikeStore> bikeStoresListCustom;
+    private List<BikeStores> bikeStoresListCustom;
     private List<Bikes> bikesListAvRentCustom;
     private List<RentBikes> bikesListRentCustom;
 
@@ -220,7 +220,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikeStoresListCustom.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStore bike_Stores = postSnapshot.getValue(BikeStore.class);
+                    BikeStores bike_Stores = postSnapshot.getValue(BikeStores.class);
                     assert bike_Stores != null;
                     bike_Stores.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoresListCustom.add(bike_Stores);

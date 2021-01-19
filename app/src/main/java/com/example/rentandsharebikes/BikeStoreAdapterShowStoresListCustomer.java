@@ -1,9 +1,7 @@
 package com.example.rentandsharebikes;
 
 import android.content.Context;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -21,12 +19,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.icu.text.DateFormat.NONE;
-
 public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter<BikeStoreAdapterShowStoresListCustomer.ImageViewHolder> {
 
     private Context bikeStoreContext;
-    private List<BikeStore> bikeStoreUploads;
+    private List<BikeStores> bikeStoresUploads;
 
     private OnItemClickListener clickListener;
 
@@ -38,9 +34,9 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
 
     private int numberBikesAvailable;
 
-    public BikeStoreAdapterShowStoresListCustomer(Context bikeStore_context, List<BikeStore> bikeStore_uploads) {
+    public BikeStoreAdapterShowStoresListCustomer(Context bikeStore_context, List<BikeStores> bikeStores_uploads) {
         bikeStoreContext = bikeStore_context;
-        bikeStoreUploads = bikeStore_uploads;
+        bikeStoresUploads = bikeStores_uploads;
     }
 
     @NonNull
@@ -52,7 +48,7 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
 
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, int position) {
-        final BikeStore uploadCurrent = bikeStoreUploads.get(position);
+        final BikeStores uploadCurrent = bikeStoresUploads.get(position);
         holder.tvStoreBikeLocation.setText(uploadCurrent.getBikeStore_Location());
         holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
         holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
@@ -88,7 +84,7 @@ public class BikeStoreAdapterShowStoresListCustomer extends RecyclerView.Adapter
 
     @Override
     public int getItemCount() {
-        return bikeStoreUploads.size();
+        return bikeStoresUploads.size();
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

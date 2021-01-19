@@ -11,22 +11,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-
 import java.util.List;
 
 public class BikeStoreAdapterReturnBikeDifferentStore extends RecyclerView.Adapter<BikeStoreAdapterReturnBikeDifferentStore.ImageViewHolder> {
 
     private Context bikeStoreContext;
-    private List<BikeStore> bikeStoreUploads;
+    private List<BikeStores> bikeStoresUploads;
 
     private OnItemClickListener clickListener;
 
-    public BikeStoreAdapterReturnBikeDifferentStore(Context bikeStore_context, List<BikeStore> bikeStore_uploads) {
+    public BikeStoreAdapterReturnBikeDifferentStore(Context bikeStore_context, List<BikeStores> bikeStores_uploads) {
         bikeStoreContext = bikeStore_context;
-        bikeStoreUploads = bikeStore_uploads;
+        bikeStoresUploads = bikeStores_uploads;
     }
 
     @NonNull
@@ -38,14 +34,14 @@ public class BikeStoreAdapterReturnBikeDifferentStore extends RecyclerView.Adapt
 
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, int position) {
-        final BikeStore uploadCurrent = bikeStoreUploads.get(position);
+        final BikeStores uploadCurrent = bikeStoresUploads.get(position);
         holder.tvStoreBikeLocReturn.setText(uploadCurrent.getBikeStore_Location());
         holder.tvStoreBikeAddReturn.setText(uploadCurrent.getBikeStore_Address());
     }
 
     @Override
     public int getItemCount() {
-        return bikeStoreUploads.size();
+        return bikeStoresUploads.size();
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,

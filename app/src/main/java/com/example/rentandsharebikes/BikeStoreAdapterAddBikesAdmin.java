@@ -23,7 +23,7 @@ import java.util.List;
 public class BikeStoreAdapterAddBikesAdmin extends RecyclerView.Adapter<BikeStoreAdapterAddBikesAdmin.ImageViewHolder> {
 
     private Context bikeStoreContext;
-    private List<BikeStore> bikeStoreUploads;
+    private List<BikeStores> bikeStoresUploads;
 
     private FirebaseStorage bikeStorage;
     private DatabaseReference databaseReference;
@@ -33,9 +33,9 @@ public class BikeStoreAdapterAddBikesAdmin extends RecyclerView.Adapter<BikeStor
 
     private int numberBikesAvailable;
 
-    public BikeStoreAdapterAddBikesAdmin(Context bikeStore_context, List<BikeStore> bikeStore_uploads){
+    public BikeStoreAdapterAddBikesAdmin(Context bikeStore_context, List<BikeStores> bikeStores_uploads){
         bikeStoreContext = bikeStore_context;
-        bikeStoreUploads = bikeStore_uploads;
+        bikeStoresUploads = bikeStores_uploads;
     }
 
     @NonNull
@@ -48,7 +48,7 @@ public class BikeStoreAdapterAddBikesAdmin extends RecyclerView.Adapter<BikeStor
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, int position) {
 
-        final BikeStore uploadCurrent = bikeStoreUploads.get(position);
+        final BikeStores uploadCurrent = bikeStoresUploads.get(position);
         holder.tvStoreBikeLocation.setText(uploadCurrent.getBikeStore_Location());
         holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
         holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
@@ -94,7 +94,7 @@ public class BikeStoreAdapterAddBikesAdmin extends RecyclerView.Adapter<BikeStor
 
     @Override
     public int getItemCount() {
-        return bikeStoreUploads.size();
+        return bikeStoresUploads.size();
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder {

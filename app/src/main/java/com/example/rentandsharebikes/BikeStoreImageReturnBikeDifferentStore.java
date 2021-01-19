@@ -30,7 +30,7 @@ public class BikeStoreImageReturnBikeDifferentStore extends AppCompatActivity im
     private RecyclerView bikeStoreRecyclerView;
     private BikeStoreAdapterReturnBikeDifferentStore bikeStoreAdapterReturnBikeDifferentStore;
 
-    public List<BikeStore> bikeStoreList;
+    public List<BikeStores> bikeStoresList;
 
     private ProgressDialog progressDialog;
 
@@ -59,7 +59,7 @@ public class BikeStoreImageReturnBikeDifferentStore extends AppCompatActivity im
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         progressDialog = new ProgressDialog(this);
-        bikeStoreList = new ArrayList<BikeStore>();
+        bikeStoresList = new ArrayList<BikeStores>();
 
         progressDialog.show();
     }
@@ -78,15 +78,15 @@ public class BikeStoreImageReturnBikeDifferentStore extends AppCompatActivity im
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikeStoreList.clear();
+                bikeStoresList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStore bikeStore = postSnapshot.getValue(BikeStore.class);
-                    assert bikeStore != null;
-                    bikeStore.setBikeStore_Key(postSnapshot.getKey());
-                    bikeStoreList.add(bikeStore);
-                    textViewBikeStoresImageReturnBikeDiffStore.setText(bikeStoreList.size()+" Bike Stores available");
+                    BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
+                    assert bikeStores != null;
+                    bikeStores.setBikeStore_Key(postSnapshot.getKey());
+                    bikeStoresList.add(bikeStores);
+                    textViewBikeStoresImageReturnBikeDiffStore.setText(bikeStoresList.size()+" Bike Stores available");
                 }
-                bikeStoreAdapterReturnBikeDifferentStore = new BikeStoreAdapterReturnBikeDifferentStore (BikeStoreImageReturnBikeDifferentStore.this, bikeStoreList);
+                bikeStoreAdapterReturnBikeDifferentStore = new BikeStoreAdapterReturnBikeDifferentStore (BikeStoreImageReturnBikeDifferentStore.this, bikeStoresList);
                 bikeStoreRecyclerView.setAdapter(bikeStoreAdapterReturnBikeDifferentStore);
                 bikeStoreAdapterReturnBikeDifferentStore.setOnItmClickListener(BikeStoreImageReturnBikeDifferentStore.this);
                 progressDialog.dismiss();
@@ -105,9 +105,9 @@ public class BikeStoreImageReturnBikeDifferentStore extends AppCompatActivity im
 
         //Send data to ReturnRentedBikes
         Intent intent = new Intent(BikeStoreImageReturnBikeDifferentStore.this, ReturnRentedBikes.class);
-        BikeStore selected_BikeStore = bikeStoreList.get(position);
-        intent.putExtra("BStoreNameDiff", selected_BikeStore.getBikeStore_Location());
-        intent.putExtra("BStoreKeyDiff", selected_BikeStore.getBikeStore_Key());
+        BikeStores selected_BikeStores = bikeStoresList.get(position);
+        intent.putExtra("BStoreNameDiff", selected_BikeStores.getBikeStore_Location());
+        intent.putExtra("BStoreKeyDiff", selected_BikeStores.getBikeStore_Key());
 
         intent.putExtra("BikeImage",bike_Image);
         intent.putExtra("BStoreNameSame",bike_StoreNameReturnBikesSame);

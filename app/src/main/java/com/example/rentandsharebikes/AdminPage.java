@@ -19,30 +19,29 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdminPage extends AppCompatActivity {
 
-    //Retrieve data from Bike Stores database
+    //Declare Bike Store database variables (Retrieve data)
     private DatabaseReference dbRefBikeStoresAv;
     private ValueEventListener evListenerBikeStoreAv;
 
-    //Retrieve data from Bikes database
+    //Declare Bike database variables (Retrieve data)
     private DatabaseReference dbRefBikesRentAv;
     private ValueEventListener evListenerBikesRentAv;
 
-    //Retrieve data from Rent Bikes database
+    //Declare Rent Bikes database variables (Retrieve data)
     private DatabaseReference dbRefBikesRent;
     private ValueEventListener eventListenerBikesRent;
 
-    //Retrieve data from Share Bikes database
+    //Declare Share Bikes database variables (Retrieve data)
     private DatabaseReference dbRefBikesShareAv;
     private ValueEventListener eventListenerBikeShareAv;
 
-    private List<BikeStore> bikeStoresList;
+    private List<BikeStores> bikeStoresList;
     private List<Bikes> bikesListAvRent;
     private List<RentBikes> bikesListRented;
     private List<ShareBikes> bikesListAvShare;
@@ -96,7 +95,7 @@ public class AdminPage extends AppCompatActivity {
 
         navigationViewAdmin = findViewById(R.id.navViewAdmin);
 
-        //Adding Click Events to our navigation drawer item
+        //Adding Click Events to navigation drawer item
         navigationViewAdmin.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
@@ -192,7 +191,7 @@ public class AdminPage extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikeStoresList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStore bike_Stores = postSnapshot.getValue(BikeStore.class);
+                    BikeStores bike_Stores = postSnapshot.getValue(BikeStores.class);
                     assert bike_Stores != null;
                     bike_Stores.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoresList.add(bike_Stores);

@@ -22,7 +22,7 @@ import java.util.List;
 public class BikeStoreAdapterShowStoresListMain extends RecyclerView.Adapter<BikeStoreAdapterShowStoresListMain.ImageViewHolder> {
 
     private Context bikeStoreContext;
-    private List<BikeStore> bikeStoreList;
+    private List<BikeStores> bikeStoresList;
 
     private OnItemClickListener clickListener;
 
@@ -34,9 +34,9 @@ public class BikeStoreAdapterShowStoresListMain extends RecyclerView.Adapter<Bik
 
     private int numberBikesAvailable;
 
-    public BikeStoreAdapterShowStoresListMain(Context bikeStore_context, List<BikeStore> bikeStore_uploads) {
+    public BikeStoreAdapterShowStoresListMain(Context bikeStore_context, List<BikeStores> bikeStores_uploads) {
         bikeStoreContext = bikeStore_context;
-        bikeStoreList = bikeStore_uploads;
+        bikeStoresList = bikeStores_uploads;
     }
 
     @NonNull
@@ -48,7 +48,7 @@ public class BikeStoreAdapterShowStoresListMain extends RecyclerView.Adapter<Bik
 
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, int position) {
-        final BikeStore uploadCurrent = bikeStoreList.get(position);
+        final BikeStores uploadCurrent = bikeStoresList.get(position);
         holder.tvStoreBikeLocation.setText(uploadCurrent.getBikeStore_Location());
         holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
         holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
@@ -84,7 +84,7 @@ public class BikeStoreAdapterShowStoresListMain extends RecyclerView.Adapter<Bik
 
     @Override
     public int getItemCount() {
-        return bikeStoreList.size();
+        return bikeStoresList.size();
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

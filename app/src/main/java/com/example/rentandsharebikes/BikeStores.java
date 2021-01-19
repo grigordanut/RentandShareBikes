@@ -2,7 +2,7 @@ package com.example.rentandsharebikes;
 
 import com.google.firebase.database.Exclude;
 
-public class BikeStore {
+public class BikeStores {
 
     private String bikeStore_Location;
     private String bikeStore_Address;
@@ -11,11 +11,11 @@ public class BikeStore {
     private int bikeStore_NumberSlots;
     private String bikeStore_Key;
 
-    public BikeStore(){
+    public BikeStores(){
 
     }
 
-    public BikeStore(String bikeStore_Location, String bikeStore_Address, double bikeStore_Latitude, double bikeStore_Longitude, int bikeStore_NumberSlots, String bikeStore_Key) {
+    public BikeStores(String bikeStore_Location, String bikeStore_Address, double bikeStore_Latitude, double bikeStore_Longitude, int bikeStore_NumberSlots, String bikeStore_Key) {
         this.bikeStore_Location = bikeStore_Location;
         this.bikeStore_Address = bikeStore_Address;
         this.bikeStore_Latitude = bikeStore_Latitude;

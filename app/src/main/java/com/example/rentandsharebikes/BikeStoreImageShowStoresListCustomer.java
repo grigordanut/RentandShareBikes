@@ -34,7 +34,7 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
     private RecyclerView bikeStoreRecyclerView;
     private BikeStoreAdapterShowStoresListCustomer bikeStoreAdapterShowStoresListCustomer;
 
-    public List<BikeStore> bikeStoreList;
+    public List<BikeStores> bikeStoresList;
 
     private ProgressDialog progressDialog;
 
@@ -52,7 +52,7 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         progressDialog = new ProgressDialog(this);
-        bikeStoreList = new ArrayList<BikeStore>();
+        bikeStoresList = new ArrayList<BikeStores>();
 
         progressDialog.show();
     }
@@ -71,15 +71,15 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikeStoreList.clear();
+                bikeStoresList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStore bikeStore = postSnapshot.getValue(BikeStore.class);
-                    assert bikeStore != null;
-                    bikeStore.setBikeStore_Key(postSnapshot.getKey());
-                    bikeStoreList.add(bikeStore);
-                    textViewBikeStoresImageShowStoreListCustomer.setText(bikeStoreList.size()+" Bike Stores available ");
+                    BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
+                    assert bikeStores != null;
+                    bikeStores.setBikeStore_Key(postSnapshot.getKey());
+                    bikeStoresList.add(bikeStores);
+                    textViewBikeStoresImageShowStoreListCustomer.setText(bikeStoresList.size()+" Bike Stores available ");
                 }
-                bikeStoreAdapterShowStoresListCustomer = new BikeStoreAdapterShowStoresListCustomer(BikeStoreImageShowStoresListCustomer.this, bikeStoreList);
+                bikeStoreAdapterShowStoresListCustomer = new BikeStoreAdapterShowStoresListCustomer(BikeStoreImageShowStoresListCustomer.this, bikeStoresList);
                 bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoresListCustomer);
                 bikeStoreAdapterShowStoresListCustomer.setOnItmClickListener(BikeStoreImageShowStoresListCustomer.this);
                 progressDialog.dismiss();
@@ -99,8 +99,8 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
         final String[] options = {"Show Google Map", "Back Main Page"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        BikeStore selected_BikeStore = bikeStoreList.get(position);
-        builder.setTitle("You selected "+selected_BikeStore.getBikeStore_Location()+" Store"+"\nSelect an option");
+        BikeStores selected_BikeStores = bikeStoresList.get(position);
+        builder.setTitle("You selected "+ selected_BikeStores.getBikeStore_Location()+" Store"+"\nSelect an option");
         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

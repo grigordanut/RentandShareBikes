@@ -349,11 +349,17 @@
     <string name="tv_bikePriceFull">Price/Hour: € </string>
 
     <!--    Image Bikes Available Main-->
-    <string name="tv_bikeStoreNameMain">Bike Store Name: </string>
     <string name="tv_bikeCondMain">Bike Condition: </string>
     <string name="tv_bikeModelMain">Bike Model: </string>
     <string name="tv_bikeManufactMain">Bike Factory: </string>
     <string name="tv_bikePriceMain">Price/Hour: € </string>
+
+    <!--    Image Bikes Available Main All-->
+    <string name="tv_bikeStoreNameMainAll">Bike Store Name: </string>
+    <string name="tv_bikeCondMainAll">Bike Condition: </string>
+    <string name="tv_bikeModelMainAll">Bike Model: </string>
+    <string name="tv_bikeManufactMainAll">Bike Factory: </string>
+    <string name="tv_bikePriceMainAll">Price/Hour: € </string>
 
     <!--    Image Bikes Customer-->
     <string name="tv_storeNameUser">Bike Store Name: </string>

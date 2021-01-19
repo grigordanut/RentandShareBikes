@@ -4,9 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -22,10 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class UpdateBikeStoreDetails extends AppCompatActivity {
 
@@ -113,9 +107,9 @@ public class UpdateBikeStoreDetails extends AppCompatActivity {
             progressDialog.setMessage("Update the Bike Store");
             progressDialog.show();
 
-            databaseRefStoreUpload = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
+            databaseRefStoreUpload = FirebaseDatabase.getInstance().getReference("Bike Stores");
             Query queryStore = databaseRefStoreUpload.orderByChild("bikeStore_Key").equalTo(store_KeyUp);
-            //Query query = databaseRefStoreUpload.orderByChild("bikeStore_Location").equalTo(store_LocationUp);
+
             queryStore.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -171,7 +165,7 @@ public class UpdateBikeStoreDetails extends AppCompatActivity {
     }
 
     private void updateBikeBikesStoreName() {
-        databaseRefBikeCheck = FirebaseDatabase.getInstance().getReference().child("Bikes");
+        databaseRefBikeCheck = FirebaseDatabase.getInstance().getReference("Bikes");
         databaseRefBikeCheck.orderByChild("bikeStoreName").equalTo(store_LocationUp)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -179,7 +173,7 @@ public class UpdateBikeStoreDetails extends AppCompatActivity {
                         if (dataSnapshot.exists()) {
 
                             final String etBike_BikeStoreLocCheck = etStoreLocationUp.getText().toString().trim();
-                            databaseRefBikeUpload = FirebaseDatabase.getInstance().getReference().child("Bikes");
+                            databaseRefBikeUpload = FirebaseDatabase.getInstance().getReference("Bikes");
                             databaseRefBikeUpload.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

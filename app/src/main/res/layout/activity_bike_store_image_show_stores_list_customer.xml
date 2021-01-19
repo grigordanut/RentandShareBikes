@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
-    tools:context=".BikeStoreImageShowStoresListCustomer">
+    tools:context=".BikeStoreImageShowStoresListCustomer"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tvBikeStoresImageShowStoresListCustomer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
@@ -25,7 +25,6 @@
         android:id="@+id/evRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        android:layout_below="@+id/tvBikeStoresImageShowStoresListCustomer"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
@@ -33,4 +32,4 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-</RelativeLayout>
+</LinearLayout>

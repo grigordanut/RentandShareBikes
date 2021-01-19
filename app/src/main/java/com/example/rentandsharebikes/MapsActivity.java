@@ -7,7 +7,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -22,8 +21,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener,GoogleMap.OnMarkerClickListener {
 
@@ -58,11 +55,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot mapSnapShot : dataSnapshot.getChildren()){
-                    BikeStore mapBikeStore = mapSnapShot.getValue(BikeStore.class);
-                    assert mapBikeStore != null;
-                    LatLng storeLocation = new LatLng(mapBikeStore.getBikeStore_Latitude(), mapBikeStore.getBikeStore_Longitude());
+                    BikeStores mapBikeStores = mapSnapShot.getValue(BikeStores.class);
+                    assert mapBikeStores != null;
+                    LatLng storeLocation = new LatLng(mapBikeStores.getBikeStore_Latitude(), mapBikeStores.getBikeStore_Longitude());
                     mMap.addMarker(new MarkerOptions().position(storeLocation)
-                            .title(mapBikeStore.getBikeStore_Location()))
+                            .title(mapBikeStores.getBikeStore_Location()))
                             .setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 }
             }

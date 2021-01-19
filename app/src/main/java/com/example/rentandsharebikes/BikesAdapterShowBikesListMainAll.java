@@ -32,7 +32,7 @@ public class BikesAdapterShowBikesListMainAll extends RecyclerView.Adapter<Bikes
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(bikesContext).inflate(R.layout.image_bikes_available_main,parent, false);
+        View view = LayoutInflater.from(bikesContext).inflate(R.layout.image_bikes_available_main_all,parent, false);
         return new ImageViewHolder(view);
     }
 
@@ -41,18 +41,18 @@ public class BikesAdapterShowBikesListMainAll extends RecyclerView.Adapter<Bikes
     public void onBindViewHolder(ImageViewHolder holder, int position) {
 
         Bikes uploadCurrent = bikesUploads.get(position);
-        holder.tVBikeStoreAvMain.setText(uploadCurrent.getBikeStoreName());
-        holder.tVBikeCondAvMain.setText(uploadCurrent.getBike_Condition());
-        holder.tVBikeModelAvMain.setText(uploadCurrent.getBike_Model());
-        holder.tVBikeManAvMain.setText(uploadCurrent.getBike_Manufacturer());
-        holder.tVBikePriceAvMain.setText(String.valueOf( +uploadCurrent.getBike_Price()));
+        holder.tVBikeStoreAvMainAll.setText(uploadCurrent.getBikeStoreName());
+        holder.tVBikeCondAvMainAll.setText(uploadCurrent.getBike_Condition());
+        holder.tVBikeModelAvMainAll.setText(uploadCurrent.getBike_Model());
+        holder.tVBikeManAvMainAll.setText(uploadCurrent.getBike_Manufacturer());
+        holder.tVBikePriceAvMainAll.setText(String.valueOf( +uploadCurrent.getBike_Price()));
 
         Picasso.get()
                 .load(uploadCurrent.getBike_Image())
                 .placeholder(R.mipmap.ic_launcher)
                 .fit()
                 .centerCrop()
-                .into(holder.imBikeAvMain);
+                .into(holder.imBikeAvMainAll);
     }
 
     @Override
@@ -62,22 +62,22 @@ public class BikesAdapterShowBikesListMainAll extends RecyclerView.Adapter<Bikes
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public ImageView imBikeAvMain;
-        public TextView tVBikeStoreAvMain;
-        public TextView tVBikeCondAvMain;
-        public TextView tVBikeModelAvMain;
-        public TextView tVBikeManAvMain;
-        public TextView tVBikePriceAvMain;
+        public ImageView imBikeAvMainAll;
+        public TextView tVBikeStoreAvMainAll;
+        public TextView tVBikeCondAvMainAll;
+        public TextView tVBikeModelAvMainAll;
+        public TextView tVBikeManAvMainAll;
+        public TextView tVBikePriceAvMainAll;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
 
-            imBikeAvMain = itemView.findViewById(R.id.imgBikesAvMain);
-            tVBikeStoreAvMain = itemView.findViewById(R.id.tvBikeStoreAvMain);
-            tVBikeCondAvMain = itemView.findViewById(R.id.tvBikeCondAvMain);
-            tVBikeModelAvMain = itemView.findViewById(R.id.tvBikeModelAvMain);
-            tVBikeManAvMain = itemView.findViewById(R.id.tvBikeManufactAvMain);
-            tVBikePriceAvMain = itemView.findViewById(R.id.tvBikePriceAvMain);
+            imBikeAvMainAll = itemView.findViewById(R.id.imgBikesAvMainAll);
+            tVBikeStoreAvMainAll = itemView.findViewById(R.id.tvBikeStoreAvMainAll);
+            tVBikeCondAvMainAll = itemView.findViewById(R.id.tvBikeCondAvMainAll);
+            tVBikeModelAvMainAll = itemView.findViewById(R.id.tvBikeModelAvMainAll);
+            tVBikeManAvMainAll = itemView.findViewById(R.id.tvBikeManufactAvMainAll);
+            tVBikePriceAvMainAll = itemView.findViewById(R.id.tvBikePriceAvMainAll);
 
             itemView.setOnClickListener(this);
         }

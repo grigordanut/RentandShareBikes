@@ -25,7 +25,7 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity {
     private RecyclerView bikeStoreRecyclerView;
     private BikeStoreAdapterAddBikesAdmin bikeStoreAdapterAddBikesAdmin;
 
-    private List<BikeStore> bikeStoreList;
+    private List<BikeStores> bikeStoresList;
 
     private ProgressDialog progressDialog;
 
@@ -39,7 +39,7 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity {
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         progressDialog = new ProgressDialog(this);
-        bikeStoreList = new ArrayList<>();
+        bikeStoresList = new ArrayList<>();
 
         progressDialog.show();
     }
@@ -58,12 +58,12 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    BikeStore bikeStore = postSnapshot.getValue(BikeStore.class);
-                    assert bikeStore != null;
-                    bikeStore.setBikeStore_Key(postSnapshot.getKey());
-                    bikeStoreList.add(bikeStore);
+                    BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
+                    assert bikeStores != null;
+                    bikeStores.setBikeStore_Key(postSnapshot.getKey());
+                    bikeStoresList.add(bikeStores);
                 }
-                bikeStoreAdapterAddBikesAdmin = new BikeStoreAdapterAddBikesAdmin(BikeStoreImageAddBikesAdmin.this, bikeStoreList);
+                bikeStoreAdapterAddBikesAdmin = new BikeStoreAdapterAddBikesAdmin(BikeStoreImageAddBikesAdmin.this, bikeStoresList);
                 bikeStoreRecyclerView.setAdapter(bikeStoreAdapterAddBikesAdmin);
                 progressDialog.dismiss();
             }

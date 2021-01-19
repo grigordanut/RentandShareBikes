@@ -48,7 +48,7 @@ public class AddBikes extends AppCompatActivity {
     private static final int IMAGE_CAPTURE_CODE = 1001;
     private static final int PERMISSION_CODE = 1000;
 
-    //Save Bike data to database
+    //Declare to Bike database variables (Upload data)
     private StorageReference stRefBikeUpload;
     private DatabaseReference dbRefBikeUpload;
     private StorageTask stTaskBikeUpload;
@@ -78,6 +78,10 @@ public class AddBikes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bikes);
+
+        //Create to Bikes table into database
+        stRefBikeUpload = FirebaseStorage.getInstance().getReference("Bikes");
+        dbRefBikeUpload = FirebaseDatabase.getInstance().getReference("Bikes");
 
         progressDialog = new ProgressDialog(AddBikes.this);
 
@@ -211,20 +215,17 @@ public class AddBikes extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    //Upload a new Bicycle into the Bicycles table
+    //Upload bike data into the Bikes table
     public void uploadBikesDetails() {
         progressDialog.dismiss();
-        //Add new Bike into the Bike's table
+
         if (validateBikeDetails()) {
 
+            //Read entered Bike data
             bike_Condition = tVBikeCondition.getText().toString().trim();
             bike_Model = eTBikeModel.getText().toString().trim();
             bike_Manufact = eTBikeManufact.getText().toString().trim();
             bike_Price = Double.parseDouble(eTBikePrice.getText().toString().trim());
-
-            //Upload bike data to Bikes table
-            stRefBikeUpload = FirebaseStorage.getInstance().getReference("Bikes");
-            dbRefBikeUpload = FirebaseDatabase.getInstance().getReference("Bikes");
 
             progressDialog.setTitle("The Bike is uploading");
             progressDialog.show();
@@ -281,14 +282,17 @@ public class AddBikes extends AppCompatActivity {
 
     private static final String[] bikeCondition = new String[]{"Brand New", "Used Bike"};
 
+    //Validate Bike data
     private Boolean validateBikeDetails() {
         boolean result = false;
 
+        //Read entered Bike data
         final String bike_ConditionVal = tVBikeCondition.getText().toString().trim();
         final String bike_ModelVal = eTBikeModel.getText().toString().trim();
         final String bike_ManufactVal = eTBikeManufact.getText().toString().trim();
         final String bike_PriceVal = eTBikePrice.getText().toString().trim();
 
+        //Validate Bike details
         if (imageUri == null) {
             alertDialogBikePicture();
         } else if (TextUtils.isEmpty(bike_ConditionVal)) {
@@ -309,6 +313,7 @@ public class AddBikes extends AppCompatActivity {
         return result;
     }
 
+    //Notify Bike condition missing
     public void alertDialogBikeCond() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Select the Bike condition");
@@ -323,6 +328,7 @@ public class AddBikes extends AppCompatActivity {
         alertDialog.show();
     }
 
+    //Notify Bike picture missing
     public void alertDialogBikePicture() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Please add a picture");

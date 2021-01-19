@@ -45,7 +45,6 @@ public class BikesImageShowBikesListMainPage extends AppCompatActivity implement
     String bikeStore_NameMain = "";
     String bikeStore_KeyMain = "";
 
-
     private ProgressDialog progressDialog;
 
     @SuppressLint("SetTextI18n")
