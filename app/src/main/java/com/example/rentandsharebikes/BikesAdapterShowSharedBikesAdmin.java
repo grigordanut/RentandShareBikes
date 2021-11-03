@@ -18,11 +18,11 @@ import java.util.List;
 public class BikesAdapterShowSharedBikesAdmin extends RecyclerView.Adapter<BikesAdapterShowSharedBikesAdmin.ImageViewHolder> {
 
     private final Context bikesContext;
-    private final List<ShareBikes> bikesUploads;
+    private final List<BikesShare> bikesUploads;
 
     private OnItemClickListener clickListener;
 
-    public BikesAdapterShowSharedBikesAdmin(Context bikes_context, List<ShareBikes> bikes_uploads){
+    public BikesAdapterShowSharedBikesAdmin(Context bikes_context, List<BikesShare> bikes_uploads){
         bikesContext = bikes_context;
         bikesUploads = bikes_uploads;
     }
@@ -38,7 +38,7 @@ public class BikesAdapterShowSharedBikesAdmin extends RecyclerView.Adapter<Bikes
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
 
-        final ShareBikes uploadCurrent = bikesUploads.get(position);
+        final BikesShare uploadCurrent = bikesUploads.get(position);
         holder.tvSharedBikesUserNameFull.setText(uploadCurrent.getShareCus_FirstName()+" "+uploadCurrent.getShareCus_LastName());
         holder.tvSharedBikesUserPhoneFull.setText(uploadCurrent.getShareCus_PhoneNo());
         holder.tvSharedBikesUserEmailFull.setText(uploadCurrent.getShareCus_EmailAdd());

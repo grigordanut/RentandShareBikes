@@ -8,16 +8,19 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="30dp">
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbarAddBikeStores"
+            layout="@layout/toolbar_add_bike_store" />
 
         <TextView
             android:id="@+id/tvAddBikeStores"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
@@ -31,7 +34,6 @@
             android:id="@+id/WrapperBikeStoreLocation"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_below="@+id/tvAddBikeStores"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
@@ -52,7 +54,6 @@
             android:id="@+id/WrapperBikeStoreAddress"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_below="@+id/WrapperBikeStoreLocation"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
@@ -73,7 +74,6 @@
             android:id="@+id/WrapperBikeStoreLatitude"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_below="@+id/WrapperBikeStoreAddress"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
@@ -94,7 +94,6 @@
             android:id="@+id/WrapperBikeStoreLongitude"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_below="@+id/WrapperBikeStoreLatitude"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
@@ -115,7 +114,6 @@
             android:id="@+id/WrapperBikeStoreNrSlots"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_below="@+id/WrapperBikeStoreLongitude"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
@@ -134,16 +132,16 @@
 
         <Button
             android:id="@+id/btnSaveBikeStore"
-            android:layout_width="260dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@+id/WrapperBikeStoreNrSlots"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:background="@drawable/btn_inverse_fading"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"
+            android:background="@drawable/btn_background"
             android:text="@string/btn_saveBikeStore"
-            android:textColor="#ffffff"
+            android:textColor="#FFFFFF"
             android:textSize="22sp"
             android:textStyle="bold" />
 
-    </RelativeLayout>
+    </LinearLayout>
 </ScrollView>

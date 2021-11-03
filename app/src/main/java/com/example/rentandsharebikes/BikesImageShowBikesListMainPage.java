@@ -29,7 +29,7 @@ import java.util.Objects;
 
 public class BikesImageShowBikesListMainPage extends AppCompatActivity implements BikesAdapterShowBikesListMainPage.OnItemClickListener {
 
-    //Access Bikes table from database
+    //Access BikesRent table from database
     private DatabaseReference databaseRefMain;
     private FirebaseStorage bikesStorageMain;
     private ValueEventListener bikesEventListenerMain;
@@ -40,7 +40,7 @@ public class BikesImageShowBikesListMainPage extends AppCompatActivity implement
 
     private TextView textViewBikesImageMain;
 
-    private List<Bikes> bikesListMain;
+    private List<BikesRent> bikesRentListMain;
 
     String bikeStore_NameMain = "";
     String bikeStore_KeyMain = "";
@@ -67,7 +67,7 @@ public class BikesImageShowBikesListMainPage extends AppCompatActivity implement
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         progressDialog = new ProgressDialog(this);
-        bikesListMain = new ArrayList<>();
+        bikesRentListMain = new ArrayList<>();
 
         progressDialog.show();
     }
@@ -87,17 +87,17 @@ public class BikesImageShowBikesListMainPage extends AppCompatActivity implement
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesListMain.clear();
+                bikesRentListMain.clear();
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(bikeStore_KeyMain)) {
-                        bikes.setBike_Key(postSnapshot.getKey());
-                        bikesListMain.add(bikes);
-                        textViewBikesImageMain.setText(bikesListMain.size()+" bikes available in "+bikeStore_NameMain+" store");
+                    BikesRent bikesRent = postSnapshot.getValue(BikesRent.class);
+                    assert bikesRent != null;
+                    if (bikesRent.getBikeStoreKey().equals(bikeStore_KeyMain)) {
+                        bikesRent.setBike_Key(postSnapshot.getKey());
+                        bikesRentListMain.add(bikesRent);
+                        textViewBikesImageMain.setText(bikesRentListMain.size()+" bikes available in "+bikeStore_NameMain+" store");
                     }
                 }
-                bikesAdapterShowBikesListMainPage = new BikesAdapterShowBikesListMainPage(BikesImageShowBikesListMainPage.this,bikesListMain);
+                bikesAdapterShowBikesListMainPage = new BikesAdapterShowBikesListMainPage(BikesImageShowBikesListMainPage.this, bikesRentListMain);
                 bikesListRecyclerView.setAdapter(bikesAdapterShowBikesListMainPage);
                 bikesAdapterShowBikesListMainPage.setOnItmClickListener(BikesImageShowBikesListMainPage.this);
                 progressDialog.dismiss();
@@ -113,18 +113,19 @@ public class BikesImageShowBikesListMainPage extends AppCompatActivity implement
     //Action of the menu onClick
     @Override
     public void onItemClick(int position) {
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowBikesListMainPage.this);
-        builderAlert.setMessage("Register and Log into your account to access the:\nRent and Share Bikes services.");
-        builderAlert.setCancelable(true);
-        builderAlert.setPositiveButton(
-                "Ok",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikesImageShowBikesListMainPage.this);
+        alertDialogBuilder
+                .setMessage("Register and Log into your account to access the:\nRent and Share Bikes services.")
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
 
-        AlertDialog alert1 = builderAlert.create();
+        AlertDialog alert1 = alertDialogBuilder.create();
         alert1.show();
     }
 

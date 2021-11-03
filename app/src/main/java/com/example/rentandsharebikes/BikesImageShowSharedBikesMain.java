@@ -22,11 +22,10 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class BikesImageShowSharedBikesMain extends AppCompatActivity implements BikesAdapterShowSharedBikesMain.OnItemClickListener {
 
-    //Display data from Share Bikes database
+    //Display data from Share BikesRent database
     private FirebaseStorage firebaseStDisplaySharedBikes;
     private DatabaseReference databaseRefDisplaySharedBikes;
     private ValueEventListener displayShareBikesEventListener;
@@ -35,7 +34,7 @@ public class BikesImageShowSharedBikesMain extends AppCompatActivity implements 
     private RecyclerView bikesListRecyclerView;
     private BikesAdapterShowSharedBikesMain bikesAdapterShowSharedBikesMain;
 
-    private List<ShareBikes> sharedBikesList;
+    private List<BikesShare> sharedBikesList;
 
     private ProgressDialog progressDialog;
 
@@ -64,7 +63,7 @@ public class BikesImageShowSharedBikesMain extends AppCompatActivity implements 
     }
 
     public void loadSharedBikesMain() {
-        //Display the list of the bikes from Share Bikes database
+        //Display the list of the bikes from Share BikesRent database
         firebaseStDisplaySharedBikes = FirebaseStorage.getInstance();
         databaseRefDisplaySharedBikes = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
@@ -74,7 +73,7 @@ public class BikesImageShowSharedBikesMain extends AppCompatActivity implements 
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 sharedBikesList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    ShareBikes share_Bikes = postSnapshot.getValue(ShareBikes.class);
+                    BikesShare share_Bikes = postSnapshot.getValue(BikesShare.class);
                     assert share_Bikes != null;
                     share_Bikes.setShareBike_Key(postSnapshot.getKey());
                     sharedBikesList.add(share_Bikes);
@@ -97,18 +96,19 @@ public class BikesImageShowSharedBikesMain extends AppCompatActivity implements 
 
     @Override
     public void onItemClick(final int position) {
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowSharedBikesMain.this);
-        builderAlert.setMessage("Register and Log into your account to access the:\nRent and Share Bikes services.");
-        builderAlert.setCancelable(true);
-        builderAlert.setPositiveButton(
-                "Ok",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikesImageShowSharedBikesMain.this);
+        alertDialogBuilder
+                .setMessage("Register and Log into your account to access the:\nRent and Share Bikes services.")
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
 
-        AlertDialog alert1 = builderAlert.create();
+        AlertDialog alert1 = alertDialogBuilder.create();
         alert1.show();
     }
 }

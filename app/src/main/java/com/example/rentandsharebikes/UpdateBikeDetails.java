@@ -44,8 +44,6 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.util.Objects;
-
 import static com.google.firebase.storage.FirebaseStorage.getInstance;
 
 public class UpdateBikeDetails extends AppCompatActivity {
@@ -266,7 +264,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
         });
     }
 
-    //Upload the updated Bike into the Bikes table
+    //Upload the updated Bike into the BikesRent table
     public void updateBikesWithNewPicture() {
         progressDialog.dismiss();
 

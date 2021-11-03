@@ -42,7 +42,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.Objects;
 
-public class AddBikes extends AppCompatActivity {
+public class AddBikeRent extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE_GET = 2;
     private static final int IMAGE_CAPTURE_CODE = 1001;
@@ -77,13 +77,13 @@ public class AddBikes extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_bikes);
+        setContentView(R.layout.activity_add_bike_rent);
 
-        //Create to Bikes table into database
+        //Create to BikesRent table into database
         stRefBikeUpload = FirebaseStorage.getInstance().getReference("Bikes");
         dbRefBikeUpload = FirebaseDatabase.getInstance().getReference("Bikes");
 
-        progressDialog = new ProgressDialog(AddBikes.this);
+        progressDialog = new ProgressDialog(AddBikeRent.this);
 
         getIntent().hasExtra("SName");
         store_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
@@ -146,7 +146,7 @@ public class AddBikes extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (stTaskBikeUpload != null && stTaskBikeUpload.isInProgress()) {
-                    Toast.makeText(AddBikes.this, "Upload in progress", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddBikeRent.this, "Upload in progress", Toast.LENGTH_SHORT).show();
                 } else {
                     uploadBikesDetails();
                 }
@@ -174,6 +174,7 @@ public class AddBikes extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_CODE) {// If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0 && grantResults[0] ==
                     PackageManager.PERMISSION_GRANTED) {
@@ -196,7 +197,7 @@ public class AddBikes extends AppCompatActivity {
                 imageUri = data.getData();
                 Bitmap thumbnail = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                 ivAddBike.setImageBitmap(thumbnail);
-                Toast.makeText(AddBikes.this, "Image picked from Gallery", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddBikeRent.this, "Image picked from Gallery", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "Exception: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -215,7 +216,7 @@ public class AddBikes extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    //Upload bike data into the Bikes table
+    //Upload bike data into the BikesRent table
     public void uploadBikesDetails() {
         progressDialog.dismiss();
 
@@ -240,21 +241,21 @@ public class AddBikes extends AppCompatActivity {
                                     String addBike_id = dbRefBikeUpload.push().getKey();
                                     bike_Key = addBike_id;
 
-                                    Bikes bikes = new Bikes(bike_Condition, bike_Model, bike_Manufact, bike_Price,
+                                    BikesRent bikesRent = new BikesRent(bike_Condition, bike_Model, bike_Manufact, bike_Price,
                                             uri.toString(), store_Name, store_Key, bike_Key);
 
                                     assert addBike_id != null;
-                                    dbRefBikeUpload.child(addBike_id).setValue(bikes);
+                                    dbRefBikeUpload.child(addBike_id).setValue(bikesRent);
 
                                     eTBikeModel.setText("");
                                     eTBikeManufact.setText("");
                                     eTBikePrice.setText("");
                                     ivAddBike.setImageResource(R.drawable.add_bikes_picture);
 
-                                    Intent add_Bikes = new Intent(AddBikes.this, AdminPage.class);
+                                    Intent add_Bikes = new Intent(AddBikeRent.this, AdminPage.class);
                                     startActivity(add_Bikes);
 
-                                    Toast.makeText(AddBikes.this, "Upload Bicycle successfully", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(AddBikeRent.this, "Upload Bicycle successfully", Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
                             });
@@ -265,7 +266,7 @@ public class AddBikes extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(AddBikes.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddBikeRent.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {

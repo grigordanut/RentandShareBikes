@@ -2,9 +2,7 @@ package com.example.rentandsharebikes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,17 +15,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import static android.icu.text.DateFormat.NONE;
-
 public class BikesAdapterShowBikesListCustomer extends RecyclerView.Adapter<BikesAdapterShowBikesListCustomer.ImageViewHolder> {
 
     private final Context bikesContext;
-    private final List<Bikes> bikesUploads;
+    private final List<BikesRent> bikesRentUploads;
     private OnItemClickListener clickListener;
 
-    public BikesAdapterShowBikesListCustomer(Context bikes_context, List<Bikes> bikes_uploads){
+    public BikesAdapterShowBikesListCustomer(Context bikes_context, List<BikesRent> bikes_ToRent_uploads){
         bikesContext = bikes_context;
-        bikesUploads = bikes_uploads;
+        bikesRentUploads = bikes_ToRent_uploads;
     }
 
     @NonNull
@@ -41,7 +37,7 @@ public class BikesAdapterShowBikesListCustomer extends RecyclerView.Adapter<Bike
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, int position) {
 
-        final Bikes uploadCurrent = bikesUploads.get(position);
+        final BikesRent uploadCurrent = bikesRentUploads.get(position);
         holder.tvBikeSUser.setText(uploadCurrent.getBikeStoreName());
         holder.tvBikeCUser.setText(uploadCurrent.getBike_Condition());
         holder.tvBikeMUser.setText(uploadCurrent.getBike_Model());
@@ -58,7 +54,7 @@ public class BikesAdapterShowBikesListCustomer extends RecyclerView.Adapter<Bike
 
     @Override
     public int getItemCount() {
-        return bikesUploads.size();
+        return bikesRentUploads.size();
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

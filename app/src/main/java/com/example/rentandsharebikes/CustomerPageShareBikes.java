@@ -3,6 +3,7 @@ package com.example.rentandsharebikes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
@@ -25,21 +26,15 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class CustomerPageShareBikes extends AppCompatActivity {
 
-    //Declaring some objects
-    private DrawerLayout drawerLayoutUserShare;
-    private ActionBarDrawerToggle drawerToggleUserShare;
-    private NavigationView navigationViewUserShare;
-
-    //Display data from Rent Bikes table database
+    //Display data from Rent BikesRent table database
     private FirebaseStorage firebaseStBikesShareCustom;
     private DatabaseReference databaseRefBikesShareCustom;
     private ValueEventListener bikesShareCustomEventListener;
 
-    //Display data from Rent Bikes table database
+    //Display data from Rent BikesRent table database
     private FirebaseStorage firebaseStBikesShareAv;
     private DatabaseReference databaseRefBikesShareAv;
     private ValueEventListener bikesShareAvEventListener;
@@ -49,12 +44,19 @@ public class CustomerPageShareBikes extends AppCompatActivity {
     private FirebaseUser currentUser;
     private DatabaseReference databaseReference;
 
-    private TextView tVCustomPageShare, tVCustomPageSharePerDetails, tVCustomerBikesShared, tVBikesShareAv;
+    private List<BikesShare> bikesListShareCustom;
+    private List<BikesShare> bikesListShareAv;
 
-    private List<ShareBikes> bikesListShareCustom;
-    private List<ShareBikes> bikesListShareAv;
     private int numberBikesSCustom;
     private int numberBikesShareAv;
+
+    private TextView tVCustomPageShare, tVCustomPageSharePerDetails, tVCustomerBikesShared, tVBikesShareAv;
+
+    //Declaring some objects
+    private DrawerLayout drawerLayoutUserShare;
+    private ActionBarDrawerToggle drawerToggleUserShare;
+    private NavigationView navigationViewUserShare;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,14 +76,16 @@ public class CustomerPageShareBikes extends AppCompatActivity {
         currentUser = firebaseAuth.getCurrentUser();
 
         drawerLayoutUserShare = findViewById(R.id.activity_customer_page_share_bikes);
-        drawerToggleUserShare = new ActionBarDrawerToggle(this, drawerLayoutUserShare, R.string.open_customPageShare, R.string.close_customPageShare);
+        navigationViewUserShare = findViewById(R.id.navViewCustomShare);
+        toolbar = findViewById(R.id.toolbarCustomPageShare);
+
+        drawerToggleUserShare = new ActionBarDrawerToggle(this, drawerLayoutUserShare, toolbar, R.string.open_customPageShare, R.string.close_customPageShare);
 
         drawerLayoutUserShare.addDrawerListener(drawerToggleUserShare);
         drawerToggleUserShare.syncState();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        navigationViewUserShare = findViewById(R.id.navViewCustomShare);
+        setSupportActionBar(toolbar);
+        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         //retrieve data from database into text views
         databaseReference = FirebaseDatabase.getInstance().getReference("Customers");
@@ -114,7 +118,7 @@ public class CustomerPageShareBikes extends AppCompatActivity {
                                         startActivity(intentNoOwnerBikes);
                                         break;
                                     case R.id.userAdd_shareBikes:
-                                        startActivity(new Intent(CustomerPageShareBikes.this, ShareBikesCustomer.class));
+                                        startActivity(new Intent(CustomerPageShareBikes.this, AddBikeShare.class));
                                         break;
                                     //Show the customer's own bikes added available to be shared
                                     case R.id.userShow_ownShareBikes:
@@ -196,7 +200,7 @@ public class CustomerPageShareBikes extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikesListShareAv.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    ShareBikes share_Bikes = postSnapshot.getValue(ShareBikes.class);
+                    BikesShare share_Bikes = postSnapshot.getValue(BikesShare.class);
                     assert share_Bikes != null;
                     if (!share_Bikes.getShareBikes_CustomId().equals(currentUser.getUid())){
                         share_Bikes.setShareBike_Key(postSnapshot.getKey());
@@ -224,7 +228,7 @@ public class CustomerPageShareBikes extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikesListShareCustom.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    ShareBikes share_Bikes = postSnapshot.getValue(ShareBikes.class);
+                    BikesShare share_Bikes = postSnapshot.getValue(BikesShare.class);
                     assert share_Bikes != null;
                     if (share_Bikes.getShareBikes_CustomId().equals(currentUser.getUid())){
                         share_Bikes.setShareBike_Key(postSnapshot.getKey());

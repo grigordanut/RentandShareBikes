@@ -47,15 +47,14 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
-import java.util.Objects;
 
-public class ShareBikesCustomer extends AppCompatActivity {
+public class AddBikeShare extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE_GET = 2;
     private static final int IMAGE_CAPTURE_CODE = 1001;
     private static final int PERMISSION_CODE = 1000;
 
-    //Save bike details into Share Bikes able
+    //Save bike details into Share BikesRent able
     private StorageReference storageRefShareBikes;
     private DatabaseReference databaseRefShareBikes;
     private StorageTask shareUploadTask;
@@ -91,10 +90,10 @@ public class ShareBikesCustomer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_share_bikes_customer);
+        setContentView(R.layout.activity_add_bike_share);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog(ShareBikesCustomer.this);
+        progressDialog = new ProgressDialog(AddBikeShare.this);
 
         storageRefShareBikes = FirebaseStorage.getInstance().getReference("Share Bikes");
         databaseRefShareBikes = FirebaseDatabase.getInstance().getReference("Share Bikes");
@@ -168,7 +167,7 @@ public class ShareBikesCustomer extends AppCompatActivity {
                 //show progress Dialog
                 progressDialog.show();
                 if (shareUploadTask != null && shareUploadTask.isInProgress()) {
-                    Toast.makeText(ShareBikesCustomer.this, "Upload in progress", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddBikeShare.this, "Upload in progress", Toast.LENGTH_SHORT).show();
                 } else {
                     uploadShareBikes();
                 }
@@ -179,7 +178,7 @@ public class ShareBikesCustomer extends AppCompatActivity {
     //Pick the share bike available date
     private void selectShareAvailableDate() {
         Calendar calendar = Calendar.getInstance();
-        DatePickerDialog dialog = new DatePickerDialog(ShareBikesCustomer.this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog dialog = new DatePickerDialog(AddBikeShare.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 String date_year = String.valueOf(year);
@@ -228,6 +227,7 @@ public class ShareBikesCustomer extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case PERMISSION_CODE: {
                 // If request is cancelled, the result arrays are empty.
@@ -257,7 +257,7 @@ public class ShareBikesCustomer extends AppCompatActivity {
                 imageShareUri = data.getData();
                 Bitmap thumbnail = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageShareUri);
                 ivShareBike.setImageBitmap(thumbnail);
-                Toast.makeText(ShareBikesCustomer.this, "Image picked from Gallery", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddBikeShare.this, "Image picked from Gallery", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "Exception: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -299,7 +299,7 @@ public class ShareBikesCustomer extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     bike_KeyShare = databaseRefShareBikes.push().getKey();
 
-                                    ShareBikes rent_Bikes = new ShareBikes(etFName_ShareBike, etLName_ShareBike, etPNo_ShareBike, etEmail_ShareBike,
+                                    BikesShare rent_Bikes = new BikesShare(etFName_ShareBike, etLName_ShareBike, etPNo_ShareBike, etEmail_ShareBike,
                                             tVCond_ShareBike, etModel_ShareBike, etManufact_ShareBike, etPrice_ShareBike, etDateAv_ShareBike, uri.toString(), customId_ShareBikes, bike_KeyShare);
 
                                     assert bike_KeyShare != null;
@@ -316,10 +316,10 @@ public class ShareBikesCustomer extends AppCompatActivity {
                                     etDateAvShareBike.setText("");
                                     ivShareBike.setImageResource(R.drawable.add_bikes_picture);
 
-                                    Intent add_Bikes = new Intent(ShareBikesCustomer.this, CustomerPageShareBikes.class);
+                                    Intent add_Bikes = new Intent(AddBikeShare.this, CustomerPageShareBikes.class);
                                     startActivity(add_Bikes);
 
-                                    Toast.makeText(ShareBikesCustomer.this, "Upload Bicycle successfully", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(AddBikeShare.this, "Upload Bicycle successfully", Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
                             });
@@ -330,7 +330,7 @@ public class ShareBikesCustomer extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(ShareBikesCustomer.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddBikeShare.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -371,7 +371,7 @@ public class ShareBikesCustomer extends AppCompatActivity {
             etEmailShareBike.setError("Please enter the Email Address");
             etEmailShareBike.requestFocus();
         } else if (imageShareUri == null) {
-            Toast.makeText(ShareBikesCustomer.this, "Please add a picture", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddBikeShare.this, "Please add a picture", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(tVCond_ShareBikeVal)) {
             alertDialogBikeShareCond();
             tVCondShareBike.requestFocus();
@@ -440,7 +440,7 @@ public class ShareBikesCustomer extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(ShareBikesCustomer.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddBikeShare.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -31,7 +31,7 @@ public class BikesImageShowSharedBikesToUpdate extends AppCompatActivity {
     private RecyclerView bikesListRecyclerView;
     private BikesAdapterShowSharedBikesToUpdate bikesAdapterShowOwnSharedBikesToUpdate;
 
-    private List<ShareBikes> upShareBikesList;
+    private List<BikesShare> upBikesShareList;
 
     String customShare_Id = "";
 
@@ -50,7 +50,7 @@ public class BikesImageShowSharedBikesToUpdate extends AppCompatActivity {
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         progressDialog = new ProgressDialog(this);
-        upShareBikesList = new ArrayList<>();
+        upBikesShareList = new ArrayList<>();
 
         progressDialog.show();
     }
@@ -71,17 +71,17 @@ public class BikesImageShowSharedBikesToUpdate extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                upShareBikesList.clear();
+                upBikesShareList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    ShareBikes share_UpBikes = postSnapshot.getValue(ShareBikes.class);
+                    BikesShare share_UpBikes = postSnapshot.getValue(BikesShare.class);
 
                     assert share_UpBikes != null;
                     if (share_UpBikes.getShareBikes_CustomId().equals(customShare_Id)) {
                         share_UpBikes.setShareBike_Key(postSnapshot.getKey());
-                        upShareBikesList.add(share_UpBikes);
+                        upBikesShareList.add(share_UpBikes);
                     }
                 }
-                bikesAdapterShowOwnSharedBikesToUpdate = new BikesAdapterShowSharedBikesToUpdate(BikesImageShowSharedBikesToUpdate.this, upShareBikesList);
+                bikesAdapterShowOwnSharedBikesToUpdate = new BikesAdapterShowSharedBikesToUpdate(BikesImageShowSharedBikesToUpdate.this, upBikesShareList);
                 bikesListRecyclerView.setAdapter(bikesAdapterShowOwnSharedBikesToUpdate);
                 progressDialog.dismiss();
             }

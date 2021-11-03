@@ -1,6 +1,6 @@
 package com.example.rentandsharebikes;
 
-public class Bikes {
+public class BikesRent {
 
     private String bike_Condition;
     private String bike_Model;
@@ -11,12 +11,12 @@ public class Bikes {
     private String bikeStoreKey;
     private String bike_Key;
 
-    public Bikes(){
+    public BikesRent(){
 
     }
 
-    public Bikes(String bike_Condition, String bike_Model, String bike_Manufacturer, double bike_Price,
-                 String bike_Image, String bikeStoreName, String bikeStoreKey, String bike_Key) {
+    public BikesRent(String bike_Condition, String bike_Model, String bike_Manufacturer, double bike_Price,
+                     String bike_Image, String bikeStoreName, String bikeStoreKey, String bike_Key) {
         this.bike_Condition = bike_Condition;
         this.bike_Model = bike_Model;
         this.bike_Manufacturer = bike_Manufacturer;

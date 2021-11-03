@@ -2,9 +2,7 @@ package com.example.rentandsharebikes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,17 +15,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import static android.icu.text.DateFormat.NONE;
-
 public class BikesAdapterShowBikesListAdminFull extends RecyclerView.Adapter<BikesAdapterShowBikesListAdminFull.ImageViewHolder> {
 
     private final Context bikesContext;
-    private final List<Bikes> bikesUploads;
+    private final List<BikesRent> bikesRentUploads;
     private OnItemClickListener clickListener;
 
-    public BikesAdapterShowBikesListAdminFull(Context bikes_context, List<Bikes> bikes_uploads){
+    public BikesAdapterShowBikesListAdminFull(Context bikes_context, List<BikesRent> bikes_ToRent_uploads){
         bikesContext = bikes_context;
-        bikesUploads = bikes_uploads;
+        bikesRentUploads = bikes_ToRent_uploads;
     }
 
     @NonNull
@@ -41,7 +37,7 @@ public class BikesAdapterShowBikesListAdminFull extends RecyclerView.Adapter<Bik
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
 
-        Bikes uploadCurrent = bikesUploads.get(position);
+        BikesRent uploadCurrent = bikesRentUploads.get(position);
         holder.tVBikeStoreNameFull.setText(uploadCurrent.getBikeStoreName());
         holder.tVBikeConAdminFull.setText(uploadCurrent.getBike_Condition());
         holder.tVBikeMAdminFull.setText(uploadCurrent.getBike_Model());
@@ -58,7 +54,7 @@ public class BikesAdapterShowBikesListAdminFull extends RecyclerView.Adapter<Bik
 
     @Override
     public int getItemCount() {
-        return bikesUploads.size();
+        return bikesRentUploads.size();
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

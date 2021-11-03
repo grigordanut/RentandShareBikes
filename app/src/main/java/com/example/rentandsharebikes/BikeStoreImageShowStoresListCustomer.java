@@ -81,7 +81,7 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
                 }
                 bikeStoreAdapterShowStoresListCustomer = new BikeStoreAdapterShowStoresListCustomer(BikeStoreImageShowStoresListCustomer.this, bikeStoresList);
                 bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoresListCustomer);
-                bikeStoreAdapterShowStoresListCustomer.setOnItmClickListener(BikeStoreImageShowStoresListCustomer.this);
+                bikeStoreAdapterShowStoresListCustomer.setOnItemClickListener(BikeStoreImageShowStoresListCustomer.this);
                 progressDialog.dismiss();
             }
 
@@ -98,15 +98,18 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
     public void onItemClick(final int position) {
         final String[] options = {"Show Google Map", "Back Main Page"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         BikeStores selected_BikeStores = bikeStoresList.get(position);
-        builder.setTitle("You selected "+ selected_BikeStores.getBikeStore_Location()+" Store"+"\nSelect an option");
-        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setTitle("You selected "+ selected_BikeStores.getBikeStore_Location()+" Store"+"\nSelect an option:")
+                .setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
                 if (which == 0) {
-                    Toast.makeText(BikeStoreImageShowStoresListCustomer.this, "Show Bikes Stores in Google Map", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BikeStoreImageShowStoresListCustomer.this, "Show BikesRent Stores in Google Map", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(BikeStoreImageShowStoresListCustomer.this, MapsActivity.class));
                 }
 
@@ -115,8 +118,16 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
                     Toast.makeText(BikeStoreImageShowStoresListCustomer.this, "Back to Customer rent page", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
-        final AlertDialog alertDialog = builder.create();
+        })
+
+        .setNegativeButton("CLOSE",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 }

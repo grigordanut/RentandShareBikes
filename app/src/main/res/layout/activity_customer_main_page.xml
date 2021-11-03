@@ -11,6 +11,10 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
+    <include
+        android:id="@+id/toolbarCustomMain"
+        layout="@layout/toolbar_customer_main" />
+
     <TextView
         android:id="@+id/tvCustomPageMain"
         android:layout_width="match_parent"
@@ -62,5 +66,20 @@
         android:textColor="#ffffff"
         android:textSize="22sp"
         android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnLogOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/btn_background"
+        android:text="Log Out"
+        android:textColor="#ffffff"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        tools:ignore="HardcodedText" />
 
 </LinearLayout>

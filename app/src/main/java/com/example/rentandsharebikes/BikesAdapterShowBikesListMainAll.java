@@ -2,9 +2,7 @@ package com.example.rentandsharebikes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,13 +18,13 @@ import java.util.List;
 public class BikesAdapterShowBikesListMainAll extends RecyclerView.Adapter<BikesAdapterShowBikesListMainAll.ImageViewHolder> {
 
     private final Context bikesContext;
-    private final List<Bikes> bikesUploads;
+    private final List<BikesRent> bikesRentUploads;
 
     private OnItemClickListener clickListener;
 
-    public BikesAdapterShowBikesListMainAll(Context bikes_context, List<Bikes> bikes_uploads){
+    public BikesAdapterShowBikesListMainAll(Context bikes_context, List<BikesRent> bikes_ToRent_uploads){
         bikesContext = bikes_context;
-        bikesUploads = bikes_uploads;
+        bikesRentUploads = bikes_ToRent_uploads;
     }
 
     @NonNull
@@ -40,7 +38,7 @@ public class BikesAdapterShowBikesListMainAll extends RecyclerView.Adapter<Bikes
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
 
-        Bikes uploadCurrent = bikesUploads.get(position);
+        BikesRent uploadCurrent = bikesRentUploads.get(position);
         holder.tVBikeStoreAvMainAll.setText(uploadCurrent.getBikeStoreName());
         holder.tVBikeCondAvMainAll.setText(uploadCurrent.getBike_Condition());
         holder.tVBikeModelAvMainAll.setText(uploadCurrent.getBike_Model());
@@ -57,7 +55,7 @@ public class BikesAdapterShowBikesListMainAll extends RecyclerView.Adapter<Bikes
 
     @Override
     public int getItemCount() {
-        return bikesUploads.size();
+        return bikesRentUploads.size();
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

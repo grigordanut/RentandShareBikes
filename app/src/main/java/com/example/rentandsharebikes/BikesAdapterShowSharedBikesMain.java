@@ -18,11 +18,11 @@ import java.util.List;
 public class BikesAdapterShowSharedBikesMain extends RecyclerView.Adapter<BikesAdapterShowSharedBikesMain.ImageViewHolder> {
 
     private final Context bikesContext;
-    private final List<ShareBikes> bikesUploads;
+    private final List<BikesShare> bikesUploads;
 
     private OnItemClickListener clickListener;
 
-    public BikesAdapterShowSharedBikesMain(Context bikes_context, List<ShareBikes> bikes_uploads){
+    public BikesAdapterShowSharedBikesMain(Context bikes_context, List<BikesShare> bikes_uploads){
         bikesContext = bikes_context;
         bikesUploads = bikes_uploads;
     }
@@ -38,7 +38,7 @@ public class BikesAdapterShowSharedBikesMain extends RecyclerView.Adapter<BikesA
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
 
-        final ShareBikes uploadCurrent = bikesUploads.get(position);
+        final BikesShare uploadCurrent = bikesUploads.get(position);
         holder.tvSharedBikeCondUser.setText(uploadCurrent.getShareBike_Condition());
         holder.tvSharedBikeModelUser.setText(uploadCurrent.getShareBike_Model());
         holder.tvSharedBikeManufactUser.setText(uploadCurrent.getShareBike_Manufact());

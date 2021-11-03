@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.rentandsharebikes">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -20,7 +21,8 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
 
     <application
         android:allowBackup="true"
@@ -40,7 +42,7 @@
         <activity android:name=".Scanner" />
         <activity android:name=".UpdateBikeSharedDetails" />
         <activity android:name=".BikesImageShowSharedBikesOwner" />
-        <activity android:name=".ShareBikesCustomer" />
+        <activity android:name=".AddBikeShare" />
         <activity android:name=".BikesImageShowBikesListMainAll" />
         <activity android:name=".BikesImageShowBikesListMainPage" />
         <activity android:name=".BikesImageShowBikesListAdminFull" />
@@ -51,7 +53,6 @@
         <activity android:name=".BikeStoreImageShowBikesListMain" />
         <activity android:name=".BikeStoreImageShowStoresListMain" />
         <activity android:name=".BikesImageReturnBikesRented" />
-        <activity android:name=".BikeStoreImageReturnBikeDifferentStore" />
         <activity android:name=".ReturnRentedBikes" />
         <activity android:name=".BikesImageShowBikesRentedCustom" />
         <activity android:name=".BikesImageRentBikesCustomer" />
@@ -86,7 +87,7 @@
         <activity android:name=".CalculateCoordinates" />
         <activity android:name=".ResetPassword" />
         <activity android:name=".AdminPage" />
-        <activity android:name=".AddBikes" />
+        <activity android:name=".AddBikeRent" />
         <activity android:name=".AddBikeStore" />
         <activity android:name=".LoginCustomer" />
         <activity android:name=".RegisterCustomer" />

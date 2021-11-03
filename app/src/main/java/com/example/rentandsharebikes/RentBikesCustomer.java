@@ -46,12 +46,12 @@ public class RentBikesCustomer extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
-    //Add bike details to Rent Bikes database
+    //Add bike details to Rent BikesRent database
     private StorageReference storageRefRentBikes;
     private DatabaseReference databaseRefRentBikes;
     private StorageTask bikesRentTask;
 
-    //Delete bike details from Bikes database
+    //Delete bike details from BikesRent database
     private StorageReference storageRefRemoveBikes;
     private DatabaseReference databaseRefRemoveBikes;
 

@@ -9,20 +9,16 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +26,7 @@ import java.util.Objects;
 
 public class BikesImageShowSharedBikesNoOwner extends AppCompatActivity implements BikesAdapterShowSharedBikesNoOwner.OnItemClickListener{
 
-    //Display data from Share Bikes database
+    //Display data from Share BikesRent database
     private FirebaseStorage firebaseStDisplaySharedBikes;
     private DatabaseReference databaseRefDisplaySharedBikes;
     private ValueEventListener displayShareBikesEventListener;
@@ -39,7 +35,7 @@ public class BikesImageShowSharedBikesNoOwner extends AppCompatActivity implemen
     private RecyclerView bikesListRecyclerView;
     private BikesAdapterShowSharedBikesNoOwner bikesAdapterShowSharedBikesNoOwner;
 
-    private List<ShareBikes> sharedBikesList;
+    private List<BikesShare> sharedBikesList;
 
     String customShareAll_Id = "";
 
@@ -73,7 +69,7 @@ public class BikesImageShowSharedBikesNoOwner extends AppCompatActivity implemen
     }
 
     public void loadSharedBikesNoOwner() {
-        //Display the list of the bikes from Share Bikes database
+        //Display the list of the bikes from Share BikesRent database
         firebaseStDisplaySharedBikes = FirebaseStorage.getInstance();
         databaseRefDisplaySharedBikes = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
@@ -83,7 +79,7 @@ public class BikesImageShowSharedBikesNoOwner extends AppCompatActivity implemen
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 sharedBikesList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    ShareBikes share_Bikes = postSnapshot.getValue(ShareBikes.class);
+                    BikesShare share_Bikes = postSnapshot.getValue(BikesShare.class);
                     assert share_Bikes != null;
                     if (!share_Bikes.getShareBikes_CustomId().equals(customShareAll_Id)) {
                         share_Bikes.setShareBike_Key(postSnapshot.getKey());
@@ -107,18 +103,19 @@ public class BikesImageShowSharedBikesNoOwner extends AppCompatActivity implemen
 
     @Override
     public void onItemClick(final int position) {
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowSharedBikesNoOwner.this);
-        builderAlert.setMessage("Contact the owner if you like to share this bike");
-        builderAlert.setCancelable(true);
-        builderAlert.setPositiveButton(
-                "Ok",
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikesImageShowSharedBikesNoOwner.this);
+        alertDialogBuilder
+                .setMessage("Contact the owner if you like to share this bike")
+                .setCancelable(false)
+                .setPositiveButton("Ok",
                 new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
                     }
                 });
 
-        AlertDialog alert1 = builderAlert.create();
+        AlertDialog alert1 = alertDialogBuilder.create();
         alert1.show();
     }
 }

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/holo_orange_light">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="0dp"
@@ -15,10 +14,15 @@
         tools:context=".MainActivity"
         tools:showIn="@layout/activity_main">
 
+        <include
+            android:id="@+id/toolbarMain"
+            layout="@layout/toolbar_main" />
+
         <TextView
             android:id="@+id/tvWelcomeMain1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbarMain"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -70,7 +74,7 @@
             android:textSize="24sp"
             tools:ignore="RtlSymmetry,TextViewEdits" />
 
-        <!--Bikes Stores Available-->
+        <!--BikesRent Stores Available-->
         <TextView
             android:id="@+id/tvMainStores"
             android:layout_width="wrap_content"

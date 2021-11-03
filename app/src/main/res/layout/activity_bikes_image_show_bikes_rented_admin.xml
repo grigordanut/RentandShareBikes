@@ -6,9 +6,11 @@
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
     android:orientation="vertical"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
     tools:context=".BikesImageShowBikesRentedAdmin">
+
+    <include
+        android:id="@+id/toolbarBikesRentedAdmin"
+        layout="@layout/toolbar_bikes_image_show_bikes_rented_admin" />
 
     <TextView
         android:id="@+id/tvAdminRentedBikes"

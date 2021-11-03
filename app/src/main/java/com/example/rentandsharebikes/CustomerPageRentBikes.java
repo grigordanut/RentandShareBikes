@@ -3,6 +3,7 @@ package com.example.rentandsharebikes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,26 +27,20 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class CustomerPageRentBikes extends AppCompatActivity {
-
-    //Declaring some objects
-    private DrawerLayout drawerLayoutUserRent;
-    private ActionBarDrawerToggle drawerToggleUserRent;
-    private NavigationView navigationViewUserRent;
 
     //Display data from Bike Stores database
     private FirebaseStorage firebaseStBikeSoresCustom;
     private DatabaseReference databaseRefBikeStoresCustom;
     private ValueEventListener bikeStoresCustomEventListener;
 
-    //Display data from Bikes table database
+    //Display data from BikesRent table database
     private FirebaseStorage firebaseStBikesAvRentCustom;
     private DatabaseReference databaseRefBikesAvRentCustom;
     private ValueEventListener bikesAvRentCustomEventListener;
 
-    //Display data from Rent Bikes table database
+    //Display data from Rent BikesRent table database
     private FirebaseStorage firebaseStBikesRentCustom;
     private DatabaseReference databaseRefBikesRentCustom;
     private ValueEventListener bikesRentCustomEventListener;
@@ -54,15 +50,21 @@ public class CustomerPageRentBikes extends AppCompatActivity {
     private FirebaseUser currentUser;
     private DatabaseReference databaseReference;
 
-    private TextView tVCustomPageRent, tVCustomPageRentPerDetails,tVCustomStoresAv, tVCustomBikesRentAv, tVCustomBikesRented;
-
     private List<BikeStores> bikeStoresListCustom;
-    private List<Bikes> bikesListAvRentCustom;
+    private List<BikesRent> bikesRentListAvRentCustom;
     private List<RentBikes> bikesListRentCustom;
 
     private int numberStoresAvCustom;
     private int numberBikesAvRentCustom;
     private int numberBikesRentedCustom;
+
+    private TextView tVCustomPageRent, tVCustomPageRentPerDetails,tVCustomStoresAv, tVCustomBikesRentAv, tVCustomBikesRented;
+
+    //Declaring some objects
+    private DrawerLayout drawerLayoutUserRent;
+    private ActionBarDrawerToggle drawerToggleUserRent;
+    private NavigationView navigationViewUserRent;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +72,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
         setContentView(R.layout.activity_customer_page_rent_bikes);
 
         bikeStoresListCustom = new ArrayList<>();
-        bikesListAvRentCustom = new ArrayList<>();
+        bikesRentListAvRentCustom = new ArrayList<>();
         bikesListRentCustom = new ArrayList<>();
 
         //initialise the variables
@@ -85,14 +87,16 @@ public class CustomerPageRentBikes extends AppCompatActivity {
         currentUser = firebaseAuth.getCurrentUser();
 
         drawerLayoutUserRent = findViewById(R.id.activity_customer_page_rent_bikes);
-        drawerToggleUserRent = new ActionBarDrawerToggle(this, drawerLayoutUserRent, R.string.open_customPageRent, R.string.close_customPageRent);
+        navigationViewUserRent = findViewById(R.id.navViewCustomRent);
+        toolbar = findViewById(R.id.toolbarCustomPageRent);
+
+        drawerToggleUserRent = new ActionBarDrawerToggle(this, drawerLayoutUserRent, toolbar, R.string.open_customPageRent, R.string.close_customPageRent);
 
         drawerLayoutUserRent.addDrawerListener(drawerToggleUserRent);
         drawerToggleUserRent.syncState();
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-
-        navigationViewUserRent = findViewById(R.id.navViewCustomRent);
+        setSupportActionBar(toolbar);
+        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         //retrieve data from database into text views
         databaseReference = FirebaseDatabase.getInstance().getReference("Customers");
@@ -124,11 +128,11 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                     case R.id.userShow_storesList:
                                         startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageShowStoresListCustomer.class));
                                         break;
-                                    //Show the list of Bikes available from customer page ordered by Bike Stores
+                                    //Show the list of BikesRent available from customer page ordered by Bike Stores
                                     case R.id.userShow_bikesList:
                                         startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageShowBikesListCustom.class));
                                         break;
-                                    //Show the list of all Bikes available from customer page
+                                    //Show the list of all BikesRent available from customer page
                                     case R.id.userShow_bikesListAll:
                                         startActivity(new Intent(CustomerPageRentBikes.this, BikesImageShowBikesListCustomAll.class));
                                         break;
@@ -136,7 +140,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                     case R.id.userRent_bikes:
                                         startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageRentBikesCustom.class));
                                         break;
-                                    //Show the list of Bikes rented by customer
+                                    //Show the list of BikesRent rented by customer
                                     case R.id.userShow_bikesRented:
                                         Intent intentRent = new Intent(CustomerPageRentBikes.this, BikesImageShowBikesRentedCustom.class);
                                         intentRent.putExtra("CFName", custom_Data.getfName_Customer());
@@ -193,10 +197,8 @@ public class CustomerPageRentBikes extends AppCompatActivity {
             return true;
         }
 
-        switch (item.getItemId()) {
-            case R.id.userRentGoBack: {
-                goBackRent();
-            }
+        if (item.getItemId() == R.id.userRentGoBack) {
+            goBackRent();
         }
 
         return super.onOptionsItemSelected(item);
@@ -244,13 +246,13 @@ public class CustomerPageRentBikes extends AppCompatActivity {
         bikesAvRentCustomEventListener = databaseRefBikesAvRentCustom.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesListAvRentCustom.clear();
+                bikesRentListAvRentCustom.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    bikes.setBike_Key(postSnapshot.getKey());
-                    bikesListAvRentCustom.add(bikes);
-                    numberBikesAvRentCustom = bikesListAvRentCustom.size();
+                    BikesRent bikesRent = postSnapshot.getValue(BikesRent.class);
+                    assert bikesRent != null;
+                    bikesRent.setBike_Key(postSnapshot.getKey());
+                    bikesRentListAvRentCustom.add(bikesRent);
+                    numberBikesAvRentCustom = bikesRentListAvRentCustom.size();
                     tVCustomBikesRentAv.setText(String.valueOf(numberBikesAvRentCustom));
                 }
             }

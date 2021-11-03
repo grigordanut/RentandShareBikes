@@ -66,7 +66,7 @@ public class CalculateCoordinates extends AppCompatActivity {
                     progressDialog.setMessage("Calculate Coordinates");
                     progressDialog.show();
                     GeoLocation geoLocation = new GeoLocation();
-                    geoLocation.getAddress(store_Place, getApplicationContext(), new GeoHandler());
+                    GeoLocation.getAddress(store_Place, getApplicationContext(), new GeoHandler());
                 }
                 progressDialog.dismiss();
             }
@@ -79,17 +79,15 @@ public class CalculateCoordinates extends AppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             final String storeAddress, addressStoreLat, addressStoreLong;
-            switch (msg.what) {
-                case 1:
-                    Bundle bundle = msg.getData();
-                    storeAddress = bundle.getString("locationAddress");
-                    addressStoreLat = bundle.getString("addressLat");
-                    addressStoreLong = bundle.getString("addressLong");
-                    break;
-                default:
-                    storeAddress = null;
-                    addressStoreLat = null;
-                    addressStoreLong = null;
+            if (msg.what == 1) {
+                Bundle bundle = msg.getData();
+                storeAddress = bundle.getString("locationAddress");
+                addressStoreLat = bundle.getString("addressLat");
+                addressStoreLong = bundle.getString("addressLong");
+            } else {
+                storeAddress = null;
+                addressStoreLat = null;
+                addressStoreLong = null;
             }
             tvStoreAddress.setText("Address: " + storeAddress);
             tvLatitude.setText(addressStoreLat);

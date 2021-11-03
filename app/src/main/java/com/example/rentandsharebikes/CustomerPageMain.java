@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,7 +42,6 @@ public class CustomerPageMain extends AppCompatActivity {
         tVCustomPageMain = (TextView) findViewById(R.id.tvCustomPageMain);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        //currentUser = firebaseAuth.getCurrentUser();
 
         Button buttonRentBikes = (Button) findViewById(R.id.btnRentBikeCustom);
         buttonRentBikes.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +58,23 @@ public class CustomerPageMain extends AppCompatActivity {
                 startActivity(new Intent(CustomerPageMain.this, CustomerPageShareBikes.class));
             }
         });
+
+        Button buttonLogOut = findViewById(R.id.btnLogOut);
+        buttonLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("remember", "false");
+                editor.apply();
+                finish();
+                startActivity(new Intent(CustomerPageMain.this, MainActivity.class));
+                Toast.makeText(CustomerPageMain.this, "You are Log Out", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
     }
 
     @Override

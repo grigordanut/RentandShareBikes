@@ -45,7 +45,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_show_stores_list_admin);
 
-        textViewBikeStoresImageShowStoreListAdmin = (TextView)findViewById(R.id.tvBikeStoresImageShowStoreListAdmin);
+        textViewBikeStoresImageShowStoreListAdmin = (TextView) findViewById(R.id.tvBikeStoresImageShowStoreListAdmin);
         textViewBikeStoresImageShowStoreListAdmin.setText("No Bike Stores available");
 
         bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
@@ -94,11 +94,11 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
                     assert bikeStores != null;
                     bikeStores.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoresList.add(bikeStores);
-                    textViewBikeStoresImageShowStoreListAdmin.setText(bikeStoresList.size()+" Bike Stores available");
+                    textViewBikeStoresImageShowStoreListAdmin.setText(bikeStoresList.size() + " Bike Stores available");
                 }
                 bikeStoreAdapterShowStoresListAdmin = new BikeStoreAdapterShowStoresListAdmin(BikeStoreImageShowStoresListAdmin.this, bikeStoresList);
                 bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoresListAdmin);
-                bikeStoreAdapterShowStoresListAdmin.setOnItmClickListener(BikeStoreImageShowStoresListAdmin.this);
+                bikeStoreAdapterShowStoresListAdmin.setOnItemClickListener(BikeStoreImageShowStoresListAdmin.this);
                 progressDialog.dismiss();
             }
 
@@ -138,49 +138,51 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
     //Action of the menu Delete and alert dialog
     @Override
     public void onDeleteStoreClick(final int position) {
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikeStoreImageShowStoresListAdmin.this);
         BikeStores selectedBikeStores = bikeStoresList.get(position);
-        builderAlert.setMessage("Are sure to delete " + selectedBikeStores.getBikeStore_Location() + " Bike Store?");
-        builderAlert.setCancelable(true);
-        builderAlert.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        BikeStores selectedBikeStores = bikeStoresList.get(position);
-                        String selectedKeyStore = selectedBikeStores.getBikeStore_Key();
-                        databaseReference.child(selectedKeyStore).removeValue();
-                        Toast.makeText(BikeStoreImageShowStoresListAdmin.this, "The Bike Store " + selectedBikeStores.getBikeStore_Location() + " has been deleted successfully", Toast.LENGTH_SHORT).show();
 
-                    }
-                });
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikeStoreImageShowStoresListAdmin.this);
+        alertDialogBuilder
+                .setMessage("Are sure to delete " + selectedBikeStores.getBikeStore_Location() + " Bike Store?")
+                .setCancelable(false)
+                .setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                BikeStores selectedBikeStores = bikeStoresList.get(position);
+                                String selectedKeyStore = selectedBikeStores.getBikeStore_Key();
+                                databaseReference.child(selectedKeyStore).removeValue();
+                                Toast.makeText(BikeStoreImageShowStoresListAdmin.this, "The Bike Store " + selectedBikeStores.getBikeStore_Location() + " has been successfully deleted.", Toast.LENGTH_SHORT).show();
 
-        builderAlert.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                            }
+                        })
 
-        AlertDialog alert1 = builderAlert.create();
+                .setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alert1 = alertDialogBuilder.create();
         alert1.show();
     }
 
     @Override
     public void alertDialogBikeStoreNotEmpty(final int position) {
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikeStoreImageShowStoresListAdmin.this);
         BikeStores selectedBikeStores = bikeStoresList.get(position);
-        builderAlert.setMessage("The " + selectedBikeStores.getBikeStore_Location()+ " Bike Store still has bikes and cannot be deleted \nDelete the Bikes first and after delete the Bike Store");
-        builderAlert.setCancelable(true);
-        builderAlert.setPositiveButton(
-                "Ok",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
 
-        AlertDialog alert1 = builderAlert.create();
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikeStoreImageShowStoresListAdmin.this);
+        alertDialogBuilder
+                .setMessage("The " + selectedBikeStores.getBikeStore_Location() + " Bike Store still has bikes and cannot be deleted \nDelete the BikesRent first and after delete the Bike Store")
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+        AlertDialog alert1 = alertDialogBuilder.create();
         alert1.show();
     }
 

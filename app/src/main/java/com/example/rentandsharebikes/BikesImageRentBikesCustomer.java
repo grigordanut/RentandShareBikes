@@ -33,7 +33,7 @@ public class BikesImageRentBikesCustomer extends AppCompatActivity {
 
     private TextView textViewBikesImageList;
 
-    private List<Bikes> bikesList;
+    private List<BikesRent> bikesRentList;
 
     String bikeStore_Name = "";
     String bikeStore_Key = "";
@@ -60,7 +60,7 @@ public class BikesImageRentBikesCustomer extends AppCompatActivity {
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         progressDialog = new ProgressDialog(this);
-        bikesList = new ArrayList<>();
+        bikesRentList = new ArrayList<>();
 
         progressDialog.show();
     }
@@ -81,17 +81,17 @@ public class BikesImageRentBikesCustomer extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesList.clear();
+                bikesRentList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
-                        bikes.setBike_Key(postSnapshot.getKey());
-                        bikesList.add(bikes);
-                        textViewBikesImageList.setText(bikesList.size()+" bikes available in "+bikeStore_Name+" store");
+                    BikesRent bikesRent = postSnapshot.getValue(BikesRent.class);
+                    assert bikesRent != null;
+                    if (bikesRent.getBikeStoreKey().equals(bikeStore_Key)) {
+                        bikesRent.setBike_Key(postSnapshot.getKey());
+                        bikesRentList.add(bikesRent);
+                        textViewBikesImageList.setText(bikesRentList.size()+" bikes available in "+bikeStore_Name+" store");
                     }
                 }
-                bikesAdapterRentBikesCustomer = new BikesAdapterRentBikesCustomer(BikesImageRentBikesCustomer.this, bikesList);
+                bikesAdapterRentBikesCustomer = new BikesAdapterRentBikesCustomer(BikesImageRentBikesCustomer.this, bikesRentList);
                 bikesListRecyclerView.setAdapter(bikesAdapterRentBikesCustomer);
                 progressDialog.dismiss();
             }

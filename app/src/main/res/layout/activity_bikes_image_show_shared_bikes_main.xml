@@ -8,6 +8,10 @@
     android:background="@android:color/holo_blue_bright"
     tools:context=".BikesImageShowSharedBikesMain">
 
+    <include
+        android:id="@+id/toolbarBikesSharedAdmin"
+        layout="@layout/toolbar_bikes_image_show_shared_bikes_main" />
+
     <TextView
         android:id="@+id/tvBikesImgShowBikesSMain"
         android:layout_width="match_parent"
@@ -16,7 +20,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
-        android:text="@string/tv_bikeStoreImgShowBikesSMain"
+        android:text="@string/tv_bikesImageShowSharedBikesMain"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="22sp" />

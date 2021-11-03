@@ -49,7 +49,6 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
-import java.util.Objects;
 
 import static com.google.firebase.storage.FirebaseStorage.getInstance;
 
@@ -60,7 +59,7 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
     private static final int IMAGE_CAPTURE_CODE = 1001;
     private static final int PERMISSION_CODE = 1000;
 
-    //Save bike details into Share Bikes able
+    //Save bike details into Share BikesRent able
     private StorageReference storageRefUpShare;
     private DatabaseReference databaseRefUpShare;
     private StorageTask shareUpTask;

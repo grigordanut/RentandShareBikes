@@ -39,7 +39,7 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
 
     private TextView textViewBikesImageList;
 
-    private List<Bikes> bikesList;
+    private List<BikesRent> bikesRentList;
 
     String bikeStore_NameRent = "";
     String bikeStore_KeyRent = "";
@@ -66,7 +66,7 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         progressDialog = new ProgressDialog(this);
-        bikesList = new ArrayList<>();
+        bikesRentList = new ArrayList<>();
 
         progressDialog.show();
     }
@@ -87,17 +87,17 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesList.clear();
+                bikesRentList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(bikeStore_KeyRent)) {
-                        bikes.setBike_Key(postSnapshot.getKey());
-                        bikesList.add(bikes);
-                        textViewBikesImageList.setText(bikesList.size()+" bikes available in "+bikeStore_NameRent+" store");
+                    BikesRent bikesRent = postSnapshot.getValue(BikesRent.class);
+                    assert bikesRent != null;
+                    if (bikesRent.getBikeStoreKey().equals(bikeStore_KeyRent)) {
+                        bikesRent.setBike_Key(postSnapshot.getKey());
+                        bikesRentList.add(bikesRent);
+                        textViewBikesImageList.setText(bikesRentList.size()+" bikes available in "+bikeStore_NameRent+" store");
                     }
                 }
-                bikesAdapterShowBikesListCustomer = new BikesAdapterShowBikesListCustomer(BikesImageShowBikesListCustomer.this, bikesList);
+                bikesAdapterShowBikesListCustomer = new BikesAdapterShowBikesListCustomer(BikesImageShowBikesListCustomer.this, bikesRentList);
                 bikesListRecyclerView.setAdapter(bikesAdapterShowBikesListCustomer);
                 bikesAdapterShowBikesListCustomer.setOnItmClickListener(BikesImageShowBikesListCustomer.this);
                 progressDialog.dismiss();
@@ -114,17 +114,20 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
     @Override
     public void onItemClick(final int position) {
         final String[] options = {"Rent this Bike", "Back Main Page"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        Bikes selected_Bike = bikesList.get(position);
-        builder.setTitle("You selected "+selected_Bike.getBike_Model()+"\nSelect an option");
-        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, options);
+        BikesRent selected_Bike = bikesRentList.get(position);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setTitle("You selected "+selected_Bike.getBike_Model()+"\nSelect an option:")
+                .setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
                 if (which == 0) {
                     Intent intent = new Intent(BikesImageShowBikesListCustomer.this, RentBikesCustomer.class);
-                    Bikes selected_Bike = bikesList.get(position);
+                    BikesRent selected_Bike = bikesRentList.get(position);
                     intent.putExtra("BCondition",selected_Bike.getBike_Condition());
                     intent.putExtra("BModel",selected_Bike.getBike_Model());
                     intent.putExtra("BManufact",selected_Bike.getBike_Manufacturer());
@@ -141,8 +144,17 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
                     Toast.makeText(BikesImageShowBikesListCustomer.this, "Back to main page", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
-        final AlertDialog alertDialog = builder.create();
+        })
+
+                .setNegativeButton("CLOSE",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+        final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 
@@ -160,10 +172,8 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.showBikesCustomGoBack:{
-                goBackBikesCustom();
-            }
+        if (item.getItemId() == R.id.showBikesCustomGoBack) {
+            goBackBikesCustom();
         }
 
         return super.onOptionsItemSelected(item);

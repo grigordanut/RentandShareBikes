@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
@@ -31,19 +32,19 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference databaseRefBikeStores;
     private ValueEventListener bikeStoresEventListener;
 
-    //Display data from Bikes table database
+    //Display data from BikesRent table database
     private FirebaseStorage firebaseStBikesAvRent;
     private DatabaseReference databaseRefBikesAvRent;
     private ValueEventListener bikesAvRentEventListener;
 
-    //Display data from Share Bikes table database
+    //Display data from Share BikesRent table database
     private FirebaseStorage firebaseStBikesAvShare;
     private DatabaseReference databaseRefBikesAvShare;
     private ValueEventListener bikesAvShareEventListener;
 
     private List<BikeStores> bikeStoresList;
-    private List<Bikes> bikesListAvRent;
-    private List<ShareBikes> bikesListAvShare;
+    private List<BikesRent> bikesRentListAvRent;
+    private List<BikesShare> bikesListAvShare;
 
     private int numberStoresAvailable;
     private int numberBikesAvRent;
@@ -55,14 +56,16 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private NavigationView navigationView;
+    private Toolbar toolbar;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         bikeStoresList = new ArrayList<>();
-        bikesListAvRent = new ArrayList<>();
+        bikesRentListAvRent = new ArrayList<>();
         bikesListAvShare = new ArrayList<>();
 
         tVMainStoresAv = (TextView)findViewById(R.id.tvMainStoresAv);
@@ -70,50 +73,48 @@ public class MainActivity extends AppCompatActivity {
         tVMainBikesShareAv = (TextView)findViewById(R.id.tvMainBikesShareAv);
 
         drawerLayout = findViewById(R.id.activity_main);
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_mainActivity, R.string.close_mainActivity);
+        navigationView = findViewById(R.id.navViewMain);
+        toolbar = findViewById(R.id.toolbarMain);
+
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_mainActivity, R.string.close_mainActivity);
 
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        navigationView = findViewById(R.id.navViewMain);
+        setSupportActionBar(toolbar);
+        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         //Adding Click Events to our navigation drawer item
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                switch (id) {
-                    //Log into My Account
-                    case R.id.myAccount:
-                        startActivity(new Intent(MainActivity.this, LoginCustomer.class));
-                        break;
-                    //Show the list of Bike Stores available
-                    case R.id.bikeStoreAv:
-                        startActivity(new Intent(MainActivity.this, BikeStoreImageShowStoresListMain.class));
-                        break;
-                    //Show the list of Bikes available from main page ordered by Bike Stores
-                    case R.id.bikeAvToRent:
-                        startActivity(new Intent(MainActivity.this, BikeStoreImageShowBikesListMain.class));
-                        break;
-                    //Show the list of all Bikes available from main page
-                    case R.id.bikeAvToRentAll:
-                        startActivity(new Intent(MainActivity.this, BikesImageShowBikesListMainAll.class));
-                        break;
-                    //Bikes available to share
-                    case R.id.bikeAvToShare:
-                        startActivity(new Intent(MainActivity.this, BikesImageShowSharedBikesMain.class));
-                        break;
-                    case R.id.contactUs:
-                        startActivity(new Intent(MainActivity.this, AdminPage.class));
-                        break;
-                    default:
-                        return true;
-                }
-                return true;
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            switch (id) {
+                //Log into My Account
+                case R.id.myAccount:
+                    startActivity(new Intent(MainActivity.this, LoginCustomer.class));
+                    break;
+                //Show the list of Bike Stores available
+                case R.id.bikeStoreAv:
+                    startActivity(new Intent(MainActivity.this, BikeStoreImageShowStoresListMain.class));
+                    break;
+                //Show the list of BikesRent available from main page ordered by Bike Stores
+                case R.id.bikeAvToRent:
+                    startActivity(new Intent(MainActivity.this, BikeStoreImageShowBikesListMain.class));
+                    break;
+                //Show the list of all BikesRent available from main page
+                case R.id.bikeAvToRentAll:
+                    startActivity(new Intent(MainActivity.this, BikesImageShowBikesListMainAll.class));
+                    break;
+                //BikesRent available to share
+                case R.id.bikeAvToShare:
+                    startActivity(new Intent(MainActivity.this, BikesImageShowSharedBikesMain.class));
+                    break;
+                case R.id.contactUs:
+                    startActivity(new Intent(MainActivity.this, ContactUs.class));
+                    break;
+                default:
+                    return true;
             }
+            return true;
         });
     }
 
@@ -186,13 +187,13 @@ public class MainActivity extends AppCompatActivity {
         bikesAvRentEventListener = databaseRefBikesAvRent.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesListAvRent.clear();
+                bikesRentListAvRent.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    bikes.setBike_Key(postSnapshot.getKey());
-                    bikesListAvRent.add(bikes);
-                    numberBikesAvRent = bikesListAvRent.size();
+                    BikesRent bikesRent = postSnapshot.getValue(BikesRent.class);
+                    assert bikesRent != null;
+                    bikesRent.setBike_Key(postSnapshot.getKey());
+                    bikesRentListAvRent.add(bikesRent);
+                    numberBikesAvRent = bikesRentListAvRent.size();
                     tVMainBikesRentAv.setText(String.valueOf(numberBikesAvRent));
                 }
             }
@@ -205,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadBikeShareAv() {
-        //Display the list of the bikes from Share Bikes database
+        //Display the list of the bikes from Share BikesRent database
         firebaseStBikesAvShare = FirebaseStorage.getInstance();
         databaseRefBikesAvShare = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
@@ -215,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikesListAvShare.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    ShareBikes share_Bikes = postSnapshot.getValue(ShareBikes.class);
+                    BikesShare share_Bikes = postSnapshot.getValue(BikesShare.class);
                     assert share_Bikes != null;
                     share_Bikes.setShareBike_Key(postSnapshot.getKey());
                     bikesListAvShare.add(share_Bikes);

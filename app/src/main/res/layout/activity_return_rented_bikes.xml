@@ -13,6 +13,10 @@
         android:layout_height="wrap_content"
         tools:context=".ReturnRentedBikes">
 
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_return_rented_bikes" />
+
         <TextView
             android:id="@+id/tvReturnBikes"
             android:layout_width="match_parent"
@@ -20,6 +24,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
+            android:layout_below="@id/toolbar"
             android:text="@string/tv_returnRentedBike"
             android:textAlignment="center"
             android:textColor="#000000"

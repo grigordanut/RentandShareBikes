@@ -44,8 +44,8 @@ public class ChangePassword extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressDialog.show();
-                old_Password = oldPassword.getText().toString().trim();
-                new_Password = newPassword.getText().toString().trim();
+                old_Password = Objects.requireNonNull(oldPassword.getText()).toString().trim();
+                new_Password = Objects.requireNonNull(newPassword.getText()).toString().trim();
 
                 if (old_Password.isEmpty()) {
                     oldPassword.setError("Enter your old Password");

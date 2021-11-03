@@ -8,15 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +48,7 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
 
     private ProgressDialog progressDialog;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,36 +125,43 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
 
     @Override
     public void alertDialogShowRentedBikesOptions(final int position) {
-        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        final String[] options = {"Return this Bike", "Back to Renting Page"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item,options);
         RentBikes sel_Bike = rentBikesList.get(position);
-        alertDialogBuilder.setTitle("You selected " + sel_Bike.getBikeModel_RentBikes() + "\nSelect an option");
-        final String[] options = {"Return this Bike", "Back to Rent Page"};
-        alertDialogBuilder.setItems(options, new DialogInterface.OnClickListener() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setTitle("You selected " + sel_Bike.getBikeModel_RentBikes() + "\nSelect an option:")
+                .setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0) {
                     RentBikes sel_Bike = rentBikesList.get(position);
                     Intent intent_Ret = new Intent ( BikesImageShowBikesRentedCustom.this, ReturnRentedBikes.class);
-                    //Bike image of rented Bike
-                    intent_Ret.putExtra("BikeImage",sel_Bike.getBikeImage_RentBike());
-                    //Bike Store name of rented Bike
-                    intent_Ret.putExtra("BStoreNameSame",sel_Bike.getStoreLocation_RentBikes());
-                    //Bike Store key of rented bike
-                    intent_Ret.putExtra("BStoreKeySame",sel_Bike.getStoreKey_RentBikes());
                     //Bike key of rented bike
                     intent_Ret.putExtra("BikeRentedKey",sel_Bike.getBike_RentKey());
+                    Toast.makeText(BikesImageShowBikesRentedCustom.this, "Return the rented Bike", Toast.LENGTH_SHORT).show();
                     startActivity(intent_Ret);
                 }
                 if (which == 1) {
-                    Toast.makeText(BikesImageShowBikesRentedCustom.this, "Go back to main page", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(BikesImageShowBikesRentedCustom.this, RentBikesCustomer.class));
-                    AlertDialog alert1 = alertDialogBuilder.create();
-                    alert1.show();
+                    Toast.makeText(BikesImageShowBikesRentedCustom.this, "Go back to renting page", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(BikesImageShowBikesRentedCustom.this, CustomerPageRentBikes.class));
                 }
 
             }
-        });
-        AlertDialog alertDialog = alertDialogBuilder.create();
+        })
+
+                .setNegativeButton("CLOSE",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+        final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 }

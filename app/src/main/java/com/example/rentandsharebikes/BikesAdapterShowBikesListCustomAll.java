@@ -18,12 +18,12 @@ import java.util.List;
 public class BikesAdapterShowBikesListCustomAll extends RecyclerView.Adapter<BikesAdapterShowBikesListCustomAll.ImageViewHolder> {
 
     private final Context bikesContext;
-    private final List<Bikes> bikesUploads;
+    private final List<BikesRent> bikesRentUploads;
     private OnItemClickListener clickListener;
 
-    public BikesAdapterShowBikesListCustomAll(Context bikes_context, List<Bikes> bikes_uploads){
+    public BikesAdapterShowBikesListCustomAll(Context bikes_context, List<BikesRent> bikes_ToRent_uploads){
         bikesContext = bikes_context;
-        bikesUploads = bikes_uploads;
+        bikesRentUploads = bikes_ToRent_uploads;
     }
 
     @NonNull
@@ -37,7 +37,7 @@ public class BikesAdapterShowBikesListCustomAll extends RecyclerView.Adapter<Bik
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, int position) {
 
-        final Bikes uploadCurrent = bikesUploads.get(position);
+        final BikesRent uploadCurrent = bikesRentUploads.get(position);
         holder.tvBStoreUser.setText(uploadCurrent.getBikeStoreName());
         holder.tvBikeCUser.setText(uploadCurrent.getBike_Condition());
         holder.tvBikeMUser.setText(uploadCurrent.getBike_Model());
@@ -54,7 +54,7 @@ public class BikesAdapterShowBikesListCustomAll extends RecyclerView.Adapter<Bik
 
     @Override
     public int getItemCount() {
-        return bikesUploads.size();
+        return bikesRentUploads.size();
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

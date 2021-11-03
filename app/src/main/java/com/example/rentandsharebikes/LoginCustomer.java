@@ -15,19 +15,22 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
+
 public class LoginCustomer extends AppCompatActivity {
 
+    //declare variables
     private TextInputEditText emailLogCustom, passLogCustom;
     private CheckBox rememberCheckBox;
 
@@ -48,12 +51,9 @@ public class LoginCustomer extends AppCompatActivity {
         passLogCustom = (TextInputEditText) findViewById(R.id.etPassLogCustom);
 
         TextView tvForgotPass = (TextView) findViewById(R.id.tvForgotPassCustom);
-        tvForgotPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent forgotPass = new Intent(LoginCustomer.this, ResetPassword.class);
-                startActivity(forgotPass);
-            }
+        tvForgotPass.setOnClickListener(v -> {
+            Intent forgotPass = new Intent(LoginCustomer.this, ResetPassword.class);
+            startActivity(forgotPass);
         });
 
         progressDialog = new ProgressDialog(this);
@@ -65,6 +65,7 @@ public class LoginCustomer extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkbox = preferences.getString("remember", "");
 
+        assert checkbox != null;
         if (checkbox.equals("true")) {
             Intent intent = new Intent(LoginCustomer.this, CustomerPageMain.class);
             startActivity(intent);
@@ -125,7 +126,6 @@ public class LoginCustomer extends AppCompatActivity {
             }
         });
 
-
         textViewEmailLogCustom = (TextView) findViewById(R.id.text_dummy_hint_emailLog);
         textViewPassLogCustom = (TextView) findViewById(R.id.text_dummy_hint_password);
 
@@ -144,7 +144,7 @@ public class LoginCustomer extends AppCompatActivity {
                     }, 10);
                 } else {
                     // Required to show/hide white background behind floating label during focus change
-                    if (emailLogCustom.getText().length() > 0)
+                    if (Objects.requireNonNull(emailLogCustom.getText()).length() > 0)
                         textViewEmailLogCustom.setVisibility(View.VISIBLE);
                     else
                         textViewEmailLogCustom.setVisibility(View.INVISIBLE);
@@ -177,8 +177,8 @@ public class LoginCustomer extends AppCompatActivity {
 
     private Boolean validateUserLogData() {
         boolean result = false;
-        email_logCustom = emailLogCustom.getText().toString().trim();
-        pass_logCustom = passLogCustom.getText().toString().trim();
+        email_logCustom = Objects.requireNonNull(emailLogCustom.getText()).toString().trim();
+        pass_logCustom = Objects.requireNonNull(passLogCustom.getText()).toString().trim();
 
         if (email_logCustom.isEmpty()) {
             emailLogCustom.setError("Enter your Login Email");

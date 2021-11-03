@@ -7,6 +7,10 @@
     android:orientation="vertical"
     tools:context=".BikeStoreImageShowBikesListMain">
 
+    <include
+        android:id="@+id/toolbarBikesSharedAdmin"
+        layout="@layout/toolbar_bike_store_image_show_bikes_list_main" />
+
     <TextView
         android:id="@+id/tvBikeStoresImgShowBikesListMain"
         android:layout_width="match_parent"

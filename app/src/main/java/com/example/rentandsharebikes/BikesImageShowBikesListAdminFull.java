@@ -28,7 +28,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class BikesImageShowBikesListAdminFull extends AppCompatActivity implements BikesAdapterShowBikesListAdminFull.OnItemClickListener {
 
@@ -41,7 +40,7 @@ public class BikesImageShowBikesListAdminFull extends AppCompatActivity implemen
 
     private TextView textViewBikesImageList;
 
-    private List<Bikes> bikesList;
+    private List<BikesRent> bikesRentList;
 
     private Button buttonAddMoreBikesFull, buttonBackAdminPageBikesFull;
 
@@ -61,7 +60,7 @@ public class BikesImageShowBikesListAdminFull extends AppCompatActivity implemen
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         progressDialog = new ProgressDialog(this);
-        bikesList = new ArrayList<>();
+        bikesRentList = new ArrayList<>();
 
         progressDialog.show();
 
@@ -98,15 +97,15 @@ public class BikesImageShowBikesListAdminFull extends AppCompatActivity implemen
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesList.clear();
+                bikesRentList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    bikes.setBike_Key(postSnapshot.getKey());
-                    bikesList.add(bikes);
-                    textViewBikesImageList.setText(bikesList.size() + " Bikes available");
+                    BikesRent bikesRent = postSnapshot.getValue(BikesRent.class);
+                    assert bikesRent != null;
+                    bikesRent.setBike_Key(postSnapshot.getKey());
+                    bikesRentList.add(bikesRent);
+                    textViewBikesImageList.setText(bikesRentList.size() + " Bikes available");
                 }
-                bikesListAdapterAdminFull = new BikesAdapterShowBikesListAdminFull(BikesImageShowBikesListAdminFull.this, bikesList);
+                bikesListAdapterAdminFull = new BikesAdapterShowBikesListAdminFull(BikesImageShowBikesListAdminFull.this, bikesRentList);
                 bikesListRecyclerView.setAdapter(bikesListAdapterAdminFull);
                 bikesListAdapterAdminFull.setOnItmClickListener(BikesImageShowBikesListAdminFull.this);
                 progressDialog.dismiss();
@@ -124,28 +123,38 @@ public class BikesImageShowBikesListAdminFull extends AppCompatActivity implemen
     public void onItemClick(final int position) {
         final String[] options = {"Update this Bike", "Delete this Bike"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        Bikes selected_Bike = bikesList.get(position);
-        builder.setTitle("You selected " + selected_Bike.getBike_Model() + "\nSelect an option");
-        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (which == 0) {
-                    updateBikeDetails(position);
-                }
-                if (which == 1) {
-                    confirmBikeDeletion(position);
-                }
-            }
-        });
+        BikesRent selected_Bike = bikesRentList.get(position);
 
-        final AlertDialog alertDialog = builder.create();
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setTitle("You selected " + selected_Bike.getBike_Model() + "\nSelect an option:")
+                .setAdapter(adapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0) {
+                            updateBikeDetails(position);
+                        }
+                        if (which == 1) {
+                            confirmBikeDeletion(position);
+                        }
+                    }
+                })
+                .setNegativeButton("CLOSE",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+        final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 
     public void updateBikeDetails(final int position) {
         Intent intent = new Intent(BikesImageShowBikesListAdminFull.this, UpdateBikeDetails.class);
-        Bikes selected_Bike = bikesList.get(position);
+        BikesRent selected_Bike = bikesRentList.get(position);
         intent.putExtra("BCondition", selected_Bike.getBike_Condition());
         intent.putExtra("BModel", selected_Bike.getBike_Model());
         intent.putExtra("BManufact", selected_Bike.getBike_Manufacturer());
@@ -156,35 +165,36 @@ public class BikesImageShowBikesListAdminFull extends AppCompatActivity implemen
     }
 
     public void confirmBikeDeletion(final int position) {
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowBikesListAdminFull.this);
-        builderAlert.setMessage("Are sure to delete this Bike?");
-        builderAlert.setCancelable(true);
-        builderAlert.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Bikes selected_Bike = bikesList.get(position);
-                        final String selectedKeyBike = selected_Bike.getBike_Key();
-                        StorageReference imageReference = bikesStorage.getReferenceFromUrl(selected_Bike.getBike_Image());
-                        imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                databaseReference.child(selectedKeyBike).removeValue();
-                                Toast.makeText(BikesImageShowBikesListAdminFull.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
+        BikesRent selected_Bike = bikesRentList.get(position);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikesImageShowBikesListAdminFull.this);
+        alertDialogBuilder
+                .setMessage("Are sure to delete the " + selected_Bike.getBike_Model() + " Bike?")
+                .setCancelable(true)
+                .setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                BikesRent selected_Bike = bikesRentList.get(position);
+                                final String selectedKeyBike = selected_Bike.getBike_Key();
+                                StorageReference imageReference = bikesStorage.getReferenceFromUrl(selected_Bike.getBike_Image());
+                                imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        databaseReference.child(selectedKeyBike).removeValue();
+                                        Toast.makeText(BikesImageShowBikesListAdminFull.this, "The Bike has been successfully deleted. ", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        })
+
+                .setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
                             }
                         });
-                    }
-                });
 
-        builderAlert.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alert1 = builderAlert.create();
+        AlertDialog alert1 = alertDialogBuilder.create();
         alert1.show();
     }
 }

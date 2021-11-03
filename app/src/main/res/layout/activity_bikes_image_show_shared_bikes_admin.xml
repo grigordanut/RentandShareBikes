@@ -8,6 +8,10 @@
     android:background="@android:color/holo_blue_bright"
     tools:context=".BikesImageShowSharedBikesAdmin">
 
+    <include
+        android:id="@+id/toolbarBikesSharedAdmin"
+        layout="@layout/toolbar_bikes_image_show_shared_bikes_admin" />
+
     <TextView
         android:id="@+id/tvBikesImgShowSBikesAdmin"
         android:layout_width="match_parent"
@@ -24,7 +28,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/evRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"

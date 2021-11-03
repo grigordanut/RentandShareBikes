@@ -11,8 +11,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -43,7 +41,7 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
 
     private TextView textViewBikesImageList;
 
-    private List<Bikes> bikesList;
+    private List<BikesRent> bikesRentList;
 
     private Button buttonAddMoreBikes, buttonBackAdminPageBikes;
 
@@ -65,14 +63,14 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
         bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
 
         textViewBikesImageList = (TextView) findViewById(R.id.tvBikeImageList);
-        textViewBikesImageList.setText("No bikes available in " +bikeStore_Name+ " store");
+        textViewBikesImageList.setText("No bikes available in " + bikeStore_Name + " store");
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         progressDialog = new ProgressDialog(this);
-        bikesList = new ArrayList<>();
+        bikesRentList = new ArrayList<>();
 
         progressDialog.show();
 
@@ -109,17 +107,17 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesList.clear();
+                bikesRentList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
-                        bikes.setBike_Key(postSnapshot.getKey());
-                        bikesList.add(bikes);
-                        textViewBikesImageList.setText(bikesList.size()+" Bikes available in "+bikeStore_Name+" store");
+                    BikesRent bikesRent = postSnapshot.getValue(BikesRent.class);
+                    assert bikesRent != null;
+                    if (bikesRent.getBikeStoreKey().equals(bikeStore_Key)) {
+                        bikesRent.setBike_Key(postSnapshot.getKey());
+                        bikesRentList.add(bikesRent);
+                        textViewBikesImageList.setText(bikesRentList.size() + " Bikes available in " + bikeStore_Name + " store");
                     }
                 }
-                bikesListAdapter = new BikesAdapterShowBikesListAdmin(BikesImageShowBikesListAdmin.this, bikesList);
+                bikesListAdapter = new BikesAdapterShowBikesListAdmin(BikesImageShowBikesListAdmin.this, bikesRentList);
                 bikesListRecyclerView.setAdapter(bikesListAdapter);
                 bikesListAdapter.setOnItmClickListener(BikesImageShowBikesListAdmin.this);
                 progressDialog.dismiss();
@@ -138,73 +136,82 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
         showOptionMenu(position);
     }
 
-    public void showOptionMenu(final int position){
-        final String [] options = {"Update this Bike", "Delete this Bike"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item,options);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        Bikes selected_Bike = bikesList.get(position);
-        builder.setTitle("You selected "+selected_Bike.getBike_Model()+"\nSelect an option");
-        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+    public void showOptionMenu(final int position) {
+        final String[] options = {"Update this Bike", "Delete this Bike"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
+        BikesRent selected_Bike = bikesRentList.get(position);
 
-                if(which == 0){
-                    updateBikes(position);
-                }
-                if (which ==1){
-                    confirmDeletion(position);
-                }
-            }
-        });
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setTitle("You selected " + selected_Bike.getBike_Model() + "\nSelect an option:")
+                .setAdapter(adapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-        final AlertDialog alertDialog = builder.create();
+                        if (which == 0) {
+                            updateBikes(position);
+                        }
+                        if (which == 1) {
+                            confirmDeletion(position);
+                        }
+                    }
+                })
+                .setNegativeButton("CLOSE",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+        final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 
-    public void updateBikes(final int position){
+    public void updateBikes(final int position) {
         Intent intent = new Intent(BikesImageShowBikesListAdmin.this, UpdateBikeDetails.class);
-        Bikes selected_Bike = bikesList.get(position);
-        intent.putExtra("BCondition",selected_Bike.getBike_Condition());
-        intent.putExtra("BModel",selected_Bike.getBike_Model());
-        intent.putExtra("BManufact",selected_Bike.getBike_Manufacturer());
-        intent.putExtra("BPrice",String.valueOf(selected_Bike.getBike_Price()));
-        intent.putExtra("BImage",selected_Bike.getBike_Image());
-        intent.putExtra("BKey",selected_Bike.getBike_Key());
+        BikesRent selected_Bike = bikesRentList.get(position);
+        intent.putExtra("BCondition", selected_Bike.getBike_Condition());
+        intent.putExtra("BModel", selected_Bike.getBike_Model());
+        intent.putExtra("BManufact", selected_Bike.getBike_Manufacturer());
+        intent.putExtra("BPrice", String.valueOf(selected_Bike.getBike_Price()));
+        intent.putExtra("BImage", selected_Bike.getBike_Image());
+        intent.putExtra("BKey", selected_Bike.getBike_Key());
         startActivity(intent);
     }
 
+    public void confirmDeletion(final int position) {
+        BikesRent selected_Bike = bikesRentList.get(position);
 
-    public void confirmDeletion(final int position){
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowBikesListAdmin.this);
-        Bikes selected_Bike = bikesList.get(position);
-        builderAlert.setMessage("Are sure to delete the "+selected_Bike.getBike_Model()+" Bike?");
-        builderAlert.setCancelable(true);
-        builderAlert.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Bikes selected_Bike = bikesList.get(position);
-                        final String selectedKeyBike = selected_Bike.getBike_Key();
-                        StorageReference imageReference = bikesStorage.getReferenceFromUrl(selected_Bike.getBike_Image());
-                        imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                databaseReference.child(selectedKeyBike).removeValue();
-                                Toast.makeText(BikesImageShowBikesListAdmin.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikesImageShowBikesListAdmin.this);
+        alertDialogBuilder
+                .setMessage("Are sure to delete the " + selected_Bike.getBike_Model() + " Bike?")
+                .setCancelable(false)
+                .setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                BikesRent selected_Bike = bikesRentList.get(position);
+                                final String selectedKeyBike = selected_Bike.getBike_Key();
+                                StorageReference imageReference = bikesStorage.getReferenceFromUrl(selected_Bike.getBike_Image());
+                                imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        databaseReference.child(selectedKeyBike).removeValue();
+                                        Toast.makeText(BikesImageShowBikesListAdmin.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
-                        });
-                    }
-                });
+                        })
 
-        builderAlert.setNegativeButton(
-                "No",
+                .setNegativeButton("No",
                 new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+                    public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 });
 
-        AlertDialog alert1 = builderAlert.create();
+        AlertDialog alert1 = alertDialogBuilder.create();
         alert1.show();
     }
 }

@@ -1,6 +1,6 @@
 package com.example.rentandsharebikes;
 
-public class ShareBikes {
+public class BikesShare {
 
     private String shareCus_FirstName;
     private String shareCus_LastName;
@@ -15,11 +15,11 @@ public class ShareBikes {
     private String shareBikes_CustomId;
     private String shareBike_Key;
 
-    public ShareBikes(){
+    public BikesShare(){
 
     }
 
-    public ShareBikes(String shareCus_FirstName, String shareCus_LastName, String shareCus_PhoneNo,
+    public BikesShare(String shareCus_FirstName, String shareCus_LastName, String shareCus_PhoneNo,
                       String shareCus_EmailAdd, String shareBike_Condition, String shareBike_Model,
                       String shareBike_Manufact, double shareBike_Price, String shareBike_DateAv,
                       String shareBike_Image, String shareBikes_CustomId, String shareBike_Key) {

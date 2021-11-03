@@ -6,9 +6,11 @@
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
     android:orientation="vertical"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
     tools:context=".BikesImageRentBikesCustomer">
+
+    <include
+        android:id="@+id/toolbarBikeStoreAddBikes"
+        layout="@layout/toolbar_bikes_image_rent_bikes_customer" />
 
     <TextView
         android:id="@+id/tvBikeImageList"

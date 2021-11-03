@@ -11,6 +11,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <include
+            android:id="@+id/toolbarStoresListAdmin"
+            layout="@layout/toolbar_bike_store_image_show_bikes_list_admin" />
+
         <TextView
             android:id="@+id/tvBikeStoresImageShowStoreListAdmin"
             android:layout_width="match_parent"

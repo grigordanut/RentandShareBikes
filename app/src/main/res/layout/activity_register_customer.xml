@@ -14,6 +14,10 @@
         android:orientation="vertical"
         tools:context=".RegisterCustomer">
 
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_register" />
+
         <TextView
             android:id="@+id/tvRegCustomer"
             android:layout_width="match_parent"

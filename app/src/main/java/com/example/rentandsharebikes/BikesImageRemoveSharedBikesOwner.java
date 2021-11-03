@@ -29,18 +29,18 @@ import java.util.Objects;
 
 public class BikesImageRemoveSharedBikesOwner extends AppCompatActivity implements BikesAdapterRemoveSharedBikesOwner.OnItemClickListener {
 
-    //Declare Share Bikes database variables (Retrieve data)
+    //Declare Share BikesRent database variables (Retrieve data)
     private DatabaseReference dbRefDisplayBikesShare;
     private ValueEventListener evListenerDisplayBikesShare;
 
-    //Declare Share Bikes database (Retrieve and Delete data)
+    //Declare Share BikesRent database (Retrieve and Delete data)
     private FirebaseStorage fbStDeleteBikesShare;
     private DatabaseReference dbRefDeleteBikeShare;
 
     private RecyclerView bikesListRecyclerView;
     private BikesAdapterRemoveSharedBikesOwner bikesAdapterRemoveSharedBikesOwner;
 
-    private List<ShareBikes> sharedBikesList;
+    private List<BikesShare> sharedBikesList;
 
     String customShare_Id = "";
 
@@ -51,10 +51,10 @@ public class BikesImageRemoveSharedBikesOwner extends AppCompatActivity implemen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bikes_image_remove_shared_bikes_owner);
 
-        //Retrieve data from Share Bikes table
+        //Retrieve data from Share BikesRent table
         dbRefDisplayBikesShare = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
-        //Retrieve and delete data from Share Bikes table
+        //Retrieve and delete data from Share BikesRent table
         fbStDeleteBikesShare = FirebaseStorage.getInstance();
         dbRefDeleteBikeShare = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
@@ -79,7 +79,7 @@ public class BikesImageRemoveSharedBikesOwner extends AppCompatActivity implemen
         loadSharedBikesOwner();
     }
 
-    //Display the Share Bikes belongs to owner
+    //Display the Share BikesRent belongs to owner
     public void loadSharedBikesOwner() {
 
         evListenerDisplayBikesShare = dbRefDisplayBikesShare.addValueEventListener(new ValueEventListener() {
@@ -88,7 +88,7 @@ public class BikesImageRemoveSharedBikesOwner extends AppCompatActivity implemen
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 sharedBikesList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    ShareBikes share_Bikes = postSnapshot.getValue(ShareBikes.class);
+                    BikesShare share_Bikes = postSnapshot.getValue(BikesShare.class);
                     assert share_Bikes != null;
                     if (share_Bikes.getShareBikes_CustomId().equals(customShare_Id)) {
                         share_Bikes.setShareBike_Key(postSnapshot.getKey());
@@ -115,7 +115,7 @@ public class BikesImageRemoveSharedBikesOwner extends AppCompatActivity implemen
         final String[] options = {"Back to Main Page", "Remove this Bike"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        ShareBikes selected_Bike = sharedBikesList.get(position);
+        BikesShare selected_Bike = sharedBikesList.get(position);
         builder.setTitle("You select "+selected_Bike.getShareBike_Model()+"\nSelect an option");
         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
@@ -137,19 +137,19 @@ public class BikesImageRemoveSharedBikesOwner extends AppCompatActivity implemen
         alertDialog.show();
     }
 
-    //Delete Share Bikes belongs to oener
+    //Delete Share BikesRent belongs to owner
     public void confirmDeletionShareBike(final int position){
         progressDialog.show();
+        BikesShare selected_Bike = sharedBikesList.get(position);
 
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageRemoveSharedBikesOwner.this);
-        ShareBikes selected_Bike = sharedBikesList.get(position);
-        builderAlert.setMessage("Are sure to delete "+selected_Bike.getShareBike_Model());
-        builderAlert.setCancelable(true);
-        builderAlert.setPositiveButton(
-                "Yes",
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikesImageRemoveSharedBikesOwner.this);
+        alertDialogBuilder
+                .setMessage("Are sure to delete "+selected_Bike.getShareBike_Model())
+                .setCancelable(false)
+                .setPositiveButton("Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        ShareBikes selected_Bike = sharedBikesList.get(position);
+                        BikesShare selected_Bike = sharedBikesList.get(position);
                         final String selectedKeyBike = selected_Bike.getShareBike_Key();
                         StorageReference imageReference = fbStDeleteBikesShare.getReferenceFromUrl(selected_Bike.getShareBike_Image());
                         imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -161,17 +161,16 @@ public class BikesImageRemoveSharedBikesOwner extends AppCompatActivity implemen
                             }
                         });
                     }
-                });
+                })
 
-        builderAlert.setNegativeButton(
-                "No",
+                .setNegativeButton("No",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
                 });
         progressDialog.dismiss();
-        AlertDialog alert1 = builderAlert.create();
+        AlertDialog alert1 = alertDialogBuilder.create();
         alert1.show();
     }
 }

@@ -72,17 +72,4 @@ public class BikeStores {
         this.bikeStore_Key = bikeStore_Key;
     }
 
-    //    //Exclude
-//    @Exclude
-//    public String getBikeStore_Key(){
-//        return bikeStore_Key;
-//    }
-//
-//    @Exclude
-//    public void setBikeStore_Key(String bikeStore_Key){
-//        this.bikeStore_Key = bikeStore_Key;
-//    }
-//
-//    public class NONE{
-//    }
 }

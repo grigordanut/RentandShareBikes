@@ -2,7 +2,6 @@ package com.example.rentandsharebikes;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -209,10 +208,7 @@ public class AddBikeStore extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("The Bike Store " + etStore_LocCheckAlert + " already exist");
         alertDialogBuilder.setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
+                (arg0, arg1) -> {
                 });
 
         AlertDialog alertDialog = alertDialogBuilder.create();

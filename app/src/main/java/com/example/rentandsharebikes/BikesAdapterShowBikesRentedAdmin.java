@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -60,7 +59,7 @@ public class BikesAdapterShowBikesRentedAdmin extends RecyclerView.Adapter<Bikes
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //bikesContext = BikesAdapterShowBikesRentedAdmin.this;
+
                 LayoutInflater li = LayoutInflater.from(bikesContext);
                 View promptsView = li.inflate(R.layout.image_bike_full, null);
 
@@ -71,23 +70,18 @@ public class BikesAdapterShowBikesRentedAdmin extends RecyclerView.Adapter<Bikes
 
                 final ImageView img_full = (ImageView) promptsView.findViewById(R.id.imgImageFull);
 
+                Picasso.get()
+                        .load(uploadCurrent.getBikeImage_RentBike())
+                        .placeholder(R.mipmap.ic_launcher)
+                        .fit()
+                        .centerCrop()
+                        .into(img_full);
+
                 // set dialog message
                 alertDialogBuilder
                         .setCancelable(false)
-                        .setPositiveButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        Picasso.get()
-                                                .load(uploadCurrent.getBikeImage_RentBike())
-                                                .placeholder(R.mipmap.ic_launcher)
-                                                .fit()
-                                                .centerCrop()
-                                                .into(img_full);
-
-
-                                    }
-                                })
-                        .setNegativeButton("Cancel",
+                        .setTitle("Bike Model: " + uploadCurrent.getBikeModel_RentBikes())
+                        .setNegativeButton("CLOSE",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         dialog.cancel();
@@ -108,7 +102,7 @@ public class BikesAdapterShowBikesRentedAdmin extends RecyclerView.Adapter<Bikes
         return bikesUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder {
+    public static class ImageViewHolder extends RecyclerView.ViewHolder  {
 
         public ImageView imageRentedBikeAdmin;
         public TextView tvRentedBikeConditionAdmin;

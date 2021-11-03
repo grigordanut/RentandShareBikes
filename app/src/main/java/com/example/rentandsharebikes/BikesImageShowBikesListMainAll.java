@@ -25,7 +25,7 @@ import java.util.List;
 
 public class BikesImageShowBikesListMainAll extends AppCompatActivity implements BikesAdapterShowBikesListMainAll.OnItemClickListener {
 
-    //Access Bikes table from database
+    //Access BikesRent table from database
     private DatabaseReference databaseRefMainAll;
     private FirebaseStorage bikesStorageMainAll;
     private ValueEventListener bikesEventListenerMainAll;
@@ -35,7 +35,7 @@ public class BikesImageShowBikesListMainAll extends AppCompatActivity implements
     private BikesAdapterShowBikesListMainAll bikesAdapterShowBikesListMainAll;
     private TextView tVBikesImageMainAll;
 
-    private List<Bikes> bikesListMainAll;
+    private List<BikesRent> bikesRentListMainAll;
 
     String bikeStore_Name = "";
 
@@ -55,7 +55,7 @@ public class BikesImageShowBikesListMainAll extends AppCompatActivity implements
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         progressDialog = new ProgressDialog(this);
-        bikesListMainAll = new ArrayList<>();
+        bikesRentListMainAll = new ArrayList<>();
 
         progressDialog.show();
     }
@@ -75,15 +75,15 @@ public class BikesImageShowBikesListMainAll extends AppCompatActivity implements
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesListMainAll.clear();
+                bikesRentListMainAll.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    bikes.setBike_Key(postSnapshot.getKey());
-                    bikesListMainAll.add(bikes);
-                    tVBikesImageMainAll.setText(bikesListMainAll.size() + " Bikes available to rent ");
+                    BikesRent bikesRent = postSnapshot.getValue(BikesRent.class);
+                    assert bikesRent != null;
+                    bikesRent.setBike_Key(postSnapshot.getKey());
+                    bikesRentListMainAll.add(bikesRent);
+                    tVBikesImageMainAll.setText(bikesRentListMainAll.size() + " BikesRent available to rent ");
                 }
-                bikesAdapterShowBikesListMainAll = new BikesAdapterShowBikesListMainAll(BikesImageShowBikesListMainAll.this, bikesListMainAll);
+                bikesAdapterShowBikesListMainAll = new BikesAdapterShowBikesListMainAll(BikesImageShowBikesListMainAll.this, bikesRentListMainAll);
                 bikesListRecyclerView.setAdapter(bikesAdapterShowBikesListMainAll);
                 bikesAdapterShowBikesListMainAll.setOnItmClickListener(BikesImageShowBikesListMainAll.this);
                 progressDialog.dismiss();
@@ -99,18 +99,19 @@ public class BikesImageShowBikesListMainAll extends AppCompatActivity implements
     //Action of the menu onClick
     @Override
     public void onItemClick(int position) {
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(BikesImageShowBikesListMainAll.this);
-        builderAlert.setMessage("Register and Log into your account to access the:\nRent and Share Bikes services.");
-        builderAlert.setCancelable(true);
-        builderAlert.setPositiveButton(
-                "Ok",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikesImageShowBikesListMainAll.this);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setMessage("Register and Log into your account to access the:\nRent and Share Bikes services.")
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
 
-        AlertDialog alert1 = builderAlert.create();
+        AlertDialog alert1 = alertDialogBuilder.create();
         alert1.show();
     }
 }

@@ -19,11 +19,11 @@ import java.util.List;
 public class BikesAdapterRentBikesCustomer extends RecyclerView.Adapter<BikesAdapterRentBikesCustomer.ImageViewHolder> {
 
     private final Context bikesContext;
-    private final List<Bikes> bikesUploads;
+    private final List<BikesRent> bikesRentUploads;
 
-    public BikesAdapterRentBikesCustomer(Context bikes_context, List<Bikes> bikes_uploads){
+    public BikesAdapterRentBikesCustomer(Context bikes_context, List<BikesRent> bikes_ToRent_uploads){
         bikesContext = bikes_context;
-        bikesUploads = bikes_uploads;
+        bikesRentUploads = bikes_ToRent_uploads;
     }
 
     @NonNull
@@ -37,7 +37,7 @@ public class BikesAdapterRentBikesCustomer extends RecyclerView.Adapter<BikesAda
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
 
-        final Bikes uploadCurrent = bikesUploads.get(position);
+        final BikesRent uploadCurrent = bikesRentUploads.get(position);
         holder.tvBikeCondition.setText(uploadCurrent.getBike_Condition());
         holder.tvBikeModel.setText(uploadCurrent.getBike_Model());
         holder.tvBikeManufacturer.setText(uploadCurrent.getBike_Manufacturer());
@@ -69,7 +69,7 @@ public class BikesAdapterRentBikesCustomer extends RecyclerView.Adapter<BikesAda
 
     @Override
     public int getItemCount() {
-        return bikesUploads.size();
+        return bikesRentUploads.size();
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder {

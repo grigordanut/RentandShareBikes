@@ -44,6 +44,7 @@ public class BikesImageReturnBikesRented extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +58,9 @@ public class BikesImageReturnBikesRented extends AppCompatActivity {
 
         getIntent().hasExtra("CId");
         customer_Id = Objects.requireNonNull(getIntent().getExtras()).getString("CId");
+
+        tVCustomerReturnBikes = findViewById(R.id.tvCusReturnBikes);
+        tVCustomerReturnBikes.setText("No rented BikesRent");
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -92,6 +96,7 @@ public class BikesImageReturnBikesRented extends AppCompatActivity {
                     if (rent_Bikes.getCustomerId_RentBikes().equals(customer_Id)) {
                         rent_Bikes.setBike_RentKey(postSnapshot.getKey());
                         rentBikesList.add(rent_Bikes);
+                        tVCustomerReturnBikes.setText("Select the Bike");
                     }
                 }
                 bikesAdapterReturnBikesRented = new BikesAdapterReturnBikesRented(BikesImageReturnBikesRented.this, rentBikesList);

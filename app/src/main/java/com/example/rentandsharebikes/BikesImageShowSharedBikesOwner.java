@@ -6,25 +6,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +41,7 @@ public class BikesImageShowSharedBikesOwner extends AppCompatActivity {
 
     private TextView tVCustomerShareBikes;
 
-    private List<ShareBikes> shareBikesList;
+    private List<BikesShare> bikesShareList;
 
     String customShareFirst_Name = "";
     String customShareLast_Name = "";
@@ -81,7 +76,7 @@ public class BikesImageShowSharedBikesOwner extends AppCompatActivity {
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         progressDialog = new ProgressDialog(this);
-        shareBikesList = new ArrayList<>();
+        bikesShareList = new ArrayList<>();
 
         progressDialog.show();
 
@@ -89,7 +84,7 @@ public class BikesImageShowSharedBikesOwner extends AppCompatActivity {
         buttonAddSBikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BikesImageShowSharedBikesOwner.this, ShareBikesCustomer.class));
+                startActivity(new Intent(BikesImageShowSharedBikesOwner.this, AddBikeShare.class));
             }
         });
 
@@ -114,19 +109,19 @@ public class BikesImageShowSharedBikesOwner extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                shareBikesList.clear();
+                bikesShareList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    ShareBikes share_Bikes = postSnapshot.getValue(ShareBikes.class);
+                    BikesShare share_Bikes = postSnapshot.getValue(BikesShare.class);
 
                     assert share_Bikes != null;
                     if(share_Bikes.getShareBikes_CustomId().equals(customShare_Id)){
                         share_Bikes.setShareBike_Key(postSnapshot.getKey());
-                        shareBikesList.add(share_Bikes);
-                        tVCustomerShareBikes.setText(shareBikesList.size() + " Bikes added by " + customShareFirst_Name+" "+customShareLast_Name);
+                        bikesShareList.add(share_Bikes);
+                        tVCustomerShareBikes.setText(bikesShareList.size() + " Bikes added by " + customShareFirst_Name+" "+customShareLast_Name);
                     }
                 }
 
-                bikesAdapterShowSharedBikesOwner = new BikesAdapterShowSharedBikesOwner(BikesImageShowSharedBikesOwner.this,shareBikesList);
+                bikesAdapterShowSharedBikesOwner = new BikesAdapterShowSharedBikesOwner(BikesImageShowSharedBikesOwner.this, bikesShareList);
                 bikesListRecyclerView.setAdapter(bikesAdapterShowSharedBikesOwner);
                 progressDialog.dismiss();
             }

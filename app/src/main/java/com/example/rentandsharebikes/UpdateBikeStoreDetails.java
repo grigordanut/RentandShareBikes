@@ -165,7 +165,7 @@ public class UpdateBikeStoreDetails extends AppCompatActivity {
     }
 
     private void updateBikeBikesStoreName() {
-        databaseRefBikeCheck = FirebaseDatabase.getInstance().getReference("Bikes");
+        databaseRefBikeCheck = FirebaseDatabase.getInstance().getReference("BikesRent");
         databaseRefBikeCheck.orderByChild("bikeStoreName").equalTo(store_LocationUp)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -173,7 +173,7 @@ public class UpdateBikeStoreDetails extends AppCompatActivity {
                         if (dataSnapshot.exists()) {
 
                             final String etBike_BikeStoreLocCheck = etStoreLocationUp.getText().toString().trim();
-                            databaseRefBikeUpload = FirebaseDatabase.getInstance().getReference("Bikes");
+                            databaseRefBikeUpload = FirebaseDatabase.getInstance().getReference("BikesRent");
                             databaseRefBikeUpload.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
