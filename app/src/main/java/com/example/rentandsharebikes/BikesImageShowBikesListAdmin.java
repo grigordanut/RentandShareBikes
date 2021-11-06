@@ -191,7 +191,7 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
                 .setPositiveButton("Yes",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                BikesRent selected_Bike = bikesRentList.get(position);
+                                //BikesRent selected_Bike = bikesRentList.get(position);
                                 final String selectedKeyBike = selected_Bike.getBike_Key();
                                 StorageReference imageReference = bikesStorage.getReferenceFromUrl(selected_Bike.getBike_Image());
                                 imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {

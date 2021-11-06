@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
+    tools:context=".UpdateBikeStoreDetails"
     tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp"
-    tools:context=".UpdateBikeStoreDetails">
+    tools:layout_editor_absoluteY="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -173,13 +173,13 @@
             android:id="@+id/btnSaveStoreUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_gravity="center"
-            android:background="@drawable/btn_background"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
-            android:textColor="#ffffff"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/btn_background"
             android:text="@string/btn_updateStoreDetails"
+            android:textColor="#ffffff"
             android:textSize="22sp" />
 
     </LinearLayout>

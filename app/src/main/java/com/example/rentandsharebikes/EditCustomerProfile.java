@@ -61,14 +61,13 @@ public class EditCustomerProfile extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                progressDialog.show();
+
                 //retrieve data from database
                 for (DataSnapshot ds_User : dataSnapshot.getChildren()) {
                     FirebaseUser user_Db = firebaseAuth.getCurrentUser();
 
                     Customers custom_Data = ds_User.getValue(Customers.class);
 
-                    progressDialog.dismiss();
                     assert user_Db != null;
                     assert custom_Data != null;
                     if (user_Db.getUid().equals(ds_User.getKey())){
