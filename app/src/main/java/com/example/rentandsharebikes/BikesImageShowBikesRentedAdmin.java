@@ -41,9 +41,9 @@ public class BikesImageShowBikesRentedAdmin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bikes_image_show_bikes_rented_admin);
 
-        tVAdminRentedBikes = (TextView)findViewById(R.id.tvAdminRentedBikes);
+        tVAdminRentedBikes = findViewById(R.id.tvAdminRentedBikes);
 
-        bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

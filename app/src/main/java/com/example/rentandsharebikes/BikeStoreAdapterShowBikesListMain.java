@@ -89,6 +89,7 @@ public class BikeStoreAdapterShowBikesListMain extends RecyclerView.Adapter<Bike
                 intent.putExtra("SNameMain",uploadCurrent.getBikeStore_Location());
                 intent.putExtra("SKeyMain",uploadCurrent.getBikeStore_Key());
                 bikeStoreContext.startActivity(intent);
+                bikeStoresUploads.clear();
             }
         });
     }

@@ -116,7 +116,7 @@ public class BikesImageRemoveSharedBikesOwner extends AppCompatActivity implemen
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         BikesShare selected_Bike = sharedBikesList.get(position);
-        builder.setTitle("You select "+selected_Bike.getShareBike_Model()+"\nSelect an option");
+        builder.setTitle("You selected: "+selected_Bike.getShareBike_Model()+"\nSelect an option");
         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

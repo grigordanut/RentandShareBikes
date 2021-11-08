@@ -26,10 +26,10 @@ public class UpdateBikeStoreDetails extends AppCompatActivity {
     //Save updated Bike Store data to database
     private DatabaseReference databaseRefStoreUpload;
 
-    //Save updated Bike data to database
+    //Check Bike data into database
     private DatabaseReference databaseRefBikeCheck;
 
-    //Save updated Bike data to database
+    //Save updated Bike Store name to Bike database
     private DatabaseReference databaseRefBikeUpload;
 
     private TextView tvStoreUp;

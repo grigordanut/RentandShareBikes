@@ -63,10 +63,10 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
         getIntent().hasExtra("CId");
         customer_Id = Objects.requireNonNull(getIntent().getExtras()).getString("CId");
 
-        tVCustomerRentBikes = (TextView) findViewById(R.id.tvCustomerRentBikes);
+        tVCustomerRentBikes = findViewById(R.id.tvCustomerRentBikes);
         tVCustomerRentBikes.setText("No Bikes rented by: " + customerFirst_Name + " " + customerLast_Name);
 
-        bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -133,7 +133,7 @@ public class BikesImageShowBikesRentedCustom extends AppCompatActivity implement
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setCancelable(false)
-                .setTitle("You selected " + sel_Bike.getBikeModel_RentBikes() + "\nSelect an option:")
+                .setTitle("You selected: " + sel_Bike.getBikeModel_RentBikes() + "\nSelect an option:")
                 .setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

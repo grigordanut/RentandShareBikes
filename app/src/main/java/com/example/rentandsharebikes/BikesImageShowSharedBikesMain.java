@@ -43,9 +43,9 @@ public class BikesImageShowSharedBikesMain extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bikes_image_show_shared_bikes_main);
 
-        tVBikesImgShowBikesSMain = (TextView) findViewById(R.id.tvBikesImgShowBikesSMain);
+        tVBikesImgShowBikesSMain = findViewById(R.id.tvBikesImgShowBikesSMain);
 
-        bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -63,7 +63,7 @@ public class BikesImageShowSharedBikesMain extends AppCompatActivity implements 
     }
 
     public void loadSharedBikesMain() {
-        //Display the list of the bikes from Share BikesRent database
+        //Display the list of the bikes from Share Bikes database
         firebaseStDisplaySharedBikes = FirebaseStorage.getInstance();
         databaseRefDisplaySharedBikes = FirebaseDatabase.getInstance().getReference("Share Bikes");
 

@@ -47,10 +47,10 @@ public class BikesImageShowBikesListMainAll extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bikes_image_show_bikes_list_main_all);
 
-        tVBikesImageMainAll = (TextView) findViewById(R.id.tvBikeImageBikesListMainAll);
+        tVBikesImageMainAll = findViewById(R.id.tvBikeImageBikesListMainAll);
         tVBikesImageMainAll.setText("No bikes available to rent");
 
-        bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

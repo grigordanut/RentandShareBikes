@@ -58,10 +58,10 @@ public class BikesImageShowBikesListCustomer extends AppCompatActivity implement
         getIntent().hasExtra("SKeyRent");
         bikeStore_KeyRent = Objects.requireNonNull(getIntent().getExtras()).getString("SKeyRent");
 
-        textViewBikesImageList = (TextView) findViewById(R.id.tvBikeImageList);
+        textViewBikesImageList = findViewById(R.id.tvBikeImageList);
         textViewBikesImageList.setText("No bikes available in " +bikeStore_NameRent+ " store");
 
-        bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

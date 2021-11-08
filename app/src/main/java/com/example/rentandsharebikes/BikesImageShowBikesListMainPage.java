@@ -59,10 +59,10 @@ public class BikesImageShowBikesListMainPage extends AppCompatActivity implement
         getIntent().hasExtra("SKeyMain");
         bikeStore_KeyMain = Objects.requireNonNull(getIntent().getExtras()).getString("SKeyMain");
 
-        textViewBikesImageMain = (TextView) findViewById(R.id.tvBikeImageBikesListMainPage);
+        textViewBikesImageMain = findViewById(R.id.tvBikeImageBikesListMainPage);
         textViewBikesImageMain.setText("No bikes available in " +bikeStore_NameMain+ " store");
 
-        bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -143,10 +143,8 @@ public class BikesImageShowBikesListMainPage extends AppCompatActivity implement
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.showBikesMainGoBack:{
-                goBackBikesMain();
-            }
+        if (item.getItemId() == R.id.showBikesMainGoBack) {
+            goBackBikesMain();
         }
 
         return super.onOptionsItemSelected(item);

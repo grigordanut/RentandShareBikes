@@ -78,6 +78,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +113,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             bike_updateCond = bundle.getString("BCondition");
-            bike_updateModel = getIntent().getExtras().getString("BModel");
+            bike_updateModel = bundle.getString("BModel");
             bike_updateManufact = bundle.getString("BManufact");
             bike_updatePrice = bundle.getString("BPrice");
             bike_updateImage = bundle.getString("BImage");
@@ -127,11 +128,10 @@ public class UpdateBikeDetails extends AppCompatActivity {
                 .centerCrop()
                 .into(ivUpdateBike);
 
-        //tViewUpBikeCond.setText(bike_updateCond);
+        tViewUpBikes.setText("Update " + bike_updateModel + " bike");
         etUpBikeModel.setText(bike_updateModel);
         etUpBikeManufact.setText(bike_updateManufact);
         etUpBikePrice.setText(String.valueOf(bike_updatePrice));
-
 
         ivUpdateBike.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,6 +202,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case PERMISSION_CODE: {
                 // If request is cancelled, the result arrays are empty.
@@ -264,7 +265,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
         });
     }
 
-    //Upload the updated Bike into the BikesRent table
+    //Upload the updated Bike into the Bike table
     public void updateBikesWithNewPicture() {
         progressDialog.dismiss();
 

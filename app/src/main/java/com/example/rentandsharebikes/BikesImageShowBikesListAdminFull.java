@@ -52,10 +52,10 @@ public class BikesImageShowBikesListAdminFull extends AppCompatActivity implemen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bikes_image_show_bikes_list_admin_full);
 
-        textViewBikesImageList = (TextView) findViewById(R.id.tvBikeImageListFull);
+        textViewBikesImageList = findViewById(R.id.tvBikeImageListFull);
         textViewBikesImageList.setText("No bikes available");
 
-        bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -64,7 +64,7 @@ public class BikesImageShowBikesListAdminFull extends AppCompatActivity implemen
 
         progressDialog.show();
 
-        buttonAddMoreBikesFull = (Button) findViewById(R.id.btnAddMoreBikesFull);
+        buttonAddMoreBikesFull = findViewById(R.id.btnAddMoreBikesFull);
         buttonAddMoreBikesFull.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +72,7 @@ public class BikesImageShowBikesListAdminFull extends AppCompatActivity implemen
             }
         });
 
-        buttonBackAdminPageBikesFull = (Button) findViewById(R.id.btnBackAdminPageBikesFull);
+        buttonBackAdminPageBikesFull = findViewById(R.id.btnBackAdminPageBikesFull);
         buttonBackAdminPageBikesFull.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,7 +128,7 @@ public class BikesImageShowBikesListAdminFull extends AppCompatActivity implemen
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setCancelable(false)
-                .setTitle("You selected " + selected_Bike.getBike_Model() + "\nSelect an option:")
+                .setTitle("You selected: " + selected_Bike.getBike_Model() + "\nSelect an option:")
                 .setAdapter(adapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -45,9 +45,9 @@ public class BikesImageShowSharedBikesAdmin extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bikes_image_show_shared_bikes_admin);
 
-        tVBikesImgShowSBikesAdmin = (TextView) findViewById(R.id.tvBikesImgShowSBikesAdmin);
+        tVBikesImgShowSBikesAdmin = findViewById(R.id.tvBikesImgShowSBikesAdmin);
 
-        bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

@@ -144,7 +144,7 @@ public class BikesImageShowBikesListAdmin extends AppCompatActivity implements B
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setCancelable(false)
-                .setTitle("You selected " + selected_Bike.getBike_Model() + "\nSelect an option:")
+                .setTitle("You selected: " + selected_Bike.getBike_Model() + "\nSelect an option:")
                 .setAdapter(adapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

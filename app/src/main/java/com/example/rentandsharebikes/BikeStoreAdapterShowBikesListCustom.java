@@ -87,6 +87,7 @@ public class BikeStoreAdapterShowBikesListCustom extends RecyclerView.Adapter<Bi
                 intent.putExtra("SNameRent",uploadCurrent.getBikeStore_Location());
                 intent.putExtra("SKeyRent",uploadCurrent.getBikeStore_Key());
                 bikeStoreContext.startActivity(intent);
+                bikeStoresUploads.clear();
             }
         });
     }

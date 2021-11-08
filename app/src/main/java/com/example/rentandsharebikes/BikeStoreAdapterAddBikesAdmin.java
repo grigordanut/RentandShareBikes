@@ -88,6 +88,7 @@ public class BikeStoreAdapterAddBikesAdmin extends RecyclerView.Adapter<BikeStor
                 intent.putExtra("SName",uploadCurrent.getBikeStore_Location());
                 intent.putExtra("SKey",uploadCurrent.getBikeStore_Key());
                 bikeStoreContext.startActivity(intent);
+                bikeStoresUploads.clear();
             }
         });
     }
