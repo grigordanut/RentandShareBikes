@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener,GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
@@ -37,6 +39,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
         ChildEventListener mChildEventListener;
@@ -58,8 +61,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     BikeStores mapBikeStores = mapSnapShot.getValue(BikeStores.class);
                     assert mapBikeStores != null;
                     LatLng storeLocation = new LatLng(mapBikeStores.getBikeStore_Latitude(), mapBikeStores.getBikeStore_Longitude());
-                    mMap.addMarker(new MarkerOptions().position(storeLocation)
-                            .title(mapBikeStores.getBikeStore_Location()))
+                    Objects.requireNonNull(mMap.addMarker(new MarkerOptions().position(storeLocation)
+                            .title(mapBikeStores.getBikeStore_Location())))
                             .setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 }
             }

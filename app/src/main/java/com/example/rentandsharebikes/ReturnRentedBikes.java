@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -61,8 +62,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
     private DatabaseReference databaseRefBikeStores;
     private ArrayList<String> bikeStoreListReturnBike;
     private ArrayAdapter<String> arrayAdapter;
-
-    private TextView tVBikeStoreAddress;
 
     //Display data from Rent BikesRent database
     private FirebaseStorage firebaseStShowRentedBikes;
@@ -175,8 +174,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
                     cBoxRetDiffStore.setChecked(false);
                     etBikeStoreReturn.setText(bike_StoreNameRentedBikesSame);
                     bikeStoreKey_ReturnBike = bike_StoreKeyRentedBikesSame;
-                }
-                else{
+                } else {
                     etBikeStoreReturn.setText("");
                 }
             }
@@ -196,23 +194,25 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
                     androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(context);
 
-                    // set prompts.xml to alert dialog builder
+                    //set prompts.xml to alert dialog builder
                     alertDialogBuilder.setView(promptsView);
 
-                    final ListView bikeStoreListViewReturnBike = promptsView.findViewById(R.id.listViewHosListAddDoc);
+                    final ListView bikeStoreListViewReturnBike = promptsView.findViewById(R.id.lVBikeStoreReturnRentedBike);
+
+                    //TextView tvReturnSelected = promptsView.findViewById(R.id.tvStorePlaceReturn);
 
                     databaseRefBikeStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
                     bikeStoreListReturnBike = new ArrayList<>();
 
                     arrayAdapter = new ArrayAdapter<>(ReturnRentedBikes.this, R.layout.image_bikestore_return_bike, R.id.tvStorePlaceReturn, bikeStoreListReturnBike);
-                    databaseRefBikeStores .addValueEventListener(new ValueEventListener() {
+                    databaseRefBikeStores.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             bikeStoreListReturnBike.clear();
-                            for (DataSnapshot dsBikeStores: dataSnapshot.getChildren()){
+                            for (DataSnapshot dsBikeStores : dataSnapshot.getChildren()) {
                                 BikeStores bike_Store = dsBikeStores.getValue(BikeStores.class);
                                 assert bike_Store != null;
-                                if (!bike_Store.getBikeStore_Key().equals(bike_StoreKeyRentedBikesSame)){
+                                if (!bike_Store.getBikeStore_Key().equals(bike_StoreKeyRentedBikesSame)) {
                                     bikeStoreListReturnBike.add(bike_Store.getBikeStore_Location());
                                     bike_StoreKeyRentedBikesDiff = bike_Store.getBikeStore_Key();
                                 }
@@ -230,12 +230,15 @@ public class ReturnRentedBikes extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String bikeStore_Name = bikeStoreListReturnBike.get(position);
+                            //tvReturnSelected.setTextColor(Color.parseColor("#bdbdbd"));
+
                             etBikeStoreReturn.setText(bikeStore_Name);
+
                             bikeStoreKey_ReturnBike = bike_StoreKeyRentedBikesDiff;
                         }
                     });
 
-                    // set dialog message
+                    //set dialog message
                     alertDialogBuilder
                             .setCancelable(false)
                             .setPositiveButton("OK",
@@ -258,9 +261,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
                     // show it
                     alertDialog.show();
-                }
-
-                else {
+                } else {
                     etBikeStoreReturn.setText("");
                 }
             }
@@ -346,7 +347,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
         }
     }
 
-    private void deleteRentedBikes(){
+    private void deleteRentedBikes() {
         StorageReference firebaseStRemoveRentBikes = getInstance().getReferenceFromUrl(img_ReturnBikes);
         firebaseStRemoveRentBikes.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
