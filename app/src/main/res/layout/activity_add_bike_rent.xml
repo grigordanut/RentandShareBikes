@@ -12,10 +12,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/toolbarAddBikesRent"
-            layout="@layout/toolbar_add_bike_rent" />
-
         <TextView
             android:id="@+id/tvWelcomeAddBikes"
             android:layout_width="match_parent"

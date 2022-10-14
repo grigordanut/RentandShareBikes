@@ -4,7 +4,6 @@
     <!--Layout Resources-->
 
     <!--    Add Bike Rent-->
-    <string name="tb_addBikesRent">Add Bikes to Rent</string>
     <string name="tv_welcomeAddBikes">Bike Details</string>
     <string name="tv_orSelect">Or</string>
     <string name="atc_selectCondition">Select Condition</string>
