@@ -14,10 +14,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/toolbarCalcCoordinates"
-            layout="@layout/toolbar_calc_coordinates" />
-
         <TextView
             android:id="@+id/textViewCalcCoordinates"
             android:layout_width="match_parent"

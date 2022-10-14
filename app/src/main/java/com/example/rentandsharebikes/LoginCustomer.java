@@ -15,7 +15,6 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,8 +35,6 @@ public class LoginCustomer extends AppCompatActivity {
 
     private String email_logCustom, pass_logCustom;
 
-    private TextView textViewEmailLogCustom, textViewPassLogCustom;
-
     private FirebaseAuth firebaseAuth;
 
     private ProgressDialog progressDialog;
@@ -47,10 +44,10 @@ public class LoginCustomer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_customer);
 
-        emailLogCustom = (TextInputEditText) findViewById(R.id.etEmailLogCustom);
-        passLogCustom = (TextInputEditText) findViewById(R.id.etPassLogCustom);
+        emailLogCustom =  findViewById(R.id.etEmailLogCustom);
+        passLogCustom = findViewById(R.id.etPassLogCustom);
 
-        TextView tvForgotPass = (TextView) findViewById(R.id.tvForgotPassCustom);
+        TextView tvForgotPass = findViewById(R.id.tvForgotPassCustom);
         tvForgotPass.setOnClickListener(v -> {
             Intent forgotPass = new Intent(LoginCustomer.this, ResetPassword.class);
             startActivity(forgotPass);
@@ -60,7 +57,7 @@ public class LoginCustomer extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        rememberCheckBox = (CheckBox) findViewById(R.id.cbRemember);
+        rememberCheckBox = findViewById(R.id.cbRemember);
 
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkbox = preferences.getString("remember", "");
@@ -122,54 +119,6 @@ public class LoginCustomer extends AppCompatActivity {
                             progressDialog.dismiss();
                         }
                     });
-                }
-            }
-        });
-
-        textViewEmailLogCustom = (TextView) findViewById(R.id.text_dummy_hint_emailLog);
-        textViewPassLogCustom = (TextView) findViewById(R.id.text_dummy_hint_password);
-
-        // Email Address
-        emailLogCustom.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    new Handler().postDelayed(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            // Show white background behind floating label
-                            textViewEmailLogCustom.setVisibility(View.VISIBLE);
-                        }
-                    }, 10);
-                } else {
-                    // Required to show/hide white background behind floating label during focus change
-                    if (Objects.requireNonNull(emailLogCustom.getText()).length() > 0)
-                        textViewEmailLogCustom.setVisibility(View.VISIBLE);
-                    else
-                        textViewEmailLogCustom.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-
-        // Password
-        passLogCustom.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Show white background behind floating label
-                            textViewPassLogCustom.setVisibility(View.VISIBLE);
-                        }
-                    }, 10);
-                } else {
-                    // Required to show/hide white background behind floating label during focus change
-                    if (passLogCustom.getText().length() > 0)
-                        textViewPassLogCustom.setVisibility(View.VISIBLE);
-                    else
-                        textViewPassLogCustom.setVisibility(View.INVISIBLE);
                 }
             }
         });

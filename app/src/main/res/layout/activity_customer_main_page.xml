@@ -11,10 +11,6 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
-    <include
-        android:id="@+id/toolbarCustomMain"
-        layout="@layout/toolbar_customer_main" />
-
     <TextView
         android:id="@+id/tvCustomPageMain"
         android:layout_width="match_parent"

@@ -8,10 +8,6 @@
     android:background="@android:color/holo_blue_bright"
     tools:context=".BikesImageRemoveSharedBikesOwner">
 
-    <include
-        android:id="@+id/toolbarBikesSharedAdmin"
-        layout="@layout/toolbar_bikes_image_remove_shared_bikes_owner" />
-
     <TextView
         android:id="@+id/tvBikesImgRemoveBikesSOwn"
         android:layout_width="match_parent"

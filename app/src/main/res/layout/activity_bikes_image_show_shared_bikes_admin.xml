@@ -8,10 +8,6 @@
     android:background="@android:color/holo_blue_bright"
     tools:context=".BikesImageShowSharedBikesAdmin">
 
-    <include
-        android:id="@+id/toolbarBikesSharedAdmin"
-        layout="@layout/toolbar_bikes_image_show_shared_bikes_admin" />
-
     <TextView
         android:id="@+id/tvBikesImgShowSBikesAdmin"
         android:layout_width="match_parent"

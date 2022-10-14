@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
@@ -24,6 +23,7 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private NavigationView navigationView;
-    private Toolbar toolbar;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -74,15 +73,13 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.activity_main);
         navigationView = findViewById(R.id.navViewMain);
-        toolbar = findViewById(R.id.toolbarMain);
 
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_mainActivity, R.string.close_mainActivity);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_mainActivity, R.string.close_mainActivity);
 
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-        setSupportActionBar(toolbar);
-        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         //Adding Click Events to our navigation drawer item
         navigationView.setNavigationItemSelectedListener(item -> {

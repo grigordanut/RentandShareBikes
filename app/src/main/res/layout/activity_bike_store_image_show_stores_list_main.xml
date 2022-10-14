@@ -8,11 +8,6 @@
     android:background="@android:color/holo_blue_bright"
     tools:context=".BikeStoreImageShowStoresListMain">
 
-    <include
-        android:id="@+id/toolbarBikesSharedAdmin"
-        layout="@layout/toolbar_bike_store_image_show_stores_list_main" />
-
-
     <TextView
         android:id="@+id/tvBikeStoresImageShowStoreListMain"
         android:layout_width="match_parent"

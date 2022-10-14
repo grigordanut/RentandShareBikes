@@ -8,10 +8,6 @@
     android:orientation="vertical"
     tools:context=".BikesImageShowBikesRentedAdmin">
 
-    <include
-        android:id="@+id/toolbarBikesRentedAdmin"
-        layout="@layout/toolbar_bikes_image_show_bikes_rented_admin" />
-
     <TextView
         android:id="@+id/tvAdminRentedBikes"
         android:layout_width="match_parent"

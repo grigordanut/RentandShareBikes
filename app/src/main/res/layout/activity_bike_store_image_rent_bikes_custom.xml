@@ -9,9 +9,6 @@
     tools:context=".BikeStoreImageRentBikesCustom"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/toolbarBikeStoresLIstCustomRentBikes"
-        layout="@layout/toolbar_bike_store_image_rent_bikes_custom" />
     <TextView
         android:id="@+id/tvBikeStoresRentBikesCustomer"
         android:layout_width="match_parent"

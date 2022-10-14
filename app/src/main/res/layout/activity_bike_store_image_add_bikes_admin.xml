@@ -8,10 +8,6 @@
     android:orientation="vertical"
     tools:context=".BikeStoreImageAddBikesAdmin">
 
-    <include
-        android:id="@+id/toolbarBikeStoreAddBikes"
-        layout="@layout/toolbar_bike_store_image_add_bikes_admin" />
-
     <TextView
         android:id="@+id/tvBikeStoresImageAddBikesAdmin"
         android:layout_width="match_parent"

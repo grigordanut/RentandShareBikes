@@ -11,10 +11,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/toolbarBikesAvailableAdmin"
-            layout="@layout/toolbar_bikes_image_show_bikes_list_admin" />
-
         <TextView
             android:id="@+id/tvBikeImageList"
             android:layout_width="match_parent"

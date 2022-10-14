@@ -14,10 +14,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/toolbarLogIn"
-            layout="@layout/toolbar_contact_us" />
-
         <TextView
             android:id="@+id/tvContactUs"
             android:layout_width="match_parent"

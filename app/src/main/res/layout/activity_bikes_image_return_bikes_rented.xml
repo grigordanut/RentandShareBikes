@@ -9,10 +9,6 @@
     android:orientation="vertical"
     tools:context=".BikesImageReturnBikesRented">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar_bikes_image_return_bikes_rented" />
-
     <TextView
         android:id="@+id/tvCusReturnBikes"
         android:layout_width="match_parent"

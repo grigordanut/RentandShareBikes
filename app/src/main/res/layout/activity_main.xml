@@ -14,15 +14,10 @@
         tools:context=".MainActivity"
         tools:showIn="@layout/activity_main">
 
-        <include
-            android:id="@+id/toolbarMain"
-            layout="@layout/toolbar_main" />
-
         <TextView
             android:id="@+id/tvWelcomeMain1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbarMain"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"

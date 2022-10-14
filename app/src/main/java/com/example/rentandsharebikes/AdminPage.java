@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AdminPage extends AppCompatActivity {
 
@@ -59,7 +60,6 @@ public class AdminPage extends AppCompatActivity {
     private DrawerLayout drawerLayoutAdmin;
     private ActionBarDrawerToggle drawerToggleAdmin;
     private NavigationView navigationViewAdmin;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,15 +90,13 @@ public class AdminPage extends AppCompatActivity {
 
         drawerLayoutAdmin = findViewById(R.id.activity_admin_page);
         navigationViewAdmin = findViewById(R.id.navViewAdmin);
-        toolbar = findViewById(R.id.toolbarAddminPage);
 
-        drawerToggleAdmin = new ActionBarDrawerToggle(this,drawerLayoutAdmin, toolbar, R.string.open_adminPage, R.string.close_adminPage);
+        drawerToggleAdmin = new ActionBarDrawerToggle(this,drawerLayoutAdmin, R.string.open_adminPage, R.string.close_adminPage);
 
         drawerLayoutAdmin.addDrawerListener(drawerToggleAdmin);
         drawerToggleAdmin.syncState();
 
-        setSupportActionBar(toolbar);
-        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         //Adding Click Events to navigation drawer item
         navigationViewAdmin.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

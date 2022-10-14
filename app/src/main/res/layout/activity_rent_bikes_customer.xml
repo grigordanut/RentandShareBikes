@@ -13,10 +13,6 @@
         android:layout_height="wrap_content"
         tools:context=".RentBikesCustomer">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar_rent_bikes_customer" />
-
         <TextView
             android:id="@+id/tvRentBikes"
             android:layout_width="match_parent"

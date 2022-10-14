@@ -14,10 +14,6 @@
         tools:context=".CustomerPageShareBikes"
         tools:showIn="@layout/activity_customer_page_share_bikes">
 
-        <include
-            android:id="@+id/toolbarCustomPageShare"
-            layout="@layout/toolbar_customer_page_share" />
-
         <TextView
             android:id="@+id/tvCustomShareService"
             android:layout_width="match_parent"

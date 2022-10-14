@@ -13,10 +13,6 @@
         android:layout_height="wrap_content"
         tools:context=".CustomerPageRentBikes">
 
-        <include
-            android:id="@+id/toolbarCustomPageRent"
-            layout="@layout/toolbar_customer_page_rent" />
-
         <TextView
             android:id="@+id/tvCustomRentService"
             android:layout_width="match_parent"

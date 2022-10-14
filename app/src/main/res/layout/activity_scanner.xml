@@ -8,10 +8,6 @@
     android:orientation="vertical"
     tools:context=".Scanner">
 
-    <include
-        android:id="@+id/toolbarAddBikesRent"
-        layout="@layout/toolbar_scanner" />
-
     <TextView
         android:id="@+id/tvScanCode"
         android:layout_width="match_parent"
