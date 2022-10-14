@@ -5,14 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f2f2f2"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
+    tools:context=".LoginCustomer">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".LoginCustomer">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvLogCustomer"
@@ -41,8 +39,8 @@
                 android:id="@+id/etEmailLogCustom"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/et_emailLogCustomer"
                 android:ems="10"
+                android:hint="@string/et_emailLogCustomer"
                 android:inputType="textEmailAddress"
                 android:paddingStart="15dp"
                 android:textSize="22sp"
@@ -51,11 +49,12 @@
 
         <!-- Password -->
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
             android:textColorHint="#000000"
             app:passwordToggleEnabled="true">
 
@@ -63,9 +62,9 @@
                 android:id="@+id/etPassLogCustom"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:ems="10"
                 android:hint="@string/et_passLogCustomer"
                 android:inputType="textPassword"
-                android:ems="10"
                 android:paddingStart="15dp"
                 android:textSize="20sp"
                 tools:ignore="RtlSymmetry" />

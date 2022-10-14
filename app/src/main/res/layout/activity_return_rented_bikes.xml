@@ -369,7 +369,6 @@
                 android:textStyle="bold"
                 tools:ignore="RtlSymmetry" />
 
-
             <TextView
                 android:id="@+id/tvReturnBikesStoreName"
                 android:layout_width="match_parent"
@@ -455,5 +454,6 @@
             android:textColor="#FFFF"
             android:textSize="22sp"
             android:textStyle="bold" />
+
     </RelativeLayout>
 </ScrollView>

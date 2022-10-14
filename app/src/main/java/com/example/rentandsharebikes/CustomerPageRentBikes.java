@@ -3,7 +3,6 @@ package com.example.rentandsharebikes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
@@ -13,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +25,7 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CustomerPageRentBikes extends AppCompatActivity {
 
@@ -64,7 +63,6 @@ public class CustomerPageRentBikes extends AppCompatActivity {
     private DrawerLayout drawerLayoutUserRent;
     private ActionBarDrawerToggle drawerToggleUserRent;
     private NavigationView navigationViewUserRent;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,15 +86,13 @@ public class CustomerPageRentBikes extends AppCompatActivity {
 
         drawerLayoutUserRent = findViewById(R.id.activity_customer_page_rent_bikes);
         navigationViewUserRent = findViewById(R.id.navViewCustomRent);
-        toolbar = findViewById(R.id.toolbarCustomPageRent);
 
-        drawerToggleUserRent = new ActionBarDrawerToggle(this, drawerLayoutUserRent, toolbar, R.string.open_customPageRent, R.string.close_customPageRent);
+        drawerToggleUserRent = new ActionBarDrawerToggle(this, drawerLayoutUserRent, R.string.open_customPageRent, R.string.close_customPageRent);
 
         drawerLayoutUserRent.addDrawerListener(drawerToggleUserRent);
         drawerToggleUserRent.syncState();
 
-        setSupportActionBar(toolbar);
-        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         //retrieve data from database into text views
         databaseReference = FirebaseDatabase.getInstance().getReference("Customers");

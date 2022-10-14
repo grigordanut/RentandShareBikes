@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -60,6 +59,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
     //Display data from Bike Stores database
     private DatabaseReference databaseRefBikeStores;
+
     private ArrayList<String> bikeStoreListReturnBike;
     private ArrayAdapter<String> arrayAdapter;
 
@@ -103,7 +103,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
     //Receive Bike Store name of rented bike from BikesAdapterReturnBikesRented (Same store as rented)
     String bike_StoreNameRentedBikesSame = "";
 
-    //Receive Bike Store kye of rented bikes from BikesAdapterReturnBikesRented (Same store as rented)
+    //Receive Bike Store key of rented bikes from BikesAdapterReturnBikesRented
     String bike_StoreKeyRentedBikesSame = "";
 
     String bike_CusIdRentedBikes = "";
@@ -127,15 +127,15 @@ public class ReturnRentedBikes extends AppCompatActivity {
         tVReturnBikes = findViewById(R.id.tvReturnBikes);
 
         //Date of Rent
-        eTDateOfRentBike = (EditText) findViewById(R.id.etDateOfRentBike);
+        eTDateOfRentBike = findViewById(R.id.etDateOfRentBike);
         eTDateOfRentBike.setEnabled(false);
 
         //Date of Return
-        eTDateReturnBike = (EditText) findViewById(R.id.etDateReturnBike);
+        eTDateReturnBike = findViewById(R.id.etDateReturnBike);
         eTDateReturnBike.setEnabled(false);
 
         //Duration Time
-        eTRentDurationBike = (EditText) findViewById(R.id.etRentDurationBike);
+        eTRentDurationBike = findViewById(R.id.etRentDurationBike);
         eTRentDurationBike.setEnabled(false);
 
         //Total Hours
@@ -180,7 +180,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
             }
         });
 
-        cBoxRetDiffStore = (CheckBox) findViewById(R.id.cbReturnBikeDiffStore);
+        cBoxRetDiffStore = findViewById(R.id.cbReturnBikeDiffStore);
         cBoxRetDiffStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,8 +199,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
                     final ListView bikeStoreListViewReturnBike = promptsView.findViewById(R.id.lVBikeStoreReturnRentedBike);
 
-                    //TextView tvReturnSelected = promptsView.findViewById(R.id.tvStorePlaceReturn);
-
                     databaseRefBikeStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
                     bikeStoreListReturnBike = new ArrayList<>();
 
@@ -217,7 +215,9 @@ public class ReturnRentedBikes extends AppCompatActivity {
                                     bike_StoreKeyRentedBikesDiff = bike_Store.getBikeStore_Key();
                                 }
                             }
+
                             bikeStoreListViewReturnBike.setAdapter(arrayAdapter);
+
                         }
 
                         @Override
@@ -230,7 +230,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String bikeStore_Name = bikeStoreListReturnBike.get(position);
-                            //tvReturnSelected.setTextColor(Color.parseColor("#bdbdbd"));
 
                             etBikeStoreReturn.setText(bikeStore_Name);
 
@@ -247,6 +246,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
                                         }
                                     })
+                            
                             .setNegativeButton("Cancel",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {

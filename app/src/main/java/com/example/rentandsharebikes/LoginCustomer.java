@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
@@ -44,7 +46,7 @@ public class LoginCustomer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_customer);
 
-        emailLogCustom =  findViewById(R.id.etEmailLogCustom);
+        emailLogCustom = findViewById(R.id.etEmailLogCustom);
         passLogCustom = findViewById(R.id.etPassLogCustom);
 
         TextView tvForgotPass = findViewById(R.id.tvForgotPassCustom);
@@ -89,7 +91,7 @@ public class LoginCustomer extends AppCompatActivity {
             }
         });
 
-        Button buttonSignUp = (Button) findViewById(R.id.btnSignUpCustom);
+        Button buttonSignUp = findViewById(R.id.btnSignUpCustom);
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +99,7 @@ public class LoginCustomer extends AppCompatActivity {
             }
         });
 
-        Button buttonLogInCustom = (Button) findViewById(R.id.btnLoginCustom);
+        Button buttonLogInCustom = findViewById(R.id.btnLoginCustom);
         buttonLogInCustom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,13 +110,22 @@ public class LoginCustomer extends AppCompatActivity {
                     firebaseAuth.signInWithEmailAndPassword(email_logCustom, pass_logCustom).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+
                             if (task.isSuccessful()) {
-                                //clear data
-                                emailLogCustom.setText("");
-                                passLogCustom.setText("");
                                 checkEmailVerification();
+
                             } else {
-                                Toast.makeText(LoginCustomer.this, "Log in failed, you entered a wrong Email or Password", Toast.LENGTH_SHORT).show();
+                                try {
+                                    throw Objects.requireNonNull(task.getException());
+                                } catch (FirebaseAuthInvalidUserException e) {
+                                    emailLogCustom.setError("This email is not registered.");
+                                    emailLogCustom.requestFocus();
+                                } catch (FirebaseAuthInvalidCredentialsException e) {
+                                    passLogCustom.setError("Invalid Password");
+                                    passLogCustom.requestFocus();
+                                } catch (Exception e) {
+                                    Toast.makeText(LoginCustomer.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
                             }
                             progressDialog.dismiss();
                         }
@@ -125,7 +136,9 @@ public class LoginCustomer extends AppCompatActivity {
     }
 
     private Boolean validateUserLogData() {
+
         boolean result = false;
+
         email_logCustom = Objects.requireNonNull(emailLogCustom.getText()).toString().trim();
         pass_logCustom = Objects.requireNonNull(passLogCustom.getText()).toString().trim();
 
@@ -133,7 +146,6 @@ public class LoginCustomer extends AppCompatActivity {
             emailLogCustom.setError("Enter your Login Email");
             emailLogCustom.requestFocus();
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email_logCustom).matches()) {
-            Toast.makeText(LoginCustomer.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
             emailLogCustom.setError("Enter a valid Email Address");
             emailLogCustom.requestFocus();
         } else if (pass_logCustom.isEmpty()) {
@@ -143,8 +155,6 @@ public class LoginCustomer extends AppCompatActivity {
             progressDialog.setMessage("Login Admin");
             progressDialog.show();
             startActivity(new Intent(LoginCustomer.this, AdminPage.class));
-            emailLogCustom.setText("");
-            passLogCustom.setText("");
             progressDialog.dismiss();
         } else {
             result = true;
@@ -160,28 +170,26 @@ public class LoginCustomer extends AppCompatActivity {
         boolean emailFlag = firebaseUser.isEmailVerified();
 
         if (emailFlag) {
+
             progressDialog.dismiss();
-            finish();
             Toast.makeText(LoginCustomer.this, "Log In successful", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(LoginCustomer.this, CustomerPageMain.class));
+            finish();
         } else {
             progressDialog.dismiss();
-            alertDialogEmailUsed();
+            alertDialogEmailNotVerified();
         }
     }
 
-    private void alertDialogEmailUsed(){
+    private void alertDialogEmailNotVerified() {
         AlertDialog.Builder builderAlert = new AlertDialog.Builder(LoginCustomer.this);
         builderAlert.setMessage("Please verify and confirm your email address before you Log in");
         builderAlert.setCancelable(true);
         builderAlert.setPositiveButton(
                 "Ok",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        firebaseAuth.signOut();
-                        finish();
-                    }
+                (arg0, arg1) -> {
+                    firebaseAuth.signOut();
+                    finish();
                 });
 
         AlertDialog alert1 = builderAlert.create();

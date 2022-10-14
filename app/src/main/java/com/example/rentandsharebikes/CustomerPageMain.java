@@ -58,23 +58,6 @@ public class CustomerPageMain extends AppCompatActivity {
                 startActivity(new Intent(CustomerPageMain.this, CustomerPageShareBikes.class));
             }
         });
-
-        Button buttonLogOut = findViewById(R.id.btnLogOut);
-        buttonLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("remember", "false");
-                editor.apply();
-                finish();
-                startActivity(new Intent(CustomerPageMain.this, MainActivity.class));
-                Toast.makeText(CustomerPageMain.this, "You are Log Out", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
     }
 
     @Override
@@ -85,6 +68,7 @@ public class CustomerPageMain extends AppCompatActivity {
 
     //load current user details
     private void loadCustomerDetailsMainPage() {
+
         //retrieve data from database into text views
         databaseReference = FirebaseDatabase.getInstance().getReference("Customers");
         databaseReference.addValueEventListener(new ValueEventListener() {
