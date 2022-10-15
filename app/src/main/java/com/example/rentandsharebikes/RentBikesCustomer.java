@@ -94,8 +94,8 @@ public class RentBikesCustomer extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         //initialise variables
-        tVRentBikes = (TextView) findViewById(R.id.tvRentBikes);
-        eTextDateRentBike = (EditText) findViewById(R.id.etDateRentBike);
+        tVRentBikes = findViewById(R.id.tvRentBikes);
+        eTextDateRentBike = findViewById(R.id.etDateRentBike);
         eTextDateRentBike.setEnabled(false);
 
         LocalDateTime date = LocalDateTime.now();
@@ -103,17 +103,17 @@ public class RentBikesCustomer extends AppCompatActivity {
         String dateRent = date.format(formatter);
         eTextDateRentBike.setText(dateRent);
 
-        etFNameRentBikes = (TextInputEditText) findViewById(R.id.etFirstNameRentBikes);
-        etLNameRentBikes = (TextInputEditText) findViewById(R.id.etLastNameRentBikes);
-        etPhoneNoRentBikes = (TextInputEditText) findViewById(R.id.etPhoneNoRentBikes);
-        etEmailRentBikes = (TextInputEditText) findViewById(R.id.etEmailRentBikes);
+        etFNameRentBikes = findViewById(R.id.etFirstNameRentBikes);
+        etLNameRentBikes = findViewById(R.id.etLastNameRentBikes);
+        etPhoneNoRentBikes = findViewById(R.id.etPhoneNoRentBikes);
+        etEmailRentBikes = findViewById(R.id.etEmailRentBikes);
 
-        ivRentBikes = (ImageView) findViewById(R.id.imgShowRentBikes);
-        tVStoreNameRentBikes = (TextView) findViewById(R.id.tvRentBikesStoreName);
-        tVCondRentBikes = (TextView) findViewById(R.id.tvRentBikesCond);
-        tVModelRentBikes = (TextView) findViewById(R.id.tvRentBikesModel);
-        tVManufactRentBikes = (TextView) findViewById(R.id.tvRentBikesManufact);
-        tVPriceRentBikes = (TextView) findViewById(R.id.tvRentBikesPrice);
+        ivRentBikes = findViewById(R.id.imgShowRentBikes);
+        tVStoreNameRentBikes = findViewById(R.id.tvRentBikesStoreName);
+        tVCondRentBikes = findViewById(R.id.tvRentBikesCond);
+        tVModelRentBikes = findViewById(R.id.tvRentBikesModel);
+        tVManufactRentBikes = findViewById(R.id.tvRentBikesManufact);
+        tVPriceRentBikes = findViewById(R.id.tvRentBikesPrice);
 
         //receive data from the other activity
         Bundle bundle = getIntent().getExtras();
@@ -155,7 +155,9 @@ public class RentBikesCustomer extends AppCompatActivity {
     }
 
     public void uploadRentBikesData(){
+
         progressDialog.dismiss();
+
         if (validateBikeRentDetails()){
             eTextDate_RentBike = eTextDateRentBike.getText().toString().trim();
             etFName_RentBikes = etFNameRentBikes.getText().toString().trim();
@@ -185,10 +187,10 @@ public class RentBikesCustomer extends AppCompatActivity {
             bikesRentTask = storageRefRentBikes.putBytes(data)
             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                public void onSuccess(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                     storageRefRentBikes.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
-                        public void onSuccess(Uri uri) {
+                        public void onSuccess(@NonNull Uri uri) {
                             String rent_BikesId = databaseRefRentBikes.push().getKey();
                             bikeKey_RentedBike = rent_BikesId;
                             RentBikes rent_Bikes = new RentBikes(eTextDate_RentBike, etFName_RentBikes,
@@ -262,7 +264,7 @@ public class RentBikesCustomer extends AppCompatActivity {
         storageRefRemoveBikes = getInstance().getReferenceFromUrl(bike_ImageRentBikes);
         storageRefRemoveBikes.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess(Void aVoid) {
+            public void onSuccess(@NonNull Void aVoid) {
                 databaseRefRemoveBikes = FirebaseDatabase.getInstance().getReference().child("Bikes");
                 Query query = databaseRefRemoveBikes.orderByChild("bike_Key").equalTo(bikeKey_RentBike);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -293,6 +295,7 @@ public class RentBikesCustomer extends AppCompatActivity {
     }
 
     public void loadCustomerDetailsRentBikes() {
+
         //retrieve data from firebase database
         databaseRefCustomer = FirebaseDatabase.getInstance().getReference("Customers");
         databaseRefCustomer.addValueEventListener(new ValueEventListener() {

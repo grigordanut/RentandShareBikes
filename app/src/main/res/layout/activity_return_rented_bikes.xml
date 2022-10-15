@@ -5,13 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
+    tools:context=".ReturnRentedBikes">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ReturnRentedBikes">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvReturnBikes"
@@ -25,160 +24,166 @@
             android:textColor="#000000"
             android:textSize="22sp" />
 
-        <TextView
-            android:id="@+id/tvDateOfRent"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvReturnBikes"
-            android:layout_alignStart="@+id/tvReturnBikes"
-            android:layout_marginStart="-10dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/tv_dateRentBike"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/etDateOfRentBike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvReturnBikes"
-            android:layout_alignEnd="@+id/tvReturnBikes"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="-10dp"
-            android:background="#f2f2f2"
-            android:hint="@string/et_dateRentBike"
-            android:inputType="date"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            tools:ignore="Autofill,RtlSymmetry" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvDateReturn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvDateOfRent"
-            android:layout_alignStart="@+id/tvReturnBikes"
-            android:layout_marginStart="-10dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/tv_dateReturnBike"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/tvDateOfRent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="@string/tv_dateRentBike"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
 
-        <EditText
-            android:id="@+id/etDateReturnBike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/etDateOfRentBike"
-            android:layout_alignEnd="@+id/tvReturnBikes"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="-10dp"
-            android:background="#f2f2f2"
-            android:hint="@string/et_dateReturnBike"
-            android:inputType="date"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            tools:ignore="Autofill,RtlSymmetry" />
+                <TextView
+                    android:id="@+id/tvDateReturn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="@string/tv_dateReturnBike"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/tvRentDuration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvDateReturn"
-            android:layout_alignStart="@+id/tvReturnBikes"
-            android:layout_marginStart="-10dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/tv_durationRentBike"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/tvRentDuration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="@string/tv_durationRentBike"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
 
-        <EditText
-            android:id="@+id/etRentDurationBike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/etDateReturnBike"
-            android:layout_alignEnd="@+id/tvReturnBikes"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="#f2f2f2"
-            android:hint="@string/et_durationRentBike"
-            android:inputType="date"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            tools:ignore="Autofill,RtlSymmetry" />
+                <TextView
+                    android:id="@+id/tvReturnHours"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="@string/tv_totalHoursRentBike"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/tvReturnHours"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvRentDuration"
-            android:layout_alignStart="@+id/tvReturnBikes"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/tv_totalHoursRentBike"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/tvReturnTotalPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="@string/tv_totalPriceRentBike"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
 
+            </LinearLayout>
 
-        <EditText
-            android:id="@+id/etReturnTotalHours"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/etRentDurationBike"
-            android:layout_alignEnd="@+id/tvReturnBikes"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="#f2f2f2"
-            android:hint="@string/et_totalHoursRentBike"
-            android:inputType="numberDecimal"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            tools:ignore="Autofill,RtlSymmetry" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvReturnTotalPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvReturnHours"
-            android:layout_alignStart="@+id/tvReturnBikes"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/tv_totalPriceRentBike"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+                <EditText
+                    android:id="@+id/etDateOfRentBike"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="#f2f2f2"
+                    android:hint="@string/et_dateRentBike"
+                    android:inputType="date"
+                    android:paddingEnd="10dp"
+                    android:textAlignment="textEnd"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    tools:ignore="Autofill,RtlSymmetry" />
 
+                <EditText
+                    android:id="@+id/etDateReturnBike"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="#f2f2f2"
+                    android:hint="@string/et_dateReturnBike"
+                    android:inputType="date"
+                    android:paddingEnd="10dp"
+                    android:textAlignment="textEnd"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    tools:ignore="Autofill,RtlSymmetry" />
 
-        <EditText
-            android:id="@+id/etReturnTotalPricePay"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/etReturnTotalHours"
-            android:layout_alignEnd="@+id/tvReturnBikes"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="#f2f2f2"
-            android:hint="@string/et_totalPriceRentBike"
-            android:inputType="numberDecimal"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            tools:ignore="Autofill,RtlSymmetry" />
+                <EditText
+                    android:id="@+id/etRentDurationBike"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="#f2f2f2"
+                    android:hint="@string/et_durationRentBike"
+                    android:inputType="date"
+                    android:paddingEnd="10dp"
+                    android:textAlignment="textEnd"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    tools:ignore="Autofill,RtlSymmetry" />
 
+                <EditText
+                    android:id="@+id/etReturnTotalHours"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="#f2f2f2"
+                    android:hint="@string/et_totalHoursRentBike"
+                    android:inputType="numberDecimal"
+                    android:paddingEnd="10dp"
+                    android:textAlignment="textEnd"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    tools:ignore="Autofill,RtlSymmetry" />
+
+                <EditText
+                    android:id="@+id/etReturnTotalPricePay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="#f2f2f2"
+                    android:hint="@string/et_totalPriceRentBike"
+                    android:inputType="numberDecimal"
+                    android:paddingEnd="10dp"
+                    android:textAlignment="textEnd"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    tools:ignore="Autofill,RtlSymmetry" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/fNameWrapperReturnBikes"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_below="@+id/tvReturnTotalPrice"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
@@ -187,7 +192,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etFirstNameReturnBikes"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:hint="@string/et_firstNameReturnBike"
                 android:inputType="textPersonName|textCapWords"
                 android:paddingStart="10dp"
@@ -197,18 +202,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/lNameWrapperRentBikes"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_below="@+id/fNameWrapperReturnBikes"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etLastNameReturnBikes"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:hint="@string/et_lastNameReturnBike"
                 android:inputType="textPersonName|textCapWords"
                 android:paddingStart="10dp"
@@ -217,44 +222,56 @@
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/tvBikeStoreReturn"
-            android:layout_width="180dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lNameWrapperRentBikes"
-            android:layout_alignStart="@id/lNameWrapperRentBikes"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="-5dp"
-            android:text="@string/tv_returnBikeStore"
-            android:textAlignment="textStart"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/etBikeReturnStore"
-            android:layout_width="160dp"
+            <TextView
+                android:id="@+id/tvBikeStoreReturn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:text="@string/tv_returnBikeStore"
+                android:textAlignment="textStart"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/etBikeReturnStore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:background="#f2f2f2"
+                android:hint="@string/et_returnBikeStore"
+                android:inputType="text"
+                android:paddingStart="10dp"
+                android:textAlignment="textStart"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                tools:ignore="Autofill,RtlSymmetry" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/lNameWrapperRentBikes"
-            android:layout_alignEnd="@id/lNameWrapperRentBikes"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="-5dp"
-            android:background="#f2f2f2"
-            android:hint="@string/et_returnBikeStore"
-            android:inputType="text"
-            android:paddingStart="10dp"
-            android:textAlignment="textStart"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            tools:ignore="Autofill,RtlSymmetry" />
+            android:orientation="horizontal">
 
         <CheckBox
             android:id="@+id/cbReturnBikeSameStore"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:layout_below="@id/tvBikeStoreReturn"
-            android:layout_alignStart="@id/lNameWrapperRentBikes"
-            android:layout_marginStart="-10dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
             android:background="@drawable/check_box"
             android:paddingEnd="10dp"
             android:text="@string/cb_returnSameAsRentStore"
@@ -263,37 +280,37 @@
 
         <CheckBox
             android:id="@+id/cbReturnBikeDiffStore"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:layout_below="@id/tvBikeStoreReturn"
-            android:layout_alignEnd="@id/lNameWrapperRentBikes"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="-10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="5dp"
             android:background="@drawable/check_box"
+            android:layout_weight="1"
             android:paddingEnd="10dp"
             android:text="@string/cb_returnDiffRentStore"
             android:textSize="18sp"
             tools:ignore="RtlSymmetry" />
 
+    </LinearLayout>
+
         <TextView
             android:id="@+id/tvReturnBikeDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/cbReturnBikeSameStore"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:text="@string/tv_returnBikeDetails"
             android:textAlignment="center"
-            android:textStyle="bold"
             android:textColor="#000000"
-            android:textSize="22sp" />
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <RelativeLayout
             android:id="@+id/relReturnBikeDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvReturnBikeDetails"
             android:layout_margin="5dp"
             android:background="#DDDDDD">
 
@@ -443,8 +460,7 @@
         <Button
             android:id="@+id/btnReturnBike"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/relReturnBikeDetails"
+            android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="50dp"
@@ -455,5 +471,5 @@
             android:textSize="22sp"
             android:textStyle="bold" />
 
-    </RelativeLayout>
+    </LinearLayout>
 </ScrollView>

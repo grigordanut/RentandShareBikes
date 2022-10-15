@@ -55,7 +55,9 @@ public class BikesAdapterReturnBikesRented extends RecyclerView.Adapter<BikesAda
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent (bikesContext, ReturnRentedBikes.class);
+
                 //Bike key of rented bike
                 intent.putExtra("BikeRentedKey",uploadCurrent.getBike_RentKey());
                 bikesContext.startActivity(intent);
