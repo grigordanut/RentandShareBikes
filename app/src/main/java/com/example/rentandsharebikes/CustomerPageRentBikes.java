@@ -29,37 +29,35 @@ import java.util.Objects;
 
 public class CustomerPageRentBikes extends AppCompatActivity {
 
-    //Display data from Bike Stores database
-    private FirebaseStorage firebaseStBikeSoresCustom;
-    private DatabaseReference databaseRefBikeStoresCustom;
-    private ValueEventListener bikeStoresCustomEventListener;
-
-    //Display data from BikesRent table database
-    private FirebaseStorage firebaseStBikesAvRentCustom;
-    private DatabaseReference databaseRefBikesAvRentCustom;
-    private ValueEventListener bikesAvRentCustomEventListener;
-
-    //Display data from Rent BikesRent table database
-    private FirebaseStorage firebaseStBikesRentCustom;
-    private DatabaseReference databaseRefBikesRentCustom;
-    private ValueEventListener bikesRentCustomEventListener;
-
     //Access customer database
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseRefCustom;
 
-    private List<BikeStores> bikeStoresListCustom;
-    private List<BikesRent> bikesRentListAvRentCustom;
-    private List<RentBikes> bikesListRentCustom;
+    private TextView tVCustomPageRent, tVCustomPageRentPerDetails;
 
+    //Display data from Bike Stores database
+    private DatabaseReference dbReferenceStoresAvCustom;
+    private ValueEventListener evListenerStoresAvCustom;
+    private List<BikeStores> listStoresAvCustom;
     private int numberStoresAvCustom;
-    private int numberBikesAvRentCustom;
+    private TextView tVStoresAvCustom;
+
+    //Display data from Bikes database
+    private DatabaseReference dbReferenceBikesAvCustom;
+    private ValueEventListener eventListenerBikesAvRentCustom;
+    private List<BikesRent> listBikesAvCustom;
+    private int numberBikesAvCustom;
+    private TextView tVBikesAvCustom;
+
+    //Display data from Rent Bikes database
+    private DatabaseReference dbReferenceBikesRentedCustom;
+    private ValueEventListener eventListenerBikesRentedCustom;
+    private List<RentBikes> listBikesRentedCustom;
     private int numberBikesRentedCustom;
+    private TextView tVBikesRentedCustom;
 
-    private TextView tVCustomPageRent, tVCustomPageRentPerDetails,tVCustomStoresAv, tVCustomBikesRentAv, tVCustomBikesRented;
-
-    //Declaring some objects
+    //Declare objects
     private DrawerLayout drawerLayoutUserRent;
     private ActionBarDrawerToggle drawerToggleUserRent;
     private NavigationView navigationViewUserRent;
@@ -69,20 +67,26 @@ public class CustomerPageRentBikes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_page_rent_bikes);
 
-        bikeStoresListCustom = new ArrayList<>();
-        bikesRentListAvRentCustom = new ArrayList<>();
-        bikesListRentCustom = new ArrayList<>();
-
-        //initialise the variables
-        tVCustomPageRent = (TextView) findViewById(R.id.tvCustomPageRent);
-        tVCustomPageRentPerDetails = (TextView)findViewById(R.id.tvCustomPageRentPerDetails);
-
-        tVCustomStoresAv = (TextView)findViewById(R.id.tvCustomStoresAv);
-        tVCustomBikesRentAv = (TextView)findViewById(R.id.tvCustomBikesRentAv);
-        tVCustomBikesRented = (TextView)findViewById(R.id.tvCustomBikesRented);
-
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
+
+        tVCustomPageRent = findViewById(R.id.tvCustomPageRent);
+        tVCustomPageRentPerDetails = findViewById(R.id.tvCustomPageRentPerDetails);
+
+        //retrieve data from Bike Stores database
+        dbReferenceStoresAvCustom = FirebaseDatabase.getInstance().getReference("Bike Stores");
+        listStoresAvCustom = new ArrayList<>();
+        tVStoresAvCustom = findViewById(R.id.tvStoresAvCustom);
+
+        //retrieve data from Bikes database
+        dbReferenceBikesAvCustom = FirebaseDatabase.getInstance().getReference("Bikes");
+        listBikesAvCustom = new ArrayList<>();
+        tVBikesAvCustom = findViewById(R.id.tvBikesAvCustom);
+
+        //Retrieve data from Rent Bikes database
+        dbReferenceBikesRentedCustom = FirebaseDatabase.getInstance().getReference("Rent Bikes");
+        listBikesRentedCustom = new ArrayList<>();
+        tVBikesRentedCustom = (TextView)findViewById(R.id.tvBikesRentedCustom);
 
         drawerLayoutUserRent = findViewById(R.id.activity_customer_page_rent_bikes);
         navigationViewUserRent = findViewById(R.id.navViewCustomRent);
@@ -95,8 +99,8 @@ public class CustomerPageRentBikes extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         //retrieve data from database into text views
-        databaseReference = FirebaseDatabase.getInstance().getReference("Customers");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseRefCustom = FirebaseDatabase.getInstance().getReference("Customers");
+        databaseRefCustom.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NewApi"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -180,7 +184,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menu_customer_rent_bikes, menu);
         return true;
     }
@@ -203,27 +207,24 @@ public class CustomerPageRentBikes extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        loadBikeStoresAvCustom();
-        loadBikeRentAvCustom();
+        loadStoresAvCustom();
+        loadBikesAvCustom();
         loadBikeRentedCustom();
     }
 
-    private void loadBikeStoresAvCustom() {
-        //initialize the bike storage database
-        firebaseStBikeSoresCustom = FirebaseStorage.getInstance();
-        databaseRefBikeStoresCustom = FirebaseDatabase.getInstance().getReference("Bike Stores");
+    private void loadStoresAvCustom() {
 
-        bikeStoresCustomEventListener = databaseRefBikeStoresCustom.addValueEventListener(new ValueEventListener() {
+        evListenerStoresAvCustom = dbReferenceStoresAvCustom.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikeStoresListCustom.clear();
+                listStoresAvCustom.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     BikeStores bike_Stores = postSnapshot.getValue(BikeStores.class);
                     assert bike_Stores != null;
                     bike_Stores.setBikeStore_Key(postSnapshot.getKey());
-                    bikeStoresListCustom.add(bike_Stores);
-                    numberStoresAvCustom = bikeStoresListCustom.size();
-                    tVCustomStoresAv.setText(String.valueOf(numberStoresAvCustom));
+                    listStoresAvCustom.add(bike_Stores);
+                    numberStoresAvCustom = listStoresAvCustom.size();
+                    tVStoresAvCustom.setText(String.valueOf(numberStoresAvCustom));
                 }
             }
 
@@ -234,22 +235,19 @@ public class CustomerPageRentBikes extends AppCompatActivity {
         });
     }
 
-    private void loadBikeRentAvCustom() {
-        //initialize the bike storage database
-        firebaseStBikesAvRentCustom = FirebaseStorage.getInstance();
-        databaseRefBikesAvRentCustom = FirebaseDatabase.getInstance().getReference("Bikes");
+    private void loadBikesAvCustom() {
 
-        bikesAvRentCustomEventListener = databaseRefBikesAvRentCustom.addValueEventListener(new ValueEventListener() {
+        eventListenerBikesAvRentCustom = dbReferenceBikesAvCustom.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesRentListAvRentCustom.clear();
+                listBikesAvCustom.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     BikesRent bikesRent = postSnapshot.getValue(BikesRent.class);
                     assert bikesRent != null;
                     bikesRent.setBike_Key(postSnapshot.getKey());
-                    bikesRentListAvRentCustom.add(bikesRent);
-                    numberBikesAvRentCustom = bikesRentListAvRentCustom.size();
-                    tVCustomBikesRentAv.setText(String.valueOf(numberBikesAvRentCustom));
+                    listBikesAvCustom.add(bikesRent);
+                    numberBikesAvCustom = listBikesAvCustom.size();
+                    tVBikesAvCustom.setText(String.valueOf(numberBikesAvCustom));
                 }
             }
 
@@ -261,22 +259,19 @@ public class CustomerPageRentBikes extends AppCompatActivity {
     }
 
     private void loadBikeRentedCustom() {
-        //initialize the bike storage database
-        firebaseStBikesRentCustom = FirebaseStorage.getInstance();
-        databaseRefBikesRentCustom = FirebaseDatabase.getInstance().getReference("Rent Bikes");
 
-        bikesRentCustomEventListener = databaseRefBikesRentCustom.addValueEventListener(new ValueEventListener() {
+        eventListenerBikesRentedCustom = dbReferenceBikesRentedCustom.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesListRentCustom.clear();
+                listBikesRentedCustom.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     RentBikes rented_Bikes = postSnapshot.getValue(RentBikes.class);
                     assert rented_Bikes != null;
                     if(rented_Bikes.getCustomerId_RentBikes().equals(currentUser.getUid())){
                         rented_Bikes.setBike_RentKey(postSnapshot.getKey());
-                        bikesListRentCustom.add(rented_Bikes);
-                        numberBikesRentedCustom = bikesListRentCustom.size();
-                        tVCustomBikesRented.setText(String.valueOf(numberBikesRentedCustom));
+                        listBikesRentedCustom.add(rented_Bikes);
+                        numberBikesRentedCustom = listBikesRentedCustom.size();
+                        tVBikesRentedCustom.setText(String.valueOf(numberBikesRentedCustom));
                     }
                 }
             }

@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +40,7 @@ public class CalculateCoordinates extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
 
-        Button buttonClearStoreAddress = findViewById(R.id.btnClearStoreAddress);
+        ImageButton buttonClearStoreAddress = findViewById(R.id.btnClearStoreAddress);
         buttonClearStoreAddress.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             @Override

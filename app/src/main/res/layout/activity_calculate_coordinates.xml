@@ -33,19 +33,19 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/WrapperBikeStorePlace"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginEnd="-40dp"
+                android:layout_marginEnd="-45dp"
                 android:layout_weight="1"
                 android:textColorHint="#000000">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etBikeStorePlace"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="match_parent"
                     android:hint="@string/et_locationAddress"
                     android:inputType="textPostalAddress|textCapWords|textNoSuggestions"
                     android:paddingStart="10dp"
@@ -54,19 +54,20 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <ImageButton
                 android:id="@+id/btnClearStoreAddress"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="40dp"
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_delete_round_right"
                 android:text="X"
                 android:textColor="#000000"
                 android:textSize="30sp"
+                android:src="@drawable/ic_baseline_clear_24"
                 android:textStyle="bold"
-                tools:ignore="HardcodedText,RtlHardcoded" />
+                tools:ignore="ContentDescription,HardcodedText,RtlHardcoded" />
+
         </LinearLayout>
 
         <Button

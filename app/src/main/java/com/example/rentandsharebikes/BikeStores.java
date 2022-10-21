@@ -1,7 +1,5 @@
 package com.example.rentandsharebikes;
 
-import com.google.firebase.database.Exclude;
-
 public class BikeStores {
 
     private String bikeStore_Location;
@@ -71,5 +69,4 @@ public class BikeStores {
     public void setBikeStore_Key(String bikeStore_Key) {
         this.bikeStore_Key = bikeStore_Key;
     }
-
 }

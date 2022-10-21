@@ -8,16 +8,16 @@
     android:background="@android:color/holo_blue_bright"
     tools:showIn="@layout/activity_customer_page_rent_bikes">
 
-    <RelativeLayout
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         tools:context=".CustomerPageRentBikes">
 
         <TextView
             android:id="@+id/tvCustomRentService"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbarCustomPageRent"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -31,7 +31,6 @@
             android:id="@+id/tvCustomPageRent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCustomRentService"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -44,7 +43,6 @@
             android:id="@+id/tvCustomPageRentDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCustomPageRent"
             android:layout_marginTop="20dp"
             android:text="@string/tv_customPageRentDetails"
             android:textAlignment="center"
@@ -55,7 +53,6 @@
             android:id="@+id/tvCustomPageRentPerDetails"
             android:layout_width="match_parent"
             android:layout_height="165dp"
-            android:layout_below="@+id/tvCustomPageRentDetails"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -72,7 +69,6 @@
             android:id="@+id/tvCustomPageRentAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCustomPageRentPerDetails"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
@@ -81,85 +77,108 @@
             android:textColor="#000000"
             android:textSize="24sp" />
 
-        <!--BikesRent Stores Available-->
-        <TextView
-            android:id="@+id/tvCustomStores"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCustomPageRentAccount"
-            android:layout_alignStart="@+id/tvCustomPageRentAccount"
-            android:layout_marginTop="20dp"
-            android:text="@string/tv_customPageBikeStores"
-            android:textColor="#000000"
-            android:textSize="24sp" />
+            android:orientation="horizontal"
+            tools:context=".CustomerPageRentBikes">
 
-        <TextView
-            android:id="@+id/tvCustomStoresAv"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCustomPageRentAccount"
-            android:layout_alignEnd="@+id/tvCustomPageRent"
-            android:layout_marginTop="20dp"
-            android:background="#ffffff"
-            android:text="@string/tv_customPageBikeStoresAv"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:context=".CustomerPageRentBikes">
 
-        <!--    BikesRent Available to Rent-->
-        <TextView
-            android:id="@+id/tvCustomBikesRent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCustomStores"
-            android:layout_alignStart="@+id/tvCustomPageRentAccount"
-            android:layout_marginTop="20dp"
-            android:text="@string/tv_customPageBikeRent"
-            android:textColor="#000000"
-            android:textSize="24sp" />
+                <!--BikesRent Stores Available-->
+                <TextView
+                    android:id="@+id/tvStoresCustom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/tv_customPageBikeStores"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/tvCustomBikesRentAv"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCustomStoresAv"
-            android:layout_alignEnd="@+id/tvCustomPageRent"
-            android:layout_marginTop="20dp"
-            android:background="#ffffff"
-            android:text="@string/tv_customPageBikeRentAv"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+                <!--    BikesRent Available to Rent-->
+                <TextView
+                    android:id="@+id/tvBikesCustom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/tv_customPageBikeRent"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
 
-        <!--    BikesRent Rented-->
-        <TextView
-            android:id="@+id/tvCustomRented"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCustomBikesRent"
-            android:layout_alignStart="@+id/tvCustomPageRent"
-            android:layout_marginTop="20dp"
-            android:text="@string/tv_customPageBikesRented"
-            android:textColor="#000000"
-            android:textSize="24sp" />
+                <!--    BikesRent Rented-->
+                <TextView
+                    android:id="@+id/tvRentedCustom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/tv_customPageBikesRented"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvCustomBikesRented"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCustomBikesRentAv"
-            android:layout_alignEnd="@+id/tvCustomPageRent"
-            android:layout_marginTop="20dp"
-            android:background="#ffffff"
-            android:text="@string/tv_customPageBikesRentedAv"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:context=".CustomerPageRentBikes">
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/tvStoresAvCustom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="#ffffff"
+                    android:text="@string/tv_customPageBikeStoresAv"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvBikesAvCustom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="#ffffff"
+                    android:text="@string/tv_customPageBikeRentAv"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvBikesRentedCustom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="#ffffff"
+                    android:text="@string/tv_customPageBikesRentedAv"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navViewCustomRent"

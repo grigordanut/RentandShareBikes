@@ -34,7 +34,7 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_add_bikes_admin);
 
-        bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikeStoreRecyclerView = findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

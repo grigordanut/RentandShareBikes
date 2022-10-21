@@ -27,9 +27,9 @@
             android:textSize="24sp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/WrapperBikeStoreLocation"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
@@ -38,7 +38,7 @@
             <EditText
                 android:id="@+id/etBikeStoreLocation"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:hint="@string/et_addStoreLocation"
                 android:inputType="text|textCapWords"
                 android:paddingStart="10dp"
@@ -47,9 +47,9 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/WrapperBikeStoreAddress"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
@@ -58,7 +58,7 @@
             <EditText
                 android:id="@+id/etBikeStoreAddress"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:hint="@string/et_addStoreAddress"
                 android:inputType="text|textCapWords"
                 android:paddingStart="10dp"
@@ -67,9 +67,9 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/WrapperBikeStoreLatitude"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
@@ -78,7 +78,7 @@
             <EditText
                 android:id="@+id/etBikeStoreLatitude"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:hint="@string/et_addStoreLatitude"
                 android:inputType="numberDecimal|numberSigned"
                 android:paddingStart="10dp"
@@ -87,9 +87,9 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/WrapperBikeStoreLongitude"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
@@ -98,7 +98,7 @@
             <EditText
                 android:id="@+id/etBikeStoreLongitude"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:hint="@string/et_addStoreLongitude"
                 android:inputType="numberDecimal|numberSigned"
                 android:paddingStart="10dp"
@@ -107,9 +107,9 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/WrapperBikeStoreNrSlots"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
@@ -118,7 +118,7 @@
             <EditText
                 android:id="@+id/etBikeStoreNrSlots"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:hint="@string/et_addStoreNoSlots"
                 android:inputType="number"
                 android:paddingStart="10dp"

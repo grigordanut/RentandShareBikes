@@ -6,22 +6,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +46,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -57,22 +54,27 @@ import static com.google.firebase.storage.FirebaseStorage.getInstance;
 
 public class ReturnRentedBikes extends AppCompatActivity {
 
-    private DatabaseReference databaseRefBikeStores;
-
-    private ArrayList<String> bikeStoresListReturnBike;
-    private ArrayAdapter<String> arrayAdapter;
-
-    //Display data from Rent Bikes database
+    //Display Rented bikes details from Rent Bikes database
     private FirebaseStorage firebaseStShowRentedBikes;
     private DatabaseReference databaseRefShowRentedBikes;
-    private ValueEventListener showRentedBikesEventListener;
+    private ValueEventListener eventListenerShowRentedBikes;
 
-    //Remove bikes from Rent Bikes database
+    //Delete rented bikes from RentBikes Database;
     private DatabaseReference databaseRefRemoveRentBikes;
+
+    private DatabaseReference databaseRefBikeStores;
+
+    //Declare Bike Store database variables (Retrieve data)
+    private DatabaseReference dbRefStoreCheck;
+
+    private BikeStores bike_Store;
+
+    private List<String> listBikeStores;
+    private ArrayAdapter<String> arrayAdapter;
 
     //Return bikes to Bikes database
     private StorageReference storageRefReturnBikes;
-    DatabaseReference databaseRefReturnBikes;
+    private DatabaseReference databaseRefReturnBikes;
 
     //Access database Customers table
     private FirebaseAuth firebaseAuth;
@@ -93,26 +95,26 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
     private ImageView ivReturnBikes;
 
-    private String bikeStore_Name;
-
     //Receive Bike image
-    private String img_ReturnBikes;
+    private String img_RentedBike;
 
-    //Receive the Bike Store Key of rented bike from BikesAdapterReturnBikesRented (Different than rented)
-    String bike_StoreKeyRentedBikesDiff = "";
+    String rentedBikes_CustomId = "";
 
-    //Receive Bike Store name of rented bike from BikesAdapterReturnBikesRented (Same store as rented)
-    String bike_StoreNameRentedBikesSame = "";
+    //Receive the Bike Key of rented bike from BikesAdapterReturnBikesRented
+    String rentedBike_Key = "";
+    String returnBike_Key = "";
 
-    //Receive Bike Store kye of rented bikes from BikesAdapterReturnBikesRented (Same store as rented)
-    String bike_StoreKeyRentedBikesSame = "";
+    //BikeStoreKey that the bike is returning
+    private String returnBikeStore_Key = "";
+    private String returnBikeStore_Name = "";
 
-    //Receive the Bike key of rented bike from BikesAdapterReturnBikesRented
-    String bike_KeyRentedBikeSame = "";
+    //Return the Bike rented to the same BikeStore as rented
+    String rentedBikeStore_Key = "";
+    String rentedBikeStore_Name = "";
 
-    String bike_CusIdRentedBikes = "";
-    String bikeStoreKey_ReturnBike = "";
-    String bikeKey_ReturnBike = "";
+    //Return the Bike rented to the different BikeStore that rented
+    //String returnBikeStore_KeyDifferent = "";
+    //String returnBikeStore_NameDifferent = "";
 
     private ProgressDialog progressDialog;
 
@@ -124,10 +126,22 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(ReturnRentedBikes.this);
 
+        listBikeStores = new ArrayList<>();
+
         firebaseAuth = FirebaseAuth.getInstance();
 
-        bikeStoresListReturnBike = new ArrayList<>();
+        //Retrieve data from RentBikes database (Bikes rented by Customer)
+        firebaseStShowRentedBikes = getInstance();
+        databaseRefShowRentedBikes = FirebaseDatabase.getInstance().getReference("Rent Bikes");
+
+        //Retrieve data from Customers database (Customer that rented bikes)
+        databaseRefCustomer = FirebaseDatabase.getInstance().getReference("Customers");
+
+        //Retrieve data from BikesSores database
         databaseRefBikeStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
+
+        //Retrieve Bike Store data from Bike Stores table
+        dbRefStoreCheck = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
         //initialise variables
         tVReturnBikes = findViewById(R.id.tvReturnBikes);
@@ -151,7 +165,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
         eTReturnTotalPricePay = findViewById(R.id.etReturnTotalPricePay);
         eTReturnTotalHours.setEnabled(false);
 
-        etFNameReturnBikes = (TextInputEditText) findViewById(R.id.etFirstNameReturnBikes);
+        etFNameReturnBikes = findViewById(R.id.etFirstNameReturnBikes);
         etFNameReturnBikes.setEnabled(false);
         etLNameReturnBikes = (TextInputEditText) findViewById(R.id.etLastNameReturnBikes);
         etLNameReturnBikes.setEnabled(false);
@@ -159,21 +173,18 @@ public class ReturnRentedBikes extends AppCompatActivity {
         etBikeStoreReturn = findViewById(R.id.etBikeReturnStore);
         etBikeStoreReturn.setEnabled(false);
 
-        ivReturnBikes = (ImageView) findViewById(R.id.imgShowReturnBikes);
-        tVStoreNameReturnBikes = (TextView) findViewById(R.id.tvReturnBikesStoreName);
-        tVCondReturnBikes = (TextView) findViewById(R.id.tvReturnBikesCond);
-        tVModelReturnBikes = (TextView) findViewById(R.id.tvReturnBikesModel);
-        tVManufactReturnBikes = (TextView) findViewById(R.id.tvReturnBikesManufact);
-        tVPriceReturnBikes = (TextView) findViewById(R.id.tvReturnBikesPrice);
+        ivReturnBikes = findViewById(R.id.imgShowReturnBikes);
+        tVStoreNameReturnBikes = findViewById(R.id.tvReturnBikesStoreName);
+        tVCondReturnBikes = findViewById(R.id.tvReturnBikesCond);
+        tVModelReturnBikes = findViewById(R.id.tvReturnBikesModel);
+        tVManufactReturnBikes = findViewById(R.id.tvReturnBikesManufact);
+        tVPriceReturnBikes = findViewById(R.id.tvReturnBikesPrice);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
 
-            //Display the Bike image
-            img_ReturnBikes = bundle.getString("BikeImage");
-
             //Display the Bike key received of rented bike
-            bike_KeyRentedBikeSame = bundle.getString("BikeRentedKey");
+            rentedBike_Key = bundle.getString("RentedBikeKey");
         }
 
         cBoxRetSameStore = findViewById(R.id.cbReturnBikeSameStore);
@@ -182,10 +193,26 @@ public class ReturnRentedBikes extends AppCompatActivity {
             public void onClick(View v) {
                 if (cBoxRetSameStore.isChecked()) {
                     cBoxRetDiffStore.setChecked(false);
-                    etBikeStoreReturn.setText(bike_StoreNameRentedBikesSame);
-                    bikeStoreKey_ReturnBike = bike_StoreKeyRentedBikesSame;
-                }
-                else{
+
+                    dbRefStoreCheck.orderByChild("bikeStore_Key").equalTo(rentedBikeStore_Key)
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        etBikeStoreReturn.setText(rentedBikeStore_Name);
+                                        returnBikeStore_Key = rentedBikeStore_Key;
+
+                                    } else {
+                                        alertBikeStoreDeleted();
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    Toast.makeText(ReturnRentedBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                } else {
                     etBikeStoreReturn.setText("");
                 }
             }
@@ -195,36 +222,28 @@ public class ReturnRentedBikes extends AppCompatActivity {
         cBoxRetDiffStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (cBoxRetDiffStore.isChecked()) {
                     cBoxRetSameStore.setChecked(false);
 
                     etBikeStoreReturn.setText("");
 
-                    Context context = ReturnRentedBikes.this;
-                    LayoutInflater li = LayoutInflater.from(context);
-                    View promptsView = li.inflate(R.layout.activity_bike_store_list_return_rented_bike, null);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ReturnRentedBikes.this);
 
-                    androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(context);
+                    arrayAdapter = new ArrayAdapter<String>(ReturnRentedBikes.this, android.R.layout.simple_list_item_single_choice, listBikeStores);
 
-                    // set prompts.xml to alert dialog builder
-                    alertDialogBuilder.setView(promptsView);
-
-                    final ListView bikeStoreNameListReturnBikes = promptsView.findViewById(R.id.lVBikeStoreReturnRentedBike);
-
-                    arrayAdapter = new ArrayAdapter<String>(ReturnRentedBikes.this,R.layout.image_bikestore_return_bike,R.id.tvBikeStoreName,bikeStoresListReturnBike);
-                    databaseRefBikeStores .addValueEventListener(new ValueEventListener() {
+                    databaseRefBikeStores.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            bikeStoresListReturnBike.clear();
-                            for (DataSnapshot dsHosp: dataSnapshot.getChildren()){
-                                BikeStores bike_Store = dsHosp.getValue(BikeStores.class);
+                            listBikeStores.clear();
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                bike_Store = postSnapshot.getValue(BikeStores.class);
                                 assert bike_Store != null;
-                                bikeStoresListReturnBike.add(bike_Store.getBikeStore_Location());
-                                bike_StoreKeyRentedBikesDiff = bike_Store.getBikeStore_Key();
+                                if (!bike_Store.getBikeStore_Key().equals(returnBikeStore_Key)){
+                                    listBikeStores.add(bike_Store.getBikeStore_Location());
+                                }
                             }
 
-                            bikeStoreNameListReturnBikes.setAdapter(arrayAdapter);
+                           arrayAdapter.notifyDataSetChanged();
                         }
 
                         @Override
@@ -233,31 +252,44 @@ public class ReturnRentedBikes extends AppCompatActivity {
                         }
                     });
 
-                    bikeStoreNameListReturnBikes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            bikeStore_Name = bikeStoresListReturnBike.get(position);
-                            etBikeStoreReturn.setText(bikeStore_Name);
-                            bikeStoreKey_ReturnBike = bike_StoreKeyRentedBikesDiff;
-                        }
-                    });
-
-                    // set dialog message
                     alertDialogBuilder
-                            //.setTitle("You selected: " + bikeStore_Name + "Bike Store")
                             .setCancelable(false)
-                            .setPositiveButton("OK",(dialog, id) -> {
-                                        dialog.dismiss();
-                                    })
-                            .setNegativeButton("Cancel",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
+                            .setSingleChoiceItems(arrayAdapter, -1, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    returnBikeStore_Name = listBikeStores.get(i);
+
+                                    //get Bike Store Key
+                                    Query query = databaseRefBikeStores.orderByChild("bikeStore_Location").equalTo(returnBikeStore_Name);
+                                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                                postSnapshot.getKey();
+                                                returnBikeStore_Key = postSnapshot.getKey();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            Toast.makeText(ReturnRentedBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     });
+                                }
+                            })
+
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    etBikeStoreReturn.setText(returnBikeStore_Name);
+                                }
+                            })
+
+                            .setNegativeButton("Cancel", (dialogInterface, i) ->
+                                    dialogInterface.cancel());
 
                     // create alert dialog
-                    androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                    AlertDialog alertDialog = alertDialogBuilder.create();
 
                     // show it
                     alertDialog.show();
@@ -309,16 +341,16 @@ public class ReturnRentedBikes extends AppCompatActivity {
             bikesReturnTask = storageRefReturnBikes.putBytes(data)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onSuccess(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             storageRefReturnBikes.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
-                                public void onSuccess(@NonNull Uri uri) {
-                                    bikeKey_ReturnBike = databaseRefReturnBikes.push().getKey();
+                                public void onSuccess(Uri uri) {
+                                    returnBike_Key = databaseRefReturnBikes.push().getKey();
                                     BikesRent return_Bikes = new BikesRent(tVCond_ReturnBikes, tVModel_ReturnBikes, tVManufact_ReturnBikes,
-                                            tVPrice_ReturnBikes, uri.toString(), storeName_ReturnBikes, bikeStoreKey_ReturnBike,
-                                            bikeKey_ReturnBike);
+                                            tVPrice_ReturnBikes, uri.toString(), storeName_ReturnBikes, returnBikeStore_Key,
+                                            returnBike_Key);
 
-                                    databaseRefReturnBikes.child(bikeKey_ReturnBike).setValue(return_Bikes);
+                                    databaseRefReturnBikes.child(returnBike_Key).setValue(return_Bikes);
                                     startActivity(new Intent(ReturnRentedBikes.this, CustomerPageRentBikes.class));
                                     deleteRentedBikes();
                                     Toast.makeText(ReturnRentedBikes.this, "Return Bike successfully", Toast.LENGTH_SHORT).show();
@@ -345,13 +377,15 @@ public class ReturnRentedBikes extends AppCompatActivity {
         }
     }
 
-    private void deleteRentedBikes(){
-        StorageReference firebaseStRemoveRentBikes = getInstance().getReferenceFromUrl(img_ReturnBikes);
+    private void deleteRentedBikes() {
+
+        StorageReference firebaseStRemoveRentBikes = getInstance().getReferenceFromUrl(img_RentedBike);
         firebaseStRemoveRentBikes.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(@NonNull Void aVoid) {
+
                 databaseRefRemoveRentBikes = FirebaseDatabase.getInstance().getReference("Rent Bikes");
-                Query query = databaseRefRemoveRentBikes.orderByChild("bike_RentKey").equalTo(bike_KeyRentedBikeSame);
+                Query query = databaseRefRemoveRentBikes.orderByChild("bike_RentKey").equalTo(rentedBike_Key);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -388,6 +422,20 @@ public class ReturnRentedBikes extends AppCompatActivity {
         alertDialog.show();
     }
 
+    public void alertBikeStoreDeleted() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("The return Bike Store has been removed.\n Please select a different Bike Store.");
+        alertDialogBuilder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -397,8 +445,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
     //Display customer details
     public void loadCustomerDetailsRentBikes() {
-        //retrieve data from database into text views
-        databaseRefCustomer = FirebaseDatabase.getInstance().getReference("Customers");
+
         databaseRefCustomer.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NewApi"})
             @Override
@@ -416,7 +463,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
                         tVReturnBikes.setText("Welcome: " + custom_Data.getfName_Customer() + " " + custom_Data.getlName_Customer());
                         etFNameReturnBikes.setText(custom_Data.getfName_Customer());
                         etLNameReturnBikes.setText(custom_Data.getlName_Customer());
-                        bike_CusIdRentedBikes = user_Db.getUid();
+                        rentedBikes_CustomId = user_Db.getUid();
                     }
                 }
             }
@@ -430,34 +477,32 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
     //Display bike details
     private void loadBikesListReturn() {
-        //initialize the bike storage database
-        firebaseStShowRentedBikes = getInstance();
-        databaseRefShowRentedBikes = FirebaseDatabase.getInstance().getReference("Rent Bikes");
 
-        showRentedBikesEventListener = databaseRefShowRentedBikes.addValueEventListener(new ValueEventListener() {
+        eventListenerShowRentedBikes = databaseRefShowRentedBikes.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    RentBikes return_Bikes = postSnapshot.getValue(RentBikes.class);
-                    assert return_Bikes != null;
-                    return_Bikes.setBike_RentKey(postSnapshot.getKey());
-                    if (return_Bikes.getBike_RentKey().equals(bike_KeyRentedBikeSame)) {
-                        eTDateOfRentBike.setText(return_Bikes.getDate_RentBikes());
-                        tVStoreNameReturnBikes.setText(return_Bikes.getStoreLocation_RentBikes());
-                        tVCondReturnBikes.setText(return_Bikes.getBikeCond_RentBikes());
-                        tVModelReturnBikes.setText(return_Bikes.getBikeModel_RentBikes());
-                        tVManufactReturnBikes.setText(return_Bikes.getBikeManufact_RentBikes());
-                        tVPriceReturnBikes.setText(String.valueOf(return_Bikes.getBikePrice_RentBikes()));
+                    RentBikes rented_Bikes = postSnapshot.getValue(RentBikes.class);
+                    assert rented_Bikes != null;
+                    rented_Bikes.setBike_RentKey(postSnapshot.getKey());
+                    if (rented_Bikes.getBike_RentKey().equals(rentedBike_Key)) {
+                        eTDateOfRentBike.setText(rented_Bikes.getDate_RentBikes());
+                        tVStoreNameReturnBikes.setText(rented_Bikes.getStoreLocation_RentBikes());
+                        tVCondReturnBikes.setText(rented_Bikes.getBikeCond_RentBikes());
+                        tVModelReturnBikes.setText(rented_Bikes.getBikeModel_RentBikes());
+                        tVManufactReturnBikes.setText(rented_Bikes.getBikeManufact_RentBikes());
+                        tVPriceReturnBikes.setText(String.valueOf(rented_Bikes.getBikePrice_RentBikes()));
 
-                        bike_StoreNameRentedBikesSame = return_Bikes.getStoreLocation_RentBikes();
-                        bike_StoreKeyRentedBikesSame = return_Bikes.getStoreKey_RentBikes();
+                        img_RentedBike = rented_Bikes.getBikeImage_RentBike();
+                        rentedBikeStore_Key = rented_Bikes.getStoreKey_RentBikes();
+                        rentedBikeStore_Name = rented_Bikes.getStoreLocation_RentBikes();
+
 
                         calculateRentDurationPrice();
 
-                        //receive data from the other activity
                         Picasso.get()
-                                .load(return_Bikes.getBikeImage_RentBike())
+                                .load(rented_Bikes.getBikeImage_RentBike())
                                 .placeholder(R.mipmap.ic_launcher)
                                 .fit()
                                 .centerCrop()
@@ -512,491 +557,8 @@ public class ReturnRentedBikes extends AppCompatActivity {
             eTReturnTotalHours.setText(String.valueOf(totalHours));
             tVPrice_ReturnBikes = Double.parseDouble(tVPriceReturnBikes.getText().toString().trim());
             eTReturn_TotalPricePay = totalHours * tVPrice_ReturnBikes;
-            eTReturnTotalPricePay.setText(String.valueOf("€ " + eTReturn_TotalPricePay));
+            eTReturnTotalPricePay.setText("€ " + eTReturn_TotalPricePay);
         }
     }
-
-
-//    //Display data from Bike Stores database
-//    private DatabaseReference databaseRefBikeStores;
-//    private ArrayList<String> bikeStoresListReturnBike;
-//    private ArrayAdapter arrayAdapter;
-//
-//    //Display data from Rent Bikes database
-//    private FirebaseStorage firebaseStShowRentedBikes;
-//    private DatabaseReference databaseRefShowRentedBikes;
-//    private ValueEventListener showRentedBikesEventListener;
-//
-//    //Remove bikes from Rent Bikes database
-//    private DatabaseReference databaseRefRemoveRentBikes;
-//
-//    //private ListView hospListView;
-//
-//    //Return bikes to Bikes database
-//    private StorageReference storageRefReturnBikes;
-//    DatabaseReference databaseRefReturnBikes;
-//
-//    //Access database Customers table
-//    private FirebaseAuth firebaseAuth;
-//    private DatabaseReference databaseRefCustomer;
-//
-//    private StorageTask bikesReturnTask;
-//
-//    private TextInputEditText etFNameReturnBikes, etLNameReturnBikes;
-//    private TextView tVReturnBikes, tVStoreNameReturnBikes, tVCondReturnBikes, tVModelReturnBikes, tVManufactReturnBikes, tVPriceReturnBikes;
-//    private CheckBox cBoxRetSameStore, cBoxRetDiffStore;
-//    private EditText eTDateOfRentBike, eTDateReturnBike, eTRentDurationBike, eTReturnTotalHours, eTReturnTotalPricePay, etBikeStoreReturn;
-//
-//    //variables for data received
-//    private String storeName_ReturnBikes, tVCond_ReturnBikes, tVModel_ReturnBikes, tVManufact_ReturnBikes;
-//
-//    private Double tVPrice_ReturnBikes, eTReturn_TotalPricePay;
-//    private Double totalHours = 0.00;
-//
-//    private ImageView ivReturnBikes;
-//
-//    //Receive Bike image
-//    String img_ReturnBikes;
-//
-//    //Receive the Bike Store Key of rented bike from BikesAdapterReturnBikesRented (Different than rented)
-//    String bike_StoreKeyRentedBikesDiff = "";
-//
-//
-//
-//    //Receive Bike Store name of rented bike from BikesAdapterReturnBikesRented (Same store as rented)
-//    String bike_StoreNameRentedBikesSame = "";
-//
-//
-//
-//    //Receive Bike Store kye of rented bikes from BikesAdapterReturnBikesRented (Same store as rented)
-//    String bike_StoreKeyRentedBikesSame = "";
-//
-//
-//
-//    String bike_CusIdRentedBikes = "";
-//    String bikeRented_Key = "";
-//    String bikeKey_ReturnBike = "";
-//    String bikeStoreKey_ReturnBike = "";
-//
-//    private ProgressDialog progressDialog;
-//
-//    @SuppressLint("SetTextI18n")
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_return_rented_bikes);
-//
-//        progressDialog = new ProgressDialog(ReturnRentedBikes.this);
-//
-//        firebaseAuth = FirebaseAuth.getInstance();
-//
-//        bikeStoresListReturnBike = new ArrayList<>();
-//        databaseRefBikeStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
-//
-//        //initialise variables
-//        tVReturnBikes = findViewById(R.id.tvReturnBikes);
-//
-//        //Date of Rent
-//        eTDateOfRentBike = (EditText) findViewById(R.id.etDateOfRentBike);
-//        eTDateOfRentBike.setEnabled(false);
-//
-//        //Date of Return
-//        eTDateReturnBike = (EditText) findViewById(R.id.etDateReturnBike);
-//        eTDateReturnBike.setEnabled(false);
-//
-//        //Duration Time
-//        eTRentDurationBike = (EditText) findViewById(R.id.etRentDurationBike);
-//        eTRentDurationBike.setEnabled(false);
-//
-//        //Total Hours
-//        eTReturnTotalHours = (EditText) findViewById(R.id.etReturnTotalHours);
-//        eTReturnTotalHours.setEnabled(false);
-//
-//        eTReturnTotalPricePay = (EditText) findViewById(R.id.etReturnTotalPricePay);
-//        eTReturnTotalHours.setEnabled(false);
-//
-//        etFNameReturnBikes = (TextInputEditText) findViewById(R.id.etFirstNameReturnBikes);
-//        etFNameReturnBikes.setEnabled(false);
-//        etLNameReturnBikes = (TextInputEditText) findViewById(R.id.etLastNameReturnBikes);
-//        etLNameReturnBikes.setEnabled(false);
-//
-//        etBikeStoreReturn = (EditText) findViewById(R.id.etBikeReturnStore);
-//        etBikeStoreReturn.setEnabled(false);
-//
-//        ivReturnBikes = (ImageView) findViewById(R.id.imgShowReturnBikes);
-//        tVStoreNameReturnBikes = (TextView) findViewById(R.id.tvReturnBikesStoreName);
-//        tVCondReturnBikes = (TextView) findViewById(R.id.tvReturnBikesCond);
-//        tVModelReturnBikes = (TextView) findViewById(R.id.tvReturnBikesModel);
-//        tVManufactReturnBikes = (TextView) findViewById(R.id.tvReturnBikesManufact);
-//        tVPriceReturnBikes = (TextView) findViewById(R.id.tvReturnBikesPrice);
-//
-//        Bundle bundle = getIntent().getExtras();
-//        if (bundle != null) {
-//            //Display the Bike key received of rented bike
-//            bikeRented_Key = bundle.getString("BikeRentedKey");
-//        }
-//
-//        cBoxRetSameStore = (CheckBox) findViewById(R.id.cbReturnBikeSameStore);
-//        cBoxRetSameStore.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (cBoxRetSameStore.isChecked()) {
-//                    cBoxRetDiffStore.setChecked(false);
-//                    etBikeStoreReturn.setText(bike_StoreNameRentedBikesSame);
-//                    bikeStoreKey_ReturnBike = bike_StoreKeyRentedBikesSame;
-//                }
-//                else{
-//                    etBikeStoreReturn.setText("");
-//                }
-//            }
-//        });
-//
-//        cBoxRetDiffStore = (CheckBox) findViewById(R.id.cbReturnBikeDiffStore);
-//        cBoxRetDiffStore.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (cBoxRetDiffStore.isChecked()) {
-//                    cBoxRetSameStore.setChecked(false);
-//
-//                    //Send data to BikeStoreListReturnBikeDifferentStore
-//                    Context context = ReturnRentedBikes.this;
-//                    LayoutInflater li = LayoutInflater.from(context);
-//                    View promptsView = li.inflate(R.layout.activity_bike_store_list_return_rented_bike, null);
-//
-//                    androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(context);
-//
-//                    // set prompts.xml to alert dialog builder
-//                    alertDialogBuilder.setView(promptsView);
-//
-//                    final ListView bikeStoreListViewReturnBike = promptsView.findViewById(R.id.lVBikeStoreReturnRentedBike);
-//
-//                    databaseRefBikeStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
-//                    bikeStoresListReturnBike = new ArrayList<>();
-//
-//                    arrayAdapter = new ArrayAdapter<>(ReturnRentedBikes.this, R.layout.image_bikestore_return_bike,R.id.tvHospitalInfo, hospListAddDoc);
-//                    databaseRefBikeStores .addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                            hospListAddDoc.clear();
-//                            for (DataSnapshot dsBikeStores: dataSnapshot.getChildren()){
-//                                BikeStores bike_Store = dsBikeStores.getValue(BikeStores.class);
-//                                assert bike_Store != null;
-//                                //if (!bike_Store.getBikeStore_Key().equals(bike_StoreKeyRentedBikesSame)){
-//                                    hospListAddDoc.add(bike_Store.getBikeStore_Location());
-//                                    bike_StoreKeyRentedBikesDiff = bike_Store.getBikeStore_Key();
-//                               // }
-//                            }
-//
-//                            bikeStoreListViewReturnBike.setAdapter(arrayAdapter);
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError databaseError) {
-//                            Toast.makeText(ReturnRentedBikes.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//
-////                    hospListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-////                        @Override
-////                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-////                            String hospital_Name = hospitalList.get(position);
-////                            Intent intent = new Intent(HospitalsList.this, DoctorsList.class);
-////                            intent.putExtra("HOSPID", hospital_Name);
-////                            startActivity(intent);
-////                        }
-////                    });
-//
-//                    bikeStoreListViewReturnBike.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                        @Override
-//                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                            String bikeStore_Name = hospListAddDoc.get(position);
-//                            etBikeStoreReturn.setText(bikeStore_Name);
-//                            bikeStoreKey_ReturnBike = bike_StoreKeyRentedBikesDiff;
-//                        }
-//                    });
-//
-//                    // set dialog message
-//                    alertDialogBuilder
-//                            .setCancelable(false)
-//                            .setPositiveButton("OK",
-//                                    new DialogInterface.OnClickListener() {
-//                                        public void onClick(DialogInterface dialog, int id) {
-//
-//                                        }
-//                                    })
-//                            .setNegativeButton("Cancel",
-//                                    new DialogInterface.OnClickListener() {
-//                                        public void onClick(DialogInterface dialog, int id) {
-//                                            dialog.cancel();
-//                                            etBikeStoreReturn.setText("");
-//                                            cBoxRetDiffStore.setChecked(false);
-//                                        }
-//                                    });
-//
-//                    // create alert dialog
-//                    androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
-//
-//                    // show it
-//                    alertDialog.show();
-//                }
-//
-//                else {
-//                    etBikeStoreReturn.setText("");
-//                }
-//            }
-//        });
-//
-//        Button buttonReturnBikes = (Button) findViewById(R.id.btnReturnBike);
-//        buttonReturnBikes.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (bikesReturnTask != null && bikesReturnTask.isInProgress()) {
-//                    Toast.makeText(ReturnRentedBikes.this, "Return Bikes in progress", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    returnRentedBike();
-//                }
-//            }
-//        });
-//    }
-//
-//    public void returnRentedBike() {
-//        progressDialog.dismiss();
-//
-//        final String etStoreName_ReturnBikesVal = Objects.requireNonNull(etBikeStoreReturn.getText()).toString().trim();
-//
-//        if (TextUtils.isEmpty(etStoreName_ReturnBikesVal)) {
-//            alertReturnBikeStore();
-//        } else {
-//            storeName_ReturnBikes = etBikeStoreReturn.getText().toString().trim();
-//            tVCond_ReturnBikes = tVCondReturnBikes.getText().toString().trim();
-//            tVModel_ReturnBikes = tVModelReturnBikes.getText().toString().trim();
-//            tVManufact_ReturnBikes = tVManufactReturnBikes.getText().toString().trim();
-//            tVPrice_ReturnBikes = Double.parseDouble(tVPriceReturnBikes.getText().toString().trim());
-//
-//            storageRefReturnBikes = FirebaseStorage.getInstance().getReference("Bikes");
-//            databaseRefReturnBikes = FirebaseDatabase.getInstance().getReference("Bikes");
-//
-//            progressDialog.setTitle("The bike is returning");
-//            progressDialog.show();
-//
-//            // Get the data from an ImageView as bytes
-//            ivReturnBikes.setDrawingCacheEnabled(true);
-//            ivReturnBikes.buildDrawingCache();
-//            Bitmap bitmap = ivReturnBikes.getDrawingCache();
-//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//            byte[] data = baos.toByteArray();
-//
-//            bikesReturnTask = storageRefReturnBikes.putBytes(data)
-//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            storageRefReturnBikes.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                                @Override
-//                                public void onSuccess(Uri uri) {
-//                                    bikeKey_ReturnBike = databaseRefReturnBikes.push().getKey();
-//                                    BikesRent return_Bikes = new BikesRent(tVCond_ReturnBikes, tVModel_ReturnBikes, tVManufact_ReturnBikes,
-//                                            tVPrice_ReturnBikes, uri.toString(), storeName_ReturnBikes, bikeStoreKey_ReturnBike,
-//                                            bikeKey_ReturnBike);
-//
-//                                    databaseRefReturnBikes.child(bikeKey_ReturnBike).setValue(return_Bikes);
-//                                    startActivity(new Intent(ReturnRentedBikes.this, CustomerPageRentBikes.class));
-//                                    deleteRentedBikes();
-//                                    Toast.makeText(ReturnRentedBikes.this, "Return Bike successfully", Toast.LENGTH_SHORT).show();
-//                                    finish();
-//                                }
-//                            });
-//                            progressDialog.dismiss();
-//                        }
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            progressDialog.dismiss();
-//                            Toast.makeText(ReturnRentedBikes.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-//                            //show upload progress
-//                            double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
-//                            progressDialog.setMessage("Returned: " + (int) progress + "%");
-//                            progressDialog.setProgress((int) progress);
-//                        }
-//                    });
-//        }
-//    }
-//
-//    private void deleteRentedBikes(){
-//        StorageReference firebaseStRemoveRentBikes = getInstance().getReferenceFromUrl(img_ReturnBikes);
-//        firebaseStRemoveRentBikes.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void aVoid) {
-//                databaseRefRemoveRentBikes = FirebaseDatabase.getInstance().getReference("Rent Bikes");
-//                Query query = databaseRefRemoveRentBikes.orderByChild("bike_RentKey").equalTo(bikeRented_Key);
-//                query.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                            ds.getRef().removeValue();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                        Toast.makeText(ReturnRentedBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(ReturnRentedBikes.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-//
-//    public void alertReturnBikeStore() {
-//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-//        alertDialogBuilder.setMessage("The return Bike Store can not be empty.");
-//        alertDialogBuilder.setPositiveButton("OK",
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface arg0, int arg1) {
-//                    }
-//                });
-//
-//        AlertDialog alertDialog = alertDialogBuilder.create();
-//        alertDialog.show();
-//    }
-//
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        loadCustomerDetailsRentBikes();
-//        loadBikesListReturn();
-//    }
-//
-//    //Display customer details
-//    public void loadCustomerDetailsRentBikes() {
-//        //retrieve data from database into text views
-//        databaseRefCustomer = FirebaseDatabase.getInstance().getReference("Customers");
-//        databaseRefCustomer.addValueEventListener(new ValueEventListener() {
-//            @SuppressLint({"SetTextI18n", "NewApi"})
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                //retrieve data from database
-//                for (DataSnapshot ds_User : dataSnapshot.getChildren()) {
-//                    FirebaseUser user_Db = firebaseAuth.getCurrentUser();
-//
-//                    Customers custom_Data = ds_User.getValue(Customers.class);
-//
-//                    assert user_Db != null;
-//                    assert custom_Data != null;
-//                    if (user_Db.getUid().equals(ds_User.getKey())) {
-//                        tVReturnBikes.setText("Welcome: " + custom_Data.getfName_Customer() + " " + custom_Data.getlName_Customer());
-//                        etFNameReturnBikes.setText(custom_Data.getfName_Customer());
-//                        etLNameReturnBikes.setText(custom_Data.getlName_Customer());
-//                        bike_CusIdRentedBikes = user_Db.getUid();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Toast.makeText(ReturnRentedBikes.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-//
-//    //Display bike details
-//    private void loadBikesListReturn() {
-//        //initialize the bike storage database
-//        firebaseStShowRentedBikes = getInstance();
-//        databaseRefShowRentedBikes = FirebaseDatabase.getInstance().getReference("Rent Bikes");
-//
-//        showRentedBikesEventListener = databaseRefShowRentedBikes.addValueEventListener(new ValueEventListener() {
-//            @SuppressLint("SetTextI18n")
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                    RentBikes rent_Bikes = postSnapshot.getValue(RentBikes.class);
-//                    assert rent_Bikes != null;
-//                    rent_Bikes.setBike_RentKey(postSnapshot.getKey());
-//                    if (rent_Bikes.getBike_RentKey().equals(bikeRented_Key)) {
-//                        eTDateOfRentBike.setText(rent_Bikes.getDate_RentBikes());
-//                        tVStoreNameReturnBikes.setText(rent_Bikes.getStoreLocation_RentBikes());
-//                        tVCondReturnBikes.setText(rent_Bikes.getBikeCond_RentBikes());
-//                        tVModelReturnBikes.setText(rent_Bikes.getBikeModel_RentBikes());
-//                        tVManufactReturnBikes.setText(rent_Bikes.getBikeManufact_RentBikes());
-//                        tVPriceReturnBikes.setText(String.valueOf(rent_Bikes.getBikePrice_RentBikes()));
-//
-//                        bike_StoreNameRentedBikesSame = rent_Bikes.getStoreLocation_RentBikes();
-//                        bike_StoreKeyRentedBikesSame = rent_Bikes.getStoreKey_RentBikes();
-//
-//                        img_ReturnBikes = rent_Bikes.getBikeImage_RentBike();
-//
-//                        calculateRentDurationPrice();
-//
-//                        //receive data from the other activity
-//                        Picasso.get()
-//                                .load(rent_Bikes.getBikeImage_RentBike())
-//                                .placeholder(R.mipmap.ic_launcher)
-//                                .fit()
-//                                .centerCrop()
-//                                .into(ivReturnBikes);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Toast.makeText(ReturnRentedBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-//
-//    @SuppressLint("SetTextI18n")
-//    public void calculateRentDurationPrice() {
-//
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
-//        String currentDateAndTime = sdf.format(new Date());
-//        eTDateReturnBike.setText(currentDateAndTime);
-//
-//        String date1 = eTDateOfRentBike.getText().toString().trim();
-//        String date2 = eTDateReturnBike.getText().toString().trim();
-//
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-//        Duration diff = Duration.between(LocalDateTime.parse(date1, formatter),
-//                LocalDateTime.parse(date2, formatter));
-//
-//        if (diff.isZero()) {
-//            Toast.makeText(ReturnRentedBikes.this, "The was rented 0m", Toast.LENGTH_SHORT).show();
-//        } else {
-//            long days = diff.toDays();
-//            if (days != 0) {
-//                diff = diff.minusDays(days);
-//            }
-//            long hours = diff.toHours();
-//            if (hours != 0) {
-//                diff = diff.minusHours(hours);
-//            }
-//            long minutes = diff.toMinutes();
-//            if (minutes != 0) {
-//                diff = diff.minusMinutes(minutes);
-//            }
-////                            long seconds = diff.getSeconds();
-////                            if (seconds != 0) {
-////                                System.out.print("" + seconds + "s ");
-////                            }
-//            System.out.println();
-//
-//            eTRentDurationBike.setText(days + " d " + " " + hours + " h " + "" + minutes + " m");
-//            totalHours = (double) ((days * 24) + hours + (minutes / 60));
-//            eTReturnTotalHours.setText(String.valueOf(totalHours));
-//            tVPrice_ReturnBikes = Double.parseDouble(tVPriceReturnBikes.getText().toString().trim());
-//            eTReturn_TotalPricePay = totalHours * tVPrice_ReturnBikes;
-//            eTReturnTotalPricePay.setText(String.valueOf("€ " + eTReturn_TotalPricePay));
-//        }
-//    }
 }
+
