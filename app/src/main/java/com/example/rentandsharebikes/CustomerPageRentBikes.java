@@ -21,7 +21,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,14 +45,14 @@ public class CustomerPageRentBikes extends AppCompatActivity {
     //Display data from Bikes database
     private DatabaseReference dbReferenceBikesAvCustom;
     private ValueEventListener eventListenerBikesAvRentCustom;
-    private List<BikesRent> listBikesAvCustom;
+    private List<Bikes> listBikesAvCustom;
     private int numberBikesAvCustom;
     private TextView tVBikesAvCustom;
 
     //Display data from Rent Bikes database
     private DatabaseReference dbReferenceBikesRentedCustom;
     private ValueEventListener eventListenerBikesRentedCustom;
-    private List<RentBikes> listBikesRentedCustom;
+    private List<RentedBikes> listBikesRentedCustom;
     private int numberBikesRentedCustom;
     private TextView tVBikesRentedCustom;
 
@@ -128,21 +127,21 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                     case R.id.userShow_storesList:
                                         startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageShowStoresListCustomer.class));
                                         break;
-                                    //Show the list of BikesRent available from customer page ordered by Bike Stores
+                                    //Show the list of Bikes available from customer page ordered by Bike Stores
                                     case R.id.userShow_bikesList:
-                                        startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageShowBikesListCustom.class));
+                                        startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageShowBikesListCustomer.class));
                                         break;
-                                    //Show the list of all BikesRent available from customer page
+                                    //Show the list of all Bikes available from customer page
                                     case R.id.userShow_bikesListAll:
-                                        startActivity(new Intent(CustomerPageRentBikes.this, BikesImageShowBikesListCustomAll.class));
+                                        startActivity(new Intent(CustomerPageRentBikes.this, BikeImageShowBikesListCustomerAll.class));
                                         break;
                                     //The activity of renting bikes by the customer
                                     case R.id.userRent_bikes:
-                                        startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageRentBikesCustom.class));
+                                        startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageRentBikesCustomer.class));
                                         break;
-                                    //Show the list of BikesRent rented by customer
+                                    //Show the list of Bikes rented by customer
                                     case R.id.userShow_bikesRented:
-                                        Intent intentRent = new Intent(CustomerPageRentBikes.this, BikesImageShowBikesRentedCustom.class);
+                                        Intent intentRent = new Intent(CustomerPageRentBikes.this, BikeImageShowRentedBikesCustomer.class);
                                         intentRent.putExtra("CFName", custom_Data.getfName_Customer());
                                         intentRent.putExtra("CLName", custom_Data.getlName_Customer());
                                         intentRent.putExtra("CId", user_Db.getUid());
@@ -150,7 +149,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                         break;
                                     //The activity of returning rented bikes by the customer
                                     case R.id.userReturn_bikes:
-                                        Intent intentReturn = new Intent(CustomerPageRentBikes.this, BikesImageReturnBikesRented.class);
+                                        Intent intentReturn = new Intent(CustomerPageRentBikes.this, BikeImageReturnRentedBikesCustomer.class);
                                         intentReturn.putExtra("CFName", custom_Data.getfName_Customer());
                                         intentReturn.putExtra("CLName", custom_Data.getlName_Customer());
                                         intentReturn.putExtra("CId", user_Db.getUid());
@@ -242,10 +241,10 @@ public class CustomerPageRentBikes extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listBikesAvCustom.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikesRent bikesRent = postSnapshot.getValue(BikesRent.class);
-                    assert bikesRent != null;
-                    bikesRent.setBike_Key(postSnapshot.getKey());
-                    listBikesAvCustom.add(bikesRent);
+                    Bikes bikes = postSnapshot.getValue(Bikes.class);
+                    assert bikes != null;
+                    bikes.setBike_Key(postSnapshot.getKey());
+                    listBikesAvCustom.add(bikes);
                     numberBikesAvCustom = listBikesAvCustom.size();
                     tVBikesAvCustom.setText(String.valueOf(numberBikesAvCustom));
                 }
@@ -265,7 +264,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listBikesRentedCustom.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    RentBikes rented_Bikes = postSnapshot.getValue(RentBikes.class);
+                    RentedBikes rented_Bikes = postSnapshot.getValue(RentedBikes.class);
                     assert rented_Bikes != null;
                     if(rented_Bikes.getCustomerId_RentBikes().equals(currentUser.getUid())){
                         rented_Bikes.setBike_RentKey(postSnapshot.getKey());

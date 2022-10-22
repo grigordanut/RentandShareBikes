@@ -59,7 +59,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
     private DatabaseReference databaseRefShowRentedBikes;
     private ValueEventListener eventListenerShowRentedBikes;
 
-    //Delete rented bikes from RentBikes Database;
+    //Delete rented bikes from RentedBikes Database;
     private DatabaseReference databaseRefRemoveRentBikes;
 
     private DatabaseReference databaseRefBikeStores;
@@ -100,7 +100,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
     String rentedBikes_CustomId = "";
 
-    //Receive the Bike Key of rented bike from BikesAdapterReturnBikesRented
+    //Receive the Bike Key of rented bike from BikeAdapterRentedBikesCustomer
     String rentedBike_Key = "";
     String returnBike_Key = "";
 
@@ -111,10 +111,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
     //Return the Bike rented to the same BikeStore as rented
     String rentedBikeStore_Key = "";
     String rentedBikeStore_Name = "";
-
-    //Return the Bike rented to the different BikeStore that rented
-    //String returnBikeStore_KeyDifferent = "";
-    //String returnBikeStore_NameDifferent = "";
 
     private ProgressDialog progressDialog;
 
@@ -130,7 +126,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        //Retrieve data from RentBikes database (Bikes rented by Customer)
+        //Retrieve data from RentedBikes database (Bikes rented by Customer)
         firebaseStShowRentedBikes = getInstance();
         databaseRefShowRentedBikes = FirebaseDatabase.getInstance().getReference("Rent Bikes");
 
@@ -238,7 +234,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
                             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                                 bike_Store = postSnapshot.getValue(BikeStores.class);
                                 assert bike_Store != null;
-                                if (!bike_Store.getBikeStore_Key().equals(returnBikeStore_Key)){
+                                if (!bike_Store.getBikeStore_Key().equals(rentedBikeStore_Key)){
                                     listBikeStores.add(bike_Store.getBikeStore_Location());
                                 }
                             }
@@ -346,7 +342,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     returnBike_Key = databaseRefReturnBikes.push().getKey();
-                                    BikesRent return_Bikes = new BikesRent(tVCond_ReturnBikes, tVModel_ReturnBikes, tVManufact_ReturnBikes,
+                                    Bikes return_Bikes = new Bikes(tVCond_ReturnBikes, tVModel_ReturnBikes, tVManufact_ReturnBikes,
                                             tVPrice_ReturnBikes, uri.toString(), storeName_ReturnBikes, returnBikeStore_Key,
                                             returnBike_Key);
 
@@ -483,7 +479,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    RentBikes rented_Bikes = postSnapshot.getValue(RentBikes.class);
+                    RentedBikes rented_Bikes = postSnapshot.getValue(RentedBikes.class);
                     assert rented_Bikes != null;
                     rented_Bikes.setBike_RentKey(postSnapshot.getKey());
                     if (rented_Bikes.getBike_RentKey().equals(rentedBike_Key)) {

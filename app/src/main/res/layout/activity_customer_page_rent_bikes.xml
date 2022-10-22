@@ -89,7 +89,7 @@
                 android:orientation="vertical"
                 tools:context=".CustomerPageRentBikes">
 
-                <!--BikesRent Stores Available-->
+                <!--Bikes Stores Available-->
                 <TextView
                     android:id="@+id/tvStoresCustom"
                     android:layout_width="match_parent"
@@ -101,7 +101,7 @@
                     android:textColor="#000000"
                     android:textSize="24sp" />
 
-                <!--    BikesRent Available to Rent-->
+                <!--    Bikes Available to Rent-->
                 <TextView
                     android:id="@+id/tvBikesCustom"
                     android:layout_width="match_parent"
@@ -113,7 +113,7 @@
                     android:textColor="#000000"
                     android:textSize="24sp" />
 
-                <!--    BikesRent Rented-->
+                <!--    Bikes Rented-->
                 <TextView
                     android:id="@+id/tvRentedCustom"
                     android:layout_width="match_parent"

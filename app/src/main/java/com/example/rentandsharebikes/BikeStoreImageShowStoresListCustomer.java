@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity implements BikeStoreAdapterShowStoresListCustomer.OnItemClickListener {
+public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity implements BikeStoreAdapterCustom.OnItemClickListener {
 
     private TextView textViewBikeStoresImageShowStoreListCustomer;
 
@@ -32,7 +32,7 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
     private ValueEventListener bikeStoreEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
-    private BikeStoreAdapterShowStoresListCustomer bikeStoreAdapterShowStoresListCustomer;
+    private BikeStoreAdapterCustom bikeStoreAdapterCustom;
 
     public List<BikeStores> bikeStoresList;
 
@@ -44,17 +44,21 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_show_stores_list_customer);
 
-        textViewBikeStoresImageShowStoreListCustomer = (TextView)findViewById(R.id.tvBikeStoresImageShowStoresListCustomer);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.show();
+
+        textViewBikeStoresImageShowStoreListCustomer = findViewById(R.id.tvBikeStoresImageShowStoresListCustomer);
         textViewBikeStoresImageShowStoreListCustomer.setText("No Bike Stores available");
 
-        bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikeStoreRecyclerView = findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        progressDialog = new ProgressDialog(this);
         bikeStoresList = new ArrayList<BikeStores>();
 
-        progressDialog.show();
+        bikeStoreAdapterCustom = new BikeStoreAdapterCustom(BikeStoreImageShowStoresListCustomer.this, bikeStoresList);
+        bikeStoreRecyclerView.setAdapter(bikeStoreAdapterCustom);
+        bikeStoreAdapterCustom.setOnItmClickListener(BikeStoreImageShowStoresListCustomer.this);
     }
 
     @Override
@@ -68,7 +72,7 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
         databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
         bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
+            @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikeStoresList.clear();
@@ -77,11 +81,10 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
                     assert bikeStores != null;
                     bikeStores.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoresList.add(bikeStores);
-                    textViewBikeStoresImageShowStoreListCustomer.setText(bikeStoresList.size()+" Bike Stores available ");
+                    textViewBikeStoresImageShowStoreListCustomer.setText(bikeStoresList.size() + " Bike Stores available ");
                 }
-                bikeStoreAdapterShowStoresListCustomer = new BikeStoreAdapterShowStoresListCustomer(BikeStoreImageShowStoresListCustomer.this, bikeStoresList);
-                bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoresListCustomer);
-                bikeStoreAdapterShowStoresListCustomer.setOnItemClickListener(BikeStoreImageShowStoresListCustomer.this);
+
+                bikeStoreAdapterCustom.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
@@ -92,10 +95,8 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
         });
     }
 
-
-    //Action of the menu onClick
     @Override
-    public void onItemClick(final int position) {
+    public void onItemClick(int position) {
         final String[] options = {"Show Google Map", "Back Main Page"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
         BikeStores selected_BikeStores = bikeStoresList.get(position);
@@ -103,30 +104,30 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setCancelable(false)
-                .setTitle("You selected "+ selected_BikeStores.getBikeStore_Location()+" Store"+"\nSelect an option:")
+                .setTitle("You selected " + selected_BikeStores.getBikeStore_Location() + " Store" + "\nSelect an option:")
                 .setAdapter(adapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                if (which == 0) {
-                    Toast.makeText(BikeStoreImageShowStoresListCustomer.this, "Show BikesRent Stores in Google Map", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(BikeStoreImageShowStoresListCustomer.this, MapsActivity.class));
-                }
-
-                if (which == 1) {
-                    startActivity(new Intent(BikeStoreImageShowStoresListCustomer.this, CustomerPageRentBikes.class));
-                    Toast.makeText(BikeStoreImageShowStoresListCustomer.this, "Back to Customer rent page", Toast.LENGTH_SHORT).show();
-                }
-            }
-        })
-
-        .setNegativeButton("CLOSE",
-                new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+
+                        if (which == 0) {
+                            Toast.makeText(BikeStoreImageShowStoresListCustomer.this, "Show Bikes Stores in Google Map", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(BikeStoreImageShowStoresListCustomer.this, MapsActivity.class));
+                        }
+
+                        if (which == 1) {
+                            startActivity(new Intent(BikeStoreImageShowStoresListCustomer.this, CustomerPageRentBikes.class));
+                            Toast.makeText(BikeStoreImageShowStoresListCustomer.this, "Back to Customer rent page", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                });
+                })
+
+                .setNegativeButton("CLOSE",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }

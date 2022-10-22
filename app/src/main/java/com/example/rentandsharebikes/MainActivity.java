@@ -32,18 +32,18 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference databaseRefBikeStores;
     private ValueEventListener bikeStoresEventListener;
 
-    //Display data from BikesRent table database
+    //Display data from Bikes table database
     private FirebaseStorage firebaseStBikesAvRent;
     private DatabaseReference databaseRefBikesAvRent;
     private ValueEventListener bikesAvRentEventListener;
 
-    //Display data from Share BikesRent table database
+    //Display data from Share Bikes table database
     private FirebaseStorage firebaseStBikesAvShare;
     private DatabaseReference databaseRefBikesAvShare;
     private ValueEventListener bikesAvShareEventListener;
 
     private List<BikeStores> bikeStoresList;
-    private List<BikesRent> bikesRentListAvRent;
+    private List<Bikes> bikesRentListAv;
     private List<BikesShare> bikesListAvShare;
 
     private int numberStoresAvailable;
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bikeStoresList = new ArrayList<>();
-        bikesRentListAvRent = new ArrayList<>();
+        bikesRentListAv = new ArrayList<>();
         bikesListAvShare = new ArrayList<>();
 
         tVMainStoresAv = (TextView)findViewById(R.id.tvMainStoresAv);
@@ -93,17 +93,17 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.bikeStoreAv:
                     startActivity(new Intent(MainActivity.this, BikeStoreImageShowStoresListMain.class));
                     break;
-                //Show the list of BikesRent available from main page ordered by Bike Stores
+                //Show the list of Bikes available from main page ordered by Bike Stores
                 case R.id.bikeAvToRent:
                     startActivity(new Intent(MainActivity.this, BikeStoreImageShowBikesListMain.class));
                     break;
-                //Show the list of all BikesRent available from main page
+                //Show the list of all Bikes available from main page
                 case R.id.bikeAvToRentAll:
-                    startActivity(new Intent(MainActivity.this, BikesImageShowBikesListMainAll.class));
+                    startActivity(new Intent(MainActivity.this, BikeImageShowBikesListMainAll.class));
                     break;
-                //BikesRent available to share
+                //Bikes available to share
                 case R.id.bikeAvToShare:
-                    startActivity(new Intent(MainActivity.this, BikesImageShowSharedBikesMain.class));
+                    startActivity(new Intent(MainActivity.this, BikeImageShowSharedBikesMain.class));
                     break;
                 case R.id.contactUs:
                     startActivity(new Intent(MainActivity.this, ContactUs.class));
@@ -184,13 +184,13 @@ public class MainActivity extends AppCompatActivity {
         bikesAvRentEventListener = databaseRefBikesAvRent.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesRentListAvRent.clear();
+                bikesRentListAv.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikesRent bikesRent = postSnapshot.getValue(BikesRent.class);
-                    assert bikesRent != null;
-                    bikesRent.setBike_Key(postSnapshot.getKey());
-                    bikesRentListAvRent.add(bikesRent);
-                    numberBikesAvRent = bikesRentListAvRent.size();
+                    Bikes bikes = postSnapshot.getValue(Bikes.class);
+                    assert bikes != null;
+                    bikes.setBike_Key(postSnapshot.getKey());
+                    bikesRentListAv.add(bikes);
+                    numberBikesAvRent = bikesRentListAv.size();
                     tVMainBikesRentAv.setText(String.valueOf(numberBikesAvRent));
                 }
             }
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadBikeShareAv() {
-        //Display the list of the bikes from Share BikesRent database
+        //Display the list of the bikes from Share Bikes database
         firebaseStBikesAvShare = FirebaseStorage.getInstance();
         databaseRefBikesAvShare = FirebaseDatabase.getInstance().getReference("Share Bikes");
 

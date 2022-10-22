@@ -24,14 +24,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikeStoreImageShowStoresListMain extends AppCompatActivity implements BikeStoreAdapterShowStoresListMain.OnItemClickListener {
+public class BikeStoreImageShowStoresListMain extends AppCompatActivity implements BikeStoreAdapterMain.OnItemClickListener {
 
     private TextView tVBikeStoresImaShowStoreListMain;
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
-    private BikeStoreAdapterShowStoresListMain bikeStoreAdapterShowStoresListMain;
+    private BikeStoreAdapterMain bikeStoreAdapterMain;
 
     private List<BikeStores> bikeStoresList;
 
@@ -43,6 +43,9 @@ public class BikeStoreImageShowStoresListMain extends AppCompatActivity implemen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_show_stores_list_main);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.show();
+
         tVBikeStoresImaShowStoreListMain = (TextView) findViewById(R.id.tvBikeStoresImageShowStoreListMain);
         tVBikeStoresImaShowStoreListMain.setText("No Bike Stores available");
 
@@ -50,10 +53,11 @@ public class BikeStoreImageShowStoresListMain extends AppCompatActivity implemen
         bikeStoreRecyclerView.setHasFixedSize(true);
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        progressDialog = new ProgressDialog(this);
         bikeStoresList = new ArrayList<BikeStores>();
 
-        progressDialog.show();
+        bikeStoreAdapterMain = new BikeStoreAdapterMain(BikeStoreImageShowStoresListMain.this, bikeStoresList);
+        bikeStoreRecyclerView.setAdapter(bikeStoreAdapterMain);
+        bikeStoreAdapterMain.setOnItemClickListener(BikeStoreImageShowStoresListMain.this);
     }
 
     @Override
@@ -76,11 +80,9 @@ public class BikeStoreImageShowStoresListMain extends AppCompatActivity implemen
                     assert bikeStores != null;
                     bikeStores.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoresList.add(bikeStores);
-                    tVBikeStoresImaShowStoreListMain.setText(bikeStoresList.size()+" Bike Stores available" );
+                    tVBikeStoresImaShowStoreListMain.setText(bikeStoresList.size() + " Bike Stores available");
                 }
-                bikeStoreAdapterShowStoresListMain = new BikeStoreAdapterShowStoresListMain(BikeStoreImageShowStoresListMain.this, bikeStoresList);
-                bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoresListMain);
-                bikeStoreAdapterShowStoresListMain.setOnItemClickListener(BikeStoreImageShowStoresListMain.this);
+
                 progressDialog.dismiss();
             }
 
@@ -93,43 +95,40 @@ public class BikeStoreImageShowStoresListMain extends AppCompatActivity implemen
 
     //Action of the menu onClick
     @Override
-    public void onItemClick(final int position) {
-        showOptionMenuMain(position);
-    }
+    public void onItemClick(int position) {
 
-    public void showOptionMenuMain(final int position){
-        final String[] options = {"Show Google Maps","Back Main Page"};
+        final String[] options = {"Show Google Maps", "Back Main Page"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, options);
         BikeStores selected_store = bikeStoresList.get(position);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setCancelable(false)
-                .setTitle("You selected "+selected_store.getBikeStore_Location()+" Store"+"\nSelect an option:")
+                .setTitle("You selected " + selected_store.getBikeStore_Location() + " Store" + "\nSelect an option:")
                 .setAdapter(adapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                if (which == 0) {
-                    Toast.makeText(BikeStoreImageShowStoresListMain.this, "Show BikesRent Stores in Google Map", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(BikeStoreImageShowStoresListMain.this, MapsActivity.class));
-                }
-                if (which == 1) {
-                    startActivity(new Intent(BikeStoreImageShowStoresListMain.this, MainActivity.class));
-                    Toast.makeText(BikeStoreImageShowStoresListMain.this, "Back to main page", Toast.LENGTH_SHORT).show();
-                }
-            }
-        })
-
-        .setNegativeButton("CLOSE",
-                new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
 
-        final AlertDialog alertDialog = alertDialogBuilder.create();
+                        if (which == 0) {
+                            Toast.makeText(BikeStoreImageShowStoresListMain.this, "Show Bikes Stores in Google Map", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(BikeStoreImageShowStoresListMain.this, MapsActivity.class));
+                        }
+                        if (which == 1) {
+                            startActivity(new Intent(BikeStoreImageShowStoresListMain.this, MainActivity.class));
+                            Toast.makeText(BikeStoreImageShowStoresListMain.this, "Back to main page", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+
+                .setNegativeButton("CLOSE",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 }

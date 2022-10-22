@@ -29,12 +29,12 @@ import java.util.List;
 
 public class CustomerPageShareBikes extends AppCompatActivity {
 
-    //Display data from Rent BikesRent table database
+    //Display data from Rent Bikes table database
     private FirebaseStorage firebaseStBikesShareCustom;
     private DatabaseReference databaseRefBikesShareCustom;
     private ValueEventListener bikesShareCustomEventListener;
 
-    //Display data from Rent BikesRent table database
+    //Display data from Rent Bikes table database
     private FirebaseStorage firebaseStBikesShareAv;
     private DatabaseReference databaseRefBikesShareAv;
     private ValueEventListener bikesShareAvEventListener;
@@ -113,7 +113,7 @@ public class CustomerPageShareBikes extends AppCompatActivity {
                                 int id = item.getItemId();
                                 switch (id) {
                                     case R.id.userShow_shareBikesAvailable:
-                                        Intent intentNoOwnerBikes = new Intent(CustomerPageShareBikes.this, BikesImageShowSharedBikesNoOwner.class);
+                                        Intent intentNoOwnerBikes = new Intent(CustomerPageShareBikes.this, BikeImageShowSharedBikesNoOwner.class);
                                         intentNoOwnerBikes.putExtra("CIdNoOwner", user_Db.getUid());
                                         startActivity(intentNoOwnerBikes);
                                         break;
@@ -122,19 +122,19 @@ public class CustomerPageShareBikes extends AppCompatActivity {
                                         break;
                                     //Show the customer's own bikes added available to be shared
                                     case R.id.userShow_ownShareBikes:
-                                        Intent intentShowBikes = new Intent(CustomerPageShareBikes.this, BikesImageShowSharedBikesOwner.class);
+                                        Intent intentShowBikes = new Intent(CustomerPageShareBikes.this, BikeImageShowSharedBikesOwner.class);
                                         intentShowBikes.putExtra("CFNameShare", custom_Data.getfName_Customer());
                                         intentShowBikes.putExtra("CLNameShare", custom_Data.getlName_Customer());
                                         intentShowBikes.putExtra("CIdShare", user_Db.getUid());
                                         startActivity(intentShowBikes);
                                         break;
                                     case R.id.userUpdate_ownShareBikes:
-                                        Intent intentUpdate = new Intent(CustomerPageShareBikes.this, BikesImageShowSharedBikesToUpdate.class);
+                                        Intent intentUpdate = new Intent(CustomerPageShareBikes.this, BikeImageShowSharedBikesToUpdate.class);
                                         intentUpdate.putExtra("CIdUpdate", user_Db.getUid());
                                         startActivity(intentUpdate);
                                         break;
                                     case R.id.userRemove_ownShareBikes:
-                                        Intent intentRemoveBikes = new Intent(CustomerPageShareBikes.this, BikesImageRemoveSharedBikesOwner.class);
+                                        Intent intentRemoveBikes = new Intent(CustomerPageShareBikes.this, BikeImageRemoveSharedBikesOwner.class);
                                         intentRemoveBikes.putExtra("CIdRemove", user_Db.getUid());
                                         startActivity(intentRemoveBikes);
                                         break;

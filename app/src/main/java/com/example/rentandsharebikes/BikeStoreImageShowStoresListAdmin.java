@@ -45,6 +45,9 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_show_stores_list_admin);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.show();
+
         textViewBikeStoresImageShowStoreListAdmin = (TextView) findViewById(R.id.tvBikeStoresImageShowStoreListAdmin);
         textViewBikeStoresImageShowStoreListAdmin.setText("No Bike Stores available");
 
@@ -52,10 +55,11 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
         bikeStoreRecyclerView.setHasFixedSize(true);
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        progressDialog = new ProgressDialog(this);
         bikeStoresList = new ArrayList<BikeStores>();
 
-        progressDialog.show();
+        bikeStoreAdapterShowStoresListAdmin = new BikeStoreAdapterShowStoresListAdmin(BikeStoreImageShowStoresListAdmin.this, bikeStoresList);
+        bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoresListAdmin);
+        bikeStoreAdapterShowStoresListAdmin.setOnItemClickListener(BikeStoreImageShowStoresListAdmin.this);
 
         buttonAddMoreStores = (Button) findViewById(R.id.btnAddMoreStores);
         buttonAddMoreStores.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +89,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
         databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
         bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
+            @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikeStoresList.clear();
@@ -96,9 +100,8 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
                     bikeStoresList.add(bikeStores);
                     textViewBikeStoresImageShowStoreListAdmin.setText(bikeStoresList.size() + " Bike Stores available");
                 }
-                bikeStoreAdapterShowStoresListAdmin = new BikeStoreAdapterShowStoresListAdmin(BikeStoreImageShowStoresListAdmin.this, bikeStoresList);
-                bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoresListAdmin);
-                bikeStoreAdapterShowStoresListAdmin.setOnItemClickListener(BikeStoreImageShowStoresListAdmin.this);
+
+                bikeStoreAdapterShowStoresListAdmin.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
@@ -172,7 +175,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikeStoreImageShowStoresListAdmin.this);
         alertDialogBuilder
-                .setMessage("The " + selectedBikeStores.getBikeStore_Location() + " Bike Store still has bikes and cannot be deleted \nDelete the BikesRent first and after delete the Bike Store")
+                .setMessage("The " + selectedBikeStores.getBikeStore_Location() + " Bike Store still has bikes and cannot be deleted \nDelete the Bikes first and after delete the Bike Store")
                 .setCancelable(false)
                 .setPositiveButton("Ok",
                         new DialogInterface.OnClickListener() {

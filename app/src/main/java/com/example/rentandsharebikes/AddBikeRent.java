@@ -79,7 +79,7 @@ public class AddBikeRent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bike_rent);
 
-        //Create to BikesRent table into database
+        //Create to Bikes table into database
         stRefBikeUpload = FirebaseStorage.getInstance().getReference("Bikes");
         dbRefBikeUpload = FirebaseDatabase.getInstance().getReference("Bikes");
 
@@ -216,7 +216,7 @@ public class AddBikeRent extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    //Upload bike data into the BikesRent table
+    //Upload bike data into the Bikes table
     public void uploadBikesDetails() {
         progressDialog.dismiss();
 
@@ -241,11 +241,11 @@ public class AddBikeRent extends AppCompatActivity {
                                     String addBike_id = dbRefBikeUpload.push().getKey();
                                     bike_Key = addBike_id;
 
-                                    BikesRent bikesRent = new BikesRent(bike_Condition, bike_Model, bike_Manufact, bike_Price,
+                                    Bikes bikes = new Bikes(bike_Condition, bike_Model, bike_Manufact, bike_Price,
                                             uri.toString(), store_Name, store_Key, bike_Key);
 
                                     assert addBike_id != null;
-                                    dbRefBikeUpload.child(addBike_id).setValue(bikesRent);
+                                    dbRefBikeUpload.child(addBike_id).setValue(bikes);
 
                                     eTBikeModel.setText("");
                                     eTBikeManufact.setText("");

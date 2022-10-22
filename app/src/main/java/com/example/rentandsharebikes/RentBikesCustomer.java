@@ -46,12 +46,12 @@ public class RentBikesCustomer extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
-    //Add bike details to Rent BikesRent database
+    //Add bike details to Rent Bikes database
     private StorageReference storageRefRentBikes;
     private DatabaseReference databaseRefRentBikes;
     private StorageTask bikesRentTask;
 
-    //Delete bike details from BikesRent database
+    //Delete bike details from Bikes database
     private StorageReference storageRefRemoveBikes;
     private DatabaseReference databaseRefRemoveBikes;
 
@@ -193,7 +193,7 @@ public class RentBikesCustomer extends AppCompatActivity {
                         public void onSuccess(@NonNull Uri uri) {
                             String rent_BikesId = databaseRefRentBikes.push().getKey();
                             bikeKey_RentedBike = rent_BikesId;
-                            RentBikes rent_Bikes = new RentBikes(eTextDate_RentBike, etFName_RentBikes,
+                            RentedBikes rent_Bikes = new RentedBikes(eTextDate_RentBike, etFName_RentBikes,
                                     etLName_RentBikes, etPhoneNo_RentBikes, etEmail_RentBikes,
                                     tVStoreName_RentBikes, bike_StoreKeyRentBikes, tVCond_RentBikes,
                                     tVModel_RentBikes, tVManufact_RentBikes, tVPrice_rentBikes, uri.toString(),

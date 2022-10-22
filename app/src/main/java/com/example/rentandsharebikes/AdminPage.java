@@ -12,7 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
@@ -36,17 +35,17 @@ public class AdminPage extends AppCompatActivity {
     private DatabaseReference dbRefBikesRentAv;
     private ValueEventListener evListenerBikesRentAv;
 
-    //Declare Rent BikesRent database variables (Retrieve data)
+    //Declare Rent Bikes database variables (Retrieve data)
     private DatabaseReference dbRefBikesRent;
     private ValueEventListener eventListenerBikesRent;
 
-    //Declare Share BikesRent database variables (Retrieve data)
+    //Declare Share Bikes database variables (Retrieve data)
     private DatabaseReference dbRefBikesShareAv;
     private ValueEventListener eventListenerBikeShareAv;
 
     private List<BikeStores> bikeStoresList;
-    private List<BikesRent> bikesRentListAvRent;
-    private List<RentBikes> bikesListRented;
+    private List<Bikes> bikesRentListAv;
+    private List<RentedBikes> bikesListRented;
     private List<BikesShare> bikesListAvShare;
 
     private int numberStoresAvailable;
@@ -69,17 +68,17 @@ public class AdminPage extends AppCompatActivity {
         //Retrieve data from Bike Store table
         dbRefBikeStoresAv = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
-        //Retrieve data from BikesRent table
+        //Retrieve data from Bikes table
         dbRefBikesRentAv = FirebaseDatabase.getInstance().getReference("Bikes");
 
-        //Retrieve data from Rent BikesRent table
+        //Retrieve data from Rent Bikes table
         dbRefBikesRent = FirebaseDatabase.getInstance().getReference("Rent Bikes");
 
-        //Retrieve data Share BikesRent table
+        //Retrieve data Share Bikes table
         dbRefBikesShareAv = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
         bikeStoresList = new ArrayList<>();
-        bikesRentListAvRent = new ArrayList<>();
+        bikesRentListAv = new ArrayList<>();
         bikesListRented = new ArrayList<>();
         bikesListAvShare = new ArrayList<>();
 
@@ -115,30 +114,30 @@ public class AdminPage extends AppCompatActivity {
                         Toast.makeText(AdminPage.this, "Show Bike Stores",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikeStoreImageShowStoresListAdmin.class));
                         break;
-                    //Add BikesRent to the Bike Stores available
+                    //Add Bikes to the Bike Stores available
                     case R.id.adminAdd_bikesToStore:
-                        Toast.makeText(AdminPage.this, "Add BikesRent to Store",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminPage.this, "Add Bikes to Store",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikeStoreImageAddBikesAdmin.class));
                         break;
-                    //Show the list of BikesRent available ordered by Bike Stores
+                    //Show the list of Bikes available ordered by Bike Stores
                     case R.id.adminShow_bikesList:
-                        Toast.makeText(AdminPage.this, "Show BikesRent List",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminPage.this, "Show Bikes List",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikeStoreImageShowBikesListAdmin.class));
                         break;
-                    //Show the full list of BikesRent available
+                    //Show the full list of Bikes available
                     case R.id.adminShow_bikesListFull:
-                        Toast.makeText(AdminPage.this, "Show Full List of BikesRent",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this, BikesImageShowBikesListAdminFull.class));
+                        Toast.makeText(AdminPage.this, "Show Full List of Bikes",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AdminPage.this, BikeImageShowBikesListAdminAll.class));
                         break;
-                    //Show the full list of rented BikesRent
+                    //Show the full list of rented Bikes
                     case R.id.adminShow_bikesRented:
-                        Toast.makeText(AdminPage.this, "Rented BikesRent",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this, BikesImageShowBikesRentedAdmin.class));
+                        Toast.makeText(AdminPage.this, "Rented Bikes",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AdminPage.this, BikeImageShowRentedBikesAdminAll.class));
                         break;
-                    //Show the full list of rented BikesRent
+                    //Show the full list of rented Bikes
                     case R.id.adminShow_bikesShared:
-                        Toast.makeText(AdminPage.this, "Shared BikesRent",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this, BikesImageShowSharedBikesAdmin.class));
+                        Toast.makeText(AdminPage.this, "Shared Bikes",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AdminPage.this, BikeImageShowSharedBikesAdmin.class));
                         break;
                     default:
                         return true;
@@ -210,19 +209,19 @@ public class AdminPage extends AppCompatActivity {
         });
     }
 
-    //Display the BikesRent available to rent
+    //Display the Bikes available to rent
     private void loadBikeRentAv() {
 
         evListenerBikesRentAv = dbRefBikesRentAv.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesRentListAvRent.clear();
+                bikesRentListAv.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikesRent bikesRent = postSnapshot.getValue(BikesRent.class);
-                    assert bikesRent != null;
-                    bikesRent.setBike_Key(postSnapshot.getKey());
-                    bikesRentListAvRent.add(bikesRent);
-                    numberBikesAvRent = bikesRentListAvRent.size();
+                    Bikes bikes = postSnapshot.getValue(Bikes.class);
+                    assert bikes != null;
+                    bikes.setBike_Key(postSnapshot.getKey());
+                    bikesRentListAv.add(bikes);
+                    numberBikesAvRent = bikesRentListAv.size();
                     tVAdminBikesRentAv.setText(String.valueOf(numberBikesAvRent));
                 }
             }
@@ -234,7 +233,7 @@ public class AdminPage extends AppCompatActivity {
         });
     }
 
-    //Display the BikesRent rented by customers
+    //Display the Bikes rented by customers
     private void loadBikeRented() {
 
         eventListenerBikesRent = dbRefBikesRent.addValueEventListener(new ValueEventListener() {
@@ -242,7 +241,7 @@ public class AdminPage extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikesListRented.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    RentBikes rented_Bikes = postSnapshot.getValue(RentBikes.class);
+                    RentedBikes rented_Bikes = postSnapshot.getValue(RentedBikes.class);
                     assert rented_Bikes != null;
                     rented_Bikes.setBike_RentKey(postSnapshot.getKey());
                     bikesListRented.add(rented_Bikes);

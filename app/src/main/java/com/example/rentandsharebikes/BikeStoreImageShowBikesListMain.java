@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -18,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikeStoreImageShowBikesListMain extends AppCompatActivity {
+public class BikeStoreImageShowBikesListMain extends AppCompatActivity{
 
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreEventListener;
@@ -35,14 +36,17 @@ public class BikeStoreImageShowBikesListMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_show_bikes_list_main);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.show();
+
         bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        progressDialog = new ProgressDialog(this);
         bikeStoresList = new ArrayList<>();
 
-        progressDialog.show();
+        bikeStoreAdapterShowBikesListMain = new BikeStoreAdapterShowBikesListMain(BikeStoreImageShowBikesListMain.this, bikeStoresList);
+        bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowBikesListMain);
     }
 
     @Override
@@ -56,6 +60,7 @@ public class BikeStoreImageShowBikesListMain extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
         bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
@@ -64,8 +69,8 @@ public class BikeStoreImageShowBikesListMain extends AppCompatActivity {
                     bikeStores.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoresList.add(bikeStores);
                 }
-                bikeStoreAdapterShowBikesListMain = new BikeStoreAdapterShowBikesListMain(BikeStoreImageShowBikesListMain.this, bikeStoresList);
-                bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowBikesListMain);
+
+                bikeStoreAdapterShowBikesListMain.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 

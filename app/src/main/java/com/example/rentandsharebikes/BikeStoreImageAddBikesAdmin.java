@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -18,12 +20,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikeStoreImageAddBikesAdmin extends AppCompatActivity {
+public class BikeStoreImageAddBikesAdmin extends AppCompatActivity implements BikeStoreAdapterAdmin.OnItemClickListener {
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
-    private BikeStoreAdapterAddBikesAdmin bikeStoreAdapterAddBikesAdmin;
+    private BikeStoreAdapterAdmin bikeStoreAdapterAdmin;
 
     private List<BikeStores> bikeStoresList;
 
@@ -34,14 +36,18 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_add_bikes_admin);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.show();
+
         bikeStoreRecyclerView = findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        progressDialog = new ProgressDialog(this);
         bikeStoresList = new ArrayList<>();
 
-        progressDialog.show();
+        bikeStoreAdapterAdmin = new BikeStoreAdapterAdmin(BikeStoreImageAddBikesAdmin.this, bikeStoresList);
+        bikeStoreRecyclerView.setAdapter(bikeStoreAdapterAdmin);
+        bikeStoreAdapterAdmin.setOnItmClickListener(BikeStoreImageAddBikesAdmin.this);
     }
 
     @Override
@@ -55,6 +61,7 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
         bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
@@ -63,8 +70,8 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity {
                     bikeStores.setBikeStore_Key(postSnapshot.getKey());
                     bikeStoresList.add(bikeStores);
                 }
-                bikeStoreAdapterAddBikesAdmin = new BikeStoreAdapterAddBikesAdmin(BikeStoreImageAddBikesAdmin.this, bikeStoresList);
-                bikeStoreRecyclerView.setAdapter(bikeStoreAdapterAddBikesAdmin);
+
+                bikeStoreAdapterAdmin.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
@@ -73,5 +80,14 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity {
                 Toast.makeText(BikeStoreImageAddBikesAdmin.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        BikeStores selected_Store = bikeStoresList.get(position);
+        Intent store_Intent = new Intent(BikeStoreImageAddBikesAdmin.this, AddBikeRent.class);
+        store_Intent.putExtra("SName", selected_Store.getBikeStore_Location());
+        store_Intent.putExtra("SKey", selected_Store.getBikeStore_Key());
+        startActivity(store_Intent);
     }
 }

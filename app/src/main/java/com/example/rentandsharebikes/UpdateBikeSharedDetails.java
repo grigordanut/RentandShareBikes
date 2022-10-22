@@ -59,7 +59,7 @@ public class UpdateBikeSharedDetails extends AppCompatActivity {
     private static final int IMAGE_CAPTURE_CODE = 1001;
     private static final int PERMISSION_CODE = 1000;
 
-    //Save bike details into Share BikesRent able
+    //Save bike details into Share Bikes able
     private StorageReference storageRefUpShare;
     private DatabaseReference databaseRefUpShare;
     private StorageTask shareUpTask;

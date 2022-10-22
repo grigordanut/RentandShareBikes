@@ -354,7 +354,7 @@
     <string name="tv_bikeManufactMain">Bike Factory: </string>
     <string name="tv_bikePriceMain">Price/Hour: € </string>
 
-    <!--    Image BikesRent Available Main All-->
+    <!--    Image Bikes Available Main All-->
     <string name="tv_bikeStoreNameMainAll">Bike Store Name: </string>
     <string name="tv_bikeCondMainAll">Bike Condition: </string>
     <string name="tv_bikeModelMainAll">Bike Model: </string>

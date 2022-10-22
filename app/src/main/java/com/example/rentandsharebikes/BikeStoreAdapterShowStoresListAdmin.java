@@ -34,7 +34,7 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
     private DatabaseReference databaseReference;
     private ValueEventListener bikesEventListener;
 
-    private List<BikesRent> bikesRentList;
+    private List<Bikes> bikesList;
 
     private int numberBikesAvailable;
 
@@ -57,7 +57,7 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
         holder.tvStoreBikeAddress.setText(uploadCurrent.getBikeStore_Address());
         holder.tvStoreBikeSlots.setText(String.valueOf(uploadCurrent.getBikeStore_NumberSlots()));
 
-        bikesRentList = new ArrayList<>();
+        bikesList = new ArrayList<>();
 
         //initialize the bike storage database
         bikeStorage = FirebaseStorage.getInstance();
@@ -66,14 +66,14 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
         bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesRentList.clear();
+                bikesList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikesRent bikesRent = postSnapshot.getValue(BikesRent.class);
-                    assert bikesRent != null;
-                    if (bikesRent.getBikeStoreKey().equals(uploadCurrent.getBikeStore_Key())) {
-                        bikesRent.setBike_Key(postSnapshot.getKey());
-                        bikesRentList.add(bikesRent);
-                        numberBikesAvailable = bikesRentList.size();
+                    Bikes bikes = postSnapshot.getValue(Bikes.class);
+                    assert bikes != null;
+                    if (bikes.getBikeStoreKey().equals(uploadCurrent.getBikeStore_Key())) {
+                        bikes.setBike_Key(postSnapshot.getKey());
+                        bikesList.add(bikes);
+                        numberBikesAvailable = bikesList.size();
                         holder.tvStoreBikesAvailable.setText(String.valueOf(numberBikesAvailable));
                     }
                 }
@@ -81,7 +81,7 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Toast.makeText(BikesImageShowBikesListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(BikeImageShowBikesListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
