@@ -163,7 +163,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
         etFNameReturnBikes = findViewById(R.id.etFirstNameReturnBikes);
         etFNameReturnBikes.setEnabled(false);
-        etLNameReturnBikes = (TextInputEditText) findViewById(R.id.etLastNameReturnBikes);
+        etLNameReturnBikes = findViewById(R.id.etLastNameReturnBikes);
         etLNameReturnBikes.setEnabled(false);
 
         etBikeStoreReturn = findViewById(R.id.etBikeReturnStore);
@@ -180,7 +180,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
         if (bundle != null) {
 
             //Display the Bike key received of rented bike
-            rentedBike_Key = bundle.getString("RentedBikeKey");
+            rentedBike_Key = bundle.getString("BikeRentedKey");
         }
 
         cBoxRetSameStore = findViewById(R.id.cbReturnBikeSameStore);
@@ -197,7 +197,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
                                     if (dataSnapshot.exists()) {
                                         etBikeStoreReturn.setText(rentedBikeStore_Name);
                                         returnBikeStore_Key = rentedBikeStore_Key;
-
+                                        //cBoxRetSameStore.setChecked(false);
                                     } else {
                                         alertBikeStoreDeleted();
                                     }
@@ -249,6 +249,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
                     });
 
                     alertDialogBuilder
+                            .setTitle("Select the Bike Store")
                             .setCancelable(false)
                             .setSingleChoiceItems(arrayAdapter, -1, new DialogInterface.OnClickListener() {
                                 @Override
@@ -278,17 +279,27 @@ public class ReturnRentedBikes extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     etBikeStoreReturn.setText(returnBikeStore_Name);
+                                    //cBoxRetDiffStore.setChecked(false);
                                 }
                             })
 
-                            .setNegativeButton("Cancel", (dialogInterface, i) ->
-                                    dialogInterface.cancel());
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    cBoxRetDiffStore.setChecked(false);
+                                    dialogInterface.cancel();
+                                }
+                            });
 
                     // create alert dialog
                     AlertDialog alertDialog = alertDialogBuilder.create();
 
                     // show it
                     alertDialog.show();
+                }
+
+                else{
+                    etBikeStoreReturn.setText("");
                 }
             }
         });
@@ -309,9 +320,9 @@ public class ReturnRentedBikes extends AppCompatActivity {
     public void returnRentedBike() {
         progressDialog.dismiss();
 
-        final String etStoreName_ReturnBikesVal = Objects.requireNonNull(etBikeStoreReturn.getText()).toString().trim();
+        storeName_ReturnBikes = Objects.requireNonNull(etBikeStoreReturn.getText()).toString().trim();
 
-        if (TextUtils.isEmpty(etStoreName_ReturnBikesVal)) {
+        if (TextUtils.isEmpty(storeName_ReturnBikes)) {
             alertReturnBikeStore();
         } else {
             storeName_ReturnBikes = etBikeStoreReturn.getText().toString().trim();
@@ -323,7 +334,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
             storageRefReturnBikes = FirebaseStorage.getInstance().getReference("Bikes");
             databaseRefReturnBikes = FirebaseDatabase.getInstance().getReference("Bikes");
 
-            progressDialog.setTitle("The bike is returning");
+            progressDialog.setTitle("The bike is returning to: " + storeName_ReturnBikes);
             progressDialog.show();
 
             // Get the data from an ImageView as bytes
@@ -493,7 +504,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
                         img_RentedBike = rented_Bikes.getBikeImage_RentBike();
                         rentedBikeStore_Key = rented_Bikes.getStoreKey_RentBikes();
                         rentedBikeStore_Name = rented_Bikes.getStoreLocation_RentBikes();
-
 
                         calculateRentDurationPrice();
 

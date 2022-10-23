@@ -88,7 +88,7 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
         databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
 
         bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
+            @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikesList.clear();

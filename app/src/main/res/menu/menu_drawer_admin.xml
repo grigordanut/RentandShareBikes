@@ -23,14 +23,19 @@
             android:title="@string/menuDAdmin_showBikesList" />
 
         <item
-            android:id="@+id/adminShow_bikesListFull"
+            android:id="@+id/adminShow_bikesListAll"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/menuDAdmin_showBikesListFull" />
+            android:title="@string/menuDAdmin_showBikesListAll" />
 
         <item
             android:id="@+id/adminShow_bikesRented"
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/menuDAdmin_showBikesRented" />
+
+        <item
+            android:id="@+id/adminShow_bikesRentedAll"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menuDAdmin_showBikesRentedAll" />
 
         <item
             android:id="@+id/adminShow_bikesShared"

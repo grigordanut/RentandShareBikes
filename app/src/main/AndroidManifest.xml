@@ -34,6 +34,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ReturnRentedBikesSpinner"
+            android:exported="false" />
+        <activity
+            android:name=".BikeStoreImageShowRentedBikesListAdmin"
+            android:exported="false" />
+        <activity
             android:name=".BikeImageShowRentedBikesAdmin"
             android:exported="false" />
         <activity android:name=".LockActivity" />

@@ -136,7 +136,8 @@ public class BikeImageShowRentedBikesCustomer extends AppCompatActivity implemen
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == 0) {
                             RentedBikes sel_Bike = rentedBikesList.get(position);
-                            Intent intent_Ret = new Intent ( BikeImageShowRentedBikesCustomer.this, ReturnRentedBikes.class);
+                            //Intent intent_Ret = new Intent ( BikeImageShowRentedBikesCustomer.this, ReturnRentedBikes.class);
+                            Intent intent_Ret = new Intent ( BikeImageShowRentedBikesCustomer.this, ReturnRentedBikesSpinner.class);
                             //Bike key of rented bike
                             intent_Ret.putExtra("BikeRentedKey",sel_Bike.getBike_RentKey());
                             Toast.makeText(BikeImageShowRentedBikesCustomer.this, "Return the rented Bike", Toast.LENGTH_SHORT).show();

@@ -37,7 +37,7 @@ public class BikeImageShowRentedBikesAdminAll extends AppCompatActivity implemen
     private RecyclerView bikesListRecyclerView;
     private BikeAdapterRentedBikesAdmin bikeAdapterRentedBikesAdmin;
 
-    private TextView tVAdminRentedBikes;
+    private TextView tVAdminRentedBikesAll;
 
     private List<RentedBikes> rentedBikesList;
 
@@ -51,7 +51,7 @@ public class BikeImageShowRentedBikesAdminAll extends AppCompatActivity implemen
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
-        tVAdminRentedBikes = findViewById(R.id.tvAdminRentedBikes);
+        tVAdminRentedBikesAll = findViewById(R.id.tvAdminRentedBikesAll);
 
         bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -86,7 +86,7 @@ public class BikeImageShowRentedBikesAdminAll extends AppCompatActivity implemen
                     assert rent_Bikes != null;
                     rent_Bikes.setBike_RentKey(postSnapshot.getKey());
                     rentedBikesList.add(rent_Bikes);
-                    tVAdminRentedBikes.setText(rentedBikesList.size()+" Bikes rented by customers");
+                    tVAdminRentedBikesAll.setText(rentedBikesList.size()+" Bikes rented by customers");
                 }
 
                 bikeAdapterRentedBikesAdmin.notifyDataSetChanged();

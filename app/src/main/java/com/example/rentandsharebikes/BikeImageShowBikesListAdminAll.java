@@ -38,7 +38,7 @@ public class BikeImageShowBikesListAdminAll extends AppCompatActivity implements
     private RecyclerView bikesListRecyclerView;
     private BikeAdapterBikesAdmin bikeAdapterBikesAdmin;
 
-    private TextView textViewBikesImageList;
+    private TextView tVBikeListAdminAll;
 
     private List<Bikes> bikesList;
 
@@ -55,8 +55,8 @@ public class BikeImageShowBikesListAdminAll extends AppCompatActivity implements
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
-        textViewBikesImageList = findViewById(R.id.tvBikeImageListFull);
-        textViewBikesImageList.setText("No bikes available");
+        tVBikeListAdminAll = findViewById(R.id.tvBikeListAdminAll);
+        tVBikeListAdminAll.setText("No bikes available");
 
         bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -98,7 +98,7 @@ public class BikeImageShowBikesListAdminAll extends AppCompatActivity implements
         databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
 
         bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
+            @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikesList.clear();
@@ -107,7 +107,7 @@ public class BikeImageShowBikesListAdminAll extends AppCompatActivity implements
                     assert bikes != null;
                     bikes.setBike_Key(postSnapshot.getKey());
                     bikesList.add(bikes);
-                    textViewBikesImageList.setText(bikesList.size() + " Bikes available");
+                    tVBikeListAdminAll.setText(bikesList.size() + " Bikes available");
                 }
 
                 bikeAdapterBikesAdmin.notifyDataSetChanged();

@@ -39,7 +39,7 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
     private RecyclerView bikesListRecyclerView;
     private BikeAdapterBikesAdmin bikeAdapterBikesAdmin;
 
-    private TextView textViewBikesImageList;
+    private TextView tVBikeListAdmin;
 
     private List<Bikes> bikesList;
 
@@ -65,10 +65,10 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
         getIntent().hasExtra("SKey");
         bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
 
-        textViewBikesImageList = (TextView) findViewById(R.id.tvBikeImageList);
-        textViewBikesImageList.setText("No bikes available in " + bikeStore_Name + " store");
+        tVBikeListAdmin = findViewById(R.id.tvBikeImageList);
+        tVBikeListAdmin.setText("No bikes available in " + bikeStore_Name + " store");
 
-        bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -78,7 +78,7 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
         bikesListRecyclerView.setAdapter(bikeAdapterBikesAdmin);
         bikeAdapterBikesAdmin.setOnItmClickListener(BikeImageShowBikesListAdmin.this);
 
-        buttonAddMoreBikes = (Button) findViewById(R.id.btnAddMoreBikes);
+        buttonAddMoreBikes = findViewById(R.id.btnAddMoreBikes);
         buttonAddMoreBikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +86,7 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
             }
         });
 
-        buttonBackAdminPageBikes = (Button) findViewById(R.id.btnBackAdminPageBikes);
+        buttonBackAdminPageBikes = findViewById(R.id.btnBackAdminPageBikes);
         buttonBackAdminPageBikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +118,7 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
                     if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
                         bikes.setBike_Key(postSnapshot.getKey());
                         bikesList.add(bikes);
-                        textViewBikesImageList.setText(bikesList.size() + " Bikes available in " + bikeStore_Name + " store");
+                        tVBikeListAdmin.setText(bikesList.size() + " Bikes available in " + bikeStore_Name + " store");
                     }
                 }
 

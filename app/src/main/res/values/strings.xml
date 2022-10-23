@@ -51,6 +51,44 @@
     <string name="tv_adminBikeShared">Bikes available to Share</string>
     <string name="tv_adminBikeSharedAv">0</string>
 
+    <!--    Bike Image Remove Shared Bikes Owner-->
+    <string name="tv_bikeStoreImgRemoveBikesOwner">Select the Bike to be removed</string>
+
+    <!--    Bike Image Rent Bikes Customer-->
+    <string name="tv_bikesImageRentBikesCustomer">Select the Bike</string>
+
+    <!--    Bike Image Return Rented Bikes Customer-->
+    <string name="tv_bikesImageRentBikesRented">Select the Bike</string>
+
+    <!--    Bike Image Show Bikes List Admin-->
+    <string name="tv_bikesImageShowBikesListAdmin">List of Bikes</string>
+    <string name="btn_addMoreBikesAdmin">Add More Bikes</string>
+    <string name="btn_backToAdminPageBikes">Back Admin Page</string>
+
+    <!--    Bike Image Show Bikes List Admin All-->
+    <string name="tv_bikesImgShowBikesListAdminAll">List of Bikes</string>
+    <string name="btn_addMoreBikesAdminAll">Add More Bikes</string>
+    <string name="btn_backToAdminPageBikesAll">Back Admin Page</string>
+
+    <!--    Bike Image Show Bikes List Customer-->
+    <string name="tv_bikesImageShowBikesListCustomer">List of Bikes</string>
+
+    <!--    Bike Image Show Bikes List Custom All-->
+    <string name="tv_bikesImageShowBikesListCustomAll">No Bikes available to rent</string>
+
+    <!--    Bike Image Show Bikes List Main All-->
+    <string name="tv_bikesImageShowBikesListMainAll">List of Bikes</string>
+
+    <!--    Bike Image Show Bikes List Main Page-->
+    <string name="tv_bikesImageShowBikesListMain">List of Bikes</string>
+
+    <!--    Bike Image Show Rented Bikes Admin-->
+    <string name="tv_bikesImageShowBikesRentedAdmin">No Bikes rented</string>
+
+    <!--    Bike Image Show Rented Bikes Admin All-->
+    <string name="tv_bikesImageShowBikesRentedAdminAll">No Bikes rented</string>
+
+
     <!--    Bike Store Image Add Bikes Admin-->
     <string name="tv_bikeStoreImageAddBikes">Select the Bike Store</string>
 
@@ -66,6 +104,9 @@
     <!--    Bike Store Image Show Bike List Main-->
     <string name="tv_bikeStoreImageShowBikesListMain">Select the Bike Store</string>
 
+    <!--    Bike Store Image Show Rented Bikes List Admin-->
+    <string name="tv_bikeStoreImageShowRentedBikesAdmin">Select the Bike Store</string>
+
     <!--    Bike Store Image Show Stores List Admin-->
     <string name="tv_bikeStoreImageShowStoresListAdmin">List of Bike Stores</string>
     <string name="btn_addMoreStores">Add More Stores</string>
@@ -80,39 +121,6 @@
     <!--    Bike Store List Return Rented Bike-->
     <string name="tv_bikeStoreListReturnBike">Select the Bike Store</string>
 
-    <!--    Bikes Image Remove Shared Bikes Owner-->
-    <string name="tv_bikeStoreImgRemoveBikesSOwner">Select the Bike to be removed</string>
-
-    <!--    Bikes Image Rent Bikes Customer-->
-    <string name="tv_bikesImageRentBikesCustomer">Select the Bike</string>
-
-    <!--    Bikes Image Return Bikes Rented-->
-    <string name="tv_bikesImageRentBikesRented">Select the Bike</string>
-
-    <!--    Bikes Image Show Bikes List Admin-->
-    <string name="tv_bikesImageShowBikesListAdmin">List of Bikes</string>
-    <string name="btn_addMoreBikesAdmin">Add More Bikes</string>
-    <string name="btn_backToAdminPageBikes">Back Admin Page</string>
-
-    <!--    Bikes Image Show Bikes List Admin Full-->
-    <string name="tv_bikesImgShowBikesListAdminFull">List of Bikes</string>
-    <string name="btn_addMoreBikesAdminFull">Add More Bikes</string>
-    <string name="btn_backToAdminPageBikesFull">Back Admin Page</string>
-
-    <!--    Bikes Image Show Bikes List Custom All-->
-    <string name="tv_bikesImageShowBikesListCustomAll">No Bikes available to rent</string>
-
-    <!--    Bikes Image Show Bikes List Customer-->
-    <string name="tv_bikesImageShowBikesListCustomer">List of Bikes</string>
-
-    <!--    Bikes Image Show Bikes List Main All-->
-    <string name="tv_bikesImageShowBikesListMainAll">List of Bikes</string>
-
-    <!--    Bikes Image Show Bikes List Main Page-->
-    <string name="tv_bikesImageShowBikesListMain">List of Bikes</string>
-
-    <!--    Bikes Image Show Bikes Rented Admin-->
-    <string name="tv_bikesImageShowBikesRentedAdmin">No Bikes rented</string>
 
     <!--    Bikes Image Show Bikes Rented Customer-->
     <string name="tv_bikesImageShowBikesRentedCustomer">List of Bikes</string>
@@ -444,8 +452,9 @@
     <string name="menuDAdmin_showBikeStores">Show Bike Stores</string>
     <string name="menuDAdmin_addBikeToStores">Add Bikes to Stores</string>
     <string name="menuDAdmin_showBikesList">List of Bikes</string>
-    <string name="menuDAdmin_showBikesListFull">List of  all Bikes</string>
+    <string name="menuDAdmin_showBikesListAll">List of  all Bikes</string>
     <string name="menuDAdmin_showBikesRented">List of Rented Bikes</string>
+    <string name="menuDAdmin_showBikesRentedAll">List of All Rented Bikes</string>
     <string name="menuDAdmin_showBikesShared">List of Shared Bikes</string>
 
     <!--    Menu Drawer Customer Rent Bikes-->
@@ -488,5 +497,9 @@
 
     <!--    Manifest File-->
     <string name="title_activity_maps">Map</string>
+
+    <!--    Dropdown Item Store Name-->
+    <string name="tv_StoreName">Store Name</string>
+
 
 </resources>

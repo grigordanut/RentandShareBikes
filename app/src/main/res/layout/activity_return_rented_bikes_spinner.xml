@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
+    tools:context=".ReturnRentedBikesSpinner">
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvReturnBikes"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="20dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginEnd="20dp"-->
+<!--            android:text="@string/tv_returnRentedBike"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#000000"-->
+<!--            android:textSize="22sp" />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tvDateOfRent"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:text="@string/tv_dateRentBike"-->
+<!--                    android:textColor="#000000"-->
+<!--                    android:textSize="20sp" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tvDateReturn"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:text="@string/tv_dateReturnBike"-->
+<!--                    android:textColor="#000000"-->
+<!--                    android:textSize="20sp" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tvRentDuration"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:text="@string/tv_durationRentBike"-->
+<!--                    android:textColor="#000000"-->
+<!--                    android:textSize="20sp" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tvReturnHours"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:text="@string/tv_totalHoursRentBike"-->
+<!--                    android:textColor="#000000"-->
+<!--                    android:textSize="20sp" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tvReturnTotalPrice"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:text="@string/tv_totalPriceRentBike"-->
+<!--                    android:textColor="#000000"-->
+<!--                    android:textSize="20sp" />-->
+
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/etDateOfRentBike"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:background="#f2f2f2"-->
+<!--                    android:hint="@string/et_dateRentBike"-->
+<!--                    android:inputType="date"-->
+<!--                    android:paddingEnd="5dp"-->
+<!--                    android:textAlignment="textEnd"-->
+<!--                    android:textColor="#000000"-->
+<!--                    android:textSize="20sp"-->
+<!--                    tools:ignore="Autofill,RtlSymmetry" />-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/etDateReturnBike"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:background="#f2f2f2"-->
+<!--                    android:hint="@string/et_dateReturnBike"-->
+<!--                    android:inputType="date"-->
+<!--                    android:paddingEnd="5dp"-->
+<!--                    android:textAlignment="textEnd"-->
+<!--                    android:textColor="#000000"-->
+<!--                    android:textSize="20sp"-->
+<!--                    tools:ignore="Autofill,RtlSymmetry" />-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/etRentDurationBike"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:background="#f2f2f2"-->
+<!--                    android:hint="@string/et_durationRentBike"-->
+<!--                    android:inputType="date"-->
+<!--                    android:paddingEnd="5dp"-->
+<!--                    android:textAlignment="textEnd"-->
+<!--                    android:textColor="#000000"-->
+<!--                    android:textSize="20sp"-->
+<!--                    tools:ignore="Autofill,RtlSymmetry" />-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/etReturnTotalHours"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:background="#f2f2f2"-->
+<!--                    android:hint="@string/et_totalHoursRentBike"-->
+<!--                    android:inputType="numberDecimal"-->
+<!--                    android:paddingEnd="5dp"-->
+<!--                    android:textAlignment="textEnd"-->
+<!--                    android:textColor="#000000"-->
+<!--                    android:textSize="20sp"-->
+<!--                    tools:ignore="Autofill,RtlSymmetry" />-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/etReturnTotalPricePay"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:background="#f2f2f2"-->
+<!--                    android:hint="@string/et_totalPriceRentBike"-->
+<!--                    android:inputType="numberDecimal"-->
+<!--                    android:paddingEnd="5dp"-->
+<!--                    android:textAlignment="textEnd"-->
+<!--                    android:textColor="#000000"-->
+<!--                    android:textSize="20sp"-->
+<!--                    tools:ignore="Autofill,RtlSymmetry" />-->
+
+<!--            </LinearLayout>-->
+
+<!--        </LinearLayout>-->
+
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            android:textColorHint="#000000">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/etFirstNameReturnBikes"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:hint="@string/et_firstNameReturnBike"-->
+<!--                android:inputType="textPersonName|textCapWords"-->
+<!--                android:paddingStart="10dp"-->
+<!--                android:textColor="#000000"-->
+<!--                android:textSize="20sp"-->
+<!--                tools:ignore="RtlSymmetry" />-->
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            android:textColorHint="#000000">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/etLastNameReturnBikes"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:hint="@string/et_lastNameReturnBike"-->
+<!--                android:inputType="textPersonName|textCapWords"-->
+<!--                android:paddingStart="10dp"-->
+<!--                android:textColor="#000000"-->
+<!--                android:textSize="20sp"-->
+<!--                tools:ignore="RtlSymmetry" />-->
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="20dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginEnd="20dp"-->
+<!--            android:background="#ffffff"-->
+<!--            android:textColorHint="#000000">-->
+
+<!--            <AutoCompleteTextView-->
+<!--                android:id="@+id/tvBikeStoreReturnBike"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:hint="Select the Bike Store"-->
+<!--                android:inputType="none"-->
+<!--                android:textSize="24sp"-->
+<!--                tools:ignore="RtlSymmetry" />-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvReturnBikeDetails"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            android:text="@string/tv_returnBikeDetails"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#000000"-->
+<!--            android:textSize="22sp"-->
+<!--            android:textStyle="bold" />-->
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/relReturnBikeDetails"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="5dp"-->
+<!--            android:background="#DDDDDD">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imgShowReturnBikes"-->
+<!--                android:layout_width="110dp"-->
+<!--                android:layout_height="140dp"-->
+<!--                android:layout_margin="5dp"-->
+<!--                android:background="#ffffff"-->
+<!--                tools:ignore="ContentDescription" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvReturnStoreName"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_toEndOf="@+id/imgShowReturnBikes"-->
+<!--                android:text="@string/tv_returnBikeStoreName"-->
+<!--                android:textColor="#000000"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textStyle="bold"-->
+<!--                tools:ignore="RtlSymmetry" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvReturnCond"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/tvReturnStoreName"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_toEndOf="@+id/imgShowReturnBikes"-->
+<!--                android:text="@string/tv_returnBikeCondition"-->
+<!--                android:textColor="#000000"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textStyle="bold"-->
+<!--                tools:ignore="RtlSymmetry" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvReturnModel"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/tvReturnCond"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_toEndOf="@+id/imgShowReturnBikes"-->
+<!--                android:text="@string/tv_returnBikeModel"-->
+<!--                android:textColor="#000000"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textStyle="bold"-->
+<!--                tools:ignore="NotSibling,RtlSymmetry" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvReturnManufact"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/tvReturnModel"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_toEndOf="@+id/imgShowReturnBikes"-->
+<!--                android:text="@string/tv_returnBikeFactory"-->
+<!--                android:textColor="#000000"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textStyle="bold"-->
+<!--                tools:ignore="RtlSymmetry" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvReturnPrice"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/tvReturnManufact"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_toEndOf="@+id/imgShowReturnBikes"-->
+<!--                android:text="@string/tv_returnBikePrice"-->
+<!--                android:textColor="#000000"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textStyle="bold"-->
+<!--                tools:ignore="RtlSymmetry" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvReturnBikesStoreName"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="210dp"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_marginEnd="5dp"-->
+<!--                android:background="#e6f7ff"-->
+<!--                android:paddingStart="5dp"-->
+<!--                android:textColor="#000000"-->
+<!--                android:textSize="18sp"-->
+<!--                tools:ignore="RtlSymmetry" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvReturnBikesCond"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/tvReturnBikesStoreName"-->
+<!--                android:layout_marginStart="210dp"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_marginEnd="5dp"-->
+<!--                android:background="#e6f7ff"-->
+<!--                android:paddingStart="5dp"-->
+<!--                android:textColor="#000000"-->
+<!--                android:textSize="18sp"-->
+<!--                tools:ignore="RtlSymmetry" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvReturnBikesModel"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/tvReturnBikesCond"-->
+<!--                android:layout_marginStart="210dp"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_marginEnd="5dp"-->
+<!--                android:background="#e6f7ff"-->
+<!--                android:paddingStart="5dp"-->
+<!--                android:textColor="#000000"-->
+<!--                android:textSize="18sp"-->
+<!--                tools:ignore="RtlSymmetry" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvReturnBikesManufact"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/tvReturnBikesModel"-->
+<!--                android:layout_marginStart="210dp"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_marginEnd="5dp"-->
+<!--                android:background="#e6f7ff"-->
+<!--                android:paddingStart="5dp"-->
+<!--                android:textColor="#000000"-->
+<!--                android:textSize="18sp"-->
+<!--                tools:ignore="RtlSymmetry" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvReturnBikesPrice"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/tvReturnBikesManufact"-->
+<!--                android:layout_marginStart="260dp"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_marginEnd="5dp"-->
+<!--                android:background="#e6f7ff"-->
+<!--                android:paddingStart="10dp"-->
+<!--                android:textColor="#000000"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textStyle="bold"-->
+<!--                tools:ignore="RtlSymmetry" />-->
+<!--        </RelativeLayout>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btnReturnBike"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="50dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginEnd="50dp"-->
+<!--            android:layout_marginBottom="20dp"-->
+<!--            android:background="@drawable/btn_background"-->
+<!--            android:text="@string/btn_returnBike"-->
+<!--            android:textColor="#FFFF"-->
+<!--            android:textSize="22sp"-->
+<!--            android:textStyle="bold" />-->
+
+<!--    </LinearLayout>-->
+</ScrollView>

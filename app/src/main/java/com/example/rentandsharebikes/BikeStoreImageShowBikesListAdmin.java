@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity  implements BikeStoreAdapterAdmin.OnItemClickListener{
+public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity implements BikeStoreAdapterAdmin.OnItemClickListener {
 
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreEventListener;
@@ -40,7 +40,7 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity  impleme
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
-        bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikeStoreRecyclerView = findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -57,7 +57,7 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity  impleme
         loadBikeStoresListAdmin();
     }
 
-    private void loadBikeStoresListAdmin(){
+    private void loadBikeStoresListAdmin() {
         //initialize the bike store database
         databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
@@ -65,7 +65,7 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity  impleme
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
                     assert bikeStores != null;
                     bikeStores.setBikeStore_Key(postSnapshot.getKey());
@@ -78,7 +78,7 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity  impleme
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeStoreImageShowBikesListAdmin.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeStoreImageShowBikesListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -88,7 +88,7 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity  impleme
         BikeStores selected_Store = bikeStoresList.get(position);
         Intent store_Intent = new Intent(BikeStoreImageShowBikesListAdmin.this, BikeImageShowBikesListAdmin.class);
         store_Intent.putExtra("SName", selected_Store.getBikeStore_Location());
-        store_Intent.putExtra("SKey",selected_Store.getBikeStore_Key());
+        store_Intent.putExtra("SKey", selected_Store.getBikeStore_Key());
         startActivity(store_Intent);
     }
 }

@@ -9,14 +9,14 @@
     tools:context=".BikeImageShowRentedBikesAdminAll">
 
     <TextView
-        android:id="@+id/tvAdminRentedBikes"
+        android:id="@+id/tvAdminRentedBikesAll"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:text="@string/tv_bikesImageShowBikesRentedAdmin"
+        android:text="@string/tv_bikesImageShowBikesRentedAdminAll"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="20sp" />

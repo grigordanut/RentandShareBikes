@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvBikeImageList"
+            android:id="@+id/tvBikeListAdmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -28,9 +28,7 @@
             android:id="@+id/evRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_margin="5dp" />
 
         <LinearLayout
             android:layout_width="match_parent"

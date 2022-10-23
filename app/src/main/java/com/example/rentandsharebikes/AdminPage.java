@@ -125,13 +125,18 @@ public class AdminPage extends AppCompatActivity {
                         startActivity(new Intent(AdminPage.this, BikeStoreImageShowBikesListAdmin.class));
                         break;
                     //Show the full list of Bikes available
-                    case R.id.adminShow_bikesListFull:
+                    case R.id.adminShow_bikesListAll:
                         Toast.makeText(AdminPage.this, "Show Full List of Bikes",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikeImageShowBikesListAdminAll.class));
                         break;
                     //Show the full list of rented Bikes
                     case R.id.adminShow_bikesRented:
                         Toast.makeText(AdminPage.this, "Rented Bikes",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AdminPage.this, BikeStoreImageShowRentedBikesListAdmin.class));
+                        break;
+                    //Show the full list of rented Bikes
+                    case R.id.adminShow_bikesRentedAll:
+                        Toast.makeText(AdminPage.this, "Rented Bikes All",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, BikeImageShowRentedBikesAdminAll.class));
                         break;
                     //Show the full list of rented Bikes

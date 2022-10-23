@@ -121,9 +121,10 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
 
         RentedBikes selected_Bike = rentedBikesList.get(position);
         Intent intent = new Intent (BikeImageReturnRentedBikesCustomer.this, ReturnRentedBikes.class);
+        //Intent intent = new Intent (BikeImageReturnRentedBikesCustomer.this, ReturnRentedBikesSpinner.class);
 
         //Bike key of rented bike
-        intent.putExtra("RentedBikeKey", selected_Bike.getBike_RentKey());
+        intent.putExtra("BikeRentedKey", selected_Bike.getBike_RentKey());
         startActivity(intent);
     }
 }
