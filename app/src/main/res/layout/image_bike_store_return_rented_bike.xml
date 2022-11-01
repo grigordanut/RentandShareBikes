@@ -13,6 +13,7 @@
         android:padding="20dp"
         android:text="@string/tv_StoreName"
         android:textColor="#000000"
+        android:background="@drawable/bg_pages"
         android:textSize="22sp"
         android:textStyle="bold"
         tools:ignore="RtlSymmetry" />

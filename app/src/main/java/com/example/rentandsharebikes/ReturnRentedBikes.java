@@ -98,7 +98,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
     //Receive Bike image
     private String img_RentedBike;
 
-    String rentedBikes_CustomId = "";
+    //String rentedBikes_CustomId = "";
 
     //Receive the Bike Key of rented bike from BikeAdapterRentedBikesCustomer
     String rentedBike_Key = "";
@@ -226,7 +226,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ReturnRentedBikes.this);
 
                     arrayAdapter = new ArrayAdapter<String>(ReturnRentedBikes.this, android.R.layout.simple_list_item_single_choice, listBikeStores);
-
+                    
                     databaseRefBikeStores.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -470,7 +470,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
                         tVReturnBikes.setText("Welcome: " + custom_Data.getfName_Customer() + " " + custom_Data.getlName_Customer());
                         etFNameReturnBikes.setText(custom_Data.getfName_Customer());
                         etLNameReturnBikes.setText(custom_Data.getlName_Customer());
-                        rentedBikes_CustomId = user_Db.getUid();
+                        //rentedBikes_CustomId = user_Db.getUid();
                     }
                 }
             }

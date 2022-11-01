@@ -64,6 +64,7 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity implements Bi
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikeStoresList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
                     assert bikeStores != null;

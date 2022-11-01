@@ -122,5 +122,6 @@ public class BikeImageRentBikesCustomer extends AppCompatActivity implements Bik
         intent.putExtra("BPrice", String.valueOf(selected_Bike.getBike_Price()));
         intent.putExtra("BKey", selected_Bike.getBike_Key());
         startActivity(intent);
+        bikesList.clear();
     }
 }
