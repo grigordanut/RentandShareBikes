@@ -32,7 +32,16 @@ import java.util.Objects;
 
 public class BikeImageShowBikesListAdmin extends AppCompatActivity implements BikeAdapterBikesAdmin.OnItemClickListener {
 
-    private DatabaseReference databaseReference;
+    //Check if Bike Table Exists
+    private DatabaseReference dbRefCheckBikesTable;
+    private FirebaseStorage bikesTableCheckStorage;
+
+    //Check if a Bike Store has Bikes available
+    private DatabaseReference dbRefCheckBikes;
+    private FirebaseStorage bikesStorageCheck;
+
+    //Display the Bikes available in that Bike Store
+    private DatabaseReference dbRefBikes;
     private FirebaseStorage bikesStorage;
     private ValueEventListener bikesEventListener;
 
@@ -45,8 +54,8 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
 
     private Button buttonAddMoreBikes, buttonBackAdminPageBikes;
 
-    String bikeStore_Name = "";
-    String bikeStore_Key = "";
+    private String bikeStore_Name = "";
+    private String bikeStore_Key = "";
 
     private ProgressDialog progressDialog;
 
@@ -65,8 +74,7 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
         getIntent().hasExtra("SKey");
         bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
 
-        tVBikeListAdmin = findViewById(R.id.tvBikeImageList);
-        tVBikeListAdmin.setText("No bikes available in " + bikeStore_Name + " store");
+        tVBikeListAdmin = findViewById(R.id.tvBikeListAdmin);
 
         bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -99,15 +107,66 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
     @Override
     public void onStart() {
         super.onStart();
-        loadBikesListAdmin();
+        checkBikesDatabase();
+    }
+
+    public void checkBikesDatabase() {
+
+        //Check if Bikes Table exists in database
+        bikesTableCheckStorage = FirebaseStorage.getInstance();
+        dbRefCheckBikesTable = FirebaseDatabase.getInstance().getReference().child("Bikes");
+
+        dbRefCheckBikesTable.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    checkBikes();
+                }
+
+                else{
+                    tVBikeListAdmin.setText("No Bikes registered were found!!");
+                }
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(BikeImageShowBikesListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void checkBikes() {
+
+        bikesStorageCheck = FirebaseStorage.getInstance();
+        dbRefCheckBikes = FirebaseDatabase.getInstance().getReference().child("Bikes");
+
+        dbRefCheckBikes.orderByChild("bikeStoreName").equalTo(bikeStore_Name)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            loadBikesListAdmin();
+                        } else {
+                            tVBikeListAdmin.setText("No bikes available in " + bikeStore_Name + " store");
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(BikeImageShowBikesListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void loadBikesListAdmin() {
+
         //initialize the bike storage database
         bikesStorage = FirebaseStorage.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
+        dbRefBikes = FirebaseDatabase.getInstance().getReference("Bikes");
 
-        bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+        bikesEventListener = dbRefBikes.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -123,7 +182,6 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
                 }
 
                 bikeAdapterBikesAdmin.notifyDataSetChanged();
-                progressDialog.dismiss();
             }
 
             @Override
@@ -200,7 +258,7 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
                                 imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        databaseReference.child(selectedKeyBike).removeValue();
+                                        dbRefBikes.child(selectedKeyBike).removeValue();
                                         Toast.makeText(BikeImageShowBikesListAdmin.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
                                     }
                                 });

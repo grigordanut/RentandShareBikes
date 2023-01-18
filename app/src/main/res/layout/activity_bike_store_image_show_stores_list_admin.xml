@@ -51,7 +51,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_round_corners"
                 android:text="@string/btn_addMoreStores"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 tools:ignore="ButtonStyle" />
 
             <Button
@@ -65,7 +65,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_round_corners"
                 android:text="@string/btn_backToAdminPageStores"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 tools:ignore="ButtonStyle" />
 
         </LinearLayout>

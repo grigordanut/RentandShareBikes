@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -58,6 +59,7 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity implemen
     }
 
     private void loadBikeStoresListAdmin() {
+
         //initialize the bike store database
         databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
@@ -65,6 +67,7 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity implemen
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikeStoresList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
                     assert bikeStores != null;

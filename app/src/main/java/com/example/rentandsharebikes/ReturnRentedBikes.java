@@ -226,7 +226,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ReturnRentedBikes.this);
 
                     arrayAdapter = new ArrayAdapter<String>(ReturnRentedBikes.this, android.R.layout.simple_list_item_single_choice, listBikeStores);
-                    
+
                     databaseRefBikeStores.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.rentandsharebikes">
+    package="com.example.rentandsharebikes" >
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -30,23 +30,18 @@
 
     <application
         android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        tools:targetApi="s">
-        <activity
-            android:name=".ReturnRentedBikesSpinner"
-            android:exported="false" />
-        <activity
-            android:name=".BikeStoreImageShowRentedBikesListAdmin"
-            android:exported="false" />
-        <activity
-            android:name=".BikeImageShowRentedBikesAdmin"
-            android:exported="false" />
+        tools:targetApi="s" >
+
+        <activity android:name=".ReturnRentedBikesSpinner" />
+        <activity android:name=".BikeStoreImageShowRentedBikesListAdmin" />
+        <activity android:name=".BikeImageShowRentedBikesAdmin" />
         <activity android:name=".LockActivity" />
         <activity android:name=".BikeImageShowSharedBikesAdmin" />
         <activity android:name=".BikeImageShowBikesListCustomerAll" />
@@ -59,12 +54,12 @@
         <activity android:name=".UpdateBikeSharedDetails" />
         <activity android:name=".BikeImageShowSharedBikesOwner" />
         <activity android:name=".AddBikeShare" />
+        <activity android:name=".BikeImageShowBikesListAdmin" />
         <activity android:name=".BikeImageShowBikesListMainAll" />
         <activity android:name=".BikeImageShowBikesListMainPage" />
         <activity android:name=".BikeImageShowBikesListAdminAll" />
         <activity android:name=".BikeImageShowRentedBikesAdminAll" />
         <activity android:name=".UpdateBikeDetails" />
-        <activity android:name=".BikeImageShowBikesListAdmin" />
         <activity android:name=".BikeStoreImageShowBikesListAdmin" />
         <activity android:name=".BikeStoreImageShowBikesListMain" />
         <activity android:name=".BikeStoreImageShowStoresListMain" />
@@ -110,17 +105,18 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CaptureAct"
+        <activity
+            android:name=".CaptureAct"
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
-            android:theme="@style/zxing_CaptureTheme"/>
+            android:theme="@style/zxing_CaptureTheme" />
     </application>
 
 </manifest>

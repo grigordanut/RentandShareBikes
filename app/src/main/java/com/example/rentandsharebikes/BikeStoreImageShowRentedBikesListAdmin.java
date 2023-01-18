@@ -30,8 +30,6 @@ public class BikeStoreImageShowRentedBikesListAdmin extends AppCompatActivity im
     private RecyclerView bikeStoreRecyclerView;
     private BikeStoreAdapterAdmin bikeStoreAdapterAdmin;
 
-    private TextView tVBikeStoresImageRent;
-
     private List<BikeStores> bikeStoresList;
 
     private ProgressDialog progressDialog;
@@ -69,6 +67,7 @@ public class BikeStoreImageShowRentedBikesListAdmin extends AppCompatActivity im
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikeStoresList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
                     assert bikeStores != null;

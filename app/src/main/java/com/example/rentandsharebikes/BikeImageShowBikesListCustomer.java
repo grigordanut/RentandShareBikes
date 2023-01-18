@@ -31,8 +31,11 @@ import java.util.Objects;
 public class BikeImageShowBikesListCustomer extends AppCompatActivity implements BikeAdapterBikesCustomer.OnItemClickListener {
 
     private FirebaseStorage bikesStorage;
-    private DatabaseReference databaseReference;
+    private DatabaseReference dbRefBikes;
     private ValueEventListener bikesEventListener;
+
+    private DatabaseReference dbRefCheckBikes;
+    private FirebaseStorage bikesStorageCheck;
 
     private RecyclerView bikesListRecyclerView;
     private BikeAdapterBikesCustomer bikeAdapterBikesCustomer;
@@ -62,7 +65,6 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
         bikeStore_KeyRent = Objects.requireNonNull(getIntent().getExtras()).getString("SKeyRent");
 
         textViewBikesImageList = findViewById(R.id.tvBikeImageList);
-        textViewBikesImageList.setText("No bikes available in " +bikeStore_NameRent+ " store");
 
         bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -79,15 +81,40 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
     @Override
     public void onStart() {
         super.onStart();
-        loadBikesListCustomer();
+        checkBikes();
+    }
+
+    private void checkBikes() {
+
+        bikesStorageCheck = FirebaseStorage.getInstance();
+        dbRefCheckBikes = FirebaseDatabase.getInstance().getReference("Bikes");
+
+        dbRefCheckBikes.orderByChild("bikeStoreName").equalTo(bikeStore_NameRent)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            loadBikesListCustomer();
+                        } else {
+                            textViewBikesImageList.setText("No bikes available in " + bikeStore_NameRent + " store");
+                        }
+                        progressDialog.dismiss();
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(BikeImageShowBikesListCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void loadBikesListCustomer() {
+
         //initialize the bike storage database
         bikesStorage = FirebaseStorage.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
+        dbRefBikes = FirebaseDatabase.getInstance().getReference("Bikes");
 
-        bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+        bikesEventListener = dbRefBikes.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -103,7 +130,6 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
                 }
 
                 bikeAdapterBikesCustomer.notifyDataSetChanged();
-                progressDialog.dismiss();
             }
 
             @Override

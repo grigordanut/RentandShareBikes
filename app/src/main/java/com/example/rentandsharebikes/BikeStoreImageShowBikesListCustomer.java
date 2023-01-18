@@ -58,6 +58,7 @@ public class BikeStoreImageShowBikesListCustomer extends AppCompatActivity imple
     }
 
     private void loadBikeStoresListCustomer(){
+
         //initialize the bike store database
         databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
@@ -65,6 +66,7 @@ public class BikeStoreImageShowBikesListCustomer extends AppCompatActivity imple
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikeStoresList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
                     assert bikeStores != null;

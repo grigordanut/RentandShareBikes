@@ -85,6 +85,7 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
     }
 
     private void loadBikesListCustomer() {
+
         //initialize the bike storage database
         bikesStReturnBikesRented = FirebaseStorage.getInstance();
         databaseRefReturnBikesRented = FirebaseDatabase.getInstance().getReference("Rent Bikes");

@@ -22,9 +22,9 @@ public class GeoLocation {
                 String resultLongitude = null;
 
                 try {
-                    List addressList = geocoder.getFromLocationName(locationAddress, 1);
+                    List<Address> addressList = geocoder.getFromLocationName(locationAddress, 1);
                     if (addressList != null && addressList.size() > 0) {
-                        Address address = (Address) addressList.get(0);
+                        Address address = addressList.get(0);
 
                         resultLatitude = address.getLatitude() + "\n";
                         resultLongitude = address.getLongitude() + "\n";
