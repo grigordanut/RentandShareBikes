@@ -20,14 +20,21 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity implements BikeStoreAdapterAdmin.OnItemClickListener {
 
-    private DatabaseReference databaseReference;
+    //Check if Bike Stores table exists
+    private DatabaseReference dbRefCheckStoresTable;
+
+    //Display the Bike Stores available
+    private DatabaseReference dbRefBikeStores;
     private ValueEventListener bikeStoreEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
     private BikeStoreAdapterAdmin bikeStoreAdapterAdmin;
+
+    private TextView tVBikeStoresImage;
 
     private List<BikeStores> bikeStoresList;
 
@@ -38,8 +45,12 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity implemen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_show_bikes_list_admin);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Bike Stores available");
+
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
+
+        tVBikeStoresImage = findViewById(R.id.tvBikeStoresImage);
 
         bikeStoreRecyclerView = findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
@@ -55,15 +66,40 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity implemen
     @Override
     public void onStart() {
         super.onStart();
-        loadBikeStoresListAdmin();
+        checkBikeStoresDatabase();
+    }
+    public void checkBikeStoresDatabase() {
+
+        //Check if Bike Stores table exists in database
+        dbRefCheckStoresTable = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
+
+        dbRefCheckStoresTable.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    loadBikeStoresListAdmin();
+                }
+
+                else{
+                    tVBikeStoresImage.setText("No Bike Stores were found!!");
+                }
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(BikeStoreImageShowBikesListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void loadBikeStoresListAdmin() {
 
         //initialize the bike store database
-        databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
+        dbRefBikeStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
-        bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+        bikeStoreEventListener = dbRefBikeStores.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -76,7 +112,6 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity implemen
                 }
 
                 bikeStoreAdapterAdmin.notifyDataSetChanged();
-                progressDialog.dismiss();
             }
 
             @Override

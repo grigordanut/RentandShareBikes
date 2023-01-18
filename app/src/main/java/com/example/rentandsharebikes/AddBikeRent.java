@@ -73,7 +73,6 @@ public class AddBikeRent extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     @SuppressLint("SetTextI18n")
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

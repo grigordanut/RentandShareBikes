@@ -47,7 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/et_locationAddress"
-                    android:inputType="textPostalAddress|textCapWords|textNoSuggestions"
+                    android:inputType="textPostalAddress|textCapWords"
                     android:paddingStart="10dp"
                     android:textSize="22sp"
                     tools:ignore="RtlSymmetry" />

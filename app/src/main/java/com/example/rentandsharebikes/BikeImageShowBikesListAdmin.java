@@ -32,7 +32,7 @@ import java.util.Objects;
 
 public class BikeImageShowBikesListAdmin extends AppCompatActivity implements BikeAdapterBikesAdmin.OnItemClickListener {
 
-    //Check if Bike Table Exists
+    //Check if Bikes table exists
     private DatabaseReference dbRefCheckBikesTable;
     private FirebaseStorage bikesTableCheckStorage;
 
@@ -112,7 +112,7 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
 
     public void checkBikesDatabase() {
 
-        //Check if Bikes Table exists in database
+        //Check if Bikes table exists in database
         bikesTableCheckStorage = FirebaseStorage.getInstance();
         dbRefCheckBikesTable = FirebaseDatabase.getInstance().getReference().child("Bikes");
 

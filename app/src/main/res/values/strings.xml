@@ -96,7 +96,7 @@
     <string name="tv_bikeStoreImageRentBikesCustomer">Select the Bike Store</string>
 
     <!--    Bike Store Image Show Bike List Admin-->
-    <string name="tv_bikeStoreImageShowBikesListAdmin">Select the Bike Store</string>
+    <string name="tv_bikeStoreImageShowBikesListAdmin">Bike Stores available</string>
 
     <!--    Bike Store Image Show Bike List Custom-->
     <string name="tv_bikeStoreImageShowBikesListCustomer">Select the Bike Store</string>

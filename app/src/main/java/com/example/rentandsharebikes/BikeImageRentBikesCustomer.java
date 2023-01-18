@@ -78,6 +78,7 @@ public class BikeImageRentBikesCustomer extends AppCompatActivity implements Bik
     }
 
     private void loadBikesListCustomer() {
+
         //initialize the bike storage database
         bikesStorage = FirebaseStorage.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
