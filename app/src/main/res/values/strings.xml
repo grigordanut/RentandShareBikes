@@ -90,7 +90,7 @@
 
 
     <!--    Bike Store Image Add Bikes Admin-->
-    <string name="tv_bikeStoreImageAddBikes">Select the Bike Store</string>
+    <string name="tv_bikeStoreImageAddBikes">List of Bike Stores</string>
 
     <!--    Bike Store Image Rent Bikes Customer-->
     <string name="tv_bikeStoreImageRentBikesCustomer">Select the Bike Store</string>

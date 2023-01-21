@@ -1,6 +1,7 @@
 package com.example.rentandsharebikes;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -10,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -104,13 +106,13 @@ public class ReturnRentedBikes extends AppCompatActivity {
     String rentedBike_Key = "";
     String returnBike_Key = "";
 
-    //BikeStoreKey that the bike is returning
-    private String returnBikeStore_Key = "";
-    private String returnBikeStore_Name = "";
-
     //Return the Bike rented to the same BikeStore as rented
     String rentedBikeStore_Key = "";
     String rentedBikeStore_Name = "";
+
+    //BikeStoreKey that the bike is returning
+    private String returnBikeStore_Key = "";
+    private String returnBikeStore_Name = "";
 
     private ProgressDialog progressDialog;
 
@@ -137,7 +139,8 @@ public class ReturnRentedBikes extends AppCompatActivity {
         databaseRefBikeStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
         //Retrieve Bike Store data from Bike Stores table
-        dbRefStoreCheck = FirebaseDatabase.getInstance().getReference("Bike Stores");
+        //dbRefStoreCheck = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
+        dbRefStoreCheck = FirebaseDatabase.getInstance().getReference().child("Rent Bikes");
 
         //initialise variables
         tVReturnBikes = findViewById(R.id.tvReturnBikes);
@@ -190,7 +193,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
                 if (cBoxRetSameStore.isChecked()) {
                     cBoxRetDiffStore.setChecked(false);
 
-                    dbRefStoreCheck.orderByChild("bikeStore_Key").equalTo(rentedBikeStore_Key)
+                    dbRefStoreCheck.orderByChild("storeKey_RentBikes").equalTo(rentedBikeStore_Key)
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -202,6 +205,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
                                         alertBikeStoreDeleted();
                                     }
                                 }
+
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
                                     Toast.makeText(ReturnRentedBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
@@ -230,16 +234,21 @@ public class ReturnRentedBikes extends AppCompatActivity {
                     databaseRefBikeStores.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                             listBikeStores.clear();
                             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                                 bike_Store = postSnapshot.getValue(BikeStores.class);
+
                                 assert bike_Store != null;
-                                if (!bike_Store.getBikeStore_Key().equals(rentedBikeStore_Key)){
+
+                                bike_Store.setBikeStore_Key(postSnapshot.getKey());
+
+                                if (!bike_Store.getBikeStore_Key().equals(rentedBikeStore_Key)) {
                                     listBikeStores.add(bike_Store.getBikeStore_Location());
                                 }
                             }
 
-                           arrayAdapter.notifyDataSetChanged();
+                            arrayAdapter.notifyDataSetChanged();
                         }
 
                         @Override
@@ -296,9 +305,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
                     // show it
                     alertDialog.show();
-                }
-
-                else{
+                } else {
                     etBikeStoreReturn.setText("");
                 }
             }
@@ -486,6 +493,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
     private void loadBikesListReturn() {
 
         eventListenerShowRentedBikes = databaseRefShowRentedBikes.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -524,6 +532,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     public void calculateRentDurationPrice() {
 

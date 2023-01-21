@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -21,11 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BikeStoreImageAddBikesAdmin extends AppCompatActivity implements BikeStoreAdapterAdmin.OnItemClickListener {
+
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
     private BikeStoreAdapterAdmin bikeStoreAdapterAdmin;
+
+    private TextView tVBikeStoresAddBikes;
 
     private List<BikeStores> bikeStoresList;
 
@@ -38,6 +42,8 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity implements Bi
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
+
+        tVBikeStoresAddBikes = findViewById(R.id.tvBikeStoresAddBikes);
 
         bikeStoreRecyclerView = findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
@@ -56,29 +62,37 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity implements Bi
         loadBikeStoresListAdmin();
     }
 
-    private void loadBikeStoresListAdmin(){
+    private void loadBikeStoresListAdmin() {
+
         //initialize the bike store database
-        databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
 
         bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
+            @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikeStoresList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
-                    assert bikeStores != null;
-                    bikeStores.setBikeStore_Key(postSnapshot.getKey());
-                    bikeStoresList.add(bikeStores);
+                if (dataSnapshot.exists()) {
+                    bikeStoresList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
+                        assert bikeStores != null;
+                        bikeStores.setBikeStore_Key(postSnapshot.getKey());
+                        bikeStoresList.add(bikeStores);
+                        tVBikeStoresAddBikes.setText("Select the Bike Store");
+                    }
+
+                    bikeStoreAdapterAdmin.notifyDataSetChanged();
+                }
+                else{
+                    tVBikeStoresAddBikes.setText("No Bike Stores were found!!");
                 }
 
-                bikeStoreAdapterAdmin.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeStoreImageAddBikesAdmin.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeStoreImageAddBikesAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

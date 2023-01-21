@@ -9,7 +9,7 @@
     tools:context=".BikeStoreImageAddBikesAdmin">
 
     <TextView
-        android:id="@+id/tvBikeStoresImageAddBikesAdmin"
+        android:id="@+id/tvBikeStoresAddBikes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implements BikeAdapterRentedBikesCustomer.OnItemClickListener{
+public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implements BikeAdapterRentedBikesCustomer.OnItemClickListener {
 
     private DatabaseReference databaseRefReturnBikesRented;
 
@@ -64,7 +64,6 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
         customer_Id = Objects.requireNonNull(getIntent().getExtras()).getString("CId");
 
         tVCustomerReturnBikes = findViewById(R.id.tvCusReturnBikes);
-        tVCustomerReturnBikes.setText("No rented Bikes");
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -88,25 +87,35 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
 
         //initialize the bike storage database
         bikesStReturnBikesRented = FirebaseStorage.getInstance();
-        databaseRefReturnBikesRented = FirebaseDatabase.getInstance().getReference("Rent Bikes");
+        databaseRefReturnBikesRented = FirebaseDatabase.getInstance().getReference().child("Rent Bikes");
 
         returnBikesEventListener = databaseRefReturnBikesRented.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                rentedBikesList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    RentedBikes rent_Bikes = postSnapshot.getValue(RentedBikes.class);
+                if (dataSnapshot.exists()) {
+                    rentedBikesList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        RentedBikes rent_Bikes = postSnapshot.getValue(RentedBikes.class);
 
-                    assert rent_Bikes != null;
-                    if (rent_Bikes.getCustomerId_RentBikes().equals(customer_Id)) {
-                        rent_Bikes.setBike_RentKey(postSnapshot.getKey());
-                        rentedBikesList.add(rent_Bikes);
-                        tVCustomerReturnBikes.setText("Select the Bike");
+                        assert rent_Bikes != null;
+                        if (rent_Bikes.getCustomerId_RentBikes().equals(customer_Id)) {
+                            rent_Bikes.setBike_RentKey(postSnapshot.getKey());
+                            rentedBikesList.add(rent_Bikes);
+                            tVCustomerReturnBikes.setText("Select the Bike");
+                        } else {
+                            tVCustomerReturnBikes.setText("No rented Bikes");
+                        }
+
+                        progressDialog.dismiss();
                     }
+
+                    bikeAdapterRentedBikesCustomer.notifyDataSetChanged();
+                }
+                else{
+                    tVCustomerReturnBikes.setText("No rented Bikes");
                 }
 
-                bikeAdapterRentedBikesCustomer.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
@@ -121,7 +130,7 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
     public void onItemClick(int position) {
 
         RentedBikes selected_Bike = rentedBikesList.get(position);
-        Intent intent = new Intent (BikeImageReturnRentedBikesCustomer.this, ReturnRentedBikes.class);
+        Intent intent = new Intent(BikeImageReturnRentedBikesCustomer.this, ReturnRentedBikes.class);
         //Intent intent = new Intent (BikeImageReturnRentedBikesCustomer.this, ReturnRentedBikesSpinner.class);
 
         //Bike key of rented bike

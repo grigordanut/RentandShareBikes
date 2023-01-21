@@ -40,7 +40,6 @@ public class BikeImageShowBikesListCustomerAll extends AppCompatActivity impleme
 
     private ProgressDialog progressDialog;
 
-
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,24 +70,31 @@ public class BikeImageShowBikesListCustomerAll extends AppCompatActivity impleme
     }
 
     private void loadBikesListCustomer() {
+
         //initialize the bike storage database
         bikesStorage = FirebaseStorage.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
 
         bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    bikes.setBike_Key(postSnapshot.getKey());
-                    bikesList.add(bikes);
-                    tVBikeImageShowListCustomAll.setText(bikesList.size() + " bikes available to rent");
+                if (dataSnapshot.exists()) {
+                    bikesList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Bikes bikes = postSnapshot.getValue(Bikes.class);
+                        assert bikes != null;
+                        bikes.setBike_Key(postSnapshot.getKey());
+                        bikesList.add(bikes);
+                        tVBikeImageShowListCustomAll.setText(bikesList.size() + " bikes available to rent");
+                    }
+
+                    bikeAdapterBikesCustomer.notifyDataSetChanged();
+                }
+                else {
+                    tVBikeImageShowListCustomAll.setText("No Bikes registered were found!!");
                 }
 
-                bikeAdapterBikesCustomer.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
@@ -109,39 +115,39 @@ public class BikeImageShowBikesListCustomerAll extends AppCompatActivity impleme
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setCancelable(false)
-                .setTitle("You selected: "+selected_Bike.getBike_Model()+"\nSelect an option:")
+                .setTitle("You selected: " + selected_Bike.getBike_Model() + "\nSelect an option:")
                 .setAdapter(adapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                if (which == 0) {
-                    Intent intent = new Intent(BikeImageShowBikesListCustomerAll.this, RentBikesCustomer.class);
-                    Bikes selected_Bike = bikesList.get(position);
-                    intent.putExtra("BCondition", selected_Bike.getBike_Condition());
-                    intent.putExtra("BModel", selected_Bike.getBike_Model());
-                    intent.putExtra("BManufact", selected_Bike.getBike_Manufacturer());
-                    intent.putExtra("BImage", selected_Bike.getBike_Image());
-                    intent.putExtra("BStoreName", selected_Bike.getBikeStoreName());
-                    intent.putExtra("BPrice", String.valueOf(selected_Bike.getBike_Price()));
-                    intent.putExtra("BStoreKey",selected_Bike.getBikeStoreKey());
-                    intent.putExtra("BKey", selected_Bike.getBike_Key());
-                    startActivity(intent);
-                }
-
-                if (which == 1) {
-                    startActivity(new Intent(BikeImageShowBikesListCustomerAll.this, CustomerPageRentBikes.class));
-                    Toast.makeText(BikeImageShowBikesListCustomerAll.this, "Back to main page", Toast.LENGTH_SHORT).show();
-                }
-            }
-        })
-
-        .setNegativeButton("CLOSE",
-                new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+
+                        if (which == 0) {
+                            Intent intent = new Intent(BikeImageShowBikesListCustomerAll.this, RentBikesCustomer.class);
+                            Bikes selected_Bike = bikesList.get(position);
+                            intent.putExtra("BCondition", selected_Bike.getBike_Condition());
+                            intent.putExtra("BModel", selected_Bike.getBike_Model());
+                            intent.putExtra("BManufact", selected_Bike.getBike_Manufacturer());
+                            intent.putExtra("BImage", selected_Bike.getBike_Image());
+                            intent.putExtra("BStoreName", selected_Bike.getBikeStoreName());
+                            intent.putExtra("BPrice", String.valueOf(selected_Bike.getBike_Price()));
+                            intent.putExtra("BStoreKey", selected_Bike.getBikeStoreKey());
+                            intent.putExtra("BKey", selected_Bike.getBike_Key());
+                            startActivity(intent);
+                        }
+
+                        if (which == 1) {
+                            startActivity(new Intent(BikeImageShowBikesListCustomerAll.this, CustomerPageRentBikes.class));
+                            Toast.makeText(BikeImageShowBikesListCustomerAll.this, "Back to main page", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                });
+                })
+
+                .setNegativeButton("CLOSE",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
 
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

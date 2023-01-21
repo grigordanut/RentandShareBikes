@@ -46,8 +46,6 @@ public class AddBikeStore extends AppCompatActivity {
     private List<BikeStores> bikeStoresList;
     private List<BikeStores> bikeStoresListCheck;
 
-    private String store_Key;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,9 +132,9 @@ public class AddBikeStore extends AppCompatActivity {
             progressDialog.show();
 
             String storeID = dbRefStoreUpload.push().getKey();
-            store_Key = storeID;
+
             assert storeID != null;
-            BikeStores bike_store = new BikeStores(etStore_Location, etStore_Address, etStore_Latitude, etStore_Longitude, etStore_NrSlots, store_Key);
+            BikeStores bike_store = new BikeStores(etStore_Location, etStore_Address, etStore_Latitude, etStore_Longitude, etStore_NrSlots);
 
             dbRefStoreUpload.child(storeID).setValue(bike_store).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override

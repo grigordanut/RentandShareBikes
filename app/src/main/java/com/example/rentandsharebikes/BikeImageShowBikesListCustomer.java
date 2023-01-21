@@ -34,8 +34,6 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
     private DatabaseReference dbRefBikes;
     private ValueEventListener bikesEventListener;
 
-    private DatabaseReference dbRefCheckBikes;
-    private FirebaseStorage bikesStorageCheck;
 
     private RecyclerView bikesListRecyclerView;
     private BikeAdapterBikesCustomer bikeAdapterBikesCustomer;
@@ -81,55 +79,44 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
     @Override
     public void onStart() {
         super.onStart();
-        checkBikes();
-    }
+        loadBikesListCustomer();
 
-    private void checkBikes() {
-
-        bikesStorageCheck = FirebaseStorage.getInstance();
-        dbRefCheckBikes = FirebaseDatabase.getInstance().getReference("Bikes");
-
-        dbRefCheckBikes.orderByChild("bikeStoreName").equalTo(bikeStore_NameRent)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            loadBikesListCustomer();
-                        } else {
-                            textViewBikesImageList.setText("No bikes available in " + bikeStore_NameRent + " store");
-                        }
-                        progressDialog.dismiss();
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(BikeImageShowBikesListCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     private void loadBikesListCustomer() {
 
         //initialize the bike storage database
         bikesStorage = FirebaseStorage.getInstance();
-        dbRefBikes = FirebaseDatabase.getInstance().getReference("Bikes");
+        dbRefBikes = FirebaseDatabase.getInstance().getReference().child("Bikes");
 
         bikesEventListener = dbRefBikes.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(bikeStore_KeyRent)) {
-                        bikes.setBike_Key(postSnapshot.getKey());
-                        bikesList.add(bikes);
-                        textViewBikesImageList.setText(bikesList.size()+" bikes available in "+bikeStore_NameRent+" store");
+                if (dataSnapshot.exists()) {
+                    bikesList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Bikes bikes = postSnapshot.getValue(Bikes.class);
+                        assert bikes != null;
+                        if (bikes.getBikeStoreKey().equals(bikeStore_KeyRent)) {
+                            bikes.setBike_Key(postSnapshot.getKey());
+                            bikesList.add(bikes);
+                            textViewBikesImageList.setText(bikesList.size() + " bikes available in " + bikeStore_NameRent + " store");
+                        }
+                        else{
+                            textViewBikesImageList.setText("No bikes available in " + bikeStore_NameRent + " store");
+                        }
+
+                        progressDialog.dismiss();
                     }
+
+                    bikeAdapterBikesCustomer.notifyDataSetChanged();
+                }
+                else {
+                    textViewBikesImageList.setText("No Bikes registered were found");
                 }
 
-                bikeAdapterBikesCustomer.notifyDataSetChanged();
+                progressDialog.dismiss();
             }
 
             @Override
@@ -149,31 +136,31 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setCancelable(false)
-                .setTitle("You selected "+selected_Bike.getBike_Model()+"\nSelect an option:")
+                .setTitle("You selected " + selected_Bike.getBike_Model() + "\nSelect an option:")
                 .setAdapter(adapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-                if (which == 0) {
-                    Intent intent = new Intent(BikeImageShowBikesListCustomer.this, RentBikesCustomer.class);
-                    Bikes selected_Bike = bikesList.get(position);
-                    intent.putExtra("BCondition",selected_Bike.getBike_Condition());
-                    intent.putExtra("BModel",selected_Bike.getBike_Model());
-                    intent.putExtra("BManufact",selected_Bike.getBike_Manufacturer());
-                    intent.putExtra("BImage",selected_Bike.getBike_Image());
-                    intent.putExtra("BStoreName",selected_Bike.getBikeStoreName());
-                    intent.putExtra("BStoreKey",selected_Bike.getBikeStoreKey());
-                    intent.putExtra("BPrice",String.valueOf(selected_Bike.getBike_Price()));
-                    intent.putExtra("BKey",selected_Bike.getBike_Key());
-                    startActivity(intent);
-                }
+                        if (which == 0) {
+                            Intent intent = new Intent(BikeImageShowBikesListCustomer.this, RentBikesCustomer.class);
+                            Bikes selected_Bike = bikesList.get(position);
+                            intent.putExtra("BCondition", selected_Bike.getBike_Condition());
+                            intent.putExtra("BModel", selected_Bike.getBike_Model());
+                            intent.putExtra("BManufact", selected_Bike.getBike_Manufacturer());
+                            intent.putExtra("BImage", selected_Bike.getBike_Image());
+                            intent.putExtra("BStoreName", selected_Bike.getBikeStoreName());
+                            intent.putExtra("BStoreKey", selected_Bike.getBikeStoreKey());
+                            intent.putExtra("BPrice", String.valueOf(selected_Bike.getBike_Price()));
+                            intent.putExtra("BKey", selected_Bike.getBike_Key());
+                            startActivity(intent);
+                        }
 
-                if (which == 1) {
-                    startActivity(new Intent(BikeImageShowBikesListCustomer.this, CustomerPageRentBikes.class));
-                    Toast.makeText(BikeImageShowBikesListCustomer.this, "Back to main page", Toast.LENGTH_SHORT).show();
-                }
-            }
-        })
+                        if (which == 1) {
+                            startActivity(new Intent(BikeImageShowBikesListCustomer.this, CustomerPageRentBikes.class));
+                            Toast.makeText(BikeImageShowBikesListCustomer.this, "Back to main page", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
 
                 .setNegativeButton("CLOSE",
                         new DialogInterface.OnClickListener() {
@@ -194,7 +181,7 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
         return true;
     }
 
-    private void goBackBikesCustom(){
+    private void goBackBikesCustom() {
         finish();
         startActivity(new Intent(BikeImageShowBikesListCustomer.this, CustomerPageRentBikes.class));
     }

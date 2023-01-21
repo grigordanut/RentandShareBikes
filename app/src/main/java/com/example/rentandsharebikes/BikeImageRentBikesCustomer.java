@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikeImageRentBikesCustomer extends AppCompatActivity implements BikeAdapterBikesCustomer.OnItemClickListener{
+public class BikeImageRentBikesCustomer extends AppCompatActivity implements BikeAdapterBikesCustomer.OnItemClickListener {
 
     private DatabaseReference databaseReference;
     private FirebaseStorage bikesStorage;
@@ -32,7 +32,7 @@ public class BikeImageRentBikesCustomer extends AppCompatActivity implements Bik
     private RecyclerView bikesListRecyclerView;
     private BikeAdapterBikesCustomer bikeAdapterBikesCustomer;
 
-    private TextView textViewBikesImageList;
+    private TextView tVBikeImageList;
 
     private List<Bikes> bikesList;
 
@@ -54,12 +54,11 @@ public class BikeImageRentBikesCustomer extends AppCompatActivity implements Bik
         bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
 
         getIntent().hasExtra("SKey");
-        bikeStore_Key= Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
+        bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
 
-        textViewBikesImageList = (TextView) findViewById(R.id.tvBikeImageList);
-        textViewBikesImageList.setText("No bikes available in " +bikeStore_Name+ " store");
+        tVBikeImageList = findViewById(R.id.tvBikeImageList);
 
-        bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -81,24 +80,34 @@ public class BikeImageRentBikesCustomer extends AppCompatActivity implements Bik
 
         //initialize the bike storage database
         bikesStorage = FirebaseStorage.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
 
         bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
-                        bikes.setBike_Key(postSnapshot.getKey());
-                        bikesList.add(bikes);
-                        textViewBikesImageList.setText(bikesList.size()+" bikes available in "+bikeStore_Name+" store");
+                if (dataSnapshot.exists()) {
+                    bikesList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Bikes bikes = postSnapshot.getValue(Bikes.class);
+                        assert bikes != null;
+                        if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
+                            bikes.setBike_Key(postSnapshot.getKey());
+                            bikesList.add(bikes);
+                            tVBikeImageList.setText(bikesList.size() + " bikes available in " + bikeStore_Name + " store");
+                        } else {
+                            tVBikeImageList.setText("No bikes available in " + bikeStore_Name + " store");
+                        }
+
+                        progressDialog.dismiss();
                     }
+
+                    bikeAdapterBikesCustomer.notifyDataSetChanged();
+                }
+                else{
+                    tVBikeImageList.setText("No Bikes registered were found!!");
                 }
 
-                bikeAdapterBikesCustomer.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 

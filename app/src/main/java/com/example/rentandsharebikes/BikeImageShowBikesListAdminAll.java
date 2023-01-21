@@ -93,24 +93,32 @@ public class BikeImageShowBikesListAdminAll extends AppCompatActivity implements
     }
 
     private void loadBikesListAdmin() {
+
         //initialize the bike storage database
         bikesStorage = FirebaseStorage.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Bikes");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
 
         bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    bikes.setBike_Key(postSnapshot.getKey());
-                    bikesList.add(bikes);
-                    tVBikeListAdminAll.setText(bikesList.size() + " Bikes available");
+
+                if (dataSnapshot.exists()) {
+                    bikesList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Bikes bikes = postSnapshot.getValue(Bikes.class);
+                        assert bikes != null;
+                        bikes.setBike_Key(postSnapshot.getKey());
+                        bikesList.add(bikes);
+                        tVBikeListAdminAll.setText(bikesList.size() + " Bikes available");
+                    }
+
+                    bikeAdapterBikesAdmin.notifyDataSetChanged();
+                }
+                else{
+                    tVBikeListAdminAll.setText("No Bikes registered were found!!");
                 }
 
-                bikeAdapterBikesAdmin.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 

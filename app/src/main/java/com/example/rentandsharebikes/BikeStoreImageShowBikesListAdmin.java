@@ -24,9 +24,6 @@ import java.util.Objects;
 
 public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity implements BikeStoreAdapterAdmin.OnItemClickListener {
 
-    //Check if Bike Stores table exists
-    private DatabaseReference dbRefCheckStoresTable;
-
     //Display the Bike Stores available
     private DatabaseReference dbRefBikeStores;
     private ValueEventListener bikeStoreEventListener;
@@ -66,32 +63,7 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity implemen
     @Override
     public void onStart() {
         super.onStart();
-        checkBikeStoresDatabase();
-    }
-    public void checkBikeStoresDatabase() {
-
-        //Check if Bike Stores table exists in database
-        dbRefCheckStoresTable = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
-
-        dbRefCheckStoresTable.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    loadBikeStoresListAdmin();
-                }
-
-                else{
-                    tVBikeStoresImage.setText("No Bike Stores were found!!");
-                }
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeStoreImageShowBikesListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        loadBikeStoresListAdmin();
     }
 
     private void loadBikeStoresListAdmin() {
@@ -100,18 +72,26 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity implemen
         dbRefBikeStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
         bikeStoreEventListener = dbRefBikeStores.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
+            @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikeStoresList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
-                    assert bikeStores != null;
-                    bikeStores.setBikeStore_Key(postSnapshot.getKey());
-                    bikeStoresList.add(bikeStores);
+                if (dataSnapshot.exists()) {
+                    bikeStoresList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
+                        assert bikeStores != null;
+                        bikeStores.setBikeStore_Key(postSnapshot.getKey());
+                        bikeStoresList.add(bikeStores);
+                        tVBikeStoresImage.setText("Select the Bike Store");
+                    }
+
+                    bikeStoreAdapterAdmin.notifyDataSetChanged();
+                }
+                else{
+                    tVBikeStoresImage.setText("No Bike Stores were found!!");
                 }
 
-                bikeStoreAdapterAdmin.notifyDataSetChanged();
+                progressDialog.dismiss();
             }
 
             @Override

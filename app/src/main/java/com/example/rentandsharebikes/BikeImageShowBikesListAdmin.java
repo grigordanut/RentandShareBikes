@@ -32,14 +32,6 @@ import java.util.Objects;
 
 public class BikeImageShowBikesListAdmin extends AppCompatActivity implements BikeAdapterBikesAdmin.OnItemClickListener {
 
-    //Check if Bikes table exists
-    private DatabaseReference dbRefCheckBikesTable;
-    private FirebaseStorage bikesTableCheckStorage;
-
-    //Check if a Bike Store has Bikes available
-    private DatabaseReference dbRefCheckBikes;
-    private FirebaseStorage bikesStorageCheck;
-
     //Display the Bikes available in that Bike Store
     private DatabaseReference dbRefBikes;
     private FirebaseStorage bikesStorage;
@@ -107,57 +99,7 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
     @Override
     public void onStart() {
         super.onStart();
-        checkBikesDatabase();
-    }
-
-    public void checkBikesDatabase() {
-
-        //Check if Bikes table exists in database
-        bikesTableCheckStorage = FirebaseStorage.getInstance();
-        dbRefCheckBikesTable = FirebaseDatabase.getInstance().getReference().child("Bikes");
-
-        dbRefCheckBikesTable.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    checkBikes();
-                }
-
-                else{
-                    tVBikeListAdmin.setText("No Bikes registered were found!!");
-                }
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeImageShowBikesListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void checkBikes() {
-
-        bikesStorageCheck = FirebaseStorage.getInstance();
-        dbRefCheckBikes = FirebaseDatabase.getInstance().getReference().child("Bikes");
-
-        dbRefCheckBikes.orderByChild("bikeStoreName").equalTo(bikeStore_Name)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            loadBikesListAdmin();
-                        } else {
-                            tVBikeListAdmin.setText("No bikes available in " + bikeStore_Name + " store");
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(BikeImageShowBikesListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+        loadBikesListAdmin();
     }
 
     private void loadBikesListAdmin() {
@@ -170,18 +112,30 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
-                        bikes.setBike_Key(postSnapshot.getKey());
-                        bikesList.add(bikes);
-                        tVBikeListAdmin.setText(bikesList.size() + " Bikes available in " + bikeStore_Name + " store");
+                if (dataSnapshot.exists()) {
+                    bikesList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Bikes bikes = postSnapshot.getValue(Bikes.class);
+                        assert bikes != null;
+                        if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
+                            bikes.setBike_Key(postSnapshot.getKey());
+                            bikesList.add(bikes);
+                            tVBikeListAdmin.setText(bikesList.size() + " Bikes available in " + bikeStore_Name + " store");
+                        }
+                        else{
+                            tVBikeListAdmin.setText("No bikes available in " + bikeStore_Name + " store");
+                        }
+
+                        progressDialog.dismiss();
                     }
+
+                    bikeAdapterBikesAdmin.notifyDataSetChanged();
+                }
+                else{
+                    tVBikeListAdmin.setText("No Bikes registered were found!!");
                 }
 
-                bikeAdapterBikesAdmin.notifyDataSetChanged();
+                progressDialog.dismiss();
             }
 
             @Override
@@ -252,7 +206,6 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
                 .setPositiveButton("Yes",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                //Bikes selected_Bike = bikesList.get(position);
                                 final String selectedKeyBike = selected_Bike.getBike_Key();
                                 StorageReference imageReference = bikesStorage.getReferenceFromUrl(selected_Bike.getBike_Image());
                                 imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {

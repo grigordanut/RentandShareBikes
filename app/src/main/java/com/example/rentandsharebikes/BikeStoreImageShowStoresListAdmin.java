@@ -29,9 +29,6 @@ import java.util.Objects;
 
 public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity implements BikeStoreAdapterShowStoresListAdmin.OnItemClickListener {
 
-    //Check if Bike Stores table exists
-    private DatabaseReference dbRefCheckStoresTable;
-
     //Display Bike stores available
     private DatabaseReference dbRefStoresAv;
     private ValueEventListener bikeStoreEventListener;
@@ -91,33 +88,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
     @Override
     public void onStart() {
         super.onStart();
-        checkBikeStoresDatabase();
-    }
-
-    public void checkBikeStoresDatabase() {
-
-        //Check if Bike Stores table exists in database
-        dbRefCheckStoresTable = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
-
-        dbRefCheckStoresTable.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    loadBikeStoresListAdmin();
-                }
-
-                else{
-                    tVListBikeStoresAdmin.setText("No Bike Stores were found!!");
-                }
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeStoreImageShowStoresListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        loadBikeStoresListAdmin();
     }
 
     private void loadBikeStoresListAdmin() {
@@ -129,16 +100,23 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikeStoresList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
-                    assert bikeStores != null;
-                    bikeStores.setBikeStore_Key(postSnapshot.getKey());
-                    bikeStoresList.add(bikeStores);
-                    tVListBikeStoresAdmin.setText(bikeStoresList.size() + " Bike Stores available");
+                if (dataSnapshot.exists()) {
+                    bikeStoresList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
+                        assert bikeStores != null;
+                        bikeStores.setBikeStore_Key(postSnapshot.getKey());
+                        bikeStoresList.add(bikeStores);
+                        tVListBikeStoresAdmin.setText(bikeStoresList.size() + " Bike Stores available");
+                    }
+
+                    bikeStoreAdapterShowStoresListAdmin.notifyDataSetChanged();
+                }
+                else{
+                    tVListBikeStoresAdmin.setText("No Bike Stores were found!!");
                 }
 
-                bikeStoreAdapterShowStoresListAdmin.notifyDataSetChanged();
+                progressDialog.dismiss();
             }
 
             @Override

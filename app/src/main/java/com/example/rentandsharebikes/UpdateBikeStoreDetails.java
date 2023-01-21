@@ -108,7 +108,7 @@ public class UpdateBikeStoreDetails extends AppCompatActivity {
             progressDialog.show();
 
             databaseRefStoreUpload = FirebaseDatabase.getInstance().getReference("Bike Stores");
-            Query queryStore = databaseRefStoreUpload.orderByChild("bikeStore_Key").equalTo(store_KeyUp);
+            Query queryStore = databaseRefStoreUpload.orderByChild("bikeStore_Location").equalTo(store_LocationUp);
 
             queryStore.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

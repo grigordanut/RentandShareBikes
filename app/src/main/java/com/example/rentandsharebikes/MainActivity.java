@@ -106,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, BikeImageShowSharedBikesMain.class));
                     break;
                 case R.id.contactUs:
-                    startActivity(new Intent(MainActivity.this, ContactUs.class));
+                    //startActivity(new Intent(MainActivity.this, ContactUs.class));
+                    startActivity(new Intent(MainActivity.this, AdminPage.class));
                     break;
                 default:
                     return true;
