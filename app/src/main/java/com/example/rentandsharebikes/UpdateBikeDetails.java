@@ -9,12 +9,10 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -48,6 +46,8 @@ import static com.google.firebase.storage.FirebaseStorage.getInstance;
 
 public class UpdateBikeDetails extends AppCompatActivity {
 
+    private static final String[] updateBikeCondition = new String[]{"Brand New", "Used Bike"};
+
     private static final int REQUEST_IMAGE_GET = 2;
     private static final int IMAGE_CAPTURE_CODE = 1001;
     private static final int PERMISSION_CODE = 1000;
@@ -56,15 +56,17 @@ public class UpdateBikeDetails extends AppCompatActivity {
     private DatabaseReference databaseRefUpdate;
     private StorageTask updateBikeTaskUp;
 
+    private ArrayAdapter<String> updateArrayAdapter;
+
     private ImageView ivUpdateBike;
     private Uri imageUriUp;
 
     private EditText etUpBikeModel, etUpBikeManufact, etUpBikePrice;
     private TextView tViewUpBikes;
     private AutoCompleteTextView tViewUpBikeCond;
-    private ImageView imgArrowUpBikeCond;
-    private Button buttonSaveBikeUpdated;
-    private ImageButton buttonUpTakePicture;
+
+    private Button btn_SaveBikeUpdated;
+    private ImageButton btn_UpTakePicture;
 
     private String etUpBike_Cond, etUpBike_Model, etUpBike_Manufact;
     private double etUpBike_Price;
@@ -84,31 +86,26 @@ public class UpdateBikeDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_bike_details);
 
+
         storageRefUpdate = FirebaseStorage.getInstance().getReference("Bikes");
         databaseRefUpdate = FirebaseDatabase.getInstance().getReference("Bikes");
 
         progressDialog = new ProgressDialog(UpdateBikeDetails.this);
 
         //initialise variables
-        tViewUpBikes = (TextView) findViewById(R.id.tvUpBikes);
+        tViewUpBikes = findViewById(R.id.tvUpBikes);
+        tViewUpBikeCond = findViewById(R.id.tvUpBikeCond);
 
-        tViewUpBikeCond = (AutoCompleteTextView) findViewById(R.id.tvUpBikeCond);
-        imgArrowUpBikeCond = (ImageView) findViewById(R.id.imgUpBikeCond);
+        updateArrayAdapter = new ArrayAdapter<>(UpdateBikeDetails.this, android.R.layout.select_dialog_item, updateBikeCondition);
+        tViewUpBikeCond.setAdapter(updateArrayAdapter);
 
-        ArrayAdapter<String> conditionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, updateBikeCondition);
-        tViewUpBikeCond.setAdapter(conditionAdapter);
+        etUpBikeModel = findViewById(R.id.etBikeModelUp);
+        etUpBikeManufact = findViewById(R.id.etBikeManufacturerUp);
+        etUpBikePrice = findViewById(R.id.etBikePricePerDayUp);
+        ivUpdateBike = findViewById(R.id.imgViewUpBikes);
 
-        imgArrowUpBikeCond.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tViewUpBikeCond.showDropDown();
-            }
-        });
-
-        etUpBikeModel = (EditText) findViewById(R.id.etBikeModelUp);
-        etUpBikeManufact = (EditText) findViewById(R.id.etBikeManufacturerUp);
-        etUpBikePrice = (EditText) findViewById(R.id.etBikePricePerDayUp);
-        ivUpdateBike = (ImageView) findViewById(R.id.imgViewUpBikes);
+        btn_UpTakePicture = findViewById(R.id.btnTakePictureUpBikes);
+        btn_SaveBikeUpdated = findViewById(R.id.btnSaveBikeUp);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -136,45 +133,34 @@ public class UpdateBikeDetails extends AppCompatActivity {
         ivUpdateBike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteOldBikePicture();
                 openGallery();
             }
         });
 
-        buttonUpTakePicture = (ImageButton) findViewById(R.id.btnTakePictureUpBikes);
-        buttonUpTakePicture.setOnClickListener(new View.OnClickListener() {
+        btn_UpTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteOldBikePicture();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkSelfPermission(Manifest.permission.CAMERA) ==
-                            PackageManager.PERMISSION_DENIED ||
-                            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                                    PackageManager.PERMISSION_DENIED) {
-                        String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                        requestPermissions(permission, PERMISSION_CODE);
-                    } else {
-                        openCamera();
-                    }
+                if (checkSelfPermission(Manifest.permission.CAMERA) ==
+                        PackageManager.PERMISSION_DENIED ||
+                        checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                                PackageManager.PERMISSION_DENIED) {
+                    String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                    requestPermissions(permission, PERMISSION_CODE);
                 } else {
                     openCamera();
                 }
             }
         });
 
-        //Action button Save Bike
-        buttonSaveBikeUpdated = (Button) findViewById(R.id.btnSaveBikeUp);
-        buttonSaveBikeUpdated.setOnClickListener(new View.OnClickListener() {
+        btn_SaveBikeUpdated.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //progressDialog.dismiss();
                 if (updateBikeTaskUp != null && updateBikeTaskUp.isInProgress()) {
                     Toast.makeText(UpdateBikeDetails.this, "Update bike in progress", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (imageUriUp == null){
-                        uploadBikesWithOldPicture();
-                    }
-                    else{
+                    if (imageUriUp == null) {
+                        alertDialogBikePictureNew();
+                    } else {
                         updateBikesWithNewPicture();
                     }
                 }
@@ -203,18 +189,15 @@ public class UpdateBikeDetails extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_CODE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] ==
-                        PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted
-                    openCamera();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
-                    // permission deniedDisable the
-                    // functionality that depends on this permission.
-                }
+        if (requestCode == PERMISSION_CODE) {// If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED) {
+                // permission was granted
+                openCamera();
+            } else {
+                Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                // permission deniedDisable the
+                // functionality that depends on this permission.
             }
         }
     }
@@ -247,20 +230,17 @@ public class UpdateBikeDetails extends AppCompatActivity {
     }
 
     private void deleteOldBikePicture() {
-        progressDialog.show();
 
         StorageReference storageRefDelete = getInstance().getReferenceFromUrl(bike_updateImage);
         storageRefDelete.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(UpdateBikeDetails.this, "Previous image deleted", Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(UpdateBikeDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
             }
         });
     }
@@ -299,6 +279,8 @@ public class UpdateBikeDetails extends AppCompatActivity {
                                                 ds.getRef().child("bike_Price").setValue(etUpBike_Price);
                                                 ds.getRef().child("bike_Image").setValue(uri.toString());
                                             }
+
+                                            deleteOldBikePicture();
                                             progressDialog.dismiss();
                                             Toast.makeText(UpdateBikeDetails.this, "The Bike will be updated", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(UpdateBikeDetails.this, AdminPage.class));
@@ -337,7 +319,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
     private void uploadBikesWithOldPicture() {
         progressDialog.dismiss();
 
-        if (validateUpdateBikeDetails()){
+        if (validateUpdateBikeDetails()) {
 
             //Add a new Bike into the Bike's table
             etUpBike_Cond = tViewUpBikeCond.getText().toString().trim();
@@ -374,6 +356,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
     }
 
     public boolean validateUpdateBikeDetails() {
+
         boolean result = false;
         final String upBike_ConditionVal = tViewUpBikeCond.getText().toString().trim();
         final String upBike_ModelVal = etUpBikeModel.getText().toString().trim();
@@ -399,19 +382,28 @@ public class UpdateBikeDetails extends AppCompatActivity {
         return result;
     }
 
-    public void alertDialogBikeCond(){
+    public void alertDialogBikeCond() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Select the Bike Condition");
-        alertDialogBuilder.setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
+        alertDialogBuilder
+                .setMessage("Select the Bike Condition")
+                .setPositiveButton("OK",
+                (arg0, arg1) -> {
                 });
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 
-    private static final String[] updateBikeCondition = new String[]{"Brand New", "Used Bike"};
+    public void alertDialogBikePictureNew() {
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setTitle("No Bike picture changed.")
+                .setMessage("Update the Bike with old picture.")
+                .setPositiveButton("YES",
+                        (arg0, arg1) -> uploadBikesWithOldPicture())
+                .setNegativeButton("CANCEL", (dialog, i) -> dialog.dismiss());
+
+        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 }

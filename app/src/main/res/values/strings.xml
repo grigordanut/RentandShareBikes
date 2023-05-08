@@ -88,7 +88,6 @@
     <!--    Bike Image Show Rented Bikes Admin All-->
     <string name="tv_bikesImageShowBikesRentedAdminAll">No Bikes rented</string>
 
-
     <!--    Bike Store Image Add Bikes Admin-->
     <string name="tv_bikeStoreImageAddBikes">List of Bike Stores</string>
 
@@ -304,7 +303,7 @@
     <!--    Update Bike Details-->
     <string name="tv_updateBikeDetails">Update Bike details</string>
     <string name="tv_updateOrSelect">Or</string>
-    <string name="atc_updateSelectCond">Select Condition</string>
+    <string name="atc_updateSelectCond">Bike Condition</string>
     <string name="img_updateArrowCond">Arrow</string>
     <string name="et_updateBikeModel">Bike Model</string>
     <string name="et_updateBikeManufac">Manufacturer</string>

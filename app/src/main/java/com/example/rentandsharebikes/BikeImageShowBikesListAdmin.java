@@ -218,7 +218,7 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
                             }
                         })
 
-                .setNegativeButton("No",
+                .setNegativeButton("CANCEL",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

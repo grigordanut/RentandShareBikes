@@ -172,7 +172,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
                             }
                         })
 
-                .setNegativeButton("No",
+                .setNegativeButton("CANCEL",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();

@@ -1,15 +1,24 @@
 package com.example.rentandsharebikes;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -40,13 +49,19 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.Objects;
 
 public class AddBikeRent extends AppCompatActivity {
 
-    private static final int REQUEST_IMAGE_GET = 2;
-    private static final int IMAGE_CAPTURE_CODE = 1001;
-    private static final int PERMISSION_CODE = 1000;
+    private static final String[] bikeCondition = new String[]{"Brand New", "Used Bike"};
+
+    private static final int PICK_PICTURE = 100;
+    private static final int TAKE_PICTURE = 101;
+
+    private static final int CAPTURE_CAMERA = 1001;
+    private static final int PERMISSION_CAMERA = 1000;
 
     //Declare to Bike database variables (Upload data)
     private StorageReference stRefBikeUpload;
@@ -59,7 +74,6 @@ public class AddBikeRent extends AppCompatActivity {
     private EditText eTBikeModel, eTBikeManufact, eTBikePrice;
     private TextView tViewWelcomeAddBikes;
     private AutoCompleteTextView tVBikeCondition;
-    private ImageView imgArrowBikeCondition;
     private Button buttonSaveBike;
     private ImageButton buttonTakePicture;
 
@@ -71,6 +85,8 @@ public class AddBikeRent extends AppCompatActivity {
     private String bike_Key = "";
 
     private ProgressDialog progressDialog;
+
+    ActivityResultLauncher<Intent> activityResultLauncher;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -90,49 +106,39 @@ public class AddBikeRent extends AppCompatActivity {
         getIntent().hasExtra("SKey");
         store_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
 
-        tViewWelcomeAddBikes = (TextView) findViewById(R.id.tvWelcomeAddBikes);
+        tViewWelcomeAddBikes = findViewById(R.id.tvWelcomeAddBikes);
         tViewWelcomeAddBikes.setText("Add Bicycles to " + store_Name + " store");
 
-        tVBikeCondition = (AutoCompleteTextView) findViewById(R.id.tvBikeCondition);
-        imgArrowBikeCondition = (ImageView) findViewById(R.id.imgBikeCondition);
+        tVBikeCondition = findViewById(R.id.tvBikeCondition);
 
-        ArrayAdapter<String> conditionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, bikeCondition);
+        ArrayAdapter<String> conditionAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, bikeCondition);
         tVBikeCondition.setAdapter(conditionAdapter);
 
-        imgArrowBikeCondition.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tVBikeCondition.showDropDown();
-            }
-        });
+        eTBikeModel = findViewById(R.id.etBikeModel);
+        eTBikeManufact = findViewById(R.id.etBikeManufacturer);
+        eTBikePrice = findViewById(R.id.etBikePricePerDay);
 
-        eTBikeModel = (EditText) findViewById(R.id.etBikeModel);
-        eTBikeManufact = (EditText) findViewById(R.id.etBikeManufacturer);
-        eTBikePrice = (EditText) findViewById(R.id.etBikePricePerDay);
+        buttonTakePicture = findViewById(R.id.btnTakePicture);
+        ivAddBike = findViewById(R.id.imgViewAddBikes);
 
-        ivAddBike = (ImageView) findViewById(R.id.imgViewAddBikes);
+
         ivAddBike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGallery();
+                Intent pick_Photo = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pick_Photo, PICK_PICTURE);
             }
         });
 
-        buttonTakePicture = (ImageButton) findViewById(R.id.btnTakePicture);
         buttonTakePicture.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ObsoleteSdkInt")
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkSelfPermission(Manifest.permission.CAMERA) ==
-                            PackageManager.PERMISSION_DENIED ||
-                            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                                    PackageManager.PERMISSION_DENIED) {
-                        String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                        requestPermissions(permission, PERMISSION_CODE);
-                    } else {
-                        openCamera();
-                    }
+                if (checkSelfPermission(Manifest.permission.CAMERA) ==
+                        PackageManager.PERMISSION_DENIED ||
+                        checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                                PackageManager.PERMISSION_DENIED) {
+                    String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                    requestPermissions(permission, TAKE_PICTURE);
                 } else {
                     openCamera();
                 }
@@ -140,7 +146,7 @@ public class AddBikeRent extends AppCompatActivity {
         });
 
         //Action button Save Bike
-        buttonSaveBike = (Button) findViewById(R.id.btnSaveBike);
+        buttonSaveBike = findViewById(R.id.btnSaveBike);
         buttonSaveBike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,54 +166,48 @@ public class AddBikeRent extends AppCompatActivity {
         imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE);
-    }
-
-    private void openGallery() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, REQUEST_IMAGE_GET);
-        }
+        startActivityForResult(cameraIntent, CAPTURE_CAMERA);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_CODE) {// If request is cancelled, the result arrays are empty.
-            if (grantResults.length > 0 && grantResults[0] ==
-                    PackageManager.PERMISSION_GRANTED) {
-                // permission was granted
-                openCamera();
-            } else {
-                Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
-                // permission deniedDisable the
-                // functionality that depends on this permission.
-            }
+        switch (requestCode) {
+            case PERMISSION_CAMERA:
+                if (grantResults.length > 0 && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted
+                    openCamera();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                    // permission deniedDisable the
+                    // functionality that depends on this permission.
+                }
+                break;
         }
     }
 
-    @SuppressLint("MissingSuperCall")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
-            try {
-                imageUri = data.getData();
-                Bitmap thumbnail = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                ivAddBike.setImageBitmap(thumbnail);
-                Toast.makeText(AddBikeRent.this, "Image picked from Gallery", Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Exception: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }
+        switch (requestCode) {
+            case PICK_PICTURE:
+                if (resultCode == RESULT_OK) {
+                    imageUri = data.getData();
+                    ivAddBike.setImageURI(imageUri);
+                }
+                break;
 
-        else if (resultCode == RESULT_OK) {
-            ivAddBike.setImageURI(imageUri);
-            Toast.makeText(getApplicationContext(), "Image captured by Camera", Toast.LENGTH_SHORT).show();
+            case TAKE_PICTURE:
+                if(resultCode == RESULT_OK) {
+                    ivAddBike.setImageURI(imageUri);
+                }
+                break;
         }
     }
+
 
     private String getFileExtension(Uri uri) {
         ContentResolver contentResolver = getContentResolver();
@@ -227,7 +227,7 @@ public class AddBikeRent extends AppCompatActivity {
             bike_Manufact = eTBikeManufact.getText().toString().trim();
             bike_Price = Double.parseDouble(eTBikePrice.getText().toString().trim());
 
-            progressDialog.setTitle("The Bike is uploading");
+            progressDialog.setTitle("The Bike is uploading!");
             progressDialog.show();
             final StorageReference fileReference = stRefBikeUpload.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             stTaskBikeUpload = fileReference.putFile(imageUri)
@@ -279,8 +279,6 @@ public class AddBikeRent extends AppCompatActivity {
                     });
         }
     }
-
-    private static final String[] bikeCondition = new String[]{"Brand New", "Used Bike"};
 
     //Validate Bike data
     private Boolean validateBikeDetails() {
