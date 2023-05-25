@@ -140,24 +140,15 @@ public class BikeImageShowBikesListAdminAll extends AppCompatActivity implements
         alertDialogBuilder
                 .setCancelable(false)
                 .setTitle("You selected: " + selected_Bike.getBike_Model() + "\nSelect an option:")
-                .setAdapter(adapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0) {
-                            updateBikeDetails(position);
-                        }
-                        if (which == 1) {
-                            confirmBikeDeletion(position);
-                        }
+                .setAdapter(adapter, (dialog, id) -> {
+                    if (id == 0) {
+                        updateBikeDetails(position);
+                    }
+                    if (id == 1) {
+                        confirmBikeDeletion(position);
                     }
                 })
-                .setNegativeButton("CLOSE",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                .setNegativeButton("CLOSE", (dialog, id) -> dialog.dismiss());
 
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

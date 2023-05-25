@@ -40,7 +40,7 @@
 
         <activity android:name=".ReturnRentedBikesSpinner" />
         <activity android:name=".BikeStoreImageShowRentedBikesListAdmin" />
-        <activity android:name=".BikeImageShowRentedBikesAdmin" />
+        <activity android:name=".BikeImageShowBikesRentedAdmin" />
         <activity android:name=".LockActivity" />
         <activity android:name=".BikeImageShowSharedBikesAdmin" />
         <activity android:name=".BikeImageShowBikesListCustomerAll" />
@@ -57,14 +57,14 @@
         <activity android:name=".BikeImageShowBikesListMainAll" />
         <activity android:name=".BikeImageShowBikesListMainPage" />
         <activity android:name=".BikeImageShowBikesListAdminAll" />
-        <activity android:name=".BikeImageShowRentedBikesAdminAll" />
+        <activity android:name=".BikeImageShowBikesRentedAdminAll" />
         <activity android:name=".UpdateBikeDetails" />
         <activity android:name=".BikeStoreImageShowBikesListAdmin" />
         <activity android:name=".BikeStoreImageShowBikesListMain" />
         <activity android:name=".BikeStoreImageShowStoresListMain" />
         <activity android:name=".BikeImageReturnRentedBikesCustomer" />
         <activity android:name=".ReturnRentedBikes" />
-        <activity android:name=".BikeImageShowRentedBikesCustomer" />
+        <activity android:name=".BikeImageShowBikesRentedCustomer" />
         <activity android:name=".BikeImageRentBikesCustomer" />
         <activity android:name=".BikeStoreImageRentBikesCustomer" />
         <activity android:name=".BikeStoreImageAddBikesAdmin" />

@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
     android:orientation="vertical"
-    tools:context=".BikeImageShowRentedBikesAdminAll">
+    tools:context=".BikeImageShowBikesRentedCustomer">
 
     <TextView
-        android:id="@+id/tvAdminRentedBikesAll"
+        android:id="@+id/tvCustomerRentBikes"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:text="@string/tv_bikesImageShowBikesRentedAdminAll"
+        android:text="@string/tv_bikesImageShowBikesRentedCustomer"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="20sp" />

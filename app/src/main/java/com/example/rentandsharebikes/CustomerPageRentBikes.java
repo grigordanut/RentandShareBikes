@@ -66,6 +66,8 @@ public class CustomerPageRentBikes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_page_rent_bikes);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Customer page rent bikes");
+
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
 
@@ -141,7 +143,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                         break;
                                     //Show the list of Bikes rented by customer
                                     case R.id.userShow_bikesRented:
-                                        Intent intentRent = new Intent(CustomerPageRentBikes.this, BikeImageShowRentedBikesCustomer.class);
+                                        Intent intentRent = new Intent(CustomerPageRentBikes.this, BikeImageShowBikesRentedCustomer.class);
                                         intentRent.putExtra("CFName", custom_Data.getfName_Customer());
                                         intentRent.putExtra("CLName", custom_Data.getlName_Customer());
                                         intentRent.putExtra("CId", user_Db.getUid());
@@ -246,7 +248,12 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                     bikes.setBike_Key(postSnapshot.getKey());
                     listBikesAvCustom.add(bikes);
                     numberBikesAvCustom = listBikesAvCustom.size();
+
                     tVBikesAvCustom.setText(String.valueOf(numberBikesAvCustom));
+
+                    if (listBikesAvCustom.size() == 0) {
+                        tVBikesAvCustom.setText(String.valueOf(0));
+                    }
                 }
             }
 
@@ -271,6 +278,10 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                         listBikesRentedCustom.add(rented_Bikes);
                         numberBikesRentedCustom = listBikesRentedCustom.size();
                         tVBikesRentedCustom.setText(String.valueOf(numberBikesRentedCustom));
+                    }
+
+                    if (listBikesRentedCustom.size() == 0) {
+                        tVBikesRentedCustom.setText(String.valueOf(0));
                     }
                 }
             }

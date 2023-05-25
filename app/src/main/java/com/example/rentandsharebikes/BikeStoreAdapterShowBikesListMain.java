@@ -22,8 +22,8 @@ import java.util.List;
 
 public class BikeStoreAdapterShowBikesListMain extends RecyclerView.Adapter<BikeStoreAdapterShowBikesListMain.ImageViewHolder> {
 
-    private Context bikeStoreContext;
-    private List<BikeStores> bikeStoresUploads;
+    private final Context bikeStoreContext;
+    private final List<BikeStores> bikeStoresUploads;
 
     private FirebaseStorage bikeStorage;
     private DatabaseReference databaseReference;

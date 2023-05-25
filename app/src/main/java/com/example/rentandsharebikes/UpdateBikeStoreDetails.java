@@ -8,7 +8,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -84,13 +83,10 @@ public class UpdateBikeStoreDetails extends AppCompatActivity {
         etStoreLongitudeUp.setText(store_LongitudeUp);
         etStoreNoSlotsUp.setText(store_NrSlotsUp);
 
-        Button btnSaveBikeStoreUpdates = findViewById(R.id.btnSaveStoreUpdate);
-        btnSaveBikeStoreUpdates.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateBikeBikesStoreName();
-                updateBikeStoreDetails();
-            }
+        Button btn_SaveBikeStoreUpdate = findViewById(R.id.btnSaveStoreUpdate);
+        btn_SaveBikeStoreUpdate.setOnClickListener(v -> {
+            updateBikeBikesStoreName();
+            updateBikeStoreDetails();
         });
     }
 
@@ -107,30 +103,23 @@ public class UpdateBikeStoreDetails extends AppCompatActivity {
             progressDialog.setMessage("Update the Bike Store");
             progressDialog.show();
 
+            BikeStores bike_store = new BikeStores(etStore_LocationUp, etStore_AddressUp, etStore_LatitudeUp, etStore_LongitudeUp, etStore_NoSlotsUp);
+
             databaseRefStoreUpload = FirebaseDatabase.getInstance().getReference("Bike Stores");
-            Query queryStore = databaseRefStoreUpload.orderByChild("bikeStore_Location").equalTo(store_LocationUp);
 
-            queryStore.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        ds.getRef().child("bikeStore_Location").setValue(etStore_LocationUp);
-                        ds.getRef().child("bikeStore_Address").setValue(etStore_AddressUp);
-                        ds.getRef().child("bikeStore_Latitude").setValue(etStore_LatitudeUp);
-                        ds.getRef().child("bikeStore_Longitude").setValue(etStore_LatitudeUp);
-                        ds.getRef().child("bikeStore_NumberSlots").setValue(etStore_NoSlotsUp);
-                    }
-                    progressDialog.dismiss();
-                    Toast.makeText(UpdateBikeStoreDetails.this, "Bike Store Updated", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(UpdateBikeStoreDetails.this, AdminPage.class));
-                    finish();
-                }
+            databaseRefStoreUpload.child(store_KeyUp).setValue(bike_store)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            startActivity(new Intent(UpdateBikeStoreDetails.this, AdminPage.class));
+                            Toast.makeText(UpdateBikeStoreDetails.this, "Bike Store Updated", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(UpdateBikeStoreDetails.this, "Filed to update the Bike Store", Toast.LENGTH_SHORT).show();
+                        }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(UpdateBikeStoreDetails.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                        progressDialog.dismiss();
+                    })
+
+                    .addOnFailureListener(e -> Toast.makeText(UpdateBikeStoreDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show());
         }
     }
 
@@ -165,38 +154,41 @@ public class UpdateBikeStoreDetails extends AppCompatActivity {
     }
 
     private void updateBikeBikesStoreName() {
+
         databaseRefBikeCheck = FirebaseDatabase.getInstance().getReference("Bikes");
-        databaseRefBikeCheck.orderByChild("bikeStoreName").equalTo(store_LocationUp)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
 
-                            final String etBike_BikeStoreLocCheck = etStoreLocationUp.getText().toString().trim();
-                            databaseRefBikeUpload = FirebaseDatabase.getInstance().getReference("Bikes");
-                            databaseRefBikeUpload.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot dsBike : dataSnapshot.getChildren()) {
-                                        dsBike.getRef().child("bikeStoreName").setValue(etBike_BikeStoreLocCheck);
-                                    }
-                                    progressDialog.dismiss();
-                                    Toast.makeText(UpdateBikeStoreDetails.this, "Bike Store Updated", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(UpdateBikeStoreDetails.this, AdminPage.class));
-                                    finish();
-                                }
+        Query queryStore = databaseRefBikeCheck.orderByChild("bikeStoreKey").equalTo(store_KeyUp);
+        queryStore.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    Toast.makeText(UpdateBikeStoreDetails.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                    final String etBike_BikeStoreLocUp = etStoreLocationUp.getText().toString().trim();
+                    databaseRefBikeUpload = FirebaseDatabase.getInstance().getReference("Bikes");
+                    databaseRefBikeUpload.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot dsBike : dataSnapshot.getChildren()) {
+                                dsBike.getRef().child("bikeStoreName").setValue(etBike_BikeStoreLocUp);
+                            }
+                            progressDialog.dismiss();
+                            Toast.makeText(UpdateBikeStoreDetails.this, "Bike Store Updated", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(UpdateBikeStoreDetails.this, AdminPage.class));
+                            finish();
                         }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(UpdateBikeStoreDetails.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Toast.makeText(UpdateBikeStoreDetails.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(UpdateBikeStoreDetails.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

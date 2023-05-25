@@ -341,8 +341,9 @@ public class LockActivity extends AppCompatActivity {
     Handler m_myHandler = new Handler(new Handler.Callback() {
 
 
+        @SuppressLint("SetTextI18n")
         @Override
-        public boolean handleMessage(Message mes) {
+        public boolean handleMessage(@NonNull Message mes) {
             switch (mes.what) {
                 case 1: {
                     //Unlock successfully 开锁成功

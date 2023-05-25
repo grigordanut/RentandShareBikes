@@ -17,8 +17,8 @@ import java.util.List;
 
 public class BikeAdapterBikesAdmin extends RecyclerView.Adapter<BikeAdapterBikesAdmin.ImageViewHolder> {
 
-    private Context bikesContext;
-    private List<Bikes> bikesUploads;
+    private final Context bikesContext;
+    private final List<Bikes> bikesUploads;
 
     private OnItemClickListener clickListener;
 

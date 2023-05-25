@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -39,53 +38,50 @@ public class ChangePassword extends AppCompatActivity {
         oldPassword = findViewById(R.id.etOldPassCustom);
         newPassword = findViewById(R.id.etNewPassCustom);
 
-        Button buttonUpdatePassword = (Button) findViewById(R.id.btnUpdatePassword);
-        buttonUpdatePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressDialog.show();
-                old_Password = Objects.requireNonNull(oldPassword.getText()).toString().trim();
-                new_Password = Objects.requireNonNull(newPassword.getText()).toString().trim();
+        Button btn_UpdatePassword = findViewById(R.id.btnUpdatePassword);
+        btn_UpdatePassword.setOnClickListener(v -> {
+            progressDialog.show();
+            old_Password = Objects.requireNonNull(oldPassword.getText()).toString().trim();
+            new_Password = Objects.requireNonNull(newPassword.getText()).toString().trim();
 
-                if (old_Password.isEmpty()) {
-                    oldPassword.setError("Enter your old Password");
-                    oldPassword.requestFocus();
-                } else if (new_Password.isEmpty()) {
-                    newPassword.setError("Enter your new Password");
-                    newPassword.requestFocus();
-                } else {
-                    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    assert user != null;
-                    AuthCredential credential = EmailAuthProvider.getCredential(Objects.requireNonNull(user.getEmail()), old_Password);
-                    user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                user.updatePassword(new_Password).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
+            if (old_Password.isEmpty()) {
+                oldPassword.setError("Enter your old Password");
+                oldPassword.requestFocus();
+            } else if (new_Password.isEmpty()) {
+                newPassword.setError("Enter your new Password");
+                newPassword.requestFocus();
+            } else {
+                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                assert user != null;
+                AuthCredential credential = EmailAuthProvider.getCredential(Objects.requireNonNull(user.getEmail()), old_Password);
+                user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            user.updatePassword(new_Password).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
 
-                                            oldPassword.getText().clear();
-                                            newPassword.getText().clear();
+                                        oldPassword.getText().clear();
+                                        newPassword.getText().clear();
 
-                                            progressDialog.dismiss();
-                                            finish();
-                                            Toast.makeText(ChangePassword.this, "Your password was updated", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(ChangePassword.this, LoginCustomer.class));
+                                        progressDialog.dismiss();
+                                        finish();
+                                        Toast.makeText(ChangePassword.this, "Your password was updated", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(ChangePassword.this, LoginCustomer.class));
 
-                                        } else {
-                                            Toast.makeText(ChangePassword.this, "Password update failed", Toast.LENGTH_SHORT).show();
-                                        }
+                                    } else {
+                                        Toast.makeText(ChangePassword.this, "Password update failed", Toast.LENGTH_SHORT).show();
                                     }
-                                });
-                            } else {
-                                Toast.makeText(ChangePassword.this, "Authentication failed", Toast.LENGTH_SHORT).show();
-                            }
-                            progressDialog.dismiss();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(ChangePassword.this, "Authentication failed", Toast.LENGTH_SHORT).show();
                         }
-                    });
-                }
+                        progressDialog.dismiss();
+                    }
+                });
             }
         });
     }

@@ -22,11 +22,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -112,27 +114,28 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikesList.clear();
                 if (dataSnapshot.exists()) {
-                    bikesList.clear();
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Bikes bikes = postSnapshot.getValue(Bikes.class);
                         assert bikes != null;
-                        if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
-                            bikes.setBike_Key(postSnapshot.getKey());
+                        bikes.setBike_Key(postSnapshot.getKey());
+                        String storeKey = bikes.getBikeStoreKey();
+
+                        if (storeKey.equals(bikeStore_Key)) {
                             bikesList.add(bikes);
                             tVBikeListAdmin.setText(bikesList.size() + " Bikes available in " + bikeStore_Name + " store");
                         }
-                        else{
+
+                        if (bikesList.size() == 0) {
                             tVBikeListAdmin.setText("No bikes available in " + bikeStore_Name + " store");
                         }
-
-                        progressDialog.dismiss();
                     }
 
                     bikeAdapterBikesAdmin.notifyDataSetChanged();
-                }
-                else{
-                    tVBikeListAdmin.setText("No Bikes registered were found!!");
+                } else {
+                    alertDialogNoBikesAvailable();
+                    tVBikeListAdmin.setText("There are not Bikes registered!!");
                 }
 
                 progressDialog.dismiss();
@@ -219,13 +222,40 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
                         })
 
                 .setNegativeButton("CANCEL",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
 
         AlertDialog alert1 = alertDialogBuilder.create();
         alert1.show();
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbRefBikes.removeEventListener(bikesEventListener);
+    }
+
+    public void alertDialogNoBikesAvailable() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setTitle("There are not Bikes available!!")
+                .setMessage("Would you like to add bikes?")
+                .setPositiveButton("YES", (dialog, id) -> {
+                    finish();
+                    Intent intent = new Intent(BikeImageShowBikesListAdmin.this, BikeStoreImageAddBikesAdmin.class);
+                    startActivity(intent);
+                })
+
+                .setNegativeButton("NO", (dialog, id) -> {
+                    Intent intent = new Intent(BikeImageShowBikesListAdmin.this, AdminPage.class);
+                    startActivity(intent);
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

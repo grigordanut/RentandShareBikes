@@ -26,6 +26,7 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CustomerPageShareBikes extends AppCompatActivity {
 
@@ -63,6 +64,11 @@ public class CustomerPageShareBikes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_page_share_bikes);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Customer page share Bikes");
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
+
         bikesListShareCustom = new ArrayList<>();
         bikesListShareAv = new ArrayList<>();
 
@@ -71,9 +77,6 @@ public class CustomerPageShareBikes extends AppCompatActivity {
         tVCustomPageSharePerDetails = (TextView)findViewById(R.id.tvCustomPageSharePerDetails);
         tVCustomerBikesShared = (TextView)findViewById(R.id.tvCustomerBikesShared);
         tVBikesShareAv = (TextView)findViewById(R.id.tvCustomerBikesSharedAv);
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = firebaseAuth.getCurrentUser();
 
         drawerLayoutUserShare = findViewById(R.id.activity_customer_page_share_bikes);
         navigationViewUserShare = findViewById(R.id.navViewCustomShare);
@@ -174,10 +177,8 @@ public class CustomerPageShareBikes extends AppCompatActivity {
             return true;
         }
 
-        switch (item.getItemId()) {
-            case R.id.userShareGoBack: {
-                goBackShare();
-            }
+        if (item.getItemId() == R.id.userShareGoBack) {
+            goBackShare();
         }
 
         return super.onOptionsItemSelected(item);

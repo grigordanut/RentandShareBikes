@@ -80,7 +80,6 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
     public void onStart() {
         super.onStart();
         loadBikesListCustomer();
-
     }
 
     private void loadBikesListCustomer() {
@@ -93,8 +92,9 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                bikesList.clear();
                 if (dataSnapshot.exists()) {
-                    bikesList.clear();
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Bikes bikes = postSnapshot.getValue(Bikes.class);
                         assert bikes != null;
@@ -102,18 +102,14 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
                             bikes.setBike_Key(postSnapshot.getKey());
                             bikesList.add(bikes);
                             textViewBikesImageList.setText(bikesList.size() + " bikes available in " + bikeStore_NameRent + " store");
-                        }
-                        else{
+                        } else {
                             textViewBikesImageList.setText("No bikes available in " + bikeStore_NameRent + " store");
                         }
-
-                        progressDialog.dismiss();
                     }
 
                     bikeAdapterBikesCustomer.notifyDataSetChanged();
-                }
-                else {
-                    textViewBikesImageList.setText("No Bikes registered were found");
+                } else {
+                    textViewBikesImageList.setText("No Bikes bikes available to rent");
                 }
 
                 progressDialog.dismiss();
@@ -137,28 +133,25 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
         alertDialogBuilder
                 .setCancelable(false)
                 .setTitle("You selected " + selected_Bike.getBike_Model() + "\nSelect an option:")
-                .setAdapter(adapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setAdapter(adapter, (dialog, id) -> {
 
-                        if (which == 0) {
-                            Intent intent = new Intent(BikeImageShowBikesListCustomer.this, RentBikesCustomer.class);
-                            Bikes selected_Bike = bikesList.get(position);
-                            intent.putExtra("BCondition", selected_Bike.getBike_Condition());
-                            intent.putExtra("BModel", selected_Bike.getBike_Model());
-                            intent.putExtra("BManufact", selected_Bike.getBike_Manufacturer());
-                            intent.putExtra("BImage", selected_Bike.getBike_Image());
-                            intent.putExtra("BStoreName", selected_Bike.getBikeStoreName());
-                            intent.putExtra("BStoreKey", selected_Bike.getBikeStoreKey());
-                            intent.putExtra("BPrice", String.valueOf(selected_Bike.getBike_Price()));
-                            intent.putExtra("BKey", selected_Bike.getBike_Key());
-                            startActivity(intent);
-                        }
+                    if (id == 0) {
+                        Intent intent = new Intent(BikeImageShowBikesListCustomer.this, RentBikesCustomer.class);
+                        Bikes selected_Bike1 = bikesList.get(position);
+                        intent.putExtra("BCondition", selected_Bike1.getBike_Condition());
+                        intent.putExtra("BModel", selected_Bike1.getBike_Model());
+                        intent.putExtra("BManufact", selected_Bike1.getBike_Manufacturer());
+                        intent.putExtra("BImage", selected_Bike1.getBike_Image());
+                        intent.putExtra("BStoreName", selected_Bike1.getBikeStoreName());
+                        intent.putExtra("BStoreKey", selected_Bike1.getBikeStoreKey());
+                        intent.putExtra("BPrice", String.valueOf(selected_Bike1.getBike_Price()));
+                        intent.putExtra("BKey", selected_Bike1.getBike_Key());
+                        startActivity(intent);
+                    }
 
-                        if (which == 1) {
-                            startActivity(new Intent(BikeImageShowBikesListCustomer.this, CustomerPageRentBikes.class));
-                            Toast.makeText(BikeImageShowBikesListCustomer.this, "Back to main page", Toast.LENGTH_SHORT).show();
-                        }
+                    if (id == 1) {
+                        startActivity(new Intent(BikeImageShowBikesListCustomer.this, CustomerPageRentBikes.class));
+                        Toast.makeText(BikeImageShowBikesListCustomer.this, "Back to main page", Toast.LENGTH_SHORT).show();
                     }
                 })
 

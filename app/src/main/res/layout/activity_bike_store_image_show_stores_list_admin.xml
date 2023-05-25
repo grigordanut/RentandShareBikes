@@ -28,10 +28,7 @@
             android:id="@+id/evRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="5dp">
+            android:layout_margin="5dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -45,9 +42,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_round_corners"
                 android:text="@string/btn_addMoreStores"
@@ -59,9 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_round_corners"
                 android:text="@string/btn_backToAdminPageStores"
@@ -71,4 +66,5 @@
         </LinearLayout>
 
     </LinearLayout>
+
 </ScrollView>

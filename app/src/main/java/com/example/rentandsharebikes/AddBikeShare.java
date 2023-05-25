@@ -98,8 +98,8 @@ public class AddBikeShare extends AppCompatActivity {
         storageRefShareBikes = FirebaseStorage.getInstance().getReference("Share Bikes");
         databaseRefShareBikes = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
-        tVCondShareBike = (AutoCompleteTextView) findViewById(R.id.tvShareBikeCond);
-        imgArrowCondShareBike = (ImageView) findViewById(R.id.imgArrowShareBikeCond);
+        tVCondShareBike = findViewById(R.id.tvShareBikeCond);
+        imgArrowCondShareBike = findViewById(R.id.imgArrowShareBikeCond);
 
         ArrayAdapter<String> conditionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, bikeShareCondition);
         tVCondShareBike.setAdapter(conditionAdapter);
@@ -111,52 +111,39 @@ public class AddBikeShare extends AppCompatActivity {
             }
         });
 
-        tVShareBikes = (TextView) findViewById(R.id.tvShareBikes);
-        etFNameShareBike = (EditText) findViewById(R.id.etShareBikeFName);
-        etLNameShareBike = (EditText) findViewById(R.id.etShareBikeLName);
-        etPNoShareBike = (EditText) findViewById(R.id.etShareBikePNumber);
-        etEmailShareBike = (EditText) findViewById(R.id.etShareBikeEmail);
-        etModelShareBike = (EditText) findViewById(R.id.etShareBikeModel);
-        etManufactShareBike = (EditText) findViewById(R.id.etShareBikeManufact);
-        etPriceShareBike = (EditText) findViewById(R.id.etShareBikePriceDay);
-        tVAvDateShareBike = (TextView) findViewById(R.id.tvShareBikeAvDate);
-        etDateAvShareBike = (EditText) findViewById(R.id.etShareBikeAvDate);
+        tVShareBikes = findViewById(R.id.tvShareBikes);
+        etFNameShareBike = findViewById(R.id.etShareBikeFName);
+        etLNameShareBike = findViewById(R.id.etShareBikeLName);
+        etPNoShareBike = findViewById(R.id.etShareBikePNumber);
+        etEmailShareBike = findViewById(R.id.etShareBikeEmail);
+        etModelShareBike = findViewById(R.id.etShareBikeModel);
+        etManufactShareBike = findViewById(R.id.etShareBikeManufact);
+        etPriceShareBike = findViewById(R.id.etShareBikePriceDay);
+        tVAvDateShareBike = findViewById(R.id.tvShareBikeAvDate);
+        etDateAvShareBike = findViewById(R.id.etShareBikeAvDate);
         etDateAvShareBike.setEnabled(false);
 
-        ivShareBike = (ImageView) findViewById(R.id.imgViewShareBikes);
-        ivShareBike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGallery();
-            }
-        });
+        ivShareBike = findViewById(R.id.imgViewShareBikes);
+        ivShareBike.setOnClickListener(view -> openGallery());
 
-        buttonShareTakePicture = (ImageButton) findViewById(R.id.btnShareTakePicture);
-        buttonShareTakePicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkSelfPermission(Manifest.permission.CAMERA) ==
-                        PackageManager.PERMISSION_DENIED ||
-                        checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                                PackageManager.PERMISSION_DENIED) {
-                    String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                    requestPermissions(permission, PERMISSION_CODE);
-                } else {
-                    openCamera();
-                }
+        buttonShareTakePicture = findViewById(R.id.btnShareTakePicture);
+        buttonShareTakePicture.setOnClickListener(v -> {
+            if (checkSelfPermission(Manifest.permission.CAMERA) ==
+                    PackageManager.PERMISSION_DENIED ||
+                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                            PackageManager.PERMISSION_DENIED) {
+                String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                requestPermissions(permission, PERMISSION_CODE);
+            } else {
+                openCamera();
             }
         });
 
         //Select the Bike available share date
-        tVAvDateShareBike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectShareAvailableDate();
-            }
-        });
+        tVAvDateShareBike.setOnClickListener(v -> selectShareAvailableDate());
 
         //Action button Save share Bike
-        buttonShareBike = (Button) findViewById(R.id.btnShareBike);
+        buttonShareBike = findViewById(R.id.btnShareBike);
         buttonShareBike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -224,18 +211,15 @@ public class AddBikeShare extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_CODE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] ==
-                        PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted
-                    openCamera();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
-                    // permission deniedDisable the
-                    // functionality that depends on this permission.
-                }
+        if (requestCode == PERMISSION_CODE) {// If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED) {
+                // permission was granted
+                openCamera();
+            } else {
+                Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                // permission deniedDisable the
+                // functionality that depends on this permission.
             }
         }
     }
@@ -322,21 +306,15 @@ public class AddBikeShare extends AppCompatActivity {
                             progressDialog.dismiss();
                         }
                     })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(AddBikeShare.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                    .addOnFailureListener(e -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(AddBikeShare.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                            //show upload Progress
-                            double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
-                            progressDialog.setMessage("Uploaded: " + (int) progress + "%");
-                            progressDialog.setProgress((int) progress);
-                        }
+                    .addOnProgressListener(taskSnapshot -> {
+                        //show upload Progress
+                        double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
+                        progressDialog.setMessage("Uploaded: " + (int) progress + "%");
+                        progressDialog.setProgress((int) progress);
                     });
         }
     }
@@ -389,16 +367,12 @@ public class AddBikeShare extends AppCompatActivity {
     }
 
     public void alertDialogBikeShareCond() {
-        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Select the Bike Condition");
-        alertDialogBuilder.setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setMessage("Select the Bike Condition")
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
-        androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 
@@ -409,8 +383,10 @@ public class AddBikeShare extends AppCompatActivity {
     }
 
     public void loadCustomerDetailsShareBikes() {
+
         //retrieve data from database into text views
         databaseRefCustomer = FirebaseDatabase.getInstance().getReference("Customers");
+
         databaseRefCustomer.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NewApi"})
             @Override

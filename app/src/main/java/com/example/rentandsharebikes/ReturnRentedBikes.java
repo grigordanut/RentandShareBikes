@@ -14,7 +14,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -100,8 +99,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
     //Receive Bike image
     private String img_RentedBike;
 
-    //String rentedBikes_CustomId = "";
-
     //Receive the Bike Key of rented bike from BikeAdapterRentedBikesCustomer
     String rentedBike_Key = "";
     String returnBike_Key = "";
@@ -122,6 +119,8 @@ public class ReturnRentedBikes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_return_rented_bikes);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Return rented bikes");
+
         progressDialog = new ProgressDialog(ReturnRentedBikes.this);
 
         listBikeStores = new ArrayList<>();
@@ -139,7 +138,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
         databaseRefBikeStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
         //Retrieve Bike Store data from Bike Stores table
-        //dbRefStoreCheck = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
         dbRefStoreCheck = FirebaseDatabase.getInstance().getReference().child("Rent Bikes");
 
         //initialise variables
@@ -187,139 +185,124 @@ public class ReturnRentedBikes extends AppCompatActivity {
         }
 
         cBoxRetSameStore = findViewById(R.id.cbReturnBikeSameStore);
-        cBoxRetSameStore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (cBoxRetSameStore.isChecked()) {
-                    cBoxRetDiffStore.setChecked(false);
+        cBoxRetSameStore.setOnClickListener(v -> {
+            if (cBoxRetSameStore.isChecked()) {
+                cBoxRetDiffStore.setChecked(false);
 
-                    dbRefStoreCheck.orderByChild("storeKey_RentBikes").equalTo(rentedBikeStore_Key)
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.exists()) {
-                                        etBikeStoreReturn.setText(rentedBikeStore_Name);
-                                        returnBikeStore_Key = rentedBikeStore_Key;
-                                        //cBoxRetSameStore.setChecked(false);
-                                    } else {
-                                        alertBikeStoreDeleted();
-                                    }
-                                }
+                Query query = databaseRefBikeStores.orderByKey().equalTo(rentedBikeStore_Key);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            etBikeStoreReturn.setText(rentedBikeStore_Name);
+                            returnBikeStore_Key = rentedBikeStore_Key;
+                            //cBoxRetSameStore.setChecked(false);
+                        } else {
+                            alertBikeStoreDeleted();
+                        }
+                    }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    Toast.makeText(ReturnRentedBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(ReturnRentedBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-                } else {
-                    etBikeStoreReturn.setText("");
-                }
+            } else {
+                etBikeStoreReturn.setText("");
             }
         });
 
         cBoxRetDiffStore = findViewById(R.id.cbReturnBikeDiffStore);
-        cBoxRetDiffStore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (cBoxRetDiffStore.isChecked()) {
-                    cBoxRetSameStore.setChecked(false);
+        cBoxRetDiffStore.setOnClickListener(v -> {
+            if (cBoxRetDiffStore.isChecked()) {
+                cBoxRetSameStore.setChecked(false);
 
-                    etBikeStoreReturn.setText("");
+                etBikeStoreReturn.setText("");
 
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ReturnRentedBikes.this);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ReturnRentedBikes.this);
 
-                    arrayAdapter = new ArrayAdapter<String>(ReturnRentedBikes.this, android.R.layout.simple_list_item_single_choice, listBikeStores);
+                arrayAdapter = new ArrayAdapter<>(ReturnRentedBikes.this, android.R.layout.simple_list_item_single_choice, listBikeStores);
 
-                    databaseRefBikeStores.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                databaseRefBikeStores.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            listBikeStores.clear();
-                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                bike_Store = postSnapshot.getValue(BikeStores.class);
+                        listBikeStores.clear();
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            bike_Store = postSnapshot.getValue(BikeStores.class);
 
-                                assert bike_Store != null;
+                            assert bike_Store != null;
 
-                                bike_Store.setBikeStore_Key(postSnapshot.getKey());
+                            bike_Store.setBikeStore_Key(postSnapshot.getKey());
 
-                                if (!bike_Store.getBikeStore_Key().equals(rentedBikeStore_Key)) {
-                                    listBikeStores.add(bike_Store.getBikeStore_Location());
-                                }
+                            if (!bike_Store.getBikeStore_Key().equals(rentedBikeStore_Key)) {
+                                listBikeStores.add(bike_Store.getBikeStore_Location());
                             }
-
-                            arrayAdapter.notifyDataSetChanged();
                         }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Toast.makeText(ReturnRentedBikes.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        arrayAdapter.notifyDataSetChanged();
+                    }
 
-                    alertDialogBuilder
-                            .setTitle("Select the Bike Store")
-                            .setCancelable(false)
-                            .setSingleChoiceItems(arrayAdapter, -1, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    returnBikeStore_Name = listBikeStores.get(i);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(ReturnRentedBikes.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-                                    //get Bike Store Key
-                                    Query query = databaseRefBikeStores.orderByChild("bikeStore_Location").equalTo(returnBikeStore_Name);
-                                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                                postSnapshot.getKey();
-                                                returnBikeStore_Key = postSnapshot.getKey();
-                                            }
+                alertDialogBuilder
+                        .setTitle("Select the Bike Store")
+                        .setCancelable(false)
+                        .setSingleChoiceItems(arrayAdapter, -1, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                returnBikeStore_Name = listBikeStores.get(i);
+
+                                //get Bike Store Key
+                                Query query = databaseRefBikeStores.orderByChild("bikeStore_Location").equalTo(returnBikeStore_Name);
+                                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                            postSnapshot.getKey();
+                                            returnBikeStore_Key = postSnapshot.getKey();
                                         }
+                                    }
 
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                                            Toast.makeText(ReturnRentedBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            })
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        Toast.makeText(ReturnRentedBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        })
 
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    etBikeStoreReturn.setText(returnBikeStore_Name);
-                                    //cBoxRetDiffStore.setChecked(false);
-                                }
-                            })
+                        .setPositiveButton("Ok", (dialogInterface, i) -> {
+                            etBikeStoreReturn.setText(returnBikeStore_Name);
+                            //cBoxRetDiffStore.setChecked(false);
+                        })
 
-                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    cBoxRetDiffStore.setChecked(false);
-                                    dialogInterface.cancel();
-                                }
-                            });
+                        .setNegativeButton("Cancel", (dialogInterface, i) -> {
+                            cBoxRetDiffStore.setChecked(false);
+                            dialogInterface.cancel();
+                        });
 
-                    // create alert dialog
-                    AlertDialog alertDialog = alertDialogBuilder.create();
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
 
-                    // show it
-                    alertDialog.show();
-                } else {
-                    etBikeStoreReturn.setText("");
-                }
+                // show it
+                alertDialog.show();
+            } else {
+                etBikeStoreReturn.setText("");
             }
         });
 
         Button buttonReturnBikes = findViewById(R.id.btnReturnBike);
-        buttonReturnBikes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (bikesReturnTask != null && bikesReturnTask.isInProgress()) {
-                    Toast.makeText(ReturnRentedBikes.this, "Return Bikes in progress", Toast.LENGTH_SHORT).show();
-                } else {
-                    returnRentedBike();
-                }
+        buttonReturnBikes.setOnClickListener(v -> {
+            if (bikesReturnTask != null && bikesReturnTask.isInProgress()) {
+                Toast.makeText(ReturnRentedBikes.this, "Return Bikes in progress", Toast.LENGTH_SHORT).show();
+            } else {
+                returnRentedBike();
             }
         });
     }
@@ -330,7 +313,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
         storeName_ReturnBikes = Objects.requireNonNull(etBikeStoreReturn.getText()).toString().trim();
 
         if (TextUtils.isEmpty(storeName_ReturnBikes)) {
-            alertReturnBikeStore();
+            alertReturnBikeStoreEmpty();
         } else {
             storeName_ReturnBikes = etBikeStoreReturn.getText().toString().trim();
             tVCond_ReturnBikes = tVCondReturnBikes.getText().toString().trim();
@@ -341,7 +324,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
             storageRefReturnBikes = FirebaseStorage.getInstance().getReference("Bikes");
             databaseRefReturnBikes = FirebaseDatabase.getInstance().getReference("Bikes");
 
-            progressDialog.setTitle("The bike is returning to: " + storeName_ReturnBikes);
+            progressDialog.setTitle("The bike is returning to: " + storeName_ReturnBikes + " store!");
             progressDialog.show();
 
             // Get the data from an ImageView as bytes
@@ -353,26 +336,22 @@ public class ReturnRentedBikes extends AppCompatActivity {
             byte[] data = baos.toByteArray();
 
             bikesReturnTask = storageRefReturnBikes.putBytes(data)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            storageRefReturnBikes.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    returnBike_Key = databaseRefReturnBikes.push().getKey();
-                                    Bikes return_Bikes = new Bikes(tVCond_ReturnBikes, tVModel_ReturnBikes, tVManufact_ReturnBikes,
-                                            tVPrice_ReturnBikes, uri.toString(), storeName_ReturnBikes, returnBikeStore_Key,
-                                            returnBike_Key);
+                    .addOnSuccessListener(taskSnapshot -> {
+                        storageRefReturnBikes.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                returnBike_Key = databaseRefReturnBikes.push().getKey();
+                                Bikes return_Bikes = new Bikes(tVCond_ReturnBikes, tVModel_ReturnBikes, tVManufact_ReturnBikes,
+                                        tVPrice_ReturnBikes, uri.toString(), storeName_ReturnBikes, returnBikeStore_Key);
 
-                                    databaseRefReturnBikes.child(returnBike_Key).setValue(return_Bikes);
-                                    startActivity(new Intent(ReturnRentedBikes.this, CustomerPageRentBikes.class));
-                                    deleteRentedBikes();
-                                    Toast.makeText(ReturnRentedBikes.this, "Return Bike successfully", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                            });
-                            progressDialog.dismiss();
-                        }
+                                databaseRefReturnBikes.child(returnBike_Key).setValue(return_Bikes);
+                                startActivity(new Intent(ReturnRentedBikes.this, CustomerPageRentBikes.class));
+                                deleteRentedBikes();
+                                Toast.makeText(ReturnRentedBikes.this, "Return Bike successfully", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
+                        progressDialog.dismiss();
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
@@ -422,15 +401,12 @@ public class ReturnRentedBikes extends AppCompatActivity {
         });
     }
 
-    public void alertReturnBikeStore() {
+    public void alertReturnBikeStoreEmpty() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("The return Bike Store can not be empty.");
-        alertDialogBuilder.setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
+        alertDialogBuilder
+                .setTitle("The return Bike Store is empty.")
+                .setMessage("Please enter the return Bike Store.")
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -438,13 +414,10 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
     public void alertBikeStoreDeleted() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("The return Bike Store has been removed.\n Please select a different Bike Store.");
-        alertDialogBuilder.setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
+        alertDialogBuilder
+                .setMessage("The return Bike Store has been removed.")
+                .setTitle("Please select a different Bike Store.")
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -477,7 +450,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
                         tVReturnBikes.setText("Welcome: " + custom_Data.getfName_Customer() + " " + custom_Data.getlName_Customer());
                         etFNameReturnBikes.setText(custom_Data.getfName_Customer());
                         etLNameReturnBikes.setText(custom_Data.getlName_Customer());
-                        //rentedBikes_CustomId = user_Db.getUid();
                     }
                 }
             }

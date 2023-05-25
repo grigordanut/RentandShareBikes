@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -27,17 +26,18 @@
             android:textSize="20sp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/fNameWrapperRegCustomer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etFirstNameRegCustom"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:hint="@string/et_firstNameCustomer"
                 android:inputType="textPersonName|textCapWords"
                 android:paddingStart="10dp"
@@ -46,17 +46,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/lNameWrapperRegCustomer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etLastNameRegCustom"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:hint="@string/et_lastNameCustomer"
                 android:inputType="textPersonName|textCapWords"
                 android:paddingStart="10dp"
@@ -65,17 +66,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/uNameWrapperRegCustomer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etUserNameRegCustom"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:hint="@string/et_userNameCustomer"
                 android:inputType="textPersonName"
                 android:paddingStart="10dp"
@@ -84,17 +86,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/fNrWrapperRegCustomer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPhoneNrRegCustom"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:hint="@string/et_phoneCustomer"
                 android:inputType="phone"
                 android:paddingStart="10dp"
@@ -103,17 +106,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailWrapperRegCustomer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmailRegCustom"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:hint="@string/et_emailRegCustomer"
                 android:inputType="textEmailAddress"
                 android:paddingStart="10dp"
@@ -122,10 +126,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passWrapperRegCustomer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:textColorHint="#000000"
             app:passwordToggleEnabled="true">
@@ -133,7 +138,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassRegCustom"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:hint="@string/et_passRegCustomer"
                 android:inputType="textPassword"
                 android:paddingStart="10dp"
@@ -142,10 +147,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/confPassWrapperRegCustomer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:textColorHint="#000000"
             app:passwordToggleEnabled="true">
@@ -153,7 +159,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etConfPassRegCustom"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="match_parent"
                 android:hint="@string/et_confPassRegCustomer"
                 android:inputType="textPassword"
                 android:paddingStart="10dp"

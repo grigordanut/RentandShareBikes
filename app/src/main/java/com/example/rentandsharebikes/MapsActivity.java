@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -15,7 +16,6 @@ import com.google.android.gms.maps.model.LatLng;
 
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener,GoogleMap.OnMarkerClickListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
 
@@ -42,7 +42,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
-        ChildEventListener mChildEventListener;
         mapDatabaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
         mapDatabaseReference.push().setValue(marker);
     }
@@ -57,25 +56,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot mapSnapShot : dataSnapshot.getChildren()){
+                for (DataSnapshot mapSnapShot : dataSnapshot.getChildren()) {
                     BikeStores mapBikeStores = mapSnapShot.getValue(BikeStores.class);
                     assert mapBikeStores != null;
                     LatLng storeLocation = new LatLng(mapBikeStores.getBikeStore_Latitude(), mapBikeStores.getBikeStore_Longitude());
-                    Objects.requireNonNull(mMap.addMarker(new MarkerOptions().position(storeLocation)
-                            .title(mapBikeStores.getBikeStore_Location())))
+                    Objects.requireNonNull(mMap.addMarker(new MarkerOptions()
+                                    .position(storeLocation)
+                                    .title(mapBikeStores.getBikeStore_Location())))
                             .setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(MapsActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(@NonNull Location location) {
 
     }
 
@@ -85,17 +85,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onProviderEnabled(String provider) {
+    public void onProviderEnabled(@NonNull String provider) {
 
     }
 
     @Override
-    public void onProviderDisabled(String provider) {
+    public void onProviderDisabled(@NonNull String provider) {
 
     }
 
     @Override
-    public boolean onMarkerClick(Marker marker) {
+    public boolean onMarkerClick(@NonNull Marker marker) {
         return false;
     }
 }

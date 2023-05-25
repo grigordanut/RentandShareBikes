@@ -1,6 +1,7 @@
 package com.example.rentandsharebikes;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -8,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -84,10 +86,13 @@ public class RentBikesCustomer extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rent_bikes_customer);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Rent bikes customer");
 
         progressDialog = new ProgressDialog(RentBikesCustomer.this);
 
@@ -141,29 +146,24 @@ public class RentBikesCustomer extends AppCompatActivity {
         tVManufactRentBikes.setText(bike_ManufactRentBikes);
         tVPriceRentBikes.setText(String.valueOf(bike_PriceRentBikes));
 
-        Button buttonRentBike = findViewById(R.id.btnRentBike);
-        buttonRentBike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (bikesRentTask != null && bikesRentTask.isInProgress()) {
-                    Toast.makeText(RentBikesCustomer.this, "Rent bike in progress", Toast.LENGTH_SHORT).show();
-                } else {
-                    uploadRentBikesData();
-                }
+        Button btn_RentBike = findViewById(R.id.btnRentBike);
+        btn_RentBike.setOnClickListener(v -> {
+            if (bikesRentTask != null && bikesRentTask.isInProgress()) {
+                Toast.makeText(RentBikesCustomer.this, "Rent bike in progress", Toast.LENGTH_SHORT).show();
+            } else {
+                uploadRentBikesData();
             }
         });
     }
 
-    public void uploadRentBikesData(){
+    public void uploadRentBikesData() {
 
-        progressDialog.dismiss();
-
-        if (validateBikeRentDetails()){
+        if (validateBikeRentDetails()) {
             eTextDate_RentBike = eTextDateRentBike.getText().toString().trim();
-            etFName_RentBikes = etFNameRentBikes.getText().toString().trim();
-            etLName_RentBikes = etLNameRentBikes.getText().toString().trim();
-            etPhoneNo_RentBikes = etPhoneNoRentBikes.getText().toString().trim();
-            etEmail_RentBikes = etEmailRentBikes.getText().toString().trim();
+            etFName_RentBikes = Objects.requireNonNull(etFNameRentBikes.getText()).toString().trim();
+            etLName_RentBikes = Objects.requireNonNull(etLNameRentBikes.getText()).toString().trim();
+            etPhoneNo_RentBikes = Objects.requireNonNull(etPhoneNoRentBikes.getText()).toString().trim();
+            etEmail_RentBikes = Objects.requireNonNull(etEmailRentBikes.getText()).toString().trim();
             tVStoreName_RentBikes = tVStoreNameRentBikes.getText().toString().trim();
             tVCond_RentBikes = tVCondRentBikes.getText().toString().trim();
             tVModel_RentBikes = tVModelRentBikes.getText().toString().trim();
@@ -173,7 +173,7 @@ public class RentBikesCustomer extends AppCompatActivity {
             storageRefRentBikes = FirebaseStorage.getInstance().getReference("Rent Bikes");
             databaseRefRentBikes = FirebaseDatabase.getInstance().getReference("Rent Bikes");
 
-            progressDialog.setTitle("The Bike is renting");
+            progressDialog.setTitle("The Bike is renting!!");
             progressDialog.show();
 
             // Get the data from an ImageView as bytes
@@ -185,51 +185,46 @@ public class RentBikesCustomer extends AppCompatActivity {
             byte[] data = baos.toByteArray();
 
             bikesRentTask = storageRefRentBikes.putBytes(data)
-            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                    storageRefRentBikes.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onSuccess(@NonNull Uri uri) {
-                            String rent_BikesId = databaseRefRentBikes.push().getKey();
-                            bikeKey_RentedBike = rent_BikesId;
-                            RentedBikes rent_Bikes = new RentedBikes(eTextDate_RentBike, etFName_RentBikes,
-                                    etLName_RentBikes, etPhoneNo_RentBikes, etEmail_RentBikes,
-                                    tVStoreName_RentBikes, bike_StoreKeyRentBikes, tVCond_RentBikes,
-                                    tVModel_RentBikes, tVManufact_RentBikes, tVPrice_rentBikes, uri.toString(),
-                                    bike_CusIdRentBikes, bikeKey_RentedBike);
+                        public void onSuccess(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                            storageRefRentBikes.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(@NonNull Uri uri) {
+                                    String rent_BikesId = databaseRefRentBikes.push().getKey();
+                                    bikeKey_RentedBike = rent_BikesId;
+                                    RentedBikes rent_Bikes = new RentedBikes(eTextDate_RentBike, etFName_RentBikes,
+                                            etLName_RentBikes, etPhoneNo_RentBikes, etEmail_RentBikes,
+                                            tVStoreName_RentBikes, bike_StoreKeyRentBikes, tVCond_RentBikes,
+                                            tVModel_RentBikes, tVManufact_RentBikes, tVPrice_rentBikes, uri.toString(),
+                                            bike_CusIdRentBikes, bikeKey_RentedBike);
 
-                            assert rent_BikesId != null;
-                            databaseRefRentBikes.child(rent_BikesId).setValue(rent_Bikes);
-                            etFNameRentBikes.setText("");
-                            etLNameRentBikes.setText("");
-                            etPhoneNoRentBikes.setText("");
-                            etEmailRentBikes.setText("");;
-                            ivRentBikes.setImageResource(R.drawable.add_bikes_picture);
+                                    assert rent_BikesId != null;
+                                    databaseRefRentBikes.child(rent_BikesId).setValue(rent_Bikes);
+                                    etFNameRentBikes.setText("");
+                                    etLNameRentBikes.setText("");
+                                    etPhoneNoRentBikes.setText("");
+                                    etEmailRentBikes.setText("");
 
-                            startActivity(new Intent(RentBikesCustomer.this, CustomerPageRentBikes.class));
-                            deleteBikesData();
-                            Toast.makeText(RentBikesCustomer.this, "Rented bike successfully", Toast.LENGTH_SHORT).show();
-                            finish();
+                                    ivRentBikes.setImageResource(R.drawable.add_bikes_picture);
+
+                                    startActivity(new Intent(RentBikesCustomer.this, CustomerPageRentBikes.class));
+                                    deleteBikesData();
+                                    Toast.makeText(RentBikesCustomer.this, "Rented bike successfully", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            });
+                            progressDialog.dismiss();
                         }
+                    }).addOnFailureListener(e -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(RentBikesCustomer.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }).addOnProgressListener(taskSnapshot -> {
+                        //show rented progress
+                        double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
+                        progressDialog.setMessage("Rented: " + (int) progress + "%");
+                        progressDialog.setProgress((int) progress);
                     });
-                    progressDialog.dismiss();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    progressDialog.dismiss();
-                    Toast.makeText(RentBikesCustomer.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                    //show rented progress
-                    double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
-                    progressDialog.setMessage("Rented: " + (int) progress + "%");
-                    progressDialog.setProgress((int) progress);
-                }
-            });
         }
     }
 
@@ -262,30 +257,11 @@ public class RentBikesCustomer extends AppCompatActivity {
 
     private void deleteBikesData() {
         storageRefRemoveBikes = getInstance().getReferenceFromUrl(bike_ImageRentBikes);
-        storageRefRemoveBikes.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(@NonNull Void aVoid) {
-                databaseRefRemoveBikes = FirebaseDatabase.getInstance().getReference().child("Bikes");
-                Query query = databaseRefRemoveBikes.orderByChild("bike_Key").equalTo(bikeKey_RentBike);
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            ds.getRef().removeValue();
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(RentBikesCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(RentBikesCustomer.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        storageRefRemoveBikes.delete().addOnSuccessListener(aVoid -> {
+
+            databaseRefRemoveBikes = FirebaseDatabase.getInstance().getReference().child("Bikes");
+            databaseRefRemoveBikes.child(bikeKey_RentBike).removeValue();
+        }).addOnFailureListener(e -> Toast.makeText(RentBikesCustomer.this, e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     @Override
@@ -310,7 +286,7 @@ public class RentBikesCustomer extends AppCompatActivity {
                     assert user_Details != null;
                     assert customer != null;
                     if (user_Details.getUid().equals(ds_user.getKey())) {
-                        tVRentBikes.setText("Welcome: "+customer.getfName_Customer()+" "+customer.getlName_Customer());
+                        tVRentBikes.setText("Welcome: " + customer.getfName_Customer() + " " + customer.getlName_Customer());
                         etFNameRentBikes.setText(customer.getfName_Customer());
                         etLNameRentBikes.setText(customer.getlName_Customer());
                         etPhoneNoRentBikes.setText(customer.getPhoneNumb_Customer());

@@ -2,11 +2,9 @@ package com.example.rentandsharebikes;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +44,12 @@ public class LoginCustomer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_customer);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Log in customer");
+
+        progressDialog = new ProgressDialog(this);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
         emailLogCustom = findViewById(R.id.etEmailLogCustom);
         passLogCustom = findViewById(R.id.etPassLogCustom);
 
@@ -55,16 +59,11 @@ public class LoginCustomer extends AppCompatActivity {
             startActivity(forgotPass);
         });
 
-        progressDialog = new ProgressDialog(this);
-
-        firebaseAuth = FirebaseAuth.getInstance();
-
         rememberCheckBox = findViewById(R.id.cbRemember);
 
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkbox = preferences.getString("remember", "");
 
-        assert checkbox != null;
         if (checkbox.equals("true")) {
             Intent intent = new Intent(LoginCustomer.this, CustomerPageMain.class);
             startActivity(intent);

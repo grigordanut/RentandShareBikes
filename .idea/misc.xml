@@ -21,13 +21,16 @@
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/activity_bike_image_show_bikes_list_customer_all.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/activity_bike_image_show_bikes_rented_admin.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/activity_bike_image_show_bikes_rented_admin_all.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/activity_bike_image_show_bikes_rented_customer.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/activity_bike_image_show_rented_bikes_admin.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/activity_bike_image_show_rented_bikes_admin_all.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/activity_bike_image_show_rented_bikes_customer.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/activity_bike_store_image_add_bikes_admin.xml" value="0.21851851851851853" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/activity_bike_store_image_rent_bikes_custom.xml" value="0.21851851851851853" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/activity_bike_store_image_rent_bikes_customer.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/activity_bike_store_image_show_bikes_list_admin.xml" value="0.21851851851851853" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/activity_bike_store_image_show_bikes_list_custom.xml" value="0.21851851851851853" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/activity_bike_store_image_show_bikes_list_customer.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/activity_bike_store_image_show_bikes_list_main.xml" value="0.21851851851851853" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/activity_bike_store_image_show_rented_bikes_list_admin.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/activity_bike_store_image_show_stores_list_admin.xml" value="0.23703703703703705" />
@@ -67,6 +70,7 @@
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/image_bike_store_return_rented_bike.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/image_bikes_admin.xml" value="0.22592592592592592" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/image_bikes_admin_full.xml" value="0.22592592592592592" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/image_bikes_customer.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/image_bikes_rented_admin.xml" value="0.22592592592592592" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/image_bikestore.xml" value="0.22592592592592592" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/RentandShareBikes/app/src/main/res/layout/image_bikestore_return_bike.xml" value="0.25025641025641027" />

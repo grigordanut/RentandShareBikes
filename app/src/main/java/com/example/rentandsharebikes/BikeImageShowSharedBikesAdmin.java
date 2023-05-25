@@ -69,6 +69,7 @@ public class BikeImageShowSharedBikesAdmin extends AppCompatActivity implements 
     }
 
     public void loadSharedBikesNoOwner() {
+
         //Display the list of the bikes from Share Bikes database
         firebaseStDisplaySharedBikes = FirebaseStorage.getInstance();
         databaseRefDisplaySharedBikes = FirebaseDatabase.getInstance().getReference("Share Bikes");
@@ -98,20 +99,14 @@ public class BikeImageShowSharedBikesAdmin extends AppCompatActivity implements 
     }
 
     @Override
-    public void onItemClick(final int position) {
+    public void onItemClick(int position) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikeImageShowSharedBikesAdmin.this);
         alertDialogBuilder
                 .setMessage("Contact the owner for more information")
                 .setCancelable(false)
-                .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
-        AlertDialog alert1 = alertDialogBuilder.create();
-        alert1.show();
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
     }
 }

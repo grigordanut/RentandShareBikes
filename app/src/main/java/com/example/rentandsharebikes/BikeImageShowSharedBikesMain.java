@@ -102,15 +102,9 @@ public class BikeImageShowSharedBikesMain extends AppCompatActivity implements B
         alertDialogBuilder
                 .setMessage("Register and Log into your account to access the:\nRent and Share Bikes services.")
                 .setCancelable(false)
-                .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
-        AlertDialog alert1 = alertDialogBuilder.create();
-        alert1.show();
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

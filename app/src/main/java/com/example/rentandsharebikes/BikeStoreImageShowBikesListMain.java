@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BikeStoreImageShowBikesListMain extends AppCompatActivity{
 
@@ -35,6 +36,8 @@ public class BikeStoreImageShowBikesListMain extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_show_bikes_list_main);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Bike Stores available Main");
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();

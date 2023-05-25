@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -23,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity implements BikeStoreAdapterCustom.OnItemClickListener {
 
@@ -43,6 +43,8 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_show_stores_list_customer);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Bike Stores available Customer");
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
@@ -105,30 +107,21 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
         alertDialogBuilder
                 .setCancelable(false)
                 .setTitle("You selected " + selected_BikeStores.getBikeStore_Location() + " Store" + "\nSelect an option:")
-                .setAdapter(adapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setAdapter(adapter, (dialog, id) -> {
 
-                        if (which == 0) {
-                            Toast.makeText(BikeStoreImageShowStoresListCustomer.this, "Show Bikes Stores in Google Map", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(BikeStoreImageShowStoresListCustomer.this, MapsActivity.class));
-                        }
+                    if (id == 0) {
+                        Toast.makeText(BikeStoreImageShowStoresListCustomer.this, "Show Bikes Stores in Google Map", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(BikeStoreImageShowStoresListCustomer.this, MapsActivity.class));
+                    }
 
-                        if (which == 1) {
-                            startActivity(new Intent(BikeStoreImageShowStoresListCustomer.this, CustomerPageRentBikes.class));
-                            Toast.makeText(BikeStoreImageShowStoresListCustomer.this, "Back to Customer rent page", Toast.LENGTH_SHORT).show();
-                        }
+                    if (id == 1) {
+                        startActivity(new Intent(BikeStoreImageShowStoresListCustomer.this, CustomerPageRentBikes.class));
+                        Toast.makeText(BikeStoreImageShowStoresListCustomer.this, "Back to Customer rent page", Toast.LENGTH_SHORT).show();
                     }
                 })
+                .setNegativeButton("CLOSE", (dialog, id) -> dialog.dismiss());
 
-                .setNegativeButton("CLOSE",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-        final AlertDialog alertDialog = alertDialogBuilder.create();
+        AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 }

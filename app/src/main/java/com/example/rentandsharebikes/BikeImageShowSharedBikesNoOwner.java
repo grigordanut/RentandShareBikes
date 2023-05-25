@@ -109,15 +109,9 @@ public class BikeImageShowSharedBikesNoOwner extends AppCompatActivity implement
         alertDialogBuilder
                 .setMessage("Contact the owner if you like to share this bike")
                 .setCancelable(false)
-                .setPositiveButton("Ok",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
-        AlertDialog alert1 = alertDialogBuilder.create();
-        alert1.show();
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

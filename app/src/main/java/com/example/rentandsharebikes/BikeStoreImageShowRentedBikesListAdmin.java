@@ -9,7 +9,6 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -20,7 +19,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class BikeStoreImageShowRentedBikesListAdmin extends AppCompatActivity implements BikeStoreAdapterAdmin.OnItemClickListener{
 
@@ -89,7 +87,7 @@ public class BikeStoreImageShowRentedBikesListAdmin extends AppCompatActivity im
     @Override
     public void onItemClick(int position) {
         BikeStores selected_Store = bikeStoresList.get(position);
-        Intent store_Intent = new Intent(BikeStoreImageShowRentedBikesListAdmin.this, BikeImageShowRentedBikesAdmin.class);
+        Intent store_Intent = new Intent(BikeStoreImageShowRentedBikesListAdmin.this, BikeImageShowBikesRentedAdmin.class);
         store_Intent.putExtra("SName", selected_Store.getBikeStore_Location());
         store_Intent.putExtra("SKey",selected_Store.getBikeStore_Key());
         startActivity(store_Intent);

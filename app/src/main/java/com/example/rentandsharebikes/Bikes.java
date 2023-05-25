@@ -1,5 +1,7 @@
 package com.example.rentandsharebikes;
 
+import com.google.firebase.database.Exclude;
+
 public class Bikes {
 
     private String bike_Condition;
@@ -15,8 +17,7 @@ public class Bikes {
 
     }
 
-    public Bikes(String bike_Condition, String bike_Model, String bike_Manufacturer, double bike_Price,
-                 String bike_Image, String bikeStoreName, String bikeStoreKey, String bike_Key) {
+    public Bikes(String bike_Condition, String bike_Model, String bike_Manufacturer, double bike_Price, String bike_Image, String bikeStoreName, String bikeStoreKey) {
         this.bike_Condition = bike_Condition;
         this.bike_Model = bike_Model;
         this.bike_Manufacturer = bike_Manufacturer;
@@ -24,7 +25,6 @@ public class Bikes {
         this.bike_Image = bike_Image;
         this.bikeStoreName = bikeStoreName;
         this.bikeStoreKey = bikeStoreKey;
-        this.bike_Key = bike_Key;
     }
 
     public String getBike_Condition() {
@@ -83,10 +83,12 @@ public class Bikes {
         this.bikeStoreKey = bikeStoreKey;
     }
 
+    @Exclude
     public String getBike_Key() {
         return bike_Key;
     }
 
+    @Exclude
     public void setBike_Key(String bike_Key) {
         this.bike_Key = bike_Key;
     }

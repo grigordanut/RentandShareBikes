@@ -147,29 +147,22 @@ public class BikeImageRemoveSharedBikesOwner extends AppCompatActivity implement
         alertDialogBuilder
                 .setMessage("Are sure to delete "+selected_Bike.getShareBike_Model())
                 .setCancelable(false)
-                .setPositiveButton("Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        BikesShare selected_Bike = sharedBikesList.get(position);
-                        final String selectedKeyBike = selected_Bike.getShareBike_Key();
-                        StorageReference imageReference = fbStDeleteBikesShare.getReferenceFromUrl(selected_Bike.getShareBike_Image());
-                        imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                dbRefDeleteBikeShare.child(selectedKeyBike).removeValue();
-                                Toast.makeText(BikeImageRemoveSharedBikesOwner.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
-                                progressDialog.dismiss();
-                            }
-                        });
-                    }
-                })
+                .setPositiveButton("YES",
+                        (dialog, id) -> {
+                            BikesShare selected_Bike1 = sharedBikesList.get(position);
+                            final String selectedKeyBike = selected_Bike1.getShareBike_Key();
+                            StorageReference imageReference = fbStDeleteBikesShare.getReferenceFromUrl(selected_Bike1.getShareBike_Image());
+                            imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    dbRefDeleteBikeShare.child(selectedKeyBike).removeValue();
+                                    Toast.makeText(BikeImageRemoveSharedBikesOwner.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
+                                }
+                            });
+                        })
 
-                .setNegativeButton("No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                .setNegativeButton("NO", (dialog, id) -> dialog.cancel());
         progressDialog.dismiss();
         AlertDialog alert1 = alertDialogBuilder.create();
         alert1.show();

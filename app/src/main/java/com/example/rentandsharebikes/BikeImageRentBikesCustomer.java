@@ -86,8 +86,8 @@ public class BikeImageRentBikesCustomer extends AppCompatActivity implements Bik
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikesList.clear();
                 if (dataSnapshot.exists()) {
-                    bikesList.clear();
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Bikes bikes = postSnapshot.getValue(Bikes.class);
                         assert bikes != null;
@@ -98,14 +98,12 @@ public class BikeImageRentBikesCustomer extends AppCompatActivity implements Bik
                         } else {
                             tVBikeImageList.setText("No bikes available in " + bikeStore_Name + " store");
                         }
-
-                        progressDialog.dismiss();
                     }
 
                     bikeAdapterBikesCustomer.notifyDataSetChanged();
                 }
                 else{
-                    tVBikeImageList.setText("No Bikes registered were found!!");
+                    tVBikeImageList.setText("No Bikes available to rent!!");
                 }
 
                 progressDialog.dismiss();

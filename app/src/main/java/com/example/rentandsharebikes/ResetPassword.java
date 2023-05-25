@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class ResetPassword extends AppCompatActivity {
 
     //declare variables
@@ -27,6 +29,8 @@ public class ResetPassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Reset User Password");
 
         //initialize variables
         emailResetPass = findViewById(R.id.etResetPass);

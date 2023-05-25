@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +26,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class BikeImageShowRentedBikesAdminAll extends AppCompatActivity implements BikeAdapterRentedBikesAdmin.OnItemClickListener {
+public class BikeImageShowBikesRentedAdmin extends AppCompatActivity implements BikeAdapterRentedBikesAdmin.OnItemClickListener {
 
     private DatabaseReference databaseReference;
     private FirebaseStorage bikesStorage;
@@ -37,21 +37,32 @@ public class BikeImageShowRentedBikesAdminAll extends AppCompatActivity implemen
     private RecyclerView bikesListRecyclerView;
     private BikeAdapterRentedBikesAdmin bikeAdapterRentedBikesAdmin;
 
-    private TextView tVAdminRentedBikesAll;
+    private TextView tVAdminRentedBikes;
 
     private List<RentedBikes> rentedBikesList;
 
     private ProgressDialog progressDialog;
 
+    String bikeStore_Name = "";
+    String bikeStore_Key = "";
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_image_show_rented_bikes_admin_all);
+        setContentView(R.layout.activity_bike_image_show_bikes_rented_admin);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
-        tVAdminRentedBikesAll = findViewById(R.id.tvAdminRentedBikesAll);
+        getIntent().hasExtra("SName");
+        bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
+
+        getIntent().hasExtra("SKey");
+        bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
+
+        tVAdminRentedBikes = findViewById(R.id.tvAdminRentedBikes);
+        tVAdminRentedBikes.setText("No bikes rented from " + bikeStore_Name + " store");
 
         bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -59,9 +70,9 @@ public class BikeImageShowRentedBikesAdminAll extends AppCompatActivity implemen
 
         rentedBikesList = new ArrayList<>();
 
-        bikeAdapterRentedBikesAdmin = new BikeAdapterRentedBikesAdmin(BikeImageShowRentedBikesAdminAll.this, rentedBikesList);
+        bikeAdapterRentedBikesAdmin = new BikeAdapterRentedBikesAdmin(BikeImageShowBikesRentedAdmin.this, rentedBikesList);
         bikesListRecyclerView.setAdapter(bikeAdapterRentedBikesAdmin);
-        bikeAdapterRentedBikesAdmin.setOnItmClickListener(BikeImageShowRentedBikesAdminAll.this);
+        bikeAdapterRentedBikesAdmin.setOnItmClickListener(BikeImageShowBikesRentedAdmin.this);
     }
 
     @SuppressLint("SetTextI18n")
@@ -84,9 +95,11 @@ public class BikeImageShowRentedBikesAdminAll extends AppCompatActivity implemen
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     RentedBikes rent_Bikes = postSnapshot.getValue(RentedBikes.class);
                     assert rent_Bikes != null;
-                    rent_Bikes.setBike_RentKey(postSnapshot.getKey());
-                    rentedBikesList.add(rent_Bikes);
-                    tVAdminRentedBikesAll.setText(rentedBikesList.size()+" Bikes rented by customers");
+                    if (rent_Bikes.getStoreKey_RentBikes().equals(bikeStore_Key)) {
+                        rent_Bikes.setBike_RentKey(postSnapshot.getKey());
+                        rentedBikesList.add(rent_Bikes);
+                        tVAdminRentedBikes.setText(rentedBikesList.size()+" Bikes rented by customers");
+                    }
                 }
 
                 bikeAdapterRentedBikesAdmin.notifyDataSetChanged();
@@ -95,7 +108,7 @@ public class BikeImageShowRentedBikesAdminAll extends AppCompatActivity implemen
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeImageShowRentedBikesAdminAll.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeImageShowBikesRentedAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -105,7 +118,7 @@ public class BikeImageShowRentedBikesAdminAll extends AppCompatActivity implemen
 
         RentedBikes selected_Bike = rentedBikesList.get(position);
 
-        Context context = BikeImageShowRentedBikesAdminAll.this;
+        Context context = BikeImageShowBikesRentedAdmin.this;
         LayoutInflater li = LayoutInflater.from(context);
         View promptsView = li.inflate(R.layout.image_bike_full, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
@@ -124,17 +137,10 @@ public class BikeImageShowRentedBikesAdminAll extends AppCompatActivity implemen
                 .setTitle("Bike Model: " + selected_Bike.getBikeModel_RentBikes())
                 .setView(promptsView)
                 .setCancelable(false)
-                .setNegativeButton("CLOSE",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
+                .setNegativeButton("CLOSE", (dialog, id) -> dialog.cancel());
 
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
         alertDialog.show();
     }
 }

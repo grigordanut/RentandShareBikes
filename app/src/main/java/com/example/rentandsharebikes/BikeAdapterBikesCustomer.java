@@ -30,7 +30,7 @@ public class BikeAdapterBikesCustomer extends RecyclerView.Adapter<BikeAdapterBi
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(bikesContext).inflate(R.layout.image_bikes_admin,parent, false);
+        View view = LayoutInflater.from(bikesContext).inflate(R.layout.image_bikes_customer,parent, false);
         return new ImageViewHolder(view);
     }
 
@@ -39,17 +39,18 @@ public class BikeAdapterBikesCustomer extends RecyclerView.Adapter<BikeAdapterBi
     public void onBindViewHolder(ImageViewHolder holder, int position) {
 
         final Bikes uploadCurrent = bikesUploads.get(position);
-        holder.tvBikeCondition.setText(uploadCurrent.getBike_Condition());
-        holder.tvBikeModel.setText(uploadCurrent.getBike_Model());
-        holder.tvBikeManufacturer.setText(uploadCurrent.getBike_Manufacturer());
-        holder.tvBikePrice.setText(String.valueOf( +uploadCurrent.getBike_Price()));
+        holder.tVStoreNameUser.setText(uploadCurrent.getBikeStoreName());
+        holder.tVBikeConditionUser.setText(uploadCurrent.getBike_Condition());
+        holder.tVBikeModelUser.setText(uploadCurrent.getBike_Model());
+        holder.tVBikeManufactUser.setText(uploadCurrent.getBike_Manufacturer());
+        holder.tVBikePriceUser.setText(String.valueOf( +uploadCurrent.getBike_Price()));
 
         Picasso.get()
                 .load(uploadCurrent.getBike_Image())
                 .placeholder(R.mipmap.ic_launcher)
                 .fit()
                 .centerCrop()
-                .into(holder.imageBike);
+                .into(holder.imageBikeUser);
     }
 
     @Override
@@ -59,20 +60,22 @@ public class BikeAdapterBikesCustomer extends RecyclerView.Adapter<BikeAdapterBi
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public ImageView imageBike;
-        public TextView tvBikeCondition;
-        public TextView tvBikeModel;
-        public TextView tvBikeManufacturer;
-        public TextView tvBikePrice;
+        public ImageView imageBikeUser;
+        public TextView tVStoreNameUser;
+        public TextView tVBikeConditionUser;
+        public TextView tVBikeModelUser;
+        public TextView tVBikeManufactUser;
+        public TextView tVBikePriceUser;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
 
-            imageBike = itemView.findViewById(R.id.imgShowBike);
-            tvBikeCondition = itemView.findViewById(R.id.tvBikeCondition);
-            tvBikeModel = itemView.findViewById(R.id.tvBikeModel);
-            tvBikeManufacturer = itemView.findViewById(R.id.tvBikeManufact);
-            tvBikePrice = itemView.findViewById(R.id.tvBikePrice);
+            imageBikeUser = itemView.findViewById(R.id.imgBikesUser);
+            tVStoreNameUser = itemView.findViewById(R.id.tvStoreNameUser);
+            tVBikeConditionUser = itemView.findViewById(R.id.tvBikeCondUser);
+            tVBikeModelUser = itemView.findViewById(R.id.tvBikeModelUser);
+            tVBikeManufactUser = itemView.findViewById(R.id.tvBikeManufactUser);
+            tVBikePriceUser = itemView.findViewById(R.id.tvBikePriceUser);
 
             itemView.setOnClickListener(this);
         }

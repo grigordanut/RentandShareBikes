@@ -40,7 +40,7 @@ public class BikeStoreImageRentBikesCustomer extends AppCompatActivity implement
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
-        bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikeStoreRecyclerView = findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -58,6 +58,7 @@ public class BikeStoreImageRentBikesCustomer extends AppCompatActivity implement
     }
 
     private void loadBikeStoresListCustomer(){
+
         //initialize the bike store database
         databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 

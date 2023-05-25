@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,10 +37,12 @@ public class CustomerPageMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_main_page);
 
-        //initialise the variables
-        tVCustomPageMain = (TextView) findViewById(R.id.tvCustomPageMain);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Customer main page");
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        //initialise the variables
+        tVCustomPageMain = (TextView) findViewById(R.id.tvCustomPageMain);
 
         Button buttonRentBikes = (Button) findViewById(R.id.btnRentBikeCustom);
         buttonRentBikes.setOnClickListener(new View.OnClickListener() {

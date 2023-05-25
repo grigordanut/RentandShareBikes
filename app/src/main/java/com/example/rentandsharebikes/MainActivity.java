@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Main Activity");
+
         bikeStoresList = new ArrayList<>();
         bikesRentListAv = new ArrayList<>();
         bikesListAvShare = new ArrayList<>();

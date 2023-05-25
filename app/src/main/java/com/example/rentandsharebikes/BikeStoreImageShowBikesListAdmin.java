@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -16,7 +18,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,8 +79,8 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity implemen
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikeStoresList.clear();
                 if (dataSnapshot.exists()) {
-                    bikeStoresList.clear();
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
                         assert bikeStores != null;
@@ -86,8 +90,7 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity implemen
                     }
 
                     bikeStoreAdapterAdmin.notifyDataSetChanged();
-                }
-                else{
+                } else {
                     tVBikeStoresImage.setText("No Bike Stores were found!!");
                 }
 

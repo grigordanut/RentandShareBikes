@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,6 +16,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Objects;
+
 public class CalculateCoordinates extends AppCompatActivity {
 
     private EditText etStorePlace;
@@ -24,7 +25,7 @@ public class CalculateCoordinates extends AppCompatActivity {
 
     private TextView tvStoreAddress, tvLatitude, tvLongitude;
 
-    private Button buttonShowCoordinates, buttonSaveCoordinates;
+    private Button btn_ShowCoordinates, btn_SaveCoordinates;
 
     private ProgressDialog progressDialog;
 
@@ -33,44 +34,37 @@ public class CalculateCoordinates extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculate_coordinates);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Calculate Coordinates");
+
+        progressDialog = new ProgressDialog(this);
+
         etStorePlace = findViewById(R.id.etBikeStorePlace);
         tvStoreAddress = findViewById(R.id.tvShowStoreAddress);
         tvLatitude = findViewById(R.id.tvStoreLatitude);
         tvLongitude = findViewById(R.id.tvStoreLongitude);
 
-        progressDialog = new ProgressDialog(this);
-
-        ImageButton buttonClearStoreAddress = findViewById(R.id.btnClearStoreAddress);
-        buttonClearStoreAddress.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                etStorePlace.setText("");
-                tvStoreAddress.setText("Store Address");
-                tvLatitude.setText("");
-                tvLongitude.setText("");
-            }
+        ImageButton btn_ClearStoreAddress = findViewById(R.id.btnClearStoreAddress);
+        btn_ClearStoreAddress.setOnClickListener(v -> {
+            etStorePlace.setText("");
+            tvStoreAddress.setText("Store Address");
+            tvLatitude.setText("");
+            tvLongitude.setText("");
         });
 
-        buttonShowCoordinates = findViewById(R.id.btnShowCoordinates);
-        buttonShowCoordinates.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
+        btn_ShowCoordinates = findViewById(R.id.btnShowCoordinates);
+        btn_ShowCoordinates.setOnClickListener(v -> {
 
-                store_Place = etStorePlace.getText().toString().trim();
+            store_Place = etStorePlace.getText().toString().trim();
 
-                if (TextUtils.isEmpty(store_Place)) {
-                    etStorePlace.setError("Enter store Address");
-                    etStorePlace.requestFocus();
-                } else {
-                    progressDialog.setMessage("Calculate Coordinates");
-                    progressDialog.show();
-                    GeoLocation geoLocation = new GeoLocation();
-                    GeoLocation.getAddress(store_Place, getApplicationContext(), new GeoHandler());
-                }
-                progressDialog.dismiss();
+            if (TextUtils.isEmpty(store_Place)) {
+                etStorePlace.setError("Enter store Address");
+                etStorePlace.requestFocus();
+            } else {
+                progressDialog.setMessage("Calculate Coordinates");
+                progressDialog.show();
+                GeoLocation.getAddress(store_Place, getApplicationContext(), new GeoHandler());
             }
+            progressDialog.dismiss();
         });
     }
 
@@ -94,26 +88,23 @@ public class CalculateCoordinates extends AppCompatActivity {
             tvLatitude.setText(addressStoreLat);
             tvLongitude.setText(addressStoreLong);
 
-            buttonSaveCoordinates = findViewById(R.id.btnSaveCoordinates);
-            buttonSaveCoordinates.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    progressDialog.setMessage("Save Coordinates");
-                    progressDialog.show();
-                    etStorePlace.setText("");
-                    tvStoreAddress.setText("Store Address");
-                    tvLatitude.setText("");
-                    tvLongitude.setText("");
+            btn_SaveCoordinates = findViewById(R.id.btnSaveCoordinates);
+            btn_SaveCoordinates.setOnClickListener(v -> {
+                progressDialog.setMessage("Save Coordinates");
+                progressDialog.show();
+                etStorePlace.setText("");
+                tvStoreAddress.setText("Store Address");
+                tvLatitude.setText("");
+                tvLongitude.setText("");
 
-                    finish();
-                    Toast.makeText(CalculateCoordinates.this,"The coordinates has been saved",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CalculateCoordinates.this, AddBikeStore.class);
-                    intent.putExtra("Address", storeAddress);
-                    intent.putExtra("Latitude", addressStoreLat);
-                    intent.putExtra("Longitude", addressStoreLong);
-                    startActivity(intent);
-                    progressDialog.dismiss();
-                }
+                progressDialog.dismiss();
+                Toast.makeText(CalculateCoordinates.this,"The coordinates has been saved",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(CalculateCoordinates.this, AddBikeStore.class);
+                intent.putExtra("Address", storeAddress);
+                intent.putExtra("Latitude", addressStoreLat);
+                intent.putExtra("Longitude", addressStoreLong);
+                startActivity(intent);
+                finish();
             });
         }
     }

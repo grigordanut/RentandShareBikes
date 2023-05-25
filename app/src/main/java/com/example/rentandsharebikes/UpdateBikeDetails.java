@@ -44,6 +44,8 @@ import com.squareup.picasso.Picasso;
 
 import static com.google.firebase.storage.FirebaseStorage.getInstance;
 
+import java.util.Objects;
+
 public class UpdateBikeDetails extends AppCompatActivity {
 
     private static final String[] updateBikeCondition = new String[]{"Brand New", "Used Bike"};
@@ -86,6 +88,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_bike_details);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Update Bike details");
 
         storageRefUpdate = FirebaseStorage.getInstance().getReference("Bikes");
         databaseRefUpdate = FirebaseDatabase.getInstance().getReference("Bikes");
@@ -130,25 +133,17 @@ public class UpdateBikeDetails extends AppCompatActivity {
         etUpBikeManufact.setText(bike_updateManufact);
         etUpBikePrice.setText(String.valueOf(bike_updatePrice));
 
-        ivUpdateBike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGallery();
-            }
-        });
+        ivUpdateBike.setOnClickListener(view -> openGallery());
 
-        btn_UpTakePicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkSelfPermission(Manifest.permission.CAMERA) ==
-                        PackageManager.PERMISSION_DENIED ||
-                        checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                                PackageManager.PERMISSION_DENIED) {
-                    String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                    requestPermissions(permission, PERMISSION_CODE);
-                } else {
-                    openCamera();
-                }
+        btn_UpTakePicture.setOnClickListener(v -> {
+            if (checkSelfPermission(Manifest.permission.CAMERA) ==
+                    PackageManager.PERMISSION_DENIED ||
+                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                            PackageManager.PERMISSION_DENIED) {
+                String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                requestPermissions(permission, PERMISSION_CODE);
+            } else {
+                openCamera();
             }
         });
 
@@ -232,17 +227,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
     private void deleteOldBikePicture() {
 
         StorageReference storageRefDelete = getInstance().getReferenceFromUrl(bike_updateImage);
-        storageRefDelete.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(UpdateBikeDetails.this, "Previous image deleted", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(UpdateBikeDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        storageRefDelete.delete().addOnSuccessListener(aVoid -> Toast.makeText(UpdateBikeDetails.this, "Previous image deleted", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(UpdateBikeDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     //Upload the updated Bike into the Bike table
@@ -261,57 +246,46 @@ public class UpdateBikeDetails extends AppCompatActivity {
 
             final StorageReference fileReference = storageRefUpdate.child(System.currentTimeMillis() + "." + getFileExtension(imageUriUp));
             updateBikeTaskUp = fileReference.putFile(imageUriUp)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    .addOnSuccessListener(taskSnapshot -> {
+                        fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
+
+                            Query query = databaseRefUpdate.orderByKey().equalTo(bike_KeyUp);
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
-                                public void onSuccess(final Uri uri) {
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                    Query query = databaseRefUpdate.orderByChild("bike_Key").equalTo(bike_KeyUp);
-                                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                                ds.getRef().child("bike_Condition").setValue(etUpBike_Cond);
-                                                ds.getRef().child("bike_Model").setValue(etUpBike_Model);
-                                                ds.getRef().child("bike_Manufacturer").setValue(etUpBike_Manufact);
-                                                ds.getRef().child("bike_Price").setValue(etUpBike_Price);
-                                                ds.getRef().child("bike_Image").setValue(uri.toString());
-                                            }
+                                    for (DataSnapshot ds : snapshot.getChildren()) {
+                                        ds.getRef().child("bike_Condition").setValue(etUpBike_Cond);
+                                        ds.getRef().child("bike_Model").setValue(etUpBike_Model);
+                                        ds.getRef().child("bike_Manufacturer").setValue(etUpBike_Manufact);
+                                        ds.getRef().child("bike_Price").setValue(etUpBike_Price);
+                                        ds.getRef().child("bike_Image").setValue(uri.toString());
+                                    }
 
-                                            deleteOldBikePicture();
-                                            progressDialog.dismiss();
-                                            Toast.makeText(UpdateBikeDetails.this, "The Bike will be updated", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(UpdateBikeDetails.this, AdminPage.class));
-                                            finish();
-                                        }
+                                    deleteOldBikePicture();
+                                    progressDialog.dismiss();
+                                    Toast.makeText(UpdateBikeDetails.this, "The Bike will be updated", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(UpdateBikeDetails.this, AdminPage.class));
+                                    finish();
+                                }
 
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                                            Toast.makeText(UpdateBikeDetails.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Toast.makeText(UpdateBikeDetails.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            progressDialog.dismiss();
-                        }
+                        });
+                        progressDialog.dismiss();
                     })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(UpdateBikeDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                    .addOnFailureListener(e -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(UpdateBikeDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                            //show upload Progress
-                            double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
-                            progressDialog.setMessage("Updated: " + (int) progress + "%");
-                            progressDialog.setProgress((int) progress);
-                        }
+                    .addOnProgressListener(taskSnapshot -> {
+                        //show upload Progress
+                        double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
+                        progressDialog.setMessage("Updated: " + (int) progress + "%");
+                        progressDialog.setProgress((int) progress);
                     });
         }
     }
@@ -330,7 +304,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
             progressDialog.setMessage("The Bike is updating");
             progressDialog.show();
 
-            Query query = databaseRefUpdate.orderByChild("bike_Key").equalTo(bike_KeyUp);
+            Query query = databaseRefUpdate.orderByKey().equalTo(bike_KeyUp);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -386,24 +360,22 @@ public class UpdateBikeDetails extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setMessage("Select the Bike Condition")
-                .setPositiveButton("OK",
-                (arg0, arg1) -> {
-                });
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 
     public void alertDialogBikePictureNew() {
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setTitle("No Bike picture changed.")
                 .setMessage("Update the Bike with old picture.")
-                .setPositiveButton("YES",
-                        (arg0, arg1) -> uploadBikesWithOldPicture())
-                .setNegativeButton("CANCEL", (dialog, i) -> dialog.dismiss());
+                .setPositiveButton("YES", (dialog, id) -> uploadBikesWithOldPicture())
 
-        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                .setNegativeButton("CANCEL", (dialog, id) -> dialog.dismiss());
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 }

@@ -5,12 +5,13 @@
     android:id="@+id/activity_admin_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_bright">
+    android:background="@android:color/holo_blue_bright"
+    tools:context=".AdminPage">
 
-    <RelativeLayout
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".AdminPage"
+        android:orientation="vertical"
         tools:showIn="@layout/activity_admin_page">
 
         <TextView
@@ -18,20 +19,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:text="@string/tv_adminPage"
             android:textAlignment="center"
-            android:textSize="28sp"
             android:textColor="#000000"
-            tools:ignore="HardcodedText" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvAdminDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvWelcomeAdmin"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
             android:text="@string/tv_adminDetails"
             android:textAlignment="center"
             android:textColor="#000000"
@@ -41,7 +43,6 @@
             android:id="@+id/tvAdminPersonalDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvAdminDetails"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -49,114 +50,158 @@
             android:background="#f2f2f2"
             android:inputType="textMultiLine"
             android:paddingStart="10dp"
-            android:paddingBottom="10dp"
             android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="@string/tv_adminPersonalDetails"
             android:textColor="#000000"
             android:textSize="24sp"
             tools:ignore="RtlSymmetry,TextViewEdits" />
 
-        <TextView
-            android:id="@+id/tvAdminStores"
-            android:layout_width="wrap_content"
+        <!--Stores Available-->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvAdminPersonalDetails"
-            android:layout_alignStart="@+id/tvWelcomeAdmin"
-            android:layout_marginTop="20dp"
-            android:text="@string/tv_adminBikeStores"
-            android:textColor="#000000"
-            android:textSize="24sp" />
+            android:orientation="horizontal"
+            tools:showIn="@layout/activity_admin_page">
 
-        <TextView
-            android:id="@+id/tvAdminStoresAv"
-            android:layout_width="60dp"
+            <TextView
+                android:id="@+id/tvAdminStores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="-80dp"
+                android:layout_weight="1"
+                android:text="@string/tv_adminBikeStores"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tvAdminStoresAv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:text="@string/tv_adminBikeStoresAv"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!--Bikes Available-->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvAdminPersonalDetails"
-            android:layout_alignEnd="@+id/tvWelcomeAdmin"
-            android:layout_marginTop="20dp"
-            android:background="#ffffff"
-            android:text="@string/tv_adminBikeStoresAv"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            tools:showIn="@layout/activity_admin_page">
 
-        <TextView
-            android:id="@+id/tvAdminBikesRent"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tvAdminBikesRent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="-80dp"
+                android:layout_weight="1"
+                android:text="@string/tv_adminBike"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tvAdminBikesRentAv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:text="@string/tv_adminBikeAv"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!--Bikes Rented-->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvAdminStores"
-            android:layout_alignStart="@+id/tvWelcomeAdmin"
-            android:layout_marginTop="20dp"
-            android:text="@string/tv_adminBike"
-            android:textColor="#000000"
-            android:textSize="24sp" />
+            android:orientation="horizontal"
+            tools:showIn="@layout/activity_admin_page">
 
-        <TextView
-            android:id="@+id/tvAdminBikesRentAv"
-            android:layout_width="60dp"
+            <TextView
+                android:id="@+id/tvAdminBikesRented"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="-80dp"
+                android:layout_weight="1"
+                android:text="@string/tv_adminBikeRented"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tvAdminBikesRentedAv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:text="@string/tv_mainBikesRentAv"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!--Bikes Share Available-->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvAdminStoresAv"
-            android:layout_alignEnd="@+id/tvWelcomeAdmin"
-            android:layout_marginTop="20dp"
-            android:background="#ffffff"
-            android:text="@string/tv_adminBikeAv"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            tools:showIn="@layout/activity_admin_page">
 
-        <TextView
-            android:id="@+id/tvAdminBikesRented"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvAdminBikesRent"
-            android:layout_alignStart="@+id/tvWelcomeAdmin"
-            android:layout_marginTop="20dp"
-            android:text="@string/tv_adminBikeRented"
-            android:textColor="#000000"
-            android:textSize="24sp" />
+            <TextView
+                android:id="@+id/tvAdminBikesShare"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="-80dp"
+                android:layout_weight="1"
+                android:text="@string/tv_adminBikeShared"
+                android:textColor="#000000"
+                android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/tvAdminBikesRentedAv"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvAdminBikesRentAv"
-            android:layout_alignEnd="@+id/tvWelcomeAdmin"
-            android:layout_marginTop="20dp"
-            android:background="#ffffff"
-            android:text="@string/tv_mainBikesRentAv"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvAdminBikesShareAv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:text="@string/tv_adminBikeSharedAv"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tvAdminBikesShare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvAdminBikesRented"
-            android:layout_alignStart="@+id/tvWelcomeAdmin"
-            android:layout_marginTop="20dp"
-            android:text="@string/tv_adminBikeShared"
-            android:textColor="#000000"
-            android:textSize="24sp" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvAdminBikesShareAv"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvAdminBikesRentedAv"
-            android:layout_alignEnd="@+id/tvWelcomeAdmin"
-            android:layout_marginTop="20dp"
-            android:background="#ffffff"
-            android:text="@string/tv_adminBikeSharedAv"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navViewAdmin"

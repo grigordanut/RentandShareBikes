@@ -21,8 +21,8 @@ import java.util.List;
 
 public class BikeStoreAdapterMain extends RecyclerView.Adapter<BikeStoreAdapterMain.ImageViewHolder> {
 
-    private Context bikeStoreContext;
-    private List<BikeStores> bikeStoresList;
+    private final Context bikeStoreContext;
+    private final List<BikeStores> bikeStoresList;
 
     private OnItemClickListener clickListener;
 

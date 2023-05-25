@@ -49,9 +49,9 @@ public class BikeImageShowBikesListCustomerAll extends AppCompatActivity impleme
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
-        tVBikeImageShowListCustomAll = (TextView) findViewById(R.id.tvBikeImageShowListCustomAll);
+        tVBikeImageShowListCustomAll = findViewById(R.id.tvBikeImageShowListCustomAll);
 
-        bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -79,8 +79,8 @@ public class BikeImageShowBikesListCustomerAll extends AppCompatActivity impleme
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikesList.clear();
                 if (dataSnapshot.exists()) {
-                    bikesList.clear();
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Bikes bikes = postSnapshot.getValue(Bikes.class);
                         assert bikes != null;
@@ -90,9 +90,8 @@ public class BikeImageShowBikesListCustomerAll extends AppCompatActivity impleme
                     }
 
                     bikeAdapterBikesCustomer.notifyDataSetChanged();
-                }
-                else {
-                    tVBikeImageShowListCustomAll.setText("No Bikes registered were found!!");
+                } else {
+                    tVBikeImageShowListCustomAll.setText("No Bikes bikes available to rent!!");
                 }
 
                 progressDialog.dismiss();
@@ -107,7 +106,7 @@ public class BikeImageShowBikesListCustomerAll extends AppCompatActivity impleme
 
     //Action on bikes onClick
     @Override
-    public void onItemClick(final int position) {
+    public void onItemClick(int position) {
         final String[] options = {"Rent this Bike", "Back Main Page"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, options);
         Bikes selected_Bike = bikesList.get(position);
@@ -136,20 +135,15 @@ public class BikeImageShowBikesListCustomerAll extends AppCompatActivity impleme
 
                         if (which == 1) {
                             startActivity(new Intent(BikeImageShowBikesListCustomerAll.this, CustomerPageRentBikes.class));
-                            Toast.makeText(BikeImageShowBikesListCustomerAll.this, "Back to main page", Toast.LENGTH_SHORT).show();
+
+
                         }
                     }
                 })
 
-                .setNegativeButton("CLOSE",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                .setNegativeButton("CLOSE", (dialog, id) -> dialog.dismiss());
 
-        final AlertDialog alertDialog = alertDialogBuilder.create();
+        AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 }

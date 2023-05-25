@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -46,14 +45,14 @@ public class BikeStoreImageShowStoresListMain extends AppCompatActivity implemen
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
-        tVBikeStoresImaShowStoreListMain = (TextView) findViewById(R.id.tvBikeStoresImageShowStoreListMain);
+        tVBikeStoresImaShowStoreListMain = findViewById(R.id.tvBikeStoresImageShowStoreListMain);
         tVBikeStoresImaShowStoreListMain.setText("No Bike Stores available");
 
-        bikeStoreRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
+        bikeStoreRecyclerView = findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
         bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        bikeStoresList = new ArrayList<BikeStores>();
+        bikeStoresList = new ArrayList<>();
 
         bikeStoreAdapterMain = new BikeStoreAdapterMain(BikeStoreImageShowStoresListMain.this, bikeStoresList);
         bikeStoreRecyclerView.setAdapter(bikeStoreAdapterMain);
@@ -67,11 +66,12 @@ public class BikeStoreImageShowStoresListMain extends AppCompatActivity implemen
     }
 
     private void loadBikeStoresListAdmin() {
+
         //initialize the bike store database
         databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
         bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
+            @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikeStoresList.clear();
@@ -83,6 +83,7 @@ public class BikeStoreImageShowStoresListMain extends AppCompatActivity implemen
                     tVBikeStoresImaShowStoreListMain.setText(bikeStoresList.size() + " Bike Stores available");
                 }
 
+                bikeStoreAdapterMain.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
@@ -105,28 +106,19 @@ public class BikeStoreImageShowStoresListMain extends AppCompatActivity implemen
         alertDialogBuilder
                 .setCancelable(false)
                 .setTitle("You selected " + selected_store.getBikeStore_Location() + " Store" + "\nSelect an option:")
-                .setAdapter(adapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setAdapter(adapter, (dialog, id) -> {
 
-                        if (which == 0) {
-                            Toast.makeText(BikeStoreImageShowStoresListMain.this, "Show Bikes Stores in Google Map", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(BikeStoreImageShowStoresListMain.this, MapsActivity.class));
-                        }
-                        if (which == 1) {
-                            startActivity(new Intent(BikeStoreImageShowStoresListMain.this, MainActivity.class));
-                            Toast.makeText(BikeStoreImageShowStoresListMain.this, "Back to main page", Toast.LENGTH_SHORT).show();
-                        }
+                    if (id == 0) {
+                        Toast.makeText(BikeStoreImageShowStoresListMain.this, "Show Bikes Stores in Google Map", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(BikeStoreImageShowStoresListMain.this, MapsActivity.class));
+                    }
+                    if (id == 1) {
+                        startActivity(new Intent(BikeStoreImageShowStoresListMain.this, MainActivity.class));
+                        Toast.makeText(BikeStoreImageShowStoresListMain.this, "Back to main page", Toast.LENGTH_SHORT).show();
                     }
                 })
 
-                .setNegativeButton("CLOSE",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                .setNegativeButton("CLOSE", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

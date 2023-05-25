@@ -133,7 +133,7 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
         }
 
         @Override
-        public boolean onMenuItemClick(MenuItem item) {
+        public boolean onMenuItemClick(@NonNull MenuItem item) {
             if (clickListener != null) {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {

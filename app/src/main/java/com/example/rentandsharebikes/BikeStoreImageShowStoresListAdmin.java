@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +20,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,10 +48,9 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_show_stores_list_admin);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Bike Stores available");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Bike Stores available Admin");
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.show();
+        progressDialog = new ProgressDialog(BikeStoreImageShowStoresListAdmin.this);
 
         tVListBikeStoresAdmin = findViewById(R.id.tvListBikeStoresAdmin);
 
@@ -93,6 +90,8 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
 
     private void loadBikeStoresListAdmin() {
 
+        progressDialog.show();
+
         //initialize the bike store database
         dbRefStoresAv = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
 
@@ -111,8 +110,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
                     }
 
                     bikeStoreAdapterShowStoresListAdmin.notifyDataSetChanged();
-                }
-                else{
+                } else {
                     tVListBikeStoresAdmin.setText("No Bike Stores were found!!");
                 }
 
@@ -154,33 +152,25 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
 
     //Action of the menu Delete and alert dialog
     @Override
-    public void onDeleteStoreClick(final int position) {
-        BikeStores selectedBikeStores = bikeStoresList.get(position);
+    public void onDeleteStoreClick(int position) {
+
+        BikeStores selected_BikeStores = bikeStoresList.get(position);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikeStoreImageShowStoresListAdmin.this);
         alertDialogBuilder
-                .setMessage("Are sure to delete " + selectedBikeStores.getBikeStore_Location() + " Bike Store?")
+                .setMessage("Are sure to delete " + selected_BikeStores.getBikeStore_Location() + " Bike Store?")
                 .setCancelable(false)
-                .setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                BikeStores selectedBikeStores = bikeStoresList.get(position);
-                                String selectedKeyStore = selectedBikeStores.getBikeStore_Key();
-                                dbRefStoresAv.child(selectedKeyStore).removeValue();
-                                Toast.makeText(BikeStoreImageShowStoresListAdmin.this, "The Bike Store " + selectedBikeStores.getBikeStore_Location() + " has been successfully deleted.", Toast.LENGTH_SHORT).show();
-
-                            }
+                .setPositiveButton("YES",
+                        (dialog, id) -> {
+                            String selected_StoreKey = selected_BikeStores.getBikeStore_Key();
+                            dbRefStoresAv.child(selected_StoreKey).removeValue();
+                            Toast.makeText(BikeStoreImageShowStoresListAdmin.this, "The Bike Store " + selected_BikeStores.getBikeStore_Location() + " has been successfully deleted.", Toast.LENGTH_SHORT).show();
                         })
 
-                .setNegativeButton("CANCEL",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
+                .setNegativeButton("CANCEL", (dialog, id) -> dialog.cancel());
 
-        AlertDialog alert1 = alertDialogBuilder.create();
-        alert1.show();
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
     }
 
     @Override
@@ -191,16 +181,10 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
         alertDialogBuilder
                 .setMessage("The " + selectedBikeStores.getBikeStore_Location() + " Bike Store still has bikes and cannot be deleted \nDelete the Bikes first and after delete the Bike Store")
                 .setCancelable(false)
-                .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
-        AlertDialog alert1 = alertDialogBuilder.create();
-        alert1.show();
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     @Override

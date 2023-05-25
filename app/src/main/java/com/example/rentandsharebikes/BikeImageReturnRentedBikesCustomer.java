@@ -65,6 +65,8 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
 
         tVCustomerReturnBikes = findViewById(R.id.tvCusReturnBikes);
 
+        tVCustomerReturnBikes.setText("No Bikes rented by: " + customerFirst_Name + " " + customerLast_Name);
+
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
         bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -93,29 +95,22 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    rentedBikesList.clear();
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        RentedBikes rent_Bikes = postSnapshot.getValue(RentedBikes.class);
+                rentedBikesList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    RentedBikes rent_Bikes = postSnapshot.getValue(RentedBikes.class);
 
-                        assert rent_Bikes != null;
-                        if (rent_Bikes.getCustomerId_RentBikes().equals(customer_Id)) {
-                            rent_Bikes.setBike_RentKey(postSnapshot.getKey());
-                            rentedBikesList.add(rent_Bikes);
-                            tVCustomerReturnBikes.setText("Select the Bike");
-                        } else {
-                            tVCustomerReturnBikes.setText("No rented Bikes");
-                        }
-
-                        progressDialog.dismiss();
+                    assert rent_Bikes != null;
+                    if (rent_Bikes.getCustomerId_RentBikes().equals(customer_Id)) {
+                        rent_Bikes.setBike_RentKey(postSnapshot.getKey());
+                        rentedBikesList.add(rent_Bikes);
+                        tVCustomerReturnBikes.setText("Select the Bike");
                     }
-
-                    bikeAdapterRentedBikesCustomer.notifyDataSetChanged();
-                }
-                else{
-                    tVCustomerReturnBikes.setText("No rented Bikes");
+//                    else {
+//                        tVCustomerReturnBikes.setText("No rented Bikes 1");
+//                    }
                 }
 
+                bikeAdapterRentedBikesCustomer.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 

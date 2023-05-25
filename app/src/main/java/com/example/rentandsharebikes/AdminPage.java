@@ -65,6 +65,8 @@ public class AdminPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_page);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN Page");
+
         //Retrieve data from Bike Store table
         dbRefBikeStoresAv = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
@@ -137,7 +139,7 @@ public class AdminPage extends AppCompatActivity {
                     //Show the full list of rented Bikes
                     case R.id.adminShow_bikesRentedAll:
                         Toast.makeText(AdminPage.this, "Rented Bikes All",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this, BikeImageShowRentedBikesAdminAll.class));
+                        startActivity(new Intent(AdminPage.this, BikeImageShowBikesRentedAdminAll.class));
                         break;
                     //Show the full list of rented Bikes
                     case R.id.adminShow_bikesShared:
@@ -204,6 +206,10 @@ public class AdminPage extends AppCompatActivity {
                     bikeStoresList.add(bike_Stores);
                     numberStoresAvailable = bikeStoresList.size();
                     tVAdminStoresAv.setText(String.valueOf(numberStoresAvailable));
+
+                    if (bikeStoresList.size() == 0) {
+                        tVAdminStoresAv.setText(String.valueOf(0));
+                    }
                 }
             }
 
@@ -228,6 +234,10 @@ public class AdminPage extends AppCompatActivity {
                     bikesRentListAv.add(bikes);
                     numberBikesAvRent = bikesRentListAv.size();
                     tVAdminBikesRentAv.setText(String.valueOf(numberBikesAvRent));
+
+                    if (bikesRentListAv.size() == 0) {
+                        tVAdminBikesRentAv.setText(String.valueOf(0));
+                    }
                 }
             }
 
@@ -252,6 +262,10 @@ public class AdminPage extends AppCompatActivity {
                     bikesListRented.add(rented_Bikes);
                     numberBikesRented = bikesListRented.size();
                     tVAdminBikesRented.setText(String.valueOf(numberBikesRented));
+
+                    if (bikesListRented.size() == 0) {
+                        tVAdminBikesRented.setText(String.valueOf(0));
+                    }
                 }
             }
 

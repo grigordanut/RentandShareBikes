@@ -42,6 +42,12 @@ public class EditCustomerProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_customer_profile);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Edit Customer profile");
+
+        progressDialog = new ProgressDialog(EditCustomerProfile.this);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
         //initialise the variables
         newFirstName = (EditText) findViewById(R.id.etNewFirstName);
         newLastName = (EditText) findViewById(R.id.etNewLastName);
@@ -50,10 +56,6 @@ public class EditCustomerProfile extends AppCompatActivity {
         newEmail = (EditText)findViewById(R.id.etNewEmail);
 
         textViewEditProfile = (TextView)findViewById(R.id.tvEditProfile);
-
-        progressDialog = new ProgressDialog(EditCustomerProfile.this);
-
-        firebaseAuth = FirebaseAuth.getInstance();
 
         //load the user details in the edit texts
         databaseReference = FirebaseDatabase.getInstance().getReference("Customers");
@@ -89,33 +91,30 @@ public class EditCustomerProfile extends AppCompatActivity {
 
         //save the user details in the database
         buttonSave = (Button) findViewById(R.id.btnSave);
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressDialog.show();
-                String newFirst_Name = newFirstName.getText().toString().trim();
-                String newLast_Name = newLastName.getText().toString().trim();
-                String newUser_Name = newUserName.getText().toString().trim();
-                String new_Phone = newPhone.getText().toString().trim();
-                String newEmail_Address = newEmail.getText().toString();
+        buttonSave.setOnClickListener(v -> {
+            progressDialog.show();
+            String newFirst_Name = newFirstName.getText().toString().trim();
+            String newLast_Name = newLastName.getText().toString().trim();
+            String newUser_Name = newUserName.getText().toString().trim();
+            String new_Phone = newPhone.getText().toString().trim();
+            String newEmail_Address = newEmail.getText().toString();
 
-                String user_id = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
-                DatabaseReference currentUser = databaseReference.child(user_id);
-                Customers customersProf = new Customers(newFirst_Name, newLast_Name, newUser_Name, new_Phone,newEmail_Address);
-                currentUser.setValue(customersProf);
+            String user_id = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
+            DatabaseReference currentUser = databaseReference.child(user_id);
+            Customers customersProf = new Customers(newFirst_Name, newLast_Name, newUser_Name, new_Phone,newEmail_Address);
+            currentUser.setValue(customersProf);
 
-                //clear data input fields
-                newFirstName.getText().clear();
-                newLastName.getText().clear();
-                newUserName.getText().clear();
-                newPhone.getText().clear();
-                newEmail.getText().clear();
+            //clear data input fields
+            newFirstName.getText().clear();
+            newLastName.getText().clear();
+            newUserName.getText().clear();
+            newPhone.getText().clear();
+            newEmail.getText().clear();
 
-                progressDialog.dismiss();
-                Toast.makeText(EditCustomerProfile.this, "Your details has been changed successfully", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(EditCustomerProfile.this, LoginCustomer.class));
-                finish();
-            }
+            progressDialog.dismiss();
+            Toast.makeText(EditCustomerProfile.this, "Your details has been changed successfully", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(EditCustomerProfile.this, LoginCustomer.class));
+            finish();
         });
     }
 
@@ -134,10 +133,8 @@ public class EditCustomerProfile extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.editDetailsCustomGoBack:{
-                goBackEditCustom();
-            }
+        if (item.getItemId() == R.id.editDetailsCustomGoBack) {
+            goBackEditCustom();
         }
 
         return super.onOptionsItemSelected(item);

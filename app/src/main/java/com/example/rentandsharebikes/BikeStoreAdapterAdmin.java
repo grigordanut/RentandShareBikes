@@ -72,6 +72,10 @@ public class BikeStoreAdapterAdmin extends RecyclerView.Adapter<BikeStoreAdapter
                         numberBikesAvailable = bikesList.size();
                         holder.tvStoreBikesAvailable.setText(String.valueOf(numberBikesAvailable));
                     }
+
+                    if (bikesList.size() == 0) {
+                        holder.tvStoreBikesAvailable.setText(String.valueOf(0));
+                    }
                 }
             }
 

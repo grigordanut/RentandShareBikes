@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BikeStoreImageAddBikesAdmin extends AppCompatActivity implements BikeStoreAdapterAdmin.OnItemClickListener {
 
@@ -39,6 +40,8 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity implements Bi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_add_bikes_admin);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Add bikes to Bike Store");
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();

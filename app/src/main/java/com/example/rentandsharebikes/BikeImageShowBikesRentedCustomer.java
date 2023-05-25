@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikeImageShowRentedBikesCustomer extends AppCompatActivity implements BikeAdapterRentedBikesCustomer.OnItemClickListener {
+public class BikeImageShowBikesRentedCustomer extends AppCompatActivity implements BikeAdapterRentedBikesCustomer.OnItemClickListener {
 
     private DatabaseReference databaseRefRemoveBike;
     private DatabaseReference databaseRefRestoreBike;
@@ -52,7 +51,7 @@ public class BikeImageShowRentedBikesCustomer extends AppCompatActivity implemen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_image_show_rented_bikes_customer);
+        setContentView(R.layout.activity_bike_image_show_bikes_rented_customer);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
@@ -75,9 +74,9 @@ public class BikeImageShowRentedBikesCustomer extends AppCompatActivity implemen
 
         rentedBikesList = new ArrayList<>();
 
-        bikeAdapterRentedBikesCustomer = new BikeAdapterRentedBikesCustomer(BikeImageShowRentedBikesCustomer.this, rentedBikesList);
+        bikeAdapterRentedBikesCustomer = new BikeAdapterRentedBikesCustomer(BikeImageShowBikesRentedCustomer.this, rentedBikesList);
         bikesListRecyclerView.setAdapter(bikeAdapterRentedBikesCustomer);
-        bikeAdapterRentedBikesCustomer.setOnItmClickListener(BikeImageShowRentedBikesCustomer.this);
+        bikeAdapterRentedBikesCustomer.setOnItmClickListener(BikeImageShowBikesRentedCustomer.this);
     }
 
     @SuppressLint("SetTextI18n")
@@ -106,6 +105,9 @@ public class BikeImageShowRentedBikesCustomer extends AppCompatActivity implemen
                         tVCustomerRentBikes.setText(rentedBikesList.size() + " bikes rented by "
                                 + rent_Bikes.getfName_RentBikes() + " " + rent_Bikes.getlName_RentBikes());
                     }
+//                    else {
+//                        tVCustomerRentBikes.setText("No Bikes rented by: " + customerFirst_Name + " " + customerLast_Name);
+//                    }
                 }
 
                 bikeAdapterRentedBikesCustomer.notifyDataSetChanged();
@@ -114,7 +116,7 @@ public class BikeImageShowRentedBikesCustomer extends AppCompatActivity implemen
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeImageShowRentedBikesCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeImageShowBikesRentedCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -131,33 +133,24 @@ public class BikeImageShowRentedBikesCustomer extends AppCompatActivity implemen
         alertDialogBuilder
                 .setCancelable(false)
                 .setTitle("You selected: " + sel_Bike.getBikeModel_RentBikes() + "\nSelect an option:")
-                .setAdapter(adapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0) {
-                            RentedBikes sel_Bike = rentedBikesList.get(position);
-                            Intent intent_Ret = new Intent ( BikeImageShowRentedBikesCustomer.this, ReturnRentedBikes.class);
-                            //Intent intent_Ret = new Intent ( BikeImageShowRentedBikesCustomer.this, ReturnRentedBikesSpinner.class);
-                            //Bike key of rented bike
-                            intent_Ret.putExtra("BikeRentedKey",sel_Bike.getBike_RentKey());
-                            Toast.makeText(BikeImageShowRentedBikesCustomer.this, "Return the rented Bike", Toast.LENGTH_SHORT).show();
-                            startActivity(intent_Ret);
-                        }
-                        if (which == 1) {
-                            Toast.makeText(BikeImageShowRentedBikesCustomer.this, "Go back to renting page", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(BikeImageShowRentedBikesCustomer.this, CustomerPageRentBikes.class));
-                        }
-
+                .setAdapter(adapter, (dialog, id) -> {
+                    if (id == 0) {
+                        RentedBikes sel_Bike1 = rentedBikesList.get(position);
+                        Intent intent_Ret = new Intent ( BikeImageShowBikesRentedCustomer.this, ReturnRentedBikes.class);
+                        //Intent intent_Ret = new Intent ( BikeImageShowBikesRentedCustomer.this, ReturnRentedBikesSpinner.class);
+                        //Bike key of rented bike
+                        intent_Ret.putExtra("BikeRentedKey", sel_Bike1.getBike_RentKey());
+                        Toast.makeText(BikeImageShowBikesRentedCustomer.this, "Return the rented Bike", Toast.LENGTH_SHORT).show();
+                        startActivity(intent_Ret);
                     }
+                    if (id == 1) {
+                        Toast.makeText(BikeImageShowBikesRentedCustomer.this, "Go back to renting page", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(BikeImageShowBikesRentedCustomer.this, CustomerPageRentBikes.class));
+                    }
+
                 })
 
-                .setNegativeButton("CLOSE",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                .setNegativeButton("CLOSE", (dialog, id) -> dialog.dismiss());
 
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
