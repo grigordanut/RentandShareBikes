@@ -27,8 +27,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,10 +34,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import static com.google.firebase.storage.FirebaseStorage.getInstance;
@@ -56,7 +52,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
 
     private StorageReference storageRefUpdate;
     private DatabaseReference databaseRefUpdate;
-    private StorageTask updateBikeTaskUp;
+    private StorageTask bikeTaskUpdate;
 
     private ArrayAdapter<String> updateArrayAdapter;
 
@@ -150,7 +146,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
         btn_SaveBikeUpdated.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (updateBikeTaskUp != null && updateBikeTaskUp.isInProgress()) {
+                if (bikeTaskUpdate != null && bikeTaskUpdate.isInProgress()) {
                     Toast.makeText(UpdateBikeDetails.this, "Update bike in progress", Toast.LENGTH_SHORT).show();
                 } else {
                     if (imageUriUp == null) {
@@ -227,12 +223,13 @@ public class UpdateBikeDetails extends AppCompatActivity {
     private void deleteOldBikePicture() {
 
         StorageReference storageRefDelete = getInstance().getReferenceFromUrl(bike_updateImage);
-        storageRefDelete.delete().addOnSuccessListener(aVoid -> Toast.makeText(UpdateBikeDetails.this, "Previous image deleted", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(UpdateBikeDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+        storageRefDelete.delete()
+                .addOnSuccessListener(aVoid -> Toast.makeText(UpdateBikeDetails.this, "Previous image deleted", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(UpdateBikeDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     //Upload the updated Bike into the Bike table
     public void updateBikesWithNewPicture() {
-        progressDialog.dismiss();
 
         if (validateUpdateBikeDetails()) {
 
@@ -245,21 +242,25 @@ public class UpdateBikeDetails extends AppCompatActivity {
             progressDialog.show();
 
             final StorageReference fileReference = storageRefUpdate.child(System.currentTimeMillis() + "." + getFileExtension(imageUriUp));
-            updateBikeTaskUp = fileReference.putFile(imageUriUp)
+            bikeTaskUpdate = fileReference.putFile(imageUriUp)
                     .addOnSuccessListener(taskSnapshot -> {
                         fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
-
-                            Query query = databaseRefUpdate.orderByKey().equalTo(bike_KeyUp);
-                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            databaseRefUpdate.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                    for (DataSnapshot ds : snapshot.getChildren()) {
-                                        ds.getRef().child("bike_Condition").setValue(etUpBike_Cond);
-                                        ds.getRef().child("bike_Model").setValue(etUpBike_Model);
-                                        ds.getRef().child("bike_Manufacturer").setValue(etUpBike_Manufact);
-                                        ds.getRef().child("bike_Price").setValue(etUpBike_Price);
-                                        ds.getRef().child("bike_Image").setValue(uri.toString());
+                                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                                        String bike_Key = postSnapshot.getKey();
+                                        assert bike_Key != null;
+
+                                        if (bike_Key.equals(bike_KeyUp)) {
+                                            postSnapshot.getRef().child("bike_Condition").setValue(etUpBike_Cond);
+                                            postSnapshot.getRef().child("bike_Model").setValue(etUpBike_Model);
+                                            postSnapshot.getRef().child("bike_Manufacturer").setValue(etUpBike_Manufact);
+                                            postSnapshot.getRef().child("bike_Price").setValue(etUpBike_Price);
+                                            postSnapshot.getRef().child("bike_Image").setValue(uri.toString());
+                                        }
                                     }
 
                                     deleteOldBikePicture();
@@ -274,13 +275,11 @@ public class UpdateBikeDetails extends AppCompatActivity {
                                     Toast.makeText(UpdateBikeDetails.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
+
                         });
-                        progressDialog.dismiss();
+
                     })
-                    .addOnFailureListener(e -> {
-                        progressDialog.dismiss();
-                        Toast.makeText(UpdateBikeDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    })
+                    .addOnFailureListener(e -> Toast.makeText(UpdateBikeDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show())
                     .addOnProgressListener(taskSnapshot -> {
                         //show upload Progress
                         double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
@@ -290,8 +289,65 @@ public class UpdateBikeDetails extends AppCompatActivity {
         }
     }
 
+//    public void updateBikesWithNewPicture() {
+//
+//        if (validateUpdateBikeDetails()) {
+//
+//            etUpBike_Cond = tViewUpBikeCond.getText().toString().trim();
+//            etUpBike_Model = etUpBikeModel.getText().toString().trim();
+//            etUpBike_Manufact = etUpBikeManufact.getText().toString().trim();
+//            etUpBike_Price = Double.parseDouble(etUpBikePrice.getText().toString().trim());
+//
+//            progressDialog.setTitle("The Bike is updating");
+//            progressDialog.show();
+//
+//            final StorageReference fileReference = storageRefUpdate.child(System.currentTimeMillis() + "." + getFileExtension(imageUriUp));
+//            updateBikeTaskUp = fileReference.putFile(imageUriUp)
+//                    .addOnSuccessListener(taskSnapshot -> {
+//                        fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
+//
+//                            Query query = databaseRefUpdate.orderByKey().equalTo(bike_KeyUp);
+//                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                                    for (DataSnapshot ds : snapshot.getChildren()) {
+//                                        ds.getRef().child("bike_Condition").setValue(etUpBike_Cond);
+//                                        ds.getRef().child("bike_Model").setValue(etUpBike_Model);
+//                                        ds.getRef().child("bike_Manufacturer").setValue(etUpBike_Manufact);
+//                                        ds.getRef().child("bike_Price").setValue(etUpBike_Price);
+//                                        ds.getRef().child("bike_Image").setValue(uri.toString());
+//                                    }
+//
+//                                    deleteOldBikePicture();
+//                                    progressDialog.dismiss();
+//                                    Toast.makeText(UpdateBikeDetails.this, "The Bike will be updated", Toast.LENGTH_SHORT).show();
+//                                    startActivity(new Intent(UpdateBikeDetails.this, AdminPage.class));
+//                                    finish();
+//                                }
+//
+//                                @Override
+//                                public void onCancelled(@NonNull DatabaseError error) {
+//                                    Toast.makeText(UpdateBikeDetails.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
+//                        });
+//                        progressDialog.dismiss();
+//                    })
+//                    .addOnFailureListener(e -> {
+//                        progressDialog.dismiss();
+//                        Toast.makeText(UpdateBikeDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    })
+//                    .addOnProgressListener(taskSnapshot -> {
+//                        //show upload Progress
+//                        double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
+//                        progressDialog.setMessage("Updated: " + (int) progress + "%");
+//                        progressDialog.setProgress((int) progress);
+//                    });
+//        }
+//    }
+
     private void uploadBikesWithOldPicture() {
-        progressDialog.dismiss();
 
         if (validateUpdateBikeDetails()) {
 
@@ -301,20 +357,20 @@ public class UpdateBikeDetails extends AppCompatActivity {
             etUpBike_Manufact = etUpBikeManufact.getText().toString().trim();
             etUpBike_Price = Double.parseDouble(etUpBikePrice.getText().toString().trim());
 
-            progressDialog.setMessage("The Bike is updating");
+            progressDialog.setMessage("The Bike is updating!!");
             progressDialog.show();
 
             Query query = databaseRefUpdate.orderByKey().equalTo(bike_KeyUp);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        ds.getRef().child("bike_Condition").setValue(etUpBike_Cond);
-                        ds.getRef().child("bike_Model").setValue(etUpBike_Model);
-                        ds.getRef().child("bike_Manufacturer").setValue(etUpBike_Manufact);
-                        ds.getRef().child("bike_Price").setValue(etUpBike_Price);
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        postSnapshot.getRef().child("bike_Condition").setValue(etUpBike_Cond);
+                        postSnapshot.getRef().child("bike_Model").setValue(etUpBike_Model);
+                        postSnapshot.getRef().child("bike_Manufacturer").setValue(etUpBike_Manufact);
+                        postSnapshot.getRef().child("bike_Price").setValue(etUpBike_Price);
                     }
-                    progressDialog.dismiss();
+
                     Toast.makeText(UpdateBikeDetails.this, "The Bike will be updated", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(UpdateBikeDetails.this, AdminPage.class));
                     finish();
@@ -325,6 +381,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
                     Toast.makeText(UpdateBikeDetails.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
+
             progressDialog.dismiss();
         }
     }
