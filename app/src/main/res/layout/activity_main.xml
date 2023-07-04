@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/wall"
+        android:background="@drawable/image_main_activity"
         android:textAlignment="center"
         tools:context=".MainActivity"
         tools:showIn="@layout/activity_main">

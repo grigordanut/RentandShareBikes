@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -46,7 +45,6 @@ public class ContactUs extends AppCompatActivity {
             }
 
             else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                Toast.makeText(ContactUs.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
                 usrEmail.setError("Enter a valid Email Address");
                 usrEmail.requestFocus();
             }

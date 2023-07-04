@@ -285,10 +285,8 @@
     <string name="et_totalPriceRentBike">Total price</string>
     <string name="et_firstNameReturnBike">First Name</string>
     <string name="et_lastNameReturnBike">Last Name</string>
-    <string name="tv_returnBikeStore">Return Bike Store</string>
+    <string name="tv_returnBikeStore">Select Bike Store</string>
     <string name="et_returnBikeStore">Return Store</string>
-    <string name="cb_returnSameAsRentStore">Same as rent</string>
-    <string name="cb_returnDiffRentStore">Different Store</string>
     <string name="tv_returnBikeDetails">Bike Details</string>
     <string name="tv_returnBikeStoreName">Bike Store: </string>
     <string name="tv_returnBikeCondition">Condition: </string>

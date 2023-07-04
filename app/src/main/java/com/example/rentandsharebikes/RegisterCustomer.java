@@ -1,13 +1,16 @@
 package com.example.rentandsharebikes;
 
-import android.app.AlertDialog;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,12 +44,12 @@ public class RegisterCustomer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_customer);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Register Customer");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Customer Registration");
 
         progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Customers");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Customers");
 
         firstNameRegCustom = findViewById(R.id.etFirstNameRegCustom);
         lastNameRegCustom = findViewById(R.id.etLastNameRegCustom);
@@ -58,35 +61,84 @@ public class RegisterCustomer extends AppCompatActivity {
 
         Button btn_SignInCustom = findViewById(R.id.btnSignInRegCustom);
         btn_SignInCustom.setOnClickListener(v -> {
-            Intent intentLog = new Intent(RegisterCustomer.this, LoginCustomer.class);
+            Intent intentLog = new Intent(RegisterCustomer.this, Login.class);
             startActivity(intentLog);
         });
 
         Button btn_Register = findViewById(R.id.btnRegCustom);
-        btn_Register.setOnClickListener(view -> {
-            if (validateUserRegData()) {
+        btn_Register.setOnClickListener(view -> registerCustomer());
+    }
 
-                progressDialog.setMessage("Register User Details");
-                progressDialog.show();
+    public void registerCustomer() {
 
-                firebaseAuth.createUserWithEmailAndPassword(email_regCustom, pass_regCustom)
-                        .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                sendEmailVerification();
-                                //clear input text fields
-                                firstNameRegCustom.setText("");
-                                lastNameRegCustom.setText("");
-                                userNameRegCustom.setText("");
-                                phoneNrRegCustom.setText("");
-                                emailRegCustom.setText("");
-                                passRegCustom.setText("");
-                                confPassRegCustom.setText("");
+        if (validateUserRegData()) {
 
-                            } else {
-                                alertDialogEmailUsed();
-                            }
-                            progressDialog.dismiss();
-                        });
+            progressDialog.setTitle("Registering customer details!!");
+            progressDialog.show();
+
+            firebaseAuth.createUserWithEmailAndPassword(email_regCustom, pass_regCustom).addOnCompleteListener(task -> {
+
+                if (task.isSuccessful()) {
+
+                    uploadUserData();
+
+                } else {
+                    try {
+                        throw Objects.requireNonNull(task.getException());
+                    } catch (Exception e) {
+
+                        LayoutInflater inflater = getLayoutInflater();
+                        @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                        TextView text = layout.findViewById(R.id.tvToast);
+                        ImageView imageView = layout.findViewById(R.id.imgToast);
+                        text.setText(e.getMessage());
+                        imageView.setImageResource(R.drawable.baseline_report_gmailerrorred_24);
+                        Toast toast = new Toast(getApplicationContext());
+                        toast.setDuration(Toast.LENGTH_LONG);
+                        toast.setView(layout);
+                        toast.show();
+                    }
+                }
+
+                progressDialog.dismiss();
+            });
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void uploadUserData() {
+
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        assert firebaseUser != null;
+        String userID = firebaseUser.getUid();
+
+        Customers customs = new Customers(firstName_regCustom, lastName_regCustom, userName_regCustom, phoneNr_RegCustom, email_regCustom);
+        databaseReference.child(userID).setValue(customs).addOnCompleteListener(task -> {
+
+            if (task.isSuccessful()) {
+
+                firebaseUser.sendEmailVerification();
+
+                LayoutInflater inflater = getLayoutInflater();
+                @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                TextView text = layout.findViewById(R.id.tvToast);
+                ImageView imageView = layout.findViewById(R.id.imgToast);
+                text.setText("Registration successful. Verification email sent!!");
+                imageView.setImageResource(R.drawable.baseline_person_add_alt_1_24);
+                Toast toast = new Toast(getApplicationContext());
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setView(layout);
+                toast.show();
+
+                Intent intent = new Intent(RegisterCustomer.this, Login.class);
+                startActivity(intent);
+                finish();
+            } else {
+                try {
+                    throw Objects.requireNonNull(task.getException());
+                } catch (Exception e) {
+                    Toast.makeText(RegisterCustomer.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -102,89 +154,37 @@ public class RegisterCustomer extends AppCompatActivity {
         confPass_regCustom = Objects.requireNonNull(confPassRegCustom.getText()).toString().trim();
 
         if (TextUtils.isEmpty(firstName_regCustom)) {
-            firstNameRegCustom.setError("First Name can be empty");
+            firstNameRegCustom.setError("First name can be empty");
             firstNameRegCustom.requestFocus();
         } else if (TextUtils.isEmpty(lastName_regCustom)) {
-            lastNameRegCustom.setError("Last Name cannot be empty");
+            lastNameRegCustom.setError("Last name cannot be empty");
             lastNameRegCustom.requestFocus();
         } else if (userName_regCustom.isEmpty()) {
-            userNameRegCustom.setError("User Name cannot be empty");
+            userNameRegCustom.setError("User name cannot be empty");
             userNameRegCustom.requestFocus();
         } else if (phoneNr_RegCustom.isEmpty()) {
             phoneNrRegCustom.setError("User Name cannot be empty");
             phoneNrRegCustom.requestFocus();
         } else if (email_regCustom.isEmpty()) {
-            emailRegCustom.setError("Email Address cannot be empty");
+            emailRegCustom.setError("Email address cannot be empty");
             emailRegCustom.requestFocus();
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email_regCustom).matches()) {
-            Toast.makeText(RegisterCustomer.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
-            emailRegCustom.setError("Enter a valid Email Address");
+            emailRegCustom.setError("Enter a valid email address");
             emailRegCustom.requestFocus();
         } else if (pass_regCustom.isEmpty()) {
             passRegCustom.setError("Password cannot be empty");
             passRegCustom.requestFocus();
         } else if (pass_regCustom.length() < 6) {
-            passRegCustom.setError("The password is too short, enter minimum 6 character long");
-            Toast.makeText(RegisterCustomer.this, "The password is too short, enter minimum 6 character long", Toast.LENGTH_SHORT).show();
+            passRegCustom.setError("Password too short, enter minimum 6 character long");
         } else if (confPass_regCustom.isEmpty()) {
-            confPassRegCustom.setError("Confirm Password cannot be empty");
+            confPassRegCustom.setError("Confirm password cannot be empty");
             confPassRegCustom.requestFocus();
         } else if (!pass_regCustom.equals(confPass_regCustom)) {
-            Toast.makeText(RegisterCustomer.this, "Confirm Password does not match Password", Toast.LENGTH_SHORT).show();
-            confPassRegCustom.setError("The Password does not match");
+            confPassRegCustom.setError("The Confirm Password does not match Password");
             confPassRegCustom.requestFocus();
         } else {
             result = true;
         }
         return result;
-    }
-
-    private void sendEmailVerification() {
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if (firebaseUser != null) {
-            firebaseUser.sendEmailVerification().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    sendUserRegData();
-                    alertDialogUserRegistered();
-                } else {
-                    Toast.makeText(RegisterCustomer.this, "Verification email has not been sent", Toast.LENGTH_SHORT).show();
-                }
-                progressDialog.dismiss();
-            });
-        }
-    }
-
-    private void sendUserRegData() {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        assert user != null;
-        String userID = user.getUid();
-        Customers customs = new Customers(firstName_regCustom, lastName_regCustom, userName_regCustom, phoneNr_RegCustom, email_regCustom);
-        databaseReference.child(userID).setValue(customs);
-    }
-
-    private void alertDialogUserRegistered() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RegisterCustomer.this);
-        alertDialogBuilder
-                .setMessage("Hi " + firstName_regCustom + " " + lastName_regCustom + " you are successfully registered, Email verification was sent. Please verify your email before Log in")
-                .setCancelable(true)
-                .setPositiveButton("Ok", (dialog, id) -> {
-                            firebaseAuth.signOut();
-                            finish();
-                            startActivity(new Intent(RegisterCustomer.this, LoginCustomer.class));
-                        });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-
-    private void alertDialogEmailUsed() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RegisterCustomer.this);
-        alertDialogBuilder
-                .setMessage("Registration failed, the email: \n" + email_regCustom + " was already used to open an account on this app.")
-                .setCancelable(true)
-                .setPositiveButton("OK", (dialog, id) -> emailRegCustom.requestFocus());
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
     }
 }

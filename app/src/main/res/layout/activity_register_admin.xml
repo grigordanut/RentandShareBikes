@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterCustomer">
+    tools:context=".RegisterAdmin">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvRegCustomer"
+            android:id="@+id/tvRegAdmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -33,7 +33,7 @@
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etFirstNameRegCustom"
+                android:id="@+id/etFirstNameRegAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/et_firstNameCustomer"
@@ -53,7 +53,7 @@
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etLastNameRegCustom"
+                android:id="@+id/etLastNameRegAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/et_lastNameCustomer"
@@ -73,7 +73,7 @@
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etUserNameRegCustom"
+                android:id="@+id/etUserNameRegAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/et_userNameCustomer"
@@ -93,7 +93,7 @@
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPhoneNrRegCustom"
+                android:id="@+id/etPhoneNrRegAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/et_phoneCustomer"
@@ -113,7 +113,7 @@
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etEmailRegCustom"
+                android:id="@+id/etEmailRegAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/et_emailRegCustomer"
@@ -134,7 +134,7 @@
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPassRegCustom"
+                android:id="@+id/etPassRegAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/et_passRegCustomer"
@@ -155,7 +155,7 @@
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etConfPassRegCustom"
+                android:id="@+id/etConfPassRegAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/et_confPassRegCustomer"
@@ -166,7 +166,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btnRegCustom"
+            android:id="@+id/btnRegAdmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
@@ -178,7 +178,7 @@
             tools:ignore="ButtonStyle" />
 
         <Button
-            android:id="@+id/btnSignInRegCustom"
+            android:id="@+id/btnSignInRegAdmin"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="45dp"

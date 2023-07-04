@@ -1,19 +1,10 @@
 package com.example.rentandsharebikes;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -226,7 +217,7 @@ public class AddBikeRent extends AppCompatActivity {
                             eTBikeModel.setText("");
                             eTBikeManufact.setText("");
                             eTBikePrice.setText("");
-                            ivAddBike.setImageResource(R.drawable.add_bikes_picture);
+                            ivAddBike.setImageResource(R.drawable.image_add_bikes);
 
                             Intent add_Bikes = new Intent(AddBikeRent.this, AdminPage.class);
                             startActivity(add_Bikes);

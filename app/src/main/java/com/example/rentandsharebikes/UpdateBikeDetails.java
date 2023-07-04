@@ -143,17 +143,14 @@ public class UpdateBikeDetails extends AppCompatActivity {
             }
         });
 
-        btn_SaveBikeUpdated.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (bikeTaskUpdate != null && bikeTaskUpdate.isInProgress()) {
-                    Toast.makeText(UpdateBikeDetails.this, "Update bike in progress", Toast.LENGTH_SHORT).show();
+        btn_SaveBikeUpdated.setOnClickListener(view -> {
+            if (bikeTaskUpdate != null && bikeTaskUpdate.isInProgress()) {
+                Toast.makeText(UpdateBikeDetails.this, "Update bike in progress", Toast.LENGTH_SHORT).show();
+            } else {
+                if (imageUriUp == null) {
+                    alertDialogBikePictureNew();
                 } else {
-                    if (imageUriUp == null) {
-                        alertDialogBikePictureNew();
-                    } else {
-                        updateBikesWithNewPicture();
-                    }
+                    updateBikesWithNewPicture();
                 }
             }
         });
@@ -238,7 +235,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
             etUpBike_Manufact = etUpBikeManufact.getText().toString().trim();
             etUpBike_Price = Double.parseDouble(etUpBikePrice.getText().toString().trim());
 
-            progressDialog.setTitle("The Bike is updating");
+            progressDialog.setTitle("The Bike is updating!!");
             progressDialog.show();
 
             final StorageReference fileReference = storageRefUpdate.child(System.currentTimeMillis() + "." + getFileExtension(imageUriUp));
@@ -264,7 +261,6 @@ public class UpdateBikeDetails extends AppCompatActivity {
                                     }
 
                                     deleteOldBikePicture();
-                                    progressDialog.dismiss();
                                     Toast.makeText(UpdateBikeDetails.this, "The Bike will be updated", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(UpdateBikeDetails.this, AdminPage.class));
                                     finish();
@@ -371,6 +367,7 @@ public class UpdateBikeDetails extends AppCompatActivity {
                         postSnapshot.getRef().child("bike_Price").setValue(etUpBike_Price);
                     }
 
+                    progressDialog.dismiss();
                     Toast.makeText(UpdateBikeDetails.this, "The Bike will be updated", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(UpdateBikeDetails.this, AdminPage.class));
                     finish();
@@ -381,8 +378,6 @@ public class UpdateBikeDetails extends AppCompatActivity {
                     Toast.makeText(UpdateBikeDetails.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
-
-            progressDialog.dismiss();
         }
     }
 

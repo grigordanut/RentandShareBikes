@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             switch (id) {
                 //Log into My Account
                 case R.id.myAccount:
-                    startActivity(new Intent(MainActivity.this, LoginCustomer.class));
+                    startActivity(new Intent(MainActivity.this, Login.class));
                     break;
                 //Show the list of Bike Stores available
                 case R.id.bikeStoreAv:
@@ -103,13 +103,12 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.bikeAvToRentAll:
                     startActivity(new Intent(MainActivity.this, BikeImageShowBikesListMainAll.class));
                     break;
-                //Bikes available to share
+                //Show bikes available to share
                 case R.id.bikeAvToShare:
                     startActivity(new Intent(MainActivity.this, BikeImageShowSharedBikesMain.class));
                     break;
                 case R.id.contactUs:
-                    //startActivity(new Intent(MainActivity.this, ContactUs.class));
-                    startActivity(new Intent(MainActivity.this, AdminPage.class));
+                    startActivity(new Intent(MainActivity.this, ContactUs.class));
                     break;
                 default:
                     return true;
@@ -154,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadBikeStoresAv() {
+
         //initialize the bike storage database
         firebaseStBikeSores = FirebaseStorage.getInstance();
         databaseRefBikeStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
@@ -180,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadBikeRentAv() {
+
         //initialize the bike storage database
         firebaseStBikesAvRent = FirebaseStorage.getInstance();
         databaseRefBikesAvRent = FirebaseDatabase.getInstance().getReference("Bikes");
@@ -206,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadBikeShareAv() {
+
         //Display the list of the bikes from Share Bikes database
         firebaseStBikesAvShare = FirebaseStorage.getInstance();
         databaseRefBikesAvShare = FirebaseDatabase.getInstance().getReference("Share Bikes");

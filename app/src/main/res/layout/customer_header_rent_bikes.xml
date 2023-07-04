@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:background="@drawable/drawer_menu_picture"
+        android:background="@drawable/image_main_header"
         tools:ignore="ContentDescription"/>
 
 </LinearLayout>

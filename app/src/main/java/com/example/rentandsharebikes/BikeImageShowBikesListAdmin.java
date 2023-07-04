@@ -204,32 +204,22 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikeImageShowBikesListAdmin.this);
         alertDialogBuilder
+                .setTitle("Delete bike from Bike Store!!")
                 .setMessage("Are sure to delete the " + selected_Bike.getBike_Model() + " Bike?")
                 .setCancelable(false)
-                .setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                final String selectedKeyBike = selected_Bike.getBike_Key();
-                                StorageReference imageReference = bikesStorage.getReferenceFromUrl(selected_Bike.getBike_Image());
-                                imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        dbRefBikes.child(selectedKeyBike).removeValue();
-                                        Toast.makeText(BikeImageShowBikesListAdmin.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
+                .setPositiveButton("Yes", (dialog, which) -> {
+                            final String selectedKeyBike = selected_Bike.getBike_Key();
+                            StorageReference imageReference = bikesStorage.getReferenceFromUrl(selected_Bike.getBike_Image());
+                            imageReference.delete().addOnSuccessListener(aVoid -> {
+                                dbRefBikes.child(selectedKeyBike).removeValue();
+                                Toast.makeText(BikeImageShowBikesListAdmin.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
+                            });
                         })
 
-                .setNegativeButton("CANCEL",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
+                .setNegativeButton("CANCEL", (dialog, which) -> dialog.cancel());
 
-        AlertDialog alert1 = alertDialogBuilder.create();
-        alert1.show();
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     @SuppressLint("SetTextI18n")

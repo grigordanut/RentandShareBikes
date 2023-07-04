@@ -30,7 +30,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="#f2f2f2"
-            android:src="@drawable/add_bikes_picture"
+            android:src="@drawable/image_add_bikes"
             tools:ignore="ContentDescription" />
 
         <TextView
@@ -54,7 +54,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@drawable/camera_image"
+            android:background="@drawable/image_take_picture_camera"
             android:textSize="24sp"
             tools:ignore="ContentDescription" />
 
@@ -146,7 +146,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="45dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/btn_background"
+            android:background="@drawable/btn_blue"
             android:text="@string/btn_saveBike"
             android:textColor="#ffffff"
             android:textSize="24sp"

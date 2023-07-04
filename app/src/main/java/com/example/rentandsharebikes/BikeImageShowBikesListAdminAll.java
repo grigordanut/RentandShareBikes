@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -171,32 +170,33 @@ public class BikeImageShowBikesListAdminAll extends AppCompatActivity implements
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikeImageShowBikesListAdminAll.this);
         alertDialogBuilder
+                .setTitle("Delete bikes from BikeStore!!")
                 .setMessage("Are sure to delete the " + selected_Bike.getBike_Model() + " Bike?")
                 .setCancelable(true)
-                .setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Bikes selected_Bike = bikesList.get(position);
-                                final String selectedKeyBike = selected_Bike.getBike_Key();
-                                StorageReference imageReference = bikesStorage.getReferenceFromUrl(selected_Bike.getBike_Image());
-                                imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        databaseReference.child(selectedKeyBike).removeValue();
-                                        Toast.makeText(BikeImageShowBikesListAdminAll.this, "The Bike has been successfully deleted. ", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
+                .setPositiveButton("YES",
+                        (dialog, which) -> {
+                            Bikes selected_Bike1 = bikesList.get(position);
+                            final String selectedKeyBike = selected_Bike1.getBike_Key();
+                            StorageReference imageReference = bikesStorage.getReferenceFromUrl(selected_Bike1.getBike_Image());
+                            imageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    databaseReference.child(selectedKeyBike).removeValue();
+                                    Toast.makeText(BikeImageShowBikesListAdminAll.this, "The Bike has been successfully deleted. ", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         })
 
-                .setNegativeButton("No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
+                .setNegativeButton("NO", (dialog, which) -> dialog.cancel());
 
-        AlertDialog alert1 = alertDialogBuilder.create();
-        alert1.show();
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        databaseReference.removeEventListener(bikesEventListener);
     }
 }

@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -31,7 +30,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,7 +39,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
@@ -294,7 +291,7 @@ public class AddBikeShare extends AppCompatActivity {
                                     etManufactShareBike.setText("");
                                     etPriceShareBike.setText("");
                                     etDateAvShareBike.setText("");
-                                    ivShareBike.setImageResource(R.drawable.add_bikes_picture);
+                                    ivShareBike.setImageResource(R.drawable.image_add_bikes);
 
                                     Intent add_Bikes = new Intent(AddBikeShare.this, CustomerPageShareBikes.class);
                                     startActivity(add_Bikes);

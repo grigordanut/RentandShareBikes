@@ -3,7 +3,6 @@ package com.example.rentandsharebikes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
@@ -57,7 +56,6 @@ public class CustomerPageShareBikes extends AppCompatActivity {
     private DrawerLayout drawerLayoutUserShare;
     private ActionBarDrawerToggle drawerToggleUserShare;
     private NavigationView navigationViewUserShare;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,15 +78,13 @@ public class CustomerPageShareBikes extends AppCompatActivity {
 
         drawerLayoutUserShare = findViewById(R.id.activity_customer_page_share_bikes);
         navigationViewUserShare = findViewById(R.id.navViewCustomShare);
-        toolbar = findViewById(R.id.toolbarCustomPageShare);
 
-        drawerToggleUserShare = new ActionBarDrawerToggle(this, drawerLayoutUserShare, toolbar, R.string.open_customPageShare, R.string.close_customPageShare);
+        drawerToggleUserShare = new ActionBarDrawerToggle(this, drawerLayoutUserShare, R.string.open_customPageShare, R.string.close_customPageShare);
 
         drawerLayoutUserShare.addDrawerListener(drawerToggleUserShare);
         drawerToggleUserShare.syncState();
 
-        setSupportActionBar(toolbar);
-        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         //retrieve data from database into text views
         databaseReference = FirebaseDatabase.getInstance().getReference("Customers");

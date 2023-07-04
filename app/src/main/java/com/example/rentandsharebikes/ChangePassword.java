@@ -69,7 +69,7 @@ public class ChangePassword extends AppCompatActivity {
                                         progressDialog.dismiss();
                                         finish();
                                         Toast.makeText(ChangePassword.this, "Your password was updated", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(ChangePassword.this, LoginCustomer.class));
+                                        startActivity(new Intent(ChangePassword.this, Login.class));
 
                                     } else {
                                         Toast.makeText(ChangePassword.this, "Password update failed", Toast.LENGTH_SHORT).show();

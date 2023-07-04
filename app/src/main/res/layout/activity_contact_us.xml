@@ -122,7 +122,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/btn_fading"
+            android:background="@drawable/btn_fading_left"
             android:text="@string/btn_sendContactUs"
             android:textAllCaps="true"
             android:textColor="@android:color/white"
