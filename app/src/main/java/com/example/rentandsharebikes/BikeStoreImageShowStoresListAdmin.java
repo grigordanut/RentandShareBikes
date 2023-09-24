@@ -99,21 +99,18 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    bikeStoresList.clear();
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
-                        assert bikeStores != null;
-                        bikeStores.setBikeStore_Key(postSnapshot.getKey());
-                        bikeStoresList.add(bikeStores);
-                        tVListBikeStoresAdmin.setText(bikeStoresList.size() + " Bike Stores available");
-                    }
 
-                    bikeStoreAdapterShowStoresListAdmin.notifyDataSetChanged();
-                } else {
-                    tVListBikeStoresAdmin.setText("No Bike Stores were found!!");
+                bikeStoresList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
+                    assert bikeStores != null;
+                    bikeStores.setBikeStore_Key(postSnapshot.getKey());
+                    bikeStoresList.add(bikeStores);
+                    tVListBikeStoresAdmin.setText(bikeStoresList.size() + " Bike Stores available");
                 }
 
+                bikeStoreAdapterShowStoresListAdmin.notifyDataSetChanged();
+                tVListBikeStoresAdmin.setText(bikeStoresList.size() + " Bike Stores available");
                 progressDialog.dismiss();
             }
 

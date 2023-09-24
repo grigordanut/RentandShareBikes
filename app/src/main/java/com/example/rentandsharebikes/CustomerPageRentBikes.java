@@ -46,7 +46,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
     private DatabaseReference dbReferenceBikesAvCustom;
     private ValueEventListener eventListenerBikesAvRentCustom;
     private List<Bikes> listBikesAvCustom;
-    private int numberBikesAvCustom;
+    //private int numberBikesAvCustom;
     private TextView tVBikesAvCustom;
 
     //Display data from Rent Bikes database
@@ -247,13 +247,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                     assert bikes != null;
                     bikes.setBike_Key(postSnapshot.getKey());
                     listBikesAvCustom.add(bikes);
-                    numberBikesAvCustom = listBikesAvCustom.size();
-
-                    tVBikesAvCustom.setText(String.valueOf(numberBikesAvCustom));
-
-                    if (listBikesAvCustom.size() == 0) {
-                        tVBikesAvCustom.setText(String.valueOf(0));
-                    }
+                    tVBikesAvCustom.setText(String.valueOf(listBikesAvCustom.size()));
                 }
             }
 

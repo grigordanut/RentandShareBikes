@@ -1,6 +1,7 @@
 package com.example.rentandsharebikes;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -37,6 +38,10 @@ public class AdminPage extends AppCompatActivity {
     //Declare Bike Store database variables (Retrieve data)
     private DatabaseReference dbRefBikeStoresAv;
     private ValueEventListener evListenerBikeStoreAv;
+
+    //Check if there are Bike Stores available into database
+    private DatabaseReference dbRefBikeStoresCheck;
+    private ValueEventListener evListenerBikeStoresCkeck;
 
     //Declare Bike database variables (Retrieve data)
     private DatabaseReference dbRefBikesRentAv;
@@ -148,8 +153,26 @@ public class AdminPage extends AppCompatActivity {
 
                                 //Add Bikes to the Bike Stores available
                                 case R.id.adminAdd_bikesToStore:
-                                    Toast.makeText(AdminPage.this, "Add Bikes to Store", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(AdminPage.this, BikeStoreImageAddBikesAdmin.class));
+
+                                    dbRefBikeStoresCheck = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
+                                    evListenerBikeStoresCkeck = dbRefBikeStoresCheck.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                Toast.makeText(AdminPage.this, "Add Bikes to Stores", Toast.LENGTH_SHORT).show();
+                                                startActivity(new Intent(AdminPage.this, BikeStoreImageAddBikesAdmin.class));
+                                            }
+
+                                            else {
+                                                alertDialogNoBikeStoresAvailable();
+                                            }
+                                        }
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            Toast.makeText(AdminPage.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
                                     break;
 
                                 //Show the list of Bikes available ordered by Bike Stores
@@ -341,5 +364,16 @@ public class AdminPage extends AppCompatActivity {
                 Toast.makeText(AdminPage.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void alertDialogNoBikeStoresAvailable() {
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setTitle("No Bike Stores available!!")
+                .setMessage("Add Bike Stores by using the menu Add Bike Stores and then you can use this service.")
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

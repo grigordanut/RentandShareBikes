@@ -74,22 +74,17 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity implements Bi
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    bikeStoresList.clear();
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
-                        assert bikeStores != null;
-                        bikeStores.setBikeStore_Key(postSnapshot.getKey());
-                        bikeStoresList.add(bikeStores);
-                        tVBikeStoresAddBikes.setText("Select the Bike Store");
-                    }
 
-                    bikeStoreAdapterAdmin.notifyDataSetChanged();
-                }
-                else{
-                    tVBikeStoresAddBikes.setText("No Bike Stores were found!!");
+                bikeStoresList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
+                    assert bikeStores != null;
+                    bikeStores.setBikeStore_Key(postSnapshot.getKey());
+                    bikeStoresList.add(bikeStores);
+                    tVBikeStoresAddBikes.setText("Select the Bike Store");
                 }
 
+                bikeStoreAdapterAdmin.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
