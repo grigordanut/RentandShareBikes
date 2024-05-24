@@ -10,7 +10,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -33,10 +32,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -49,7 +46,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.StringTokenizer;
 
 import static com.google.firebase.storage.FirebaseStorage.getInstance;
 
@@ -112,7 +108,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
-    BikeStoreAdapterReturnBikesNew bikeStoreAdapterReturnBikesNew;
+    private BikeStoreAdapterReturnRentedBikes bikeStoreAdapterReturnRentedBikes;
 
     List<BikeStores> listBikeStoresTest;
 
@@ -206,7 +202,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ReturnRentedBikes.this);
 
-        bikeStoreAdapterReturnBikesNew = new BikeStoreAdapterReturnBikesNew(ReturnRentedBikes.this, R.layout.image_bike_store_return_rented_bike, listBikeStoresTest);
+        bikeStoreAdapterReturnRentedBikes = new BikeStoreAdapterReturnRentedBikes(ReturnRentedBikes.this, R.layout.image_bike_store_return_rented_bike, listBikeStoresTest);
 
         databaseRefBikeStores.addValueEventListener(new ValueEventListener() {
             @Override
@@ -223,7 +219,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
                     listBikeStoresTest.add(bike_Store);
                 }
 
-                bikeStoreAdapterReturnBikesNew.notifyDataSetChanged();
+                bikeStoreAdapterReturnRentedBikes.notifyDataSetChanged();
             }
 
             @Override
@@ -235,16 +231,26 @@ public class ReturnRentedBikes extends AppCompatActivity {
         alertDialogBuilder
                 .setTitle("Select the Bike Store!!")
                 .setCancelable(false)
-                .setSingleChoiceItems(bikeStoreAdapterReturnBikesNew, -1, (dialogInterface, id) -> {
+                .setSingleChoiceItems(bikeStoreAdapterReturnRentedBikes, -1, (dialog, id) -> {
 
                     bike_Store = listBikeStoresTest.get(id);
                     returnBikeStore_Key = bike_Store.getBikeStore_Key();
                     returnBikeStore_Name = bike_Store.getBikeStore_Location();
-
-                    confirmSelection(id);
-                    dialogInterface.dismiss();
                 })
-                .setNegativeButton("CLOSE", (dialog, which) -> dialog.cancel());
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        etBikeStoreReturn.setText(returnBikeStore_Name);
+                        dialog.dismiss();
+                    }
+                })
+
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -359,17 +365,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
         alertDialogBuilder
                 .setTitle("The return Bike Store is empty.")
                 .setMessage("Please enter the return Bike Store.")
-                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-
-    public void alertBikeStoreDeleted() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder
-                .setMessage("The return Bike Store has been removed.")
-                .setTitle("Please select a different Bike Store.")
                 .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();

@@ -120,7 +120,6 @@
     <!--    Bike Store List Return Rented Bike-->
     <string name="tv_bikeStoreListReturnBike">Select the Bike Store</string>
 
-
     <!--    Bikes Image Show Bikes Rented Customer-->
     <string name="tv_bikesImageShowBikesRentedCustomer">List of Bikes</string>
 

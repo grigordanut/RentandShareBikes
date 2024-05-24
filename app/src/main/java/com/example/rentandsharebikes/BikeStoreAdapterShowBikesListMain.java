@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -77,7 +78,7 @@ public class BikeStoreAdapterShowBikesListMain extends RecyclerView.Adapter<Bike
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Toast.makeText(BikeStoreAdapterAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(bikeStoreContext, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

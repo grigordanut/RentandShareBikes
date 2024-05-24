@@ -1,75 +1,64 @@
 package com.example.rentandsharebikes;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.Nullable;
 
 import java.util.List;
+import java.util.Objects;
 
-public class BikeStoreAdapterReturnRentedBikes extends RecyclerView.Adapter<BikeStoreAdapterReturnRentedBikes.ImageViewHolder> {
+public class BikeStoreAdapterReturnRentedBikes extends ArrayAdapter<BikeStores> {
 
-    private final Context bikeStoreContext;
-    private final List<BikeStores> bikeStoresList;
+    private Context mContext;
+    private int mResorces;
 
-    private OnItemClickListener clickListener;
+//    private int lastPosition = -1;
+//    private int row_index = -1;
 
-    public BikeStoreAdapterReturnRentedBikes(Context bikeStore_context, List<BikeStores> bikeStores_uploads) {
-        bikeStoreContext = bikeStore_context;
-        bikeStoresList = bikeStores_uploads;
+    public BikeStoreAdapterReturnRentedBikes(@NonNull Context context, int resources, @NonNull List<BikeStores> objects) {
+        super(context, resources, objects);
+
+        this.mContext = context;
+        this.mResorces = resources;
     }
 
+    @SuppressLint("ViewHolder")
     @NonNull
     @Override
-    public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(bikeStoreContext).inflate(R.layout.image_bike_store_return_rented_bike, parent, false);
-        return new ImageViewHolder(view);
-    }
+    public View getView(int position, @Nullable @org.jetbrains.annotations.Nullable View convertView, @NonNull ViewGroup parent) {
 
-    @Override
-    public void onBindViewHolder(ImageViewHolder holder, int position) {
-        final BikeStores uploadCurrent = bikeStoresList.get(position);
-        holder.tVBikeStoreName.setText(uploadCurrent.getBikeStore_Location());
-        holder.tVBikeStoreKey.setText(uploadCurrent.getBikeStore_Key());
-    }
+        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
 
-    @Override
-    public int getItemCount() {
-        return bikeStoresList.size();
-    }
+        convertView = layoutInflater.inflate(mResorces, parent, false);
 
+        TextView tVBikeStoreNameSpin = convertView.findViewById(R.id.tvBikeStoreNameSpin);
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView tVBikeStoreName;
-        public TextView tVBikeStoreKey;
+        tVBikeStoreNameSpin.setText(Objects.requireNonNull(getItem(position)).getBikeStore_Location());
 
-        public ImageViewHolder(View itemView) {
-            super(itemView);
-            tVBikeStoreName = itemView.findViewById(R.id.tvBikeStoreNameSpin);
+//        convertView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                row_index = position;
+//                notifyDataSetChanged();
+//            }
+//        });
+//
+//        if (row_index == position) {
+//            //convertView.setBackgroundColor(Color.GREEN);
+//            tVBikeStoreNameSpin.setTextColor(Color.GREEN);
+//        }
+//
+//        else {
+//            tVBikeStoreNameSpin.setTextColor(Color.BLACK);
+//        }
 
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (clickListener != null) {
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    clickListener.onItemClick(position);
-                }
-            }
-        }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        clickListener = listener;
+        return convertView;
     }
 }
