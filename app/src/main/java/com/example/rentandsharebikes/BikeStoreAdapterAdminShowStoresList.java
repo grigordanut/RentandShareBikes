@@ -24,7 +24,7 @@ import java.util.List;
 
 import static android.icu.text.DateFormat.NONE;
 
-public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<BikeStoreAdapterShowStoresListAdmin.ImageViewHolder>{
+public class BikeStoreAdapterAdminShowStoresList extends RecyclerView.Adapter<BikeStoreAdapterAdminShowStoresList.ImageViewHolder>{
 
     private Context bikeStoreContext;
     private List<BikeStores> bikeStoresUploads;
@@ -39,7 +39,7 @@ public class BikeStoreAdapterShowStoresListAdmin extends RecyclerView.Adapter<Bi
 
     private int numberBikesAvailable;
 
-    public BikeStoreAdapterShowStoresListAdmin(Context bikeStore_context, List<BikeStores> bikeStores_uploads) {
+    public BikeStoreAdapterAdminShowStoresList(Context bikeStore_context, List<BikeStores> bikeStores_uploads) {
         bikeStoreContext = bikeStore_context;
         bikeStoresUploads = bikeStores_uploads;
     }

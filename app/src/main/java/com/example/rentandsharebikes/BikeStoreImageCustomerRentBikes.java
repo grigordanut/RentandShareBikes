@@ -9,7 +9,6 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -20,17 +19,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class BikeStoreImageAddBikesAdmin extends AppCompatActivity implements BikeStoreAdapterAdmin.OnItemClickListener {
+public class BikeStoreImageCustomerRentBikes extends AppCompatActivity implements BikeStoreAdapterCustom.OnItemClickListener{
 
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
-    private BikeStoreAdapterAdmin bikeStoreAdapterAdmin;
-
-    private TextView tVBikeStoresAddBikes;
+    private BikeStoreAdapterCustom bikeStoreAdapterCustom;
 
     private List<BikeStores> bikeStoresList;
 
@@ -39,14 +35,10 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity implements Bi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_store_image_add_bikes_admin);
-
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Add bikes to Bike Store");
+        setContentView(R.layout.activity_bike_store_image_customer_rent_bikes);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
-
-        tVBikeStoresAddBikes = findViewById(R.id.tvBikeStoresAddBikes);
 
         bikeStoreRecyclerView = findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
@@ -54,51 +46,57 @@ public class BikeStoreImageAddBikesAdmin extends AppCompatActivity implements Bi
 
         bikeStoresList = new ArrayList<>();
 
-        bikeStoreAdapterAdmin = new BikeStoreAdapterAdmin(BikeStoreImageAddBikesAdmin.this, bikeStoresList);
-        bikeStoreRecyclerView.setAdapter(bikeStoreAdapterAdmin);
-        bikeStoreAdapterAdmin.setOnItmClickListener(BikeStoreImageAddBikesAdmin.this);
+        bikeStoreAdapterCustom = new BikeStoreAdapterCustom(BikeStoreImageCustomerRentBikes.this, bikeStoresList);
+        bikeStoreRecyclerView.setAdapter(bikeStoreAdapterCustom);
+        bikeStoreAdapterCustom.setOnItmClickListener(BikeStoreImageCustomerRentBikes.this);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        loadBikeStoresListAdmin();
+        loadBikeStoresListCustomer();
     }
 
-    private void loadBikeStoresListAdmin() {
+    private void loadBikeStoresListCustomer(){
 
         //initialize the bike store database
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
         bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 bikeStoresList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
-                    assert bikeStores != null;
-                    bikeStores.setBikeStore_Key(postSnapshot.getKey());
-                    bikeStoresList.add(bikeStores);
-                    tVBikeStoresAddBikes.setText("Select the Bike Store");
+
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                        BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
+                        assert bikeStores != null;
+                        bikeStores.setBikeStore_Key(postSnapshot.getKey());
+                        bikeStoresList.add(bikeStores);
+                    }
+
+                    bikeStoreAdapterCustom.notifyDataSetChanged();
                 }
 
-                bikeStoreAdapterAdmin.notifyDataSetChanged();
-                progressDialog.dismiss();
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeStoreImageAddBikesAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeStoreImageCustomerRentBikes.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     @Override
     public void onItemClick(int position) {
+
         BikeStores selected_Store = bikeStoresList.get(position);
-        Intent store_Intent = new Intent(BikeStoreImageAddBikesAdmin.this, AddBikeRent.class);
+        Intent store_Intent = new Intent(BikeStoreImageCustomerRentBikes.this, BikeImageRentBikesCustomer.class);
         store_Intent.putExtra("SName", selected_Store.getBikeStore_Location());
         store_Intent.putExtra("SKey", selected_Store.getBikeStore_Key());
         startActivity(store_Intent);

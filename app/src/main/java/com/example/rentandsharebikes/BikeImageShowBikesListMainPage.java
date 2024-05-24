@@ -62,7 +62,7 @@ public class BikeImageShowBikesListMainPage extends AppCompatActivity implements
         bikeStore_KeyMain = Objects.requireNonNull(getIntent().getExtras()).getString("SKeyMain");
 
         textViewBikesImageMain = findViewById(R.id.tvBikeImageBikesListMainPage);
-        textViewBikesImageMain.setText("No bikes available in " +bikeStore_NameMain+ " store");
+        //textViewBikesImageMain.setText("No bikes available in " + bikeStore_NameMain + " store");
 
         bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -97,12 +97,18 @@ public class BikeImageShowBikesListMainPage extends AppCompatActivity implements
                     if (bikes.getBikeStoreKey().equals(bikeStore_KeyMain)) {
                         bikes.setBike_Key(postSnapshot.getKey());
                         bikesListMain.add(bikes);
-                        textViewBikesImageMain.setText(bikesListMain.size()+" bikes available in "+bikeStore_NameMain+" store");
                     }
                 }
 
                 bikeAdapterShowBikesListMainPage.notifyDataSetChanged();
-                progressDialog.dismiss();
+
+                if (bikesListMain.size() == 1) {
+                    textViewBikesImageMain.setText(bikesListMain.size()+" bike available in " + bikeStore_NameMain+" store");
+                }
+
+                else {
+                    textViewBikesImageMain.setText(bikesListMain.size()+" bikes available in " + bikeStore_NameMain+" store");
+                }
             }
 
             @Override
@@ -110,6 +116,8 @@ public class BikeImageShowBikesListMainPage extends AppCompatActivity implements
                 Toast.makeText(BikeImageShowBikesListMainPage.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     //Action of the menu onClick

@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikeStoreImageShowRentedBikesListAdmin extends AppCompatActivity implements BikeStoreAdapterAdmin.OnItemClickListener{
+public class BikeStoreImageAdminShowRentedBikesList extends AppCompatActivity implements BikeStoreAdapterAdmin.OnItemClickListener{
 
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreEventListener;
@@ -35,7 +35,7 @@ public class BikeStoreImageShowRentedBikesListAdmin extends AppCompatActivity im
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_store_image_show_rented_bikes_list_admin);
+        setContentView(R.layout.activity_bike_store_image_admin_show_rented_bikes_list);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
@@ -46,9 +46,9 @@ public class BikeStoreImageShowRentedBikesListAdmin extends AppCompatActivity im
 
         bikeStoresList = new ArrayList<>();
 
-        bikeStoreAdapterAdmin = new BikeStoreAdapterAdmin(BikeStoreImageShowRentedBikesListAdmin.this, bikeStoresList);
+        bikeStoreAdapterAdmin = new BikeStoreAdapterAdmin(BikeStoreImageAdminShowRentedBikesList.this, bikeStoresList);
         bikeStoreRecyclerView.setAdapter(bikeStoreAdapterAdmin);
-        bikeStoreAdapterAdmin.setOnItmClickListener(BikeStoreImageShowRentedBikesListAdmin.this);
+        bikeStoreAdapterAdmin.setOnItmClickListener(BikeStoreImageAdminShowRentedBikesList.this);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class BikeStoreImageShowRentedBikesListAdmin extends AppCompatActivity im
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeStoreImageShowRentedBikesListAdmin.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeStoreImageAdminShowRentedBikesList.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -87,7 +87,7 @@ public class BikeStoreImageShowRentedBikesListAdmin extends AppCompatActivity im
     @Override
     public void onItemClick(int position) {
         BikeStores selected_Store = bikeStoresList.get(position);
-        Intent store_Intent = new Intent(BikeStoreImageShowRentedBikesListAdmin.this, BikeImageShowBikesRentedAdmin.class);
+        Intent store_Intent = new Intent(BikeStoreImageAdminShowRentedBikesList.this, BikeImageShowBikesRentedAdmin.class);
         store_Intent.putExtra("SName", selected_Store.getBikeStore_Location());
         store_Intent.putExtra("SKey",selected_Store.getBikeStore_Key());
         startActivity(store_Intent);

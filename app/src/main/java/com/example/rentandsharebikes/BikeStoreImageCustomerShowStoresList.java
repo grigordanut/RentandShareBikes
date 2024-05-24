@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity implements BikeStoreAdapterCustom.OnItemClickListener {
+public class BikeStoreImageCustomerShowStoresList extends AppCompatActivity implements BikeStoreAdapterCustom.OnItemClickListener {
 
     private TextView textViewBikeStoresImageShowStoreListCustomer;
 
@@ -42,7 +42,7 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_store_image_show_stores_list_customer);
+        setContentView(R.layout.activity_bike_store_image_customer_show_stores_list);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("Bike Stores available Customer");
 
@@ -50,7 +50,6 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
         progressDialog.show();
 
         textViewBikeStoresImageShowStoreListCustomer = findViewById(R.id.tvBikeStoresImageShowStoresListCustomer);
-        textViewBikeStoresImageShowStoreListCustomer.setText("No Bike Stores available");
 
         bikeStoreRecyclerView = findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
@@ -58,9 +57,9 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
 
         bikeStoresList = new ArrayList<BikeStores>();
 
-        bikeStoreAdapterCustom = new BikeStoreAdapterCustom(BikeStoreImageShowStoresListCustomer.this, bikeStoresList);
+        bikeStoreAdapterCustom = new BikeStoreAdapterCustom(BikeStoreImageCustomerShowStoresList.this, bikeStoresList);
         bikeStoreRecyclerView.setAdapter(bikeStoreAdapterCustom);
-        bikeStoreAdapterCustom.setOnItmClickListener(BikeStoreImageShowStoresListCustomer.this);
+        bikeStoreAdapterCustom.setOnItmClickListener(BikeStoreImageCustomerShowStoresList.this);
     }
 
     @Override
@@ -77,24 +76,39 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 bikeStoresList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
-                    assert bikeStores != null;
-                    bikeStores.setBikeStore_Key(postSnapshot.getKey());
-                    bikeStoresList.add(bikeStores);
-                    textViewBikeStoresImageShowStoreListCustomer.setText(bikeStoresList.size() + " Bike Stores available ");
+
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
+                        assert bikeStores != null;
+                        bikeStores.setBikeStore_Key(postSnapshot.getKey());
+                        bikeStoresList.add(bikeStores);
+                    }
+
+                    bikeStoreAdapterCustom.notifyDataSetChanged();
+
+                    if (bikeStoresList.size() == 1) {
+                        textViewBikeStoresImageShowStoreListCustomer.setText(bikeStoresList.size() + " Bike Store available ");
+                    }
+                    else {
+                        textViewBikeStoresImageShowStoreListCustomer.setText(bikeStoresList.size() + " Bike Stores available ");
+                    }
                 }
 
-                bikeStoreAdapterCustom.notifyDataSetChanged();
-                progressDialog.dismiss();
+                else {
+                    textViewBikeStoresImageShowStoreListCustomer.setText("No Bike Stores available!!");
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeStoreImageShowStoresListCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeStoreImageCustomerShowStoresList.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     @Override
@@ -110,13 +124,13 @@ public class BikeStoreImageShowStoresListCustomer extends AppCompatActivity impl
                 .setAdapter(adapter, (dialog, id) -> {
 
                     if (id == 0) {
-                        Toast.makeText(BikeStoreImageShowStoresListCustomer.this, "Show Bikes Stores in Google Map", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(BikeStoreImageShowStoresListCustomer.this, MapsActivity.class));
+                        Toast.makeText(BikeStoreImageCustomerShowStoresList.this, "Show Bikes Stores in Google Map", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(BikeStoreImageCustomerShowStoresList.this, MapsActivity.class));
                     }
 
                     if (id == 1) {
-                        startActivity(new Intent(BikeStoreImageShowStoresListCustomer.this, CustomerPageRentBikes.class));
-                        Toast.makeText(BikeStoreImageShowStoresListCustomer.this, "Back to Customer rent page", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(BikeStoreImageCustomerShowStoresList.this, CustomerPageRentBikes.class));
+                        Toast.makeText(BikeStoreImageCustomerShowStoresList.this, "Back to Customer rent page", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("CLOSE", (dialog, id) -> dialog.dismiss());

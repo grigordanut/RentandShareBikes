@@ -17,18 +17,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -84,7 +81,7 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
         buttonAddMoreBikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BikeImageShowBikesListAdmin.this, BikeStoreImageAddBikesAdmin.class));
+                startActivity(new Intent(BikeImageShowBikesListAdmin.this, BikeStoreImageAdminAddBikes.class));
             }
         });
 
@@ -236,7 +233,7 @@ public class BikeImageShowBikesListAdmin extends AppCompatActivity implements Bi
                 .setMessage("Would you like to add bikes?")
                 .setPositiveButton("YES", (dialog, id) -> {
                     finish();
-                    Intent intent = new Intent(BikeImageShowBikesListAdmin.this, BikeStoreImageAddBikesAdmin.class);
+                    Intent intent = new Intent(BikeImageShowBikesListAdmin.this, BikeStoreImageAdminAddBikes.class);
                     startActivity(intent);
                 })
 

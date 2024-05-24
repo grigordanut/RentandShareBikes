@@ -127,11 +127,11 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                 switch (id) {
                                     //Show the list of Bike Stores available
                                     case R.id.userShow_storesList:
-                                        startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageShowStoresListCustomer.class));
+                                        startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageCustomerShowStoresList.class));
                                         break;
                                     //Show the list of Bikes available from customer page ordered by Bike Stores
                                     case R.id.userShow_bikesList:
-                                        startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageShowBikesListCustomer.class));
+                                        startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageCustomerShowBikesList.class));
                                         break;
                                     //Show the list of all Bikes available from customer page
                                     case R.id.userShow_bikesListAll:
@@ -139,7 +139,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                         break;
                                     //The activity of renting bikes by the customer
                                     case R.id.userRent_bikes:
-                                        startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageRentBikesCustomer.class));
+                                        startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageCustomerRentBikes.class));
                                         break;
                                     //Show the list of Bikes rented by customer
                                     case R.id.userShow_bikesRented:

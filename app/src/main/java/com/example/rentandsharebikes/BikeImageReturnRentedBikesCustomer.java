@@ -65,7 +65,7 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
 
         tVCustomerReturnBikes = findViewById(R.id.tvCusReturnBikes);
 
-        tVCustomerReturnBikes.setText("No Bikes rented by: " + customerFirst_Name + " " + customerLast_Name);
+        //tVCustomerReturnBikes.setText("No Bikes rented by: " + customerFirst_Name + " " + customerLast_Name);
 
         bikesListRecyclerView = (RecyclerView) findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -100,18 +100,22 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
                     RentedBikes rent_Bikes = postSnapshot.getValue(RentedBikes.class);
 
                     assert rent_Bikes != null;
+
                     if (rent_Bikes.getCustomerId_RentBikes().equals(customer_Id)) {
                         rent_Bikes.setBike_RentKey(postSnapshot.getKey());
                         rentedBikesList.add(rent_Bikes);
-                        tVCustomerReturnBikes.setText("Select the Bike");
                     }
-//                    else {
-//                        tVCustomerReturnBikes.setText("No rented Bikes 1");
-//                    }
                 }
 
                 bikeAdapterRentedBikesCustomer.notifyDataSetChanged();
-                progressDialog.dismiss();
+
+                if (rentedBikesList.size() == 1) {
+                    tVCustomerReturnBikes.setText("Select the Bike");
+                }
+
+                else {
+                    tVCustomerReturnBikes.setText("No Bikes rented by: " + customerFirst_Name + " " + customerLast_Name);
+                }
             }
 
             @Override
@@ -119,6 +123,8 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
                 Toast.makeText(BikeImageReturnRentedBikesCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     @Override

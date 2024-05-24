@@ -21,7 +21,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikeStoreAdapterShowBikesListMain extends RecyclerView.Adapter<BikeStoreAdapterShowBikesListMain.ImageViewHolder> {
+public class BikeStoreAdapterMainShowBikesList extends RecyclerView.Adapter<BikeStoreAdapterMainShowBikesList.ImageViewHolder> {
 
     private final Context bikeStoreContext;
     private final List<BikeStores> bikeStoresUploads;
@@ -34,7 +34,7 @@ public class BikeStoreAdapterShowBikesListMain extends RecyclerView.Adapter<Bike
 
     private int numberBikesAvailable;
 
-    public BikeStoreAdapterShowBikesListMain(Context bikeStore_context, List<BikeStores> bikeStores_uploads){
+    public BikeStoreAdapterMainShowBikesList(Context bikeStore_context, List<BikeStores> bikeStores_uploads){
         bikeStoreContext = bikeStore_context;
         bikeStoresUploads = bikeStores_uploads;
     }

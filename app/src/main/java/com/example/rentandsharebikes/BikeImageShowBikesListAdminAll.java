@@ -10,9 +10,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,8 +39,6 @@ public class BikeImageShowBikesListAdminAll extends AppCompatActivity implements
 
     private List<Bikes> bikesList;
 
-    private Button buttonAddMoreBikesFull, buttonBackAdminPageBikesFull;
-
     private ProgressDialog progressDialog;
 
     @SuppressLint("SetTextI18n")
@@ -55,7 +51,6 @@ public class BikeImageShowBikesListAdminAll extends AppCompatActivity implements
         progressDialog.show();
 
         tVBikeListAdminAll = findViewById(R.id.tvBikeListAdminAll);
-        tVBikeListAdminAll.setText("No bikes available");
 
         bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -66,22 +61,6 @@ public class BikeImageShowBikesListAdminAll extends AppCompatActivity implements
         bikeAdapterBikesAdmin = new BikeAdapterBikesAdmin(BikeImageShowBikesListAdminAll.this, bikesList);
         bikesListRecyclerView.setAdapter(bikeAdapterBikesAdmin);
         bikeAdapterBikesAdmin.setOnItmClickListener(BikeImageShowBikesListAdminAll.this);
-
-        buttonAddMoreBikesFull = findViewById(R.id.btnAddMoreBikesFull);
-        buttonAddMoreBikesFull.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(BikeImageShowBikesListAdminAll.this, BikeStoreImageAddBikesAdmin.class));
-            }
-        });
-
-        buttonBackAdminPageBikesFull = findViewById(R.id.btnBackAdminPageBikesFull);
-        buttonBackAdminPageBikesFull.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(BikeImageShowBikesListAdminAll.this, AdminPage.class));
-            }
-        });
     }
 
     @SuppressLint("SetTextI18n")
@@ -101,24 +80,28 @@ public class BikeImageShowBikesListAdminAll extends AppCompatActivity implements
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bikesList.clear();
 
                 if (dataSnapshot.exists()) {
-                    bikesList.clear();
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Bikes bikes = postSnapshot.getValue(Bikes.class);
                         assert bikes != null;
                         bikes.setBike_Key(postSnapshot.getKey());
                         bikesList.add(bikes);
-                        tVBikeListAdminAll.setText(bikesList.size() + " Bikes available");
                     }
 
                     bikeAdapterBikesAdmin.notifyDataSetChanged();
-                }
-                else{
-                    tVBikeListAdminAll.setText("No Bikes registered were found!!");
-                }
 
-                progressDialog.dismiss();
+                    if (bikesList.size() == 1) {
+                        tVBikeListAdminAll.setText(bikesList.size() + " Bike available");
+                    }
+                    else {
+                        tVBikeListAdminAll.setText(bikesList.size() + " Bikes available");
+                    }
+                }
+                else {
+                    tVBikeListAdminAll.setText("No bikes available!!");
+                }
             }
 
             @Override
@@ -126,6 +109,8 @@ public class BikeImageShowBikesListAdminAll extends AppCompatActivity implements
                 Toast.makeText(BikeImageShowBikesListAdminAll.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     //Action on bikes onClick
@@ -199,4 +184,6 @@ public class BikeImageShowBikesListAdminAll extends AppCompatActivity implements
         super.onDestroy();
         databaseReference.removeEventListener(bikesEventListener);
     }
+
+
 }

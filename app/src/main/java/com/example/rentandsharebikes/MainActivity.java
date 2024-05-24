@@ -93,11 +93,11 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 //Show the list of Bike Stores available
                 case R.id.bikeStoreAv:
-                    startActivity(new Intent(MainActivity.this, BikeStoreImageShowStoresListMain.class));
+                    startActivity(new Intent(MainActivity.this, BikeStoreImageMainShowStoresList.class));
                     break;
                 //Show the list of Bikes available from main page ordered by Bike Stores
                 case R.id.bikeAvToRent:
-                    startActivity(new Intent(MainActivity.this, BikeStoreImageShowBikesListMain.class));
+                    startActivity(new Intent(MainActivity.this, BikeStoreImageMainShowBikesList.class));
                     break;
                 //Show the list of all Bikes available from main page
                 case R.id.bikeAvToRentAll:

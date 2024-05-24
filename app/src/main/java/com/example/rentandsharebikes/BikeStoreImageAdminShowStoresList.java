@@ -10,8 +10,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,18 +24,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity implements BikeStoreAdapterShowStoresListAdmin.OnItemClickListener {
+public class BikeStoreImageAdminShowStoresList extends AppCompatActivity implements BikeStoreAdapterAdminShowStoresList.OnItemClickListener {
 
     //Display Bike stores available
     private DatabaseReference dbRefStoresAv;
     private ValueEventListener bikeStoreEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
-    private BikeStoreAdapterShowStoresListAdmin bikeStoreAdapterShowStoresListAdmin;
+    private BikeStoreAdapterAdminShowStoresList bikeStoreAdapterAdminShowStoresList;
 
     private TextView tVListBikeStoresAdmin;
-
-    private Button buttonAddMoreStores, buttonBackAdminPageStore;
 
     public List<BikeStores> bikeStoresList;
 
@@ -46,16 +43,13 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_store_image_show_stores_list_admin);
+        setContentView(R.layout.activity_bike_store_image_admin_show_stores_list);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("Bike Stores available Admin");
 
-        progressDialog = new ProgressDialog(BikeStoreImageShowStoresListAdmin.this);
+        progressDialog = new ProgressDialog(BikeStoreImageAdminShowStoresList.this);
 
         tVListBikeStoresAdmin = findViewById(R.id.tvListBikeStoresAdmin);
-
-        buttonAddMoreStores = findViewById(R.id.btnAddMoreStores);
-        buttonBackAdminPageStore = findViewById(R.id.btnBackAdminPageStore);
 
         bikeStoreRecyclerView = findViewById(R.id.evRecyclerView);
         bikeStoreRecyclerView.setHasFixedSize(true);
@@ -63,23 +57,9 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
 
         bikeStoresList = new ArrayList<BikeStores>();
 
-        bikeStoreAdapterShowStoresListAdmin = new BikeStoreAdapterShowStoresListAdmin(BikeStoreImageShowStoresListAdmin.this, bikeStoresList);
-        bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowStoresListAdmin);
-        bikeStoreAdapterShowStoresListAdmin.setOnItemClickListener(BikeStoreImageShowStoresListAdmin.this);
-
-        buttonAddMoreStores.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(BikeStoreImageShowStoresListAdmin.this, CalculateCoordinates.class));
-            }
-        });
-
-        buttonBackAdminPageStore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(BikeStoreImageShowStoresListAdmin.this, AdminPage.class));
-            }
-        });
+        bikeStoreAdapterAdminShowStoresList = new BikeStoreAdapterAdminShowStoresList(BikeStoreImageAdminShowStoresList.this, bikeStoresList);
+        bikeStoreRecyclerView.setAdapter(bikeStoreAdapterAdminShowStoresList);
+        bikeStoreAdapterAdminShowStoresList.setOnItemClickListener(BikeStoreImageAdminShowStoresList.this);
     }
 
     @Override
@@ -101,24 +81,37 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 bikeStoresList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
-                    assert bikeStores != null;
-                    bikeStores.setBikeStore_Key(postSnapshot.getKey());
-                    bikeStoresList.add(bikeStores);
-                    tVListBikeStoresAdmin.setText(bikeStoresList.size() + " Bike Stores available");
-                }
 
-                bikeStoreAdapterShowStoresListAdmin.notifyDataSetChanged();
-                tVListBikeStoresAdmin.setText(bikeStoresList.size() + " Bike Stores available");
-                progressDialog.dismiss();
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
+                        assert bikeStores != null;
+                        bikeStores.setBikeStore_Key(postSnapshot.getKey());
+                        bikeStoresList.add(bikeStores);
+                    }
+
+                    bikeStoreAdapterAdminShowStoresList.notifyDataSetChanged();
+
+                    if (bikeStoresList.size() == 1) {
+                        tVListBikeStoresAdmin.setText(bikeStoresList.size() + " Bike Store available");
+                    }
+
+                    else {
+                        tVListBikeStoresAdmin.setText(bikeStoresList.size() + " Bike Stores available");
+                    }
+                }
+                else {
+                    tVListBikeStoresAdmin.setText("No Bike Stores available!!");
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeStoreImageShowStoresListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeStoreImageAdminShowStoresList.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     //Action of the menu onClick
@@ -130,13 +123,13 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
 
     @Override
     public void onShowMapStoreClick(int position) {
-        startActivity(new Intent(BikeStoreImageShowStoresListAdmin.this, MapsActivity.class));
+        startActivity(new Intent(BikeStoreImageAdminShowStoresList.this, MapsActivity.class));
     }
 
     @Override
     public void onUpdateStoreClick(int position) {
 
-        Intent intent = new Intent(BikeStoreImageShowStoresListAdmin.this, UpdateBikeStoreDetails.class);
+        Intent intent = new Intent(BikeStoreImageAdminShowStoresList.this, UpdateBikeStoreDetails.class);
         BikeStores selected_BikeStores = bikeStoresList.get(position);
         intent.putExtra("SLocation", selected_BikeStores.getBikeStore_Location());
         intent.putExtra("SAddress", selected_BikeStores.getBikeStore_Address());
@@ -153,7 +146,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
 
         BikeStores selected_BikeStores = bikeStoresList.get(position);
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikeStoreImageShowStoresListAdmin.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikeStoreImageAdminShowStoresList.this);
         alertDialogBuilder
                 .setMessage("Are sure to delete " + selected_BikeStores.getBikeStore_Location() + " Bike Store?")
                 .setCancelable(false)
@@ -161,7 +154,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
                         (dialog, id) -> {
                             String selected_StoreKey = selected_BikeStores.getBikeStore_Key();
                             dbRefStoresAv.child(selected_StoreKey).removeValue();
-                            Toast.makeText(BikeStoreImageShowStoresListAdmin.this, "The Bike Store " + selected_BikeStores.getBikeStore_Location() + " has been successfully deleted.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BikeStoreImageAdminShowStoresList.this, "The Bike Store " + selected_BikeStores.getBikeStore_Location() + " has been successfully deleted.", Toast.LENGTH_SHORT).show();
                         })
 
                 .setNegativeButton("CANCEL", (dialog, id) -> dialog.cancel());
@@ -174,7 +167,7 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
     public void alertDialogBikeStoreNotEmpty(final int position) {
         BikeStores selectedBikeStores = bikeStoresList.get(position);
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikeStoreImageShowStoresListAdmin.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikeStoreImageAdminShowStoresList.this);
         alertDialogBuilder
                 .setMessage("The " + selectedBikeStores.getBikeStore_Location() + " Bike Store still has bikes and cannot be deleted \nDelete the Bikes first and after delete the Bike Store")
                 .setCancelable(false)
@@ -188,5 +181,36 @@ public class BikeStoreImageShowStoresListAdmin extends AppCompatActivity impleme
     protected void onDestroy() {
         super.onDestroy();
         dbRefStoresAv.removeEventListener(bikeStoreEventListener);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_bike_store_image_admin_show_stores_list, menu);
+        return true;
+    }
+
+    public void menuStoreImgAdminShowStoreGoBack() {
+        startActivity(new Intent(BikeStoreImageAdminShowStoresList.this, AdminPage.class));
+        finish();
+    }
+
+    public void menuStoreImgAdminShowStoreAddStore() {
+        startActivity(new Intent(BikeStoreImageAdminShowStoresList.this, CalculateCoordinates.class));
+        finish();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.menuStoreImgAdminShowStore_goBack) {
+            menuStoreImgAdminShowStoreGoBack();
+        }
+
+        if (item.getItemId() == R.id.menuStoreImgAdminShowStore_addStore) {
+            menuStoreImgAdminShowStoreAddStore();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

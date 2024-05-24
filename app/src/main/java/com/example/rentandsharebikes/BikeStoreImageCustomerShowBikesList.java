@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -18,15 +19,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class BikeStoreImageShowBikesListMain extends AppCompatActivity{
+public class BikeStoreImageCustomerShowBikesList extends AppCompatActivity implements BikeStoreAdapterCustom.OnItemClickListener{
 
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
-    private BikeStoreAdapterShowBikesListMain bikeStoreAdapterShowBikesListMain;
+    private BikeStoreAdapterCustom bikeStoreAdapterCustom;
 
     private List<BikeStores> bikeStoresList;
 
@@ -35,9 +35,7 @@ public class BikeStoreImageShowBikesListMain extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_store_image_show_bikes_list_main);
-
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Bike Stores available Main");
+        setContentView(R.layout.activity_bike_store_image_customer_show_bikes_list);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
@@ -48,17 +46,19 @@ public class BikeStoreImageShowBikesListMain extends AppCompatActivity{
 
         bikeStoresList = new ArrayList<>();
 
-        bikeStoreAdapterShowBikesListMain = new BikeStoreAdapterShowBikesListMain(BikeStoreImageShowBikesListMain.this, bikeStoresList);
-        bikeStoreRecyclerView.setAdapter(bikeStoreAdapterShowBikesListMain);
+        bikeStoreAdapterCustom = new BikeStoreAdapterCustom(BikeStoreImageCustomerShowBikesList.this, bikeStoresList);
+        bikeStoreRecyclerView.setAdapter(bikeStoreAdapterCustom);
+        bikeStoreAdapterCustom.setOnItmClickListener(BikeStoreImageCustomerShowBikesList.this);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        loadBikeStoresListAdmin();
+        loadBikeStoresListCustomer();
     }
 
-    private void loadBikeStoresListAdmin(){
+    private void loadBikeStoresListCustomer(){
+
         //initialize the bike store database
         databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
@@ -74,14 +74,24 @@ public class BikeStoreImageShowBikesListMain extends AppCompatActivity{
                     bikeStoresList.add(bikeStores);
                 }
 
-                bikeStoreAdapterShowBikesListMain.notifyDataSetChanged();
+                bikeStoreAdapterCustom.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeStoreImageShowBikesListMain.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeStoreImageCustomerShowBikesList.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
+        BikeStores selected_Store = bikeStoresList.get(position);
+        Intent store_Intent = new Intent(BikeStoreImageCustomerShowBikesList.this, BikeImageShowBikesListCustomer.class);
+        store_Intent.putExtra("SNameRent", selected_Store.getBikeStore_Location());
+        store_Intent.putExtra("SKeyRent", selected_Store.getBikeStore_Key());
+        startActivity(store_Intent);
     }
 }

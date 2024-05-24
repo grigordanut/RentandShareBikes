@@ -41,7 +41,7 @@
     <!--    Admin Page-->
     <string name="tv_adminPage">Welcome to Admin Page</string>
     <string name="tv_adminDetails">Admin personal details</string>
-    <string name="tv_adminPersonalDetails">Phone: \n0894644545 \n\nEmail: \nadmin@gmail.com</string>
+    <string name="tv_adminPersonalDetails">Your personal details</string>
     <string name="tv_adminBikeStores">Bike Stores Available</string>
     <string name="tv_adminBikeStoresAv">0</string>
     <string name="tv_adminBike">Bike available to Rent</string>
@@ -108,8 +108,6 @@
 
     <!--    Bike Store Image Show Stores List Admin-->
     <string name="tv_bikeStoreImageShowStoresListAdmin">List of Bike Stores</string>
-    <string name="btn_addMoreStores">Add More Stores</string>
-    <string name="btn_backToAdminPageStores">Back Admin Page</string>
 
     <!--    Bike Store Image Show Stores List Customer-->
     <string name="tv_bikeStoreImageShowStoresListCustomer">Bike Stores Available</string>
@@ -425,6 +423,11 @@
     <!--    Menu Admin-->
     <string name="menu_adminSettings">Admin</string>
     <string name="menu_adminLogOut">Log Out</string>
+
+    <!--    Menu Bike Store Image Admin Show Stores List-->
+    <string name="mStoreImgAdminShowStore_goBack">Go Back Admin</string>
+    <string name="mStoreImgAdminShowStore_addStore">Add Bike Store</string>
+    <string name="mStoreImgAdminShowStore_close">Close</string>
 
     <!--    Menu Change Password Custom-->
     <string name="menu_PasswordCustom_goBack">Go Back</string>

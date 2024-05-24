@@ -6,9 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -18,15 +16,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity implements BikeStoreAdapterAdmin.OnItemClickListener {
+public class BikeStoreImageAdminShowBikesList extends AppCompatActivity implements BikeStoreAdapterAdmin.OnItemClickListener {
 
     //Display the Bike Stores available
     private DatabaseReference dbRefBikeStores;
@@ -44,7 +40,7 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity implemen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_store_image_show_bikes_list_admin);
+        setContentView(R.layout.activity_bike_store_image_admin_show_bikes_list);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("Bike Stores available");
 
@@ -59,9 +55,9 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity implemen
 
         bikeStoresList = new ArrayList<>();
 
-        bikeStoreAdapterAdmin = new BikeStoreAdapterAdmin(BikeStoreImageShowBikesListAdmin.this, bikeStoresList);
+        bikeStoreAdapterAdmin = new BikeStoreAdapterAdmin(BikeStoreImageAdminShowBikesList.this, bikeStoresList);
         bikeStoreRecyclerView.setAdapter(bikeStoreAdapterAdmin);
-        bikeStoreAdapterAdmin.setOnItmClickListener(BikeStoreImageShowBikesListAdmin.this);
+        bikeStoreAdapterAdmin.setOnItmClickListener(BikeStoreImageAdminShowBikesList.this);
     }
 
     @Override
@@ -86,28 +82,29 @@ public class BikeStoreImageShowBikesListAdmin extends AppCompatActivity implemen
                         assert bikeStores != null;
                         bikeStores.setBikeStore_Key(postSnapshot.getKey());
                         bikeStoresList.add(bikeStores);
-                        tVBikeStoresImage.setText("Select the Bike Store");
                     }
 
                     bikeStoreAdapterAdmin.notifyDataSetChanged();
-                } else {
-                    tVBikeStoresImage.setText("No Bike Stores were found!!");
-                }
+                    tVBikeStoresImage.setText("Select the Bike Store");
 
-                progressDialog.dismiss();
+                } else {
+                    tVBikeStoresImage.setText("No Bike Stores available!!");
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeStoreImageShowBikesListAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeStoreImageAdminShowBikesList.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     @Override
     public void onItemClick(int position) {
         BikeStores selected_Store = bikeStoresList.get(position);
-        Intent store_Intent = new Intent(BikeStoreImageShowBikesListAdmin.this, BikeImageShowBikesListAdmin.class);
+        Intent store_Intent = new Intent(BikeStoreImageAdminShowBikesList.this, BikeImageShowBikesListAdmin.class);
         store_Intent.putExtra("SName", selected_Store.getBikeStore_Location());
         store_Intent.putExtra("SKey", selected_Store.getBikeStore_Key());
         startActivity(store_Intent);

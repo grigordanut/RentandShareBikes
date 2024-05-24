@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@android:color/holo_blue_bright"
-    tools:context=".BikeStoreImageShowStoresListMain">
+    android:orientation="vertical"
+    android:padding="5dp"
+    tools:context=".BikeStoreImageCustomerShowStoresList">
 
     <TextView
-        android:id="@+id/tvBikeStoresImageShowStoreListMain"
+        android:id="@+id/tvBikeStoresImageShowStoresListCustomer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:text="@string/tv_bikeStoreImageShowStoresListMain"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/tv_bikeStoreImageShowStoresListCustomer"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="24sp" />

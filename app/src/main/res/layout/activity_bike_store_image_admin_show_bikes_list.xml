@@ -6,15 +6,15 @@
     android:background="@android:color/holo_blue_bright"
     android:orientation="vertical"
     android:padding="5dp"
-    tools:context=".BikeImageShowBikesListAdminAll">
+    tools:context=".BikeStoreImageAdminShowBikesList">
 
     <TextView
-        android:id="@+id/tvBikeListAdminAll"
+        android:id="@+id/tvBikeStoresImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:text="@string/tv_bikesImgShowBikesListAdminAll"
+        android:text="@string/tv_bikeStoreImageShowBikesListAdmin"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="24sp" />

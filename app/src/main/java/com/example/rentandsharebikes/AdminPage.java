@@ -1,7 +1,6 @@
 package com.example.rentandsharebikes;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -38,10 +37,6 @@ public class AdminPage extends AppCompatActivity {
     //Declare Bike Store database variables (Retrieve data)
     private DatabaseReference dbRefBikeStoresAv;
     private ValueEventListener evListenerBikeStoreAv;
-
-    //Check if there are Bike Stores available into database
-    private DatabaseReference dbRefBikeStoresCheck;
-    private ValueEventListener evListenerBikeStoresCkeck;
 
     //Declare Bike database variables (Retrieve data)
     private DatabaseReference dbRefBikesRentAv;
@@ -148,37 +143,19 @@ public class AdminPage extends AppCompatActivity {
                                 //Show the list of Bike Stores available
                                 case R.id.adminShow_bikeStores:
                                     Toast.makeText(AdminPage.this, "Show Bike Stores", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(AdminPage.this, BikeStoreImageShowStoresListAdmin.class));
+                                    startActivity(new Intent(AdminPage.this, BikeStoreImageAdminShowStoresList.class));
                                     break;
 
                                 //Add Bikes to the Bike Stores available
                                 case R.id.adminAdd_bikesToStore:
-
-                                    dbRefBikeStoresCheck = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
-                                    evListenerBikeStoresCkeck = dbRefBikeStoresCheck.addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if (snapshot.exists()) {
-                                                Toast.makeText(AdminPage.this, "Add Bikes to Stores", Toast.LENGTH_SHORT).show();
-                                                startActivity(new Intent(AdminPage.this, BikeStoreImageAddBikesAdmin.class));
-                                            }
-
-                                            else {
-                                                alertDialogNoBikeStoresAvailable();
-                                            }
-                                        }
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-                                            Toast.makeText(AdminPage.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-
+                                    Toast.makeText(AdminPage.this, "Add Bikes to Stores", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(AdminPage.this, BikeStoreImageAdminAddBikes.class));
                                     break;
 
                                 //Show the list of Bikes available ordered by Bike Stores
                                 case R.id.adminShow_bikesList:
                                     Toast.makeText(AdminPage.this, "Show Bikes List", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(AdminPage.this, BikeStoreImageShowBikesListAdmin.class));
+                                    startActivity(new Intent(AdminPage.this, BikeStoreImageAdminShowBikesList.class));
                                     break;
 
                                 //Show the full list of Bikes available
@@ -190,7 +167,7 @@ public class AdminPage extends AppCompatActivity {
                                 //Show the full list of rented Bikes
                                 case R.id.adminShow_bikesRented:
                                     Toast.makeText(AdminPage.this, "Rented Bikes", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(AdminPage.this, BikeStoreImageShowRentedBikesListAdmin.class));
+                                    startActivity(new Intent(AdminPage.this, BikeStoreImageAdminShowRentedBikesList.class));
                                     break;
 
                                 //Show the full list of rented Bikes
@@ -364,16 +341,5 @@ public class AdminPage extends AppCompatActivity {
                 Toast.makeText(AdminPage.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void alertDialogNoBikeStoresAvailable() {
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
-        alertDialogBuilder
-                .setTitle("No Bike Stores available!!")
-                .setMessage("Add Bike Stores by using the menu Add Bike Stores and then you can use this service.")
-                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
     }
 }

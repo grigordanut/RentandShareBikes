@@ -49,7 +49,6 @@ public class BikeImageShowBikesListMainAll extends AppCompatActivity implements 
         progressDialog.show();
 
         tVBikesImageMainAll = findViewById(R.id.tvBikeImageBikesListMainAll);
-        tVBikesImageMainAll.setText("No bikes available to rent");
 
         bikesListRecyclerView = findViewById(R.id.evRecyclerView);
         bikesListRecyclerView.setHasFixedSize(true);
@@ -77,17 +76,30 @@ public class BikeImageShowBikesListMainAll extends AppCompatActivity implements 
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 bikesListMainAll.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    bikes.setBike_Key(postSnapshot.getKey());
-                    bikesListMainAll.add(bikes);
-                    tVBikesImageMainAll.setText(bikesListMainAll.size() + " Bikes available to rent ");
+
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Bikes bikes = postSnapshot.getValue(Bikes.class);
+                        assert bikes != null;
+                        bikes.setBike_Key(postSnapshot.getKey());
+                        bikesListMainAll.add(bikes);
+                    }
+
+                    bikeAdapterShowBikesListMainAll.notifyDataSetChanged();
+
+                    if (bikesListMainAll.size() == 1) {
+                        tVBikesImageMainAll.setText(bikesListMainAll.size() + " Bike available to rent ");
+                    }
+                    else {
+                        tVBikesImageMainAll.setText(bikesListMainAll.size() + " Bikes available to rent ");
+                    }
                 }
 
-                bikeAdapterShowBikesListMainAll.notifyDataSetChanged();
-                progressDialog.dismiss();
+                else {
+                    tVBikesImageMainAll.setText("No bikes available to rent!!");
+                }
             }
 
             @Override
@@ -95,6 +107,8 @@ public class BikeImageShowBikesListMainAll extends AppCompatActivity implements 
                 Toast.makeText(BikeImageShowBikesListMainAll.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     //Action of the menu onClick
