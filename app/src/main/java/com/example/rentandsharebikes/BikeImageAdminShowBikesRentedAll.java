@@ -33,12 +33,12 @@ public class BikeImageAdminShowBikesRentedAll extends AppCompatActivity implemen
     private FirebaseStorage bikesStorage;
     private ValueEventListener bikesEventListener;
 
-    private RecyclerView bikesListRecyclerView;
+    private RecyclerView rvBikesImgAdminShow_BikesRentedAll;
     private BikeAdapterAdminShowBikesRented bikeAdapterAdminShowBikesRented;
 
-    private TextView tVAdminRentedBikesAll;
+    private TextView tVBikesImgAdminShowBikesRentedAll;
 
-    private List<RentedBikes> rentedBikesList;
+    private List<RentedBikes> listShowBikesRentedAll;
 
     private ProgressDialog progressDialog;
 
@@ -48,18 +48,21 @@ public class BikeImageAdminShowBikesRentedAll extends AppCompatActivity implemen
         setContentView(R.layout.activity_bike_image_admin_show_bikes_rented_all);
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.show();
 
-        tVAdminRentedBikesAll = findViewById(R.id.tvAdminRentedBikesAll);
+        //initialize the bike storage database
+        bikesStorage = FirebaseStorage.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Rent Bikes");
 
-        bikesListRecyclerView = findViewById(R.id.evRecyclerView);
-        bikesListRecyclerView.setHasFixedSize(true);
-        bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        tVBikesImgAdminShowBikesRentedAll = findViewById(R.id.tvBikesImgAdminShowBikesRentedAll);
 
-        rentedBikesList = new ArrayList<>();
+        rvBikesImgAdminShow_BikesRentedAll = findViewById(R.id.rvBikesImgAdminShowBikesRentedAll);
+        rvBikesImgAdminShow_BikesRentedAll.setHasFixedSize(true);
+        rvBikesImgAdminShow_BikesRentedAll.setLayoutManager(new LinearLayoutManager(this));
 
-        bikeAdapterAdminShowBikesRented = new BikeAdapterAdminShowBikesRented(BikeImageAdminShowBikesRentedAll.this, rentedBikesList);
-        bikesListRecyclerView.setAdapter(bikeAdapterAdminShowBikesRented);
+        listShowBikesRentedAll = new ArrayList<>();
+
+        bikeAdapterAdminShowBikesRented = new BikeAdapterAdminShowBikesRented(BikeImageAdminShowBikesRentedAll.this, listShowBikesRentedAll);
+        rvBikesImgAdminShow_BikesRentedAll.setAdapter(bikeAdapterAdminShowBikesRented);
         bikeAdapterAdminShowBikesRented.setOnItmClickListener(BikeImageAdminShowBikesRentedAll.this);
     }
 
@@ -71,25 +74,35 @@ public class BikeImageAdminShowBikesRentedAll extends AppCompatActivity implemen
     }
 
     private void loadBikesListCustomer() {
-        //initialize the bike storage database
-        bikesStorage = FirebaseStorage.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Rent Bikes");
+
+        progressDialog.show();
 
         bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
+            @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                rentedBikesList.clear();
+
+                listShowBikesRentedAll.clear();
+
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     RentedBikes rent_Bikes = postSnapshot.getValue(RentedBikes.class);
                     assert rent_Bikes != null;
                     rent_Bikes.setBike_RentKey(postSnapshot.getKey());
-                    rentedBikesList.add(rent_Bikes);
-                    tVAdminRentedBikesAll.setText(rentedBikesList.size()+" Bikes rented by customers");
+                    listShowBikesRentedAll.add(rent_Bikes);
+                }
+
+                if (listShowBikesRentedAll.size() == 1) {
+                    tVBikesImgAdminShowBikesRentedAll.setText(listShowBikesRentedAll.size()+" Bike rented by customers");
+
+                }
+                else if (listShowBikesRentedAll.size() > 1) {
+                    tVBikesImgAdminShowBikesRentedAll.setText(listShowBikesRentedAll.size()+" Bikes rented by customers");
+                }
+                else {
+                    tVBikesImgAdminShowBikesRentedAll.setText("No Bikes rented by customers");
                 }
 
                 bikeAdapterAdminShowBikesRented.notifyDataSetChanged();
-                progressDialog.dismiss();
             }
 
             @Override
@@ -97,12 +110,14 @@ public class BikeImageAdminShowBikesRentedAll extends AppCompatActivity implemen
                 Toast.makeText(BikeImageAdminShowBikesRentedAll.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     @Override
     public void onItemClick(int position) {
 
-        RentedBikes selected_Bike = rentedBikesList.get(position);
+        RentedBikes selected_Bike = listShowBikesRentedAll.get(position);
 
         Context context = BikeImageAdminShowBikesRentedAll.this;
         LayoutInflater li = LayoutInflater.from(context);

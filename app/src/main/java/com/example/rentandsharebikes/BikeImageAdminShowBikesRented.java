@@ -64,6 +64,8 @@ public class BikeImageAdminShowBikesRented extends AppCompatActivity implements 
         getIntent().hasExtra("SKey");
         bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle(bikeStore_Name + " Bike Store");
+
         tVBikesImgAdminShowBikesRented = findViewById(R.id.tvBikesImgAdminShowBikesRented);
 
         rvBikesImgAdminShow_BikesRented = findViewById(R.id.rvBikesImgAdminShowBikesRented);
@@ -95,26 +97,27 @@ public class BikeImageAdminShowBikesRented extends AppCompatActivity implements 
 
                 listShowBikesRented.clear();
 
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        RentedBikes rent_Bikes = postSnapshot.getValue(RentedBikes.class);
-                        assert rent_Bikes != null;
-                        rent_Bikes.setBike_RentKey(postSnapshot.getKey());
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    RentedBikes rent_Bikes = postSnapshot.getValue(RentedBikes.class);
+                    assert rent_Bikes != null;
+                    rent_Bikes.setBike_RentKey(postSnapshot.getKey());
 
-                        if (rent_Bikes.getStoreKey_RentBikes().equals(bikeStore_Key)) {
-                            listShowBikesRented.add(rent_Bikes);
-                        }
-
-                        tVBikesImgAdminShowBikesRented.setText(listShowBikesRented.size() + " Bikes rented from: " + bikeStore_Name);
+                    if (rent_Bikes.getStoreKey_RentBikes().equals(bikeStore_Key)) {
+                        listShowBikesRented.add(rent_Bikes);
                     }
-
-                    bikeAdapterAdminShowBikesRented.notifyDataSetChanged();
                 }
 
+                if (listShowBikesRented.size() == 1) {
+                    tVBikesImgAdminShowBikesRented.setText(listShowBikesRented.size() + " Bike rented from: " + bikeStore_Name);
+                }
+                else if (listShowBikesRented.size() > 1) {
+                    tVBikesImgAdminShowBikesRented.setText(listShowBikesRented.size() + " Bikes rented from: " + bikeStore_Name);
+                }
                 else {
                     tVBikesImgAdminShowBikesRented.setText("No bikes rented from: " + bikeStore_Name);
-                    bikeAdapterAdminShowBikesRented.notifyDataSetChanged();
                 }
+
+                bikeAdapterAdminShowBikesRented.notifyDataSetChanged();
             }
 
             @Override

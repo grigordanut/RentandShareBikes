@@ -6,23 +6,23 @@
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
     android:orientation="vertical"
+    android:padding="5dp"
     tools:context=".BikeImageAdminShowBikesRentedAll">
 
     <TextView
-        android:id="@+id/tvAdminRentedBikesAll"
+        android:id="@+id/tvBikesImgAdminShowBikesRentedAll"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:text="@string/tv_bikesImgAdminShowBikesRentedAll"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/evRecyclerView"
+        android:id="@+id/rvBikesImgAdminShowBikesRentedAll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp" />
