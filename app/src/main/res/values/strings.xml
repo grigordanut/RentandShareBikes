@@ -43,13 +43,40 @@
     <string name="tv_adminDetails">Admin personal details</string>
     <string name="tv_adminPersonalDetails">Your personal details</string>
     <string name="tv_adminBikeStores">Bike Stores Available</string>
-    <string name="tv_adminBikeStoresAv">0</string>
+    <string name="tv_adminBikeStoresAv">Null</string>
     <string name="tv_adminBike">Bike available to Rent</string>
-    <string name="tv_adminBikeAv">0</string>
+    <string name="tv_adminBikeAv">Null</string>
     <string name="tv_adminBikeRented">Rented Bikes</string>
-    <string name="tv_adminBikeRentedAv">0</string>
+    <string name="tv_adminBikeRentedAv">Null</string>
     <string name="tv_adminBikeShared">Bikes available to Share</string>
-    <string name="tv_adminBikeSharedAv">0</string>
+    <string name="tv_adminBikeSharedAv">Null</string>
+
+    <!--    Bike Image Admin Show Bikes-->
+    <string name="tv_bikesImageAdminShowBikes">List of Bikes</string>
+
+    <!--    Bike Image Admin Show Bikes All-->
+    <string name="tv_bikeImgAdminShowBikesAll">List of all Bikes</string>
+
+    <!--    Bike Image Admin Show Bikes Rented-->
+    <string name="tv_bikesImgAdminShowBikesRented">List of bikes rented</string>
+
+    <!--    Bike Image Admin Show Rented Bikes All-->
+    <string name="tv_bikesImgAdminShowBikesRentedAll">List of all bikes rented</string>
+
+    <!--    Bike Image Main Show Bikes -->
+    <string name="tv_bikeImgMainShowBikes">List of Bikes</string>
+
+    <!--    Bike Image Main Show Bikes All-->
+    <string name="tv_bikeImgMainShowBikesAll">List of all Bikes</string>
+
+    <!--    Bike Image Main Show Bikes To Share-->
+    <string name="tv_bikeImgMainShowBikesToShare">Bikes available to be shared</string>
+
+
+
+
+
+
 
     <!--    Bike Image Remove Shared Bikes Owner-->
     <string name="tv_bikeStoreImgRemoveBikesOwner">Select the Bike to be removed</string>
@@ -60,15 +87,9 @@
     <!--    Bike Image Return Rented Bikes Customer-->
     <string name="tv_bikesImageRentBikesRented">Select the Bike</string>
 
-    <!--    Bike Image Show Bikes List Admin-->
-    <string name="tv_bikesImageShowBikesListAdmin">List of Bikes</string>
-    <string name="btn_addMoreBikesAdmin">Add More Bikes</string>
-    <string name="btn_backToAdminPageBikes">Back Admin Page</string>
 
-    <!--    Bike Image Show Bikes List Admin All-->
-    <string name="tv_bikesImgShowBikesListAdminAll">List of Bikes</string>
-    <string name="btn_addMoreBikesAdminAll">Add More Bikes</string>
-    <string name="btn_backToAdminPageBikesAll">Back Admin Page</string>
+
+
 
     <!--    Bike Image Show Bikes List Customer-->
     <string name="tv_bikesImageShowBikesListCustomer">List of Bikes</string>
@@ -76,67 +97,67 @@
     <!--    Bike Image Show Bikes List Custom All-->
     <string name="tv_bikesImageShowBikesListCustomAll">No Bikes available to rent</string>
 
-    <!--    Bike Image Show Bikes List Main All-->
-    <string name="tv_bikesImageShowBikesListMainAll">List of Bikes</string>
 
-    <!--    Bike Image Show Bikes List Main Page-->
-    <string name="tv_bikesImageShowBikesListMain">List of Bikes</string>
 
-    <!--    Bike Image Show Rented Bikes Admin-->
-    <string name="tv_bikesImageShowBikesRentedAdmin">No Bikes rented</string>
 
-    <!--    Bike Image Show Rented Bikes Admin All-->
-    <string name="tv_bikesImageShowBikesRentedAdminAll">No Bikes rented</string>
 
-    <!--    Bike Store Image Add Bikes Admin-->
-    <string name="tv_bikeStoreImageAddBikes">List of Bike Stores</string>
+
+
+    <!--    Bike Store Image Admin Add Bikes-->
+    <string name="tv_bikeStoreImgAminAddBikes">List of Bike Stores</string>
+
+    <!--    Bike Store Image Admin Show Bike List-->
+    <string name="tv_bikeStoreImgAdminShowBikes">List of Bike Stores</string>
+
+    <!--    Bike Store Image Admin Show Bikes Rented-->
+    <string name="tv_bikeStoreImgAdminShowBikesRented">List of Bike Stores</string>
+
+
 
     <!--    Bike Store Image Rent Bikes Customer-->
     <string name="tv_bikeStoreImageRentBikesCustomer">Select the Bike Store</string>
 
-    <!--    Bike Store Image Show Bike List Admin-->
-    <string name="tv_bikeStoreImageShowBikesListAdmin">Bike Stores available</string>
-
     <!--    Bike Store Image Show Bike List Custom-->
     <string name="tv_bikeStoreImageShowBikesListCustomer">Select the Bike Store</string>
 
-    <!--    Bike Store Image Show Bike List Main-->
-    <string name="tv_bikeStoreImageShowBikesListMain">Select the Bike Store</string>
 
-    <!--    Bike Store Image Show Rented Bikes List Admin-->
-    <string name="tv_bikeStoreImageShowRentedBikesAdmin">Select the Bike Store</string>
-
-    <!--    Bike Store Image Show Stores List Admin-->
-    <string name="tv_bikeStoreImageShowStoresListAdmin">List of Bike Stores</string>
+    <!--    Bike Store Image Admin Show Stores-->
+    <string name="tv_bikeStoreImgAdminShowStores">List of Bike Stores</string>
 
     <!--    Bike Store Image Show Stores List Customer-->
     <string name="tv_bikeStoreImageShowStoresListCustomer">Bike Stores Available</string>
 
-    <!--    Bike Store Image Show Stores List Main-->
-    <string name="tv_bikeStoreImageShowStoresListMain">List of Bike Stores</string>
-
     <!--    Bike Store List Return Rented Bike-->
     <string name="tv_bikeStoreListReturnBike">Select the Bike Store</string>
 
-    <!--    Bikes Image Show Bikes Rented Customer-->
+    <!--    Bike Image Show Bikes Rented Customer-->
     <string name="tv_bikesImageShowBikesRentedCustomer">List of Bikes</string>
 
-    <!--    Bikes Image Show Shared Bikes Admin-->
+    <!--    Bike Image Show Shared Bikes Admin-->
     <string name="tv_bikesImageShowSharedBikesAdmin">No Bikes available to be shared</string>
 
-    <!--    Bikes Image Show Shared Bikes Main-->
-    <string name="tv_bikesImageShowSharedBikesMain">No Bikes available to be shared</string>
 
-    <!--    Bikes Image Show Bikes Rented No Owner-->
+
+
+
+    <!--    Bike Image Show Bikes Rented No Owner-->
     <string name="tv_bikeStoreImgShowBikesSNoOwner">No Bikes available to be shared</string>
 
-    <!--    Bikes Image Show Shared Bikes Owner-->
+    <!--    Bike Image Show Shared Bikes Owner-->
     <string name="tv_bikesImageShowOwnSharedBikes">List of Bikes</string>
     <string name="btn_addMoreBikesShare">Add More Bikes</string>
     <string name="btn_backToCustomPageShare">Back Main Page</string>
 
-    <!--    Bikes Image Show Shared Bikes To Update-->
+    <!--    Bike Image Show Shared Bikes To Update-->
     <string name="tv_bikesImageShowSBikesToUpdate">Select the bike to be update</string>
+
+
+
+    <!--    Bike Store Image Main Show Bikes-->
+    <string name="tv_bikeStoreImageMainShowBikes">List of Bike Stores</string>
+
+    <!--    Bike Store Image Main Show Stores-->
+    <string name="tv_bikeStoreImageMainShowStores">List of Bike Stores</string>
 
     <!--    Calculate Coordinates-->
     <string name="tv_calculateCoordinates">Calculate Address Coordinates</string>
@@ -174,11 +195,11 @@
     <string name="tv_customPageRentPersonalDetails">Your personal details:</string>
     <string name="tv_customPageRentPersonalAccount">Your personal Account:</string>
     <string name="tv_customPageBikeStores">Bikes Stores Available</string>
-    <string name="tv_customPageBikeStoresAv">0</string>
+    <string name="tv_customPageBikeStoresAv">Null</string>
     <string name="tv_customPageBikeRent">Bikes available to Rent</string>
-    <string name="tv_customPageBikeRentAv">0</string>
+    <string name="tv_customPageBikeRentAv">Null</string>
     <string name="tv_customPageBikesRented">Rented Bikes</string>
-    <string name="tv_customPageBikesRentedAv">0</string>
+    <string name="tv_customPageBikesRentedAv">Null</string>
     <string name="tv_customPageRentAccount">Your account</string>
     <string name="open_customPageRent">Open</string>
     <string name="close_customPageRent">Close</string>
@@ -221,17 +242,17 @@
     <string name="btn_logInCustomer">Log In</string>
     <string name="btn_signUpCustomer">Register</string>
 
-    <!--    Main Activity Layout Page-->
+    <!--    Activity Main Page-->
     <string name="tv_mainPage1">Welcome to</string>
     <string name="tv_mainPage2">Rent and Share Bikes</string>
     <string name="tv_mainPageInfo">The company offers services of renting and sharing bikes.</string>
     <string name="tv_mainPageDetails">Phone: \n0894644545 \n\nEmail: \nrent.bikes19@gmail.com</string>
     <string name="tv_mainBikeStores">Bike Stores Available</string>
-    <string name="tv_mainBikeStoresAv">0</string>
+    <string name="tv_mainBikeStoresAv">Null</string>
     <string name="tv_mainBikesRent">Bike available to Rent</string>
-    <string name="tv_mainBikesRentAv">0</string>
+    <string name="tv_mainBikesRentAv">Null</string>
     <string name="tv_mainBikesShare">Bike available to Share</string>
-    <string name="tv_mainBikesShareAv">0</string>
+    <string name="tv_mainBikesShareAv">Null</string>
     <string name="tv_mainTradeMark">\u00AE</string>
 
     <!--    Register Customer-->
@@ -341,7 +362,7 @@
     <string name="tv_bikeCondition">Condition: </string>
     <string name="tv_bikeModel">Model: </string>
     <string name="tv_bikeManufacturer">Factory: </string>
-    <string name="tv_bikePrice">Price/Hour: € </string>
+    <string name="tv_bikePrice">Price €</string>
 
     <!--    Image Bikes Admin Full-->
     <string name="tv_bikeStoreFull">Bike Store Name: </string>
@@ -411,17 +432,25 @@
     <string name="tv_storeAddress">Store Address: </string>
     <string name="tv_numberSlots">Number Slots: </string>
     <string name="tv_numberAvailable">Bikes Available: </string>
-    <string name="tv_numberBikesAvailable">0</string>
+    <string name="tv_numberBikesAvailable">Null</string>
 
     <!--    Image Bike Store Return-->
     <string name="tv_storeLocationReturn">Store Location: </string>
     <string name="tv_storeAddressReturn">Store Address: </string>
 
+    <!--    Image Bike Store-->
+    <string name="tv_storeLocationRent">Store Location: </string>
+    <string name="tv_storeAddressRent">Store Address: </string>
+    <string name="tv_numberSlotsRent">Number Slots: </string>
+    <string name="tv_numberAvailableRent">Bikes Available: </string>
+    <string name="tv_numberBikesAvailableRent">Null</string>
+    <string name="tv_numberRentedRent">Rented: </string>
+    <string name="tv_numberBikesRentedRent">Null</string>
+
     <!--    Main Header-->
 
     <!--    Menu Resources-->
     <!--    Menu Admin-->
-    <string name="menu_adminSettings">Admin</string>
     <string name="menu_adminLogOut">Log Out</string>
 
     <!--    Menu Bike Store Image Admin Show Stores List-->

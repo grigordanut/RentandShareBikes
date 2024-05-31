@@ -15,14 +15,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class BikeAdapterBikesCustomer extends RecyclerView.Adapter<BikeAdapterBikesCustomer.ImageViewHolder> {
+public class BikeAdapterMainShowBikes extends RecyclerView.Adapter<BikeAdapterMainShowBikes.ImageViewHolder>{
 
     private final Context bikesContext;
     private final List<Bikes> bikesUploads;
 
     private OnItemClickListener clickListener;
 
-    public BikeAdapterBikesCustomer(Context bikes_context, List<Bikes> bikes_ToRent_uploads){
+    public BikeAdapterMainShowBikes(Context bikes_context, List<Bikes> bikes_ToRent_uploads){
         bikesContext = bikes_context;
         bikesUploads = bikes_ToRent_uploads;
     }
@@ -30,7 +30,7 @@ public class BikeAdapterBikesCustomer extends RecyclerView.Adapter<BikeAdapterBi
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(bikesContext).inflate(R.layout.image_bikes_customer,parent, false);
+        View view = LayoutInflater.from(bikesContext).inflate(R.layout.image_bikes_available_main,parent, false);
         return new ImageViewHolder(view);
     }
 
@@ -38,19 +38,18 @@ public class BikeAdapterBikesCustomer extends RecyclerView.Adapter<BikeAdapterBi
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
 
-        final Bikes uploadCurrent = bikesUploads.get(position);
-        holder.tVStoreNameUser.setText(uploadCurrent.getBikeStoreName());
-        holder.tVBikeConditionUser.setText(uploadCurrent.getBike_Condition());
-        holder.tVBikeModelUser.setText(uploadCurrent.getBike_Model());
-        holder.tVBikeManufactUser.setText(uploadCurrent.getBike_Manufacturer());
-        holder.tVBikePriceUser.setText(String.valueOf(uploadCurrent.getBike_Price()));
+        Bikes uploadCurrent = bikesUploads.get(position);
+        holder.tVBikeCondAvMain.setText(uploadCurrent.getBike_Condition());
+        holder.tVBikeModelAvMain.setText(uploadCurrent.getBike_Model());
+        holder.tVBikeManAvMain.setText(uploadCurrent.getBike_Manufacturer());
+        holder.tVBikePriceAvMain.setText(String.valueOf(uploadCurrent.getBike_Price()));
 
         Picasso.get()
                 .load(uploadCurrent.getBike_Image())
                 .placeholder(R.mipmap.ic_launcher)
                 .fit()
                 .centerCrop()
-                .into(holder.imageBikeUser);
+                .into(holder.imBikeAvMain);
     }
 
     @Override
@@ -58,24 +57,22 @@ public class BikeAdapterBikesCustomer extends RecyclerView.Adapter<BikeAdapterBi
         return bikesUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public ImageView imageBikeUser;
-        public TextView tVStoreNameUser;
-        public TextView tVBikeConditionUser;
-        public TextView tVBikeModelUser;
-        public TextView tVBikeManufactUser;
-        public TextView tVBikePriceUser;
+        public ImageView imBikeAvMain;
+        public TextView tVBikeCondAvMain;
+        public TextView tVBikeModelAvMain;
+        public TextView tVBikeManAvMain;
+        public TextView tVBikePriceAvMain;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
 
-            imageBikeUser = itemView.findViewById(R.id.imgBikesUser);
-            tVStoreNameUser = itemView.findViewById(R.id.tvStoreNameUser);
-            tVBikeConditionUser = itemView.findViewById(R.id.tvBikeCondUser);
-            tVBikeModelUser = itemView.findViewById(R.id.tvBikeModelUser);
-            tVBikeManufactUser = itemView.findViewById(R.id.tvBikeManufactUser);
-            tVBikePriceUser = itemView.findViewById(R.id.tvBikePriceUser);
+            imBikeAvMain = itemView.findViewById(R.id.imgBikesAvMain);
+            tVBikeCondAvMain = itemView.findViewById(R.id.tvBikeCondAvMain);
+            tVBikeModelAvMain = itemView.findViewById(R.id.tvBikeModelAvMain);
+            tVBikeManAvMain = itemView.findViewById(R.id.tvBikeManufactAvMain);
+            tVBikePriceAvMain = itemView.findViewById(R.id.tvBikePriceAvMain);
 
             itemView.setOnClickListener(this);
         }

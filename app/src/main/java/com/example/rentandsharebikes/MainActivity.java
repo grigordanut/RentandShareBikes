@@ -1,6 +1,7 @@
 package com.example.rentandsharebikes;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,7 +29,6 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     //Display data from Bike Stores database
-    private FirebaseStorage firebaseStBikeSores;
     private DatabaseReference databaseRefBikeStores;
     private ValueEventListener bikeStoresEventListener;
 
@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     private NavigationView navigationView;
 
+    private ProgressDialog progressDialog;
+
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("Main Activity");
+
+        progressDialog = new ProgressDialog(MainActivity.this);
+
+        //initialize the bike storage database
+        databaseRefBikeStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
+
+        //initialize the bike storage database
+        firebaseStBikesAvRent = FirebaseStorage.getInstance();
+        databaseRefBikesAvRent = FirebaseDatabase.getInstance().getReference("Bikes");
+
+        //Display the list of the bikes from Share Bikes database
+        firebaseStBikesAvShare = FirebaseStorage.getInstance();
+        databaseRefBikesAvShare = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
         bikeStoresList = new ArrayList<>();
         bikesRentListAv = new ArrayList<>();
@@ -93,19 +108,19 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 //Show the list of Bike Stores available
                 case R.id.bikeStoreAv:
-                    startActivity(new Intent(MainActivity.this, BikeStoreImageMainShowStoresList.class));
+                    startActivity(new Intent(MainActivity.this, BikeStoreImageMainShowStores.class));
                     break;
                 //Show the list of Bikes available from main page ordered by Bike Stores
                 case R.id.bikeAvToRent:
-                    startActivity(new Intent(MainActivity.this, BikeStoreImageMainShowBikesList.class));
+                    startActivity(new Intent(MainActivity.this, BikeStoreImageMainShowBikes.class));
                     break;
                 //Show the list of all Bikes available from main page
                 case R.id.bikeAvToRentAll:
-                    startActivity(new Intent(MainActivity.this, BikeImageShowBikesListMainAll.class));
+                    startActivity(new Intent(MainActivity.this, BikeImageMainShowBikesAll.class));
                     break;
                 //Show bikes available to share
                 case R.id.bikeAvToShare:
-                    startActivity(new Intent(MainActivity.this, BikeImageShowSharedBikesMain.class));
+                    startActivity(new Intent(MainActivity.this, BikeImageMainShowBikesToShare.class));
                     break;
                 case R.id.contactUs:
                     startActivity(new Intent(MainActivity.this, ContactUs.class));
@@ -147,28 +162,34 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        loadBikeStoresAv();
-        loadBikeRentAv();
-        loadBikeShareAv();
+        loadBikeStoresMainAv();
+        loadBikeRentMainAv();
+        loadBikeShareMainAv();
     }
 
-    private void loadBikeStoresAv() {
+    private void loadBikeStoresMainAv() {
 
-        //initialize the bike storage database
-        firebaseStBikeSores = FirebaseStorage.getInstance();
-        databaseRefBikeStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
+        progressDialog.show();
 
         bikeStoresEventListener = databaseRefBikeStores.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 bikeStoresList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStores bike_Stores = postSnapshot.getValue(BikeStores.class);
-                    assert bike_Stores != null;
-                    bike_Stores.setBikeStore_Key(postSnapshot.getKey());
-                    bikeStoresList.add(bike_Stores);
-                    numberStoresAvailable = bikeStoresList.size();
-                    tVMainStoresAv.setText(String.valueOf(numberStoresAvailable));
+
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        BikeStores bike_Stores = postSnapshot.getValue(BikeStores.class);
+                        assert bike_Stores != null;
+                        bike_Stores.setBikeStore_Key(postSnapshot.getKey());
+                        bikeStoresList.add(bike_Stores);
+                        numberStoresAvailable = bikeStoresList.size();
+                        tVMainStoresAv.setText(String.valueOf(numberStoresAvailable));
+                    }
+                }
+
+                else {
+                    tVMainStoresAv.setText(String.valueOf(0));
                 }
             }
 
@@ -177,25 +198,33 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
-    private void loadBikeRentAv() {
+    private void loadBikeRentMainAv() {
 
-        //initialize the bike storage database
-        firebaseStBikesAvRent = FirebaseStorage.getInstance();
-        databaseRefBikesAvRent = FirebaseDatabase.getInstance().getReference("Bikes");
+        progressDialog.show();
 
         bikesAvRentEventListener = databaseRefBikesAvRent.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 bikesRentListAv.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    bikes.setBike_Key(postSnapshot.getKey());
-                    bikesRentListAv.add(bikes);
-                    numberBikesAvRent = bikesRentListAv.size();
-                    tVMainBikesRentAv.setText(String.valueOf(numberBikesAvRent));
+
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Bikes bikes = postSnapshot.getValue(Bikes.class);
+                        assert bikes != null;
+                        bikes.setBike_Key(postSnapshot.getKey());
+                        bikesRentListAv.add(bikes);
+                        numberBikesAvRent = bikesRentListAv.size();
+                        tVMainBikesRentAv.setText(String.valueOf(numberBikesAvRent));
+                    }
+                }
+
+                else {
+                    tVMainBikesRentAv.setText(String.valueOf(0));
                 }
             }
 
@@ -204,26 +233,34 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
-    private void loadBikeShareAv() {
+    private void loadBikeShareMainAv() {
 
-        //Display the list of the bikes from Share Bikes database
-        firebaseStBikesAvShare = FirebaseStorage.getInstance();
-        databaseRefBikesAvShare = FirebaseDatabase.getInstance().getReference("Share Bikes");
+        progressDialog.show();
 
         bikesAvShareEventListener = databaseRefBikesAvShare.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 bikesListAvShare.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikesShare share_Bikes = postSnapshot.getValue(BikesShare.class);
-                    assert share_Bikes != null;
-                    share_Bikes.setShareBike_Key(postSnapshot.getKey());
-                    bikesListAvShare.add(share_Bikes);
-                    numberBikesAvShare = bikesListAvShare.size();
-                    tVMainBikesShareAv.setText(String.valueOf(numberBikesAvShare));
+
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        BikesShare share_Bikes = postSnapshot.getValue(BikesShare.class);
+                        assert share_Bikes != null;
+                        share_Bikes.setShareBike_Key(postSnapshot.getKey());
+                        bikesListAvShare.add(share_Bikes);
+                        numberBikesAvShare = bikesListAvShare.size();
+                        tVMainBikesShareAv.setText(String.valueOf(numberBikesAvShare));
+                    }
+                }
+
+                else {
+                    tVMainBikesShareAv.setText(String.valueOf(0));
                 }
             }
 
@@ -232,5 +269,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 }

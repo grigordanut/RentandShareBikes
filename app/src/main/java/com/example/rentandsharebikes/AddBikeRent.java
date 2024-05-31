@@ -271,17 +271,6 @@ public class AddBikeRent extends AppCompatActivity {
         return result;
     }
 
-    //Notify Bike condition missing
-    public void alertDialogBikeCond() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder
-                .setMessage("Select the Bike condition")
-                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-
     //Notify Bike picture missing
     public void alertDialogBikePicture() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -289,6 +278,17 @@ public class AddBikeRent extends AppCompatActivity {
                 .setTitle("No Bike picture")
                 .setMessage("Please add a picture!")
                 .setCancelable(false)
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    //Notify Bike condition missing
+    public void alertDialogBikeCond() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setMessage("Select the Bike condition")
                 .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();

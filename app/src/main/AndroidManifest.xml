@@ -40,12 +40,12 @@
         <activity
             android:name=".RegisterAdmin"
             android:exported="false" />
-        <activity android:name=".BikeStoreImageAdminShowRentedBikesList" />
-        <activity android:name=".BikeImageShowBikesRentedAdmin" />
+        <activity android:name=".BikeStoreImageAdminShowBikesRented" />
+        <activity android:name=".BikeImageAdminShowBikesRented" />
         <activity android:name=".LockActivity" />
         <activity android:name=".BikeImageShowSharedBikesAdmin" />
         <activity android:name=".BikeImageShowBikesListCustomerAll" />
-        <activity android:name=".BikeImageShowSharedBikesMain" />
+        <activity android:name=".BikeImageMainShowBikesToShare" />
         <activity android:name=".BikeImageShowSharedBikesToUpdate" />
         <activity android:name=".BikeImageShowSharedBikesNoOwner" />
         <activity android:name=".BikeImageRemoveSharedBikesOwner" />
@@ -54,15 +54,15 @@
         <activity android:name=".UpdateBikeSharedDetails" />
         <activity android:name=".BikeImageShowSharedBikesOwner" />
         <activity android:name=".AddBikeShare" />
-        <activity android:name=".BikeImageShowBikesListAdmin" />
-        <activity android:name=".BikeImageShowBikesListMainAll" />
-        <activity android:name=".BikeImageShowBikesListMainPage" />
-        <activity android:name=".BikeImageShowBikesListAdminAll" />
-        <activity android:name=".BikeImageShowBikesRentedAdminAll" />
+        <activity android:name=".BikeImageAdminShowBikes" />
+        <activity android:name=".BikeImageMainShowBikesAll" />
+        <activity android:name=".BikeImageMainShowBikes" />
+        <activity android:name=".BikeImageAdminShowBikesAll" />
+        <activity android:name=".BikeImageAdminShowBikesRentedAll" />
         <activity android:name=".UpdateBikeDetails" />
-        <activity android:name=".BikeStoreImageAdminShowBikesList" />
-        <activity android:name=".BikeStoreImageMainShowBikesList" />
-        <activity android:name=".BikeStoreImageMainShowStoresList" />
+        <activity android:name=".BikeStoreImageAdminShowBikes" />
+        <activity android:name=".BikeStoreImageMainShowBikes" />
+        <activity android:name=".BikeStoreImageMainShowStores" />
         <activity android:name=".BikeImageReturnRentedBikesCustomer" />
         <activity android:name=".ReturnRentedBikes" />
         <activity android:name=".BikeImageShowBikesRentedCustomer" />
@@ -77,7 +77,7 @@
         <activity android:name=".CustomerPageShareBikes" />
         <activity android:name=".CustomerPageRentBikes" />
         <activity android:name=".UpdateBikeStoreDetails" />
-        <activity android:name=".BikeStoreImageAdminShowStoresList" />
+        <activity android:name=".BikeStoreImageAdminShowStores" />
         <activity android:name=".CustomerPageMain" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

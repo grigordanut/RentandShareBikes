@@ -6,26 +6,23 @@
     android:background="@android:color/holo_blue_bright"
     android:orientation="vertical"
     android:padding="5dp"
-    tools:context=".BikeStoreImageAdminAddBikes">
+    tools:context=".BikeImageAdminShowBikes">
 
     <TextView
-        android:id="@+id/tvBikeStoreImgAdminAddBikes"
+        android:id="@+id/tvBikeImgAdminShowBikes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:text="@string/tv_bikeStoreImgAminAddBikes"
+        android:text="@string/tv_bikesImageAdminShowBikes"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvBikeStoreImgAdminAddBikes"
+        android:id="@+id/rvBikeImgAdminShowBikes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_margin="5dp" />
 
 </LinearLayout>

@@ -2,7 +2,9 @@ package com.example.rentandsharebikes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -19,8 +21,7 @@ public class BikeStoreAdapterReturnRentedBikes extends ArrayAdapter<BikeStores> 
     private Context mContext;
     private int mResorces;
 
-//    private int lastPosition = -1;
-//    private int row_index = -1;
+    private int row_index = -1;
 
     public BikeStoreAdapterReturnRentedBikes(@NonNull Context context, int resources, @NonNull List<BikeStores> objects) {
         super(context, resources, objects);
@@ -38,26 +39,31 @@ public class BikeStoreAdapterReturnRentedBikes extends ArrayAdapter<BikeStores> 
 
         convertView = layoutInflater.inflate(mResorces, parent, false);
 
-        TextView tVBikeStoreNameSpin = convertView.findViewById(R.id.tvBikeStoreNameSpin);
+        TextView tVBikeStoreName = convertView.findViewById(R.id.tvBikeStoreName);
 
-        tVBikeStoreNameSpin.setText(Objects.requireNonNull(getItem(position)).getBikeStore_Location());
+        tVBikeStoreName.setText(Objects.requireNonNull(getItem(position)).getBikeStore_Location());
 
-//        convertView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                row_index = position;
-//                notifyDataSetChanged();
-//            }
-//        });
-//
-//        if (row_index == position) {
-//            //convertView.setBackgroundColor(Color.GREEN);
-//            tVBikeStoreNameSpin.setTextColor(Color.GREEN);
-//        }
-//
-//        else {
-//            tVBikeStoreNameSpin.setTextColor(Color.BLACK);
-//        }
+        convertView.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                row_index = position;
+                notifyDataSetChanged();
+
+                return false;
+            }
+        });
+
+        if (row_index == position) {
+
+            //convertView.setBackgroundColor(Color.rgb(216, 27, 96));
+            tVBikeStoreName.setBackgroundColor(Color.GREEN);
+            tVBikeStoreName.setTextColor(Color.BLUE);
+
+        } else {
+            tVBikeStoreName.setTextColor(Color.BLACK);
+        }
 
         return convertView;
     }

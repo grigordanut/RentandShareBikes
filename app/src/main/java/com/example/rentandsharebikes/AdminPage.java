@@ -1,6 +1,7 @@
 package com.example.rentandsharebikes;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,7 @@ public class AdminPage extends AppCompatActivity {
     private ValueEventListener evListenerBikeStoreAv;
 
     //Declare Bike database variables (Retrieve data)
+    private FirebaseStorage firebaseStorage;
     private DatabaseReference dbRefBikesRentAv;
     private ValueEventListener evListenerBikesRentAv;
 
@@ -50,14 +53,14 @@ public class AdminPage extends AppCompatActivity {
     private DatabaseReference dbRefBikesShareAv;
     private ValueEventListener eventListenerBikeShareAv;
 
-    private List<BikeStores> bikeStoresList;
-    private List<Bikes> bikesRentListAv;
-    private List<RentedBikes> bikesListRented;
-    private List<BikesShare> bikesListAvShare;
+    private List<BikeStores> listBikeStoresAv;
+    private List<Bikes> listBikesRentAv;
+    private List<RentedBikes> listBikesRented;
+    private List<BikesShare> listBikesShareAv;
 
-    private int numberStoresAvailable;
-    private int numberBikesAvRent;
-    private int numberBikesAvShare;
+    private int numberBikeStoresAv;
+    private int numberBikesRentAv;
+    private int numberBikesShareAv;
     private int numberBikesRented;
 
     private TextView tVAdminDetails, tVAdminPersonalDetails, tVAdminStoresAv, tVAdminBikesRentAv, tVAdminBikesRented, tVAdminBikesShareAv;
@@ -67,12 +70,16 @@ public class AdminPage extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggleAdmin;
     private NavigationView navigationViewAdmin;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_page);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN Page");
+
+        progressDialog = new ProgressDialog(AdminPage.this);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -92,10 +99,10 @@ public class AdminPage extends AppCompatActivity {
         //Retrieve data Share Bikes table
         dbRefBikesShareAv = FirebaseDatabase.getInstance().getReference("Share Bikes");
 
-        bikeStoresList = new ArrayList<>();
-        bikesRentListAv = new ArrayList<>();
-        bikesListRented = new ArrayList<>();
-        bikesListAvShare = new ArrayList<>();
+        listBikeStoresAv = new ArrayList<>();
+        listBikesRentAv = new ArrayList<>();
+        listBikesRented = new ArrayList<>();
+        listBikesShareAv = new ArrayList<>();
 
         tVAdminDetails = findViewById(R.id.tvAdminDetails);
         tVAdminPersonalDetails = findViewById(R.id.tvAdminPersonalDetails);
@@ -143,7 +150,7 @@ public class AdminPage extends AppCompatActivity {
                                 //Show the list of Bike Stores available
                                 case R.id.adminShow_bikeStores:
                                     Toast.makeText(AdminPage.this, "Show Bike Stores", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(AdminPage.this, BikeStoreImageAdminShowStoresList.class));
+                                    startActivity(new Intent(AdminPage.this, BikeStoreImageAdminShowStores.class));
                                     break;
 
                                 //Add Bikes to the Bike Stores available
@@ -155,25 +162,25 @@ public class AdminPage extends AppCompatActivity {
                                 //Show the list of Bikes available ordered by Bike Stores
                                 case R.id.adminShow_bikesList:
                                     Toast.makeText(AdminPage.this, "Show Bikes List", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(AdminPage.this, BikeStoreImageAdminShowBikesList.class));
+                                    startActivity(new Intent(AdminPage.this, BikeStoreImageAdminShowBikes.class));
                                     break;
 
                                 //Show the full list of Bikes available
                                 case R.id.adminShow_bikesListAll:
                                     Toast.makeText(AdminPage.this, "Show Full List of Bikes", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(AdminPage.this, BikeImageShowBikesListAdminAll.class));
+                                    startActivity(new Intent(AdminPage.this, BikeImageAdminShowBikesAll.class));
                                     break;
 
                                 //Show the full list of rented Bikes
                                 case R.id.adminShow_bikesRented:
                                     Toast.makeText(AdminPage.this, "Rented Bikes", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(AdminPage.this, BikeStoreImageAdminShowRentedBikesList.class));
+                                    startActivity(new Intent(AdminPage.this, BikeStoreImageAdminShowBikesRented.class));
                                     break;
 
                                 //Show the full list of rented Bikes
                                 case R.id.adminShow_bikesRentedAll:
                                     Toast.makeText(AdminPage.this, "Rented Bikes All", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(AdminPage.this, BikeImageShowBikesRentedAdminAll.class));
+                                    startActivity(new Intent(AdminPage.this, BikeImageAdminShowBikesRentedAll.class));
                                     break;
 
                                 //Show the full list of rented Bikes
@@ -238,21 +245,29 @@ public class AdminPage extends AppCompatActivity {
 
     //Display the Bike Stores available
     private void loadBikeStoresAv() {
+
+        progressDialog.show();
+
         evListenerBikeStoreAv = dbRefBikeStoresAv.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikeStoresList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStores bike_Stores = postSnapshot.getValue(BikeStores.class);
-                    assert bike_Stores != null;
-                    bike_Stores.setBikeStore_Key(postSnapshot.getKey());
-                    bikeStoresList.add(bike_Stores);
-                    numberStoresAvailable = bikeStoresList.size();
-                    tVAdminStoresAv.setText(String.valueOf(numberStoresAvailable));
 
-                    if (bikeStoresList.size() == 0) {
-                        tVAdminStoresAv.setText(String.valueOf(0));
+                listBikeStoresAv.clear();
+
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        BikeStores bike_Stores = postSnapshot.getValue(BikeStores.class);
+                        assert bike_Stores != null;
+                        bike_Stores.setBikeStore_Key(postSnapshot.getKey());
+                        listBikeStoresAv.add(bike_Stores);
+                        numberBikeStoresAv = listBikeStoresAv.size();
+
+                        tVAdminStoresAv.setText(String.valueOf(numberBikeStoresAv));
                     }
+                }
+
+                else {
+                    tVAdminStoresAv.setText(String.valueOf(0));
                 }
             }
 
@@ -261,26 +276,35 @@ public class AdminPage extends AppCompatActivity {
                 Toast.makeText(AdminPage.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     //Display the Bikes available to rent
     private void loadBikeRentAv() {
 
+        progressDialog.show();
+
         evListenerBikesRentAv = dbRefBikesRentAv.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesRentListAv.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    bikes.setBike_Key(postSnapshot.getKey());
-                    bikesRentListAv.add(bikes);
-                    numberBikesAvRent = bikesRentListAv.size();
-                    tVAdminBikesRentAv.setText(String.valueOf(numberBikesAvRent));
 
-                    if (bikesRentListAv.size() == 0) {
-                        tVAdminBikesRentAv.setText(String.valueOf(0));
+                listBikesRentAv.clear();
+
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Bikes bikes = postSnapshot.getValue(Bikes.class);
+                        assert bikes != null;
+                        bikes.setBike_Key(postSnapshot.getKey());
+                        listBikesRentAv.add(bikes);
+                        numberBikesRentAv = listBikesRentAv.size();
+
+                        tVAdminBikesRentAv.setText(String.valueOf(numberBikesRentAv));
                     }
+                }
+
+                else {
+                    tVAdminBikesRentAv.setText(String.valueOf(0));
                 }
             }
 
@@ -289,26 +313,34 @@ public class AdminPage extends AppCompatActivity {
                 Toast.makeText(AdminPage.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     //Display the Bikes rented by customers
     private void loadBikeRented() {
 
+        progressDialog.show();
+
         eventListenerBikesRent = dbRefBikesRent.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesListRented.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    RentedBikes rented_Bikes = postSnapshot.getValue(RentedBikes.class);
-                    assert rented_Bikes != null;
-                    rented_Bikes.setBike_RentKey(postSnapshot.getKey());
-                    bikesListRented.add(rented_Bikes);
-                    numberBikesRented = bikesListRented.size();
-                    tVAdminBikesRented.setText(String.valueOf(numberBikesRented));
 
-                    if (bikesListRented.size() == 0) {
-                        tVAdminBikesRented.setText(String.valueOf(0));
+                listBikesRented.clear();
+
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        RentedBikes rented_Bikes = postSnapshot.getValue(RentedBikes.class);
+                        assert rented_Bikes != null;
+                        rented_Bikes.setBike_RentKey(postSnapshot.getKey());
+                        listBikesRented.add(rented_Bikes);
+                        numberBikesRented = listBikesRented.size();
+                        tVAdminBikesRented.setText(String.valueOf(numberBikesRented));
                     }
+                }
+
+                else {
+                    tVAdminBikesRented.setText(String.valueOf(0));
                 }
             }
 
@@ -317,22 +349,34 @@ public class AdminPage extends AppCompatActivity {
                 Toast.makeText(AdminPage.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
-    //Display the Bike Shares available
+    //Display the Bike to Share available
     private void loadBikeShareAv() {
+
+        progressDialog.show();
 
         eventListenerBikeShareAv = dbRefBikesShareAv.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesListAvShare.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikesShare share_Bikes = postSnapshot.getValue(BikesShare.class);
-                    assert share_Bikes != null;
-                    share_Bikes.setShareBike_Key(postSnapshot.getKey());
-                    bikesListAvShare.add(share_Bikes);
-                    numberBikesAvShare = bikesListAvShare.size();
-                    tVAdminBikesShareAv.setText(String.valueOf(numberBikesAvShare));
+
+                listBikesShareAv.clear();
+
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        BikesShare share_Bikes = postSnapshot.getValue(BikesShare.class);
+                        assert share_Bikes != null;
+                        share_Bikes.setShareBike_Key(postSnapshot.getKey());
+                        listBikesShareAv.add(share_Bikes);
+                        numberBikesShareAv = listBikesShareAv.size();
+                        tVAdminBikesShareAv.setText(String.valueOf(numberBikesShareAv));
+                    }
+                }
+
+                else {
+                    tVAdminBikesShareAv.setText(String.valueOf(0));
                 }
             }
 
@@ -341,5 +385,7 @@ public class AdminPage extends AppCompatActivity {
                 Toast.makeText(AdminPage.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 }

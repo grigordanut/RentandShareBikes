@@ -6,17 +6,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,13 +66,10 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
     private DatabaseReference databaseRefBikeStores;
 
-    //Declare Bike Store database variables (Retrieve data)
-    private DatabaseReference dbRefStoreCheck;
-
     private BikeStores bike_Store;
 
-    private List<String> listBikeStores;
-    private ArrayAdapter<String> arrayAdapter;
+    private List<String> listBikeStoresString;
+    private ArrayAdapter<String> arrayAdapterString;
 
     //Return bikes to Bikes database
     private StorageReference storageRefReturnBikes;
@@ -104,7 +106,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
     //BikeStoreKey that the bike is returning
     private String returnBikeStore_Key = "";
-    private String returnBikeStore_Name = "";
+    String returnBikeStore_Name = "";
 
     private ProgressDialog progressDialog;
 
@@ -122,7 +124,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(ReturnRentedBikes.this);
 
-        listBikeStores = new ArrayList<>();
+        listBikeStoresString = new ArrayList<>();
         listBikeStoresTest = new ArrayList<>();
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -136,9 +138,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
 
         //Retrieve data from BikesSores database
         databaseRefBikeStores = FirebaseDatabase.getInstance().getReference("Bike Stores");
-
-        //Retrieve Bike Store data from Bike Stores table
-        dbRefStoreCheck = FirebaseDatabase.getInstance().getReference().child("Rent Bikes");
 
         //initialise variables
         tVReturnBikes = findViewById(R.id.tvReturnBikes);
@@ -205,6 +204,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
         bikeStoreAdapterReturnRentedBikes = new BikeStoreAdapterReturnRentedBikes(ReturnRentedBikes.this, R.layout.image_bike_store_return_rented_bike, listBikeStoresTest);
 
         databaseRefBikeStores.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -232,15 +232,16 @@ public class ReturnRentedBikes extends AppCompatActivity {
                 .setTitle("Select the Bike Store!!")
                 .setCancelable(false)
                 .setSingleChoiceItems(bikeStoreAdapterReturnRentedBikes, -1, (dialog, id) -> {
-
                     bike_Store = listBikeStoresTest.get(id);
-                    returnBikeStore_Key = bike_Store.getBikeStore_Key();
-                    returnBikeStore_Name = bike_Store.getBikeStore_Location();
                 })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton("NEXT", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        returnBikeStore_Key = bike_Store.getBikeStore_Key();
+                        returnBikeStore_Name = bike_Store.getBikeStore_Location();
                         etBikeStoreReturn.setText(returnBikeStore_Name);
+
                         dialog.dismiss();
                     }
                 })
@@ -251,25 +252,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-
-    public void confirmSelection(final int position) {
-
-        bike_Store = listBikeStoresTest.get(position);
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ReturnRentedBikes.this);
-        alertDialogBuilder
-                .setTitle("You selected the: " + bike_Store.getBikeStore_Location() + " store.")
-                .setMessage("Are sure to return the rented bike to:\n" + bike_Store.getBikeStore_Location() + " bike store?")
-                .setCancelable(false)
-                .setPositiveButton("YES", (dialog, which) -> {
-                    etBikeStoreReturn.setText(returnBikeStore_Name);
-                })
-
-                .setNegativeButton("CANCEL", (dialog, which) -> dialog.cancel());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

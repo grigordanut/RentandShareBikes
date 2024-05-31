@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -61,12 +62,16 @@ public class CustomerPageRentBikes extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggleUserRent;
     private NavigationView navigationViewUserRent;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_page_rent_bikes);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("Customer page rent bikes");
+
+        progressDialog = new ProgressDialog(CustomerPageRentBikes.this);
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -215,17 +220,27 @@ public class CustomerPageRentBikes extends AppCompatActivity {
 
     private void loadStoresAvCustom() {
 
+        progressDialog.show();
+
         evListenerStoresAvCustom = dbReferenceStoresAvCustom.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 listStoresAvCustom.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStores bike_Stores = postSnapshot.getValue(BikeStores.class);
-                    assert bike_Stores != null;
-                    bike_Stores.setBikeStore_Key(postSnapshot.getKey());
-                    listStoresAvCustom.add(bike_Stores);
-                    numberStoresAvCustom = listStoresAvCustom.size();
-                    tVStoresAvCustom.setText(String.valueOf(numberStoresAvCustom));
+
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        BikeStores bike_Stores = postSnapshot.getValue(BikeStores.class);
+                        assert bike_Stores != null;
+                        bike_Stores.setBikeStore_Key(postSnapshot.getKey());
+                        listStoresAvCustom.add(bike_Stores);
+                        numberStoresAvCustom = listStoresAvCustom.size();
+                        tVStoresAvCustom.setText(String.valueOf(numberStoresAvCustom));
+                    }
+                }
+
+                else {
+                    tVStoresAvCustom.setText(String.valueOf(0));
                 }
             }
 
@@ -234,20 +249,32 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                 Toast.makeText(CustomerPageRentBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     private void loadBikesAvCustom() {
 
+        progressDialog.show();
+
         eventListenerBikesAvRentCustom = dbReferenceBikesAvCustom.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 listBikesAvCustom.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    bikes.setBike_Key(postSnapshot.getKey());
-                    listBikesAvCustom.add(bikes);
-                    tVBikesAvCustom.setText(String.valueOf(listBikesAvCustom.size()));
+
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Bikes bikes = postSnapshot.getValue(Bikes.class);
+                        assert bikes != null;
+                        bikes.setBike_Key(postSnapshot.getKey());
+                        listBikesAvCustom.add(bikes);
+                        tVBikesAvCustom.setText(String.valueOf(listBikesAvCustom.size()));
+                    }
+                }
+
+                else {
+                    tVBikesAvCustom.setText(String.valueOf(0));
                 }
             }
 
@@ -256,27 +283,35 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                 Toast.makeText(CustomerPageRentBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     private void loadBikeRentedCustom() {
 
+        progressDialog.show();
+
         eventListenerBikesRentedCustom = dbReferenceBikesRentedCustom.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listBikesRentedCustom.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    RentedBikes rented_Bikes = postSnapshot.getValue(RentedBikes.class);
-                    assert rented_Bikes != null;
-                    if(rented_Bikes.getCustomerId_RentBikes().equals(currentUser.getUid())){
-                        rented_Bikes.setBike_RentKey(postSnapshot.getKey());
-                        listBikesRentedCustom.add(rented_Bikes);
-                        numberBikesRentedCustom = listBikesRentedCustom.size();
-                        tVBikesRentedCustom.setText(String.valueOf(numberBikesRentedCustom));
-                    }
 
-                    if (listBikesRentedCustom.size() == 0) {
-                        tVBikesRentedCustom.setText(String.valueOf(0));
+                listBikesRentedCustom.clear();
+
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        RentedBikes rented_Bikes = postSnapshot.getValue(RentedBikes.class);
+                        assert rented_Bikes != null;
+                        if(rented_Bikes.getCustomerId_RentBikes().equals(currentUser.getUid())){
+                            rented_Bikes.setBike_RentKey(postSnapshot.getKey());
+                            listBikesRentedCustom.add(rented_Bikes);
+                            numberBikesRentedCustom = listBikesRentedCustom.size();
+                            tVBikesRentedCustom.setText(String.valueOf(numberBikesRentedCustom));
+                        }
                     }
+                }
+
+                else {
+                    tVBikesRentedCustom.setText(String.valueOf(0));
                 }
             }
 
@@ -285,5 +320,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                 Toast.makeText(CustomerPageRentBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 }

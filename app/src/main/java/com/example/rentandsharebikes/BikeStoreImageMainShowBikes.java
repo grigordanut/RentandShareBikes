@@ -22,43 +22,43 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikeStoreImageAdminAddBikes extends AppCompatActivity implements BikeStoreAdapterAdmin.OnItemClickListener {
+public class BikeStoreImageMainShowBikes extends AppCompatActivity implements BikeStoreAdapterMain.OnItemClickListener {
 
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreEventListener;
 
-    private RecyclerView rvBikeStoreImgAdmin_AddBikes;
-    private BikeStoreAdapterAdmin bikeStoreAdapterAdmin;
+    private RecyclerView rVBikeStoreImgMain_ShowBikes;
+    private BikeStoreAdapterMain bikeStoreAdapterMain;
 
-    private TextView tVBikeStoreImgAdminAddBikes;
+    private List<BikeStores> listMainBikeStores;
 
-    private List<BikeStores> listBikeStoresAddBikes;
+    private TextView tVBikeStoreImgMainShowBikes;
 
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_store_image_admin_add_bikes);
+        setContentView(R.layout.activity_bike_store_image_main_show_bikes);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN Bike Stores add bikes");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("MAIN Bikes Stores show bikes");
+
+        //initialize the bike store database
+        databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
         progressDialog = new ProgressDialog(this);
 
-        //initialize the bike store database
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bike Stores");
+        tVBikeStoreImgMainShowBikes = findViewById(R.id.tvBikeStoreImgMainShowBikes);
 
-        tVBikeStoreImgAdminAddBikes = findViewById(R.id.tvBikeStoreImgAdminAddBikes);
+        rVBikeStoreImgMain_ShowBikes = (RecyclerView) findViewById(R.id.rVBikeStoreImgMainShowBikes);
+        rVBikeStoreImgMain_ShowBikes.setHasFixedSize(true);
+        rVBikeStoreImgMain_ShowBikes.setLayoutManager(new LinearLayoutManager(this));
 
-        rvBikeStoreImgAdmin_AddBikes= findViewById(R.id.rvBikeStoreImgAdminAddBikes);
-        rvBikeStoreImgAdmin_AddBikes.setHasFixedSize(true);
-        rvBikeStoreImgAdmin_AddBikes.setLayoutManager(new LinearLayoutManager(this));
+        listMainBikeStores = new ArrayList<>();
 
-        listBikeStoresAddBikes = new ArrayList<>();
-
-        bikeStoreAdapterAdmin = new BikeStoreAdapterAdmin(BikeStoreImageAdminAddBikes.this, listBikeStoresAddBikes);
-        rvBikeStoreImgAdmin_AddBikes.setAdapter(bikeStoreAdapterAdmin);
-        bikeStoreAdapterAdmin.setOnItmClickListener(BikeStoreImageAdminAddBikes.this);
+        bikeStoreAdapterMain = new BikeStoreAdapterMain(BikeStoreImageMainShowBikes.this, listMainBikeStores);
+        rVBikeStoreImgMain_ShowBikes.setAdapter(bikeStoreAdapterMain);
+        bikeStoreAdapterMain.setOnItemClickListener(BikeStoreImageMainShowBikes.this);
     }
 
     @Override
@@ -76,29 +76,29 @@ public class BikeStoreImageAdminAddBikes extends AppCompatActivity implements Bi
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                listBikeStoresAddBikes.clear();
+                listMainBikeStores.clear();
 
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
                         assert bikeStores != null;
                         bikeStores.setBikeStore_Key(postSnapshot.getKey());
-                        listBikeStoresAddBikes.add(bikeStores);
-                        tVBikeStoreImgAdminAddBikes.setText("Select the Bike Store");
+                        listMainBikeStores.add(bikeStores);
                     }
 
-                    bikeStoreAdapterAdmin.notifyDataSetChanged();
-
+                    tVBikeStoreImgMainShowBikes.setText("Select the Bike Store");
+                    bikeStoreAdapterMain.notifyDataSetChanged();
                 }
+
                 else {
-                    tVBikeStoreImgAdminAddBikes.setText("No Bike Stores available!!");
-                    bikeStoreAdapterAdmin.notifyDataSetChanged();
+                    tVBikeStoreImgMainShowBikes.setText("No Bike Stores available!!");
+                    bikeStoreAdapterMain.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeStoreImageAdminAddBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeStoreImageMainShowBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -107,10 +107,10 @@ public class BikeStoreImageAdminAddBikes extends AppCompatActivity implements Bi
 
     @Override
     public void onItemClick(int position) {
-        BikeStores selected_Store = listBikeStoresAddBikes.get(position);
-        Intent store_Intent = new Intent(BikeStoreImageAdminAddBikes.this, AddBikeRent.class);
-        store_Intent.putExtra("SName", selected_Store.getBikeStore_Location());
-        store_Intent.putExtra("SKey", selected_Store.getBikeStore_Key());
-        startActivity(store_Intent);
+        BikeStores selected_Store = listMainBikeStores.get(position);
+        Intent intent = new Intent(BikeStoreImageMainShowBikes.this, BikeImageMainShowBikes.class);
+        intent.putExtra("SNameMain", selected_Store.getBikeStore_Location());
+        intent.putExtra("SKeyMain", selected_Store.getBikeStore_Key());
+        startActivity(intent);
     }
 }

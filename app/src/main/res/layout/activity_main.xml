@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/image_main_activity">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/image_main_activity"
-        android:textAlignment="center"
+        android:orientation="vertical"
         tools:context=".MainActivity"
         tools:showIn="@layout/activity_main">
 
@@ -30,7 +29,6 @@
             android:id="@+id/tvWelcomeMain2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvWelcomeMain1"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -42,7 +40,6 @@
             android:id="@+id/tvMainPage"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:layout_below="@+id/tvWelcomeMain2"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -56,7 +53,6 @@
             android:id="@+id/tvMainDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvMainPage"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -70,88 +66,121 @@
             android:textSize="24sp"
             tools:ignore="RtlSymmetry,TextViewEdits" />
 
-        <!--Bikes Stores Available-->
-        <TextView
-            android:id="@+id/tvMainStores"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvMainDetails"
-            android:layout_alignStart="@+id/tvWelcomeMain1"
-            android:layout_marginTop="20dp"
-            android:text="@string/tv_mainBikeStores"
-            android:textColor="#000000"
-            android:textSize="24sp" />
+            android:orientation="horizontal"
+            tools:showIn="@layout/activity_main">
 
-        <TextView
-            android:id="@+id/tvMainStoresAv"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvMainDetails"
-            android:layout_alignEnd="@+id/tvWelcomeMain1"
-            android:layout_marginTop="20dp"
-            android:background="#ffffff"
-            android:text="@string/tv_mainBikeStoresAv"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvMainStores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="-100dp"
+                android:layout_weight="1"
+                android:text="@string/tv_mainBikeStores"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/tvMainBikesRent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvMainStores"
-            android:layout_alignStart="@+id/tvWelcomeMain1"
-            android:layout_marginTop="20dp"
-            android:text="@string/tv_mainBikesRent"
-            android:textColor="#000000"
-            android:textSize="24sp" />
+            <TextView
+                android:id="@+id/tvMainStoresAv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="110dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:text="@string/tv_mainBikeStoresAv"
+                android:textAlignment="textEnd"
+                android:paddingEnd="5dp"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
 
-        <TextView
-            android:id="@+id/tvMainBikesRentAv"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvMainStoresAv"
-            android:layout_alignEnd="@+id/tvWelcomeMain1"
-            android:layout_marginTop="20dp"
-            android:background="#ffffff"
-            android:text="@string/tv_mainBikesRentAv"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvMainBikesShare"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvMainBikesRent"
-            android:layout_alignStart="@+id/tvWelcomeMain1"
-            android:layout_marginTop="20dp"
-            android:text="@string/tv_mainBikesShare"
-            android:textColor="#000000"
-            android:textSize="24sp" />
+            android:orientation="horizontal"
+            tools:showIn="@layout/activity_main">
 
-        <TextView
-            android:id="@+id/tvMainBikesShareAv"
-            android:layout_width="60dp"
+            <TextView
+                android:id="@+id/tvMainBikesRent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="-100dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/tv_mainBikesRent"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tvMainBikesRentAv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="110dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:background="@color/white"
+                android:layout_weight="1"
+                android:text="@string/tv_mainBikesRentAv"
+                android:textAlignment="textEnd"
+                android:paddingEnd="5dp"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvMainBikesRentAv"
-            android:layout_alignEnd="@+id/tvWelcomeMain1"
-            android:layout_marginTop="20dp"
-            android:background="#ffffff"
-            android:text="@string/tv_mainBikesShareAv"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            tools:showIn="@layout/activity_main">
+
+            <TextView
+                android:id="@+id/tvMainBikesShare"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="-100dp"
+                android:layout_weight="1"
+                android:text="@string/tv_mainBikesShare"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tvMainBikesShareAv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="110dp"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:paddingEnd="5dp"
+                android:text="@string/tv_mainBikesShareAv"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvTradeMark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvMainBikesShareAv"
-            android:layout_alignStart="@+id/tvWelcomeMain1"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
@@ -159,7 +188,7 @@
             android:textAlignment="center"
             android:textSize="30sp" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navViewMain"

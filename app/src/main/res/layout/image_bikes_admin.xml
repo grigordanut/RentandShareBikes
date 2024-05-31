@@ -4,133 +4,146 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="2dp"
-        app:cardBackgroundColor="#DDDDDD"
         app:cardCornerRadius="10dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/linear_round_corners_grey"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/imgShowBike"
                 android:layout_width="110dp"
                 android:layout_height="115dp"
-                android:background="#ffffff"
-                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@color/white"
                 tools:ignore="ContentDescription" />
 
-            <TextView
-                android:id="@+id/tvCondition"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/imgShowBike"
-                android:text="@string/tv_bikeCondition"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="RtlSymmetry" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvModel"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tvCondition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/tv_bikeCondition"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/tvModel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/tv_bikeModel"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:ignore="NotSibling,RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/tvManufact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/tv_bikeManufacturer"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/tv_bikePrice"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:ignore="RtlSymmetry" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvCondition"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/imgShowBike"
-                android:text="@string/tv_bikeModel"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="NotSibling,RtlSymmetry" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvManufact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvModel"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/imgShowBike"
-                android:text="@string/tv_bikeManufacturer"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="RtlSymmetry" />
+                <TextView
+                    android:id="@+id/tvBikeCondition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/white"
+                    android:paddingStart="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    tools:ignore="RtlSymmetry" />
 
-            <TextView
-                android:id="@+id/tvPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvManufact"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/imgShowBike"
-                android:text="@string/tv_bikePrice"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="RtlSymmetry" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tvBikeModel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/white"
+                    android:paddingStart="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    tools:ignore="RtlSymmetry" />
 
-        <TextView
-            android:id="@+id/tvBikeCondition"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="205dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:background="#e6f7ff"
-            android:paddingStart="5dp"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            tools:ignore="RtlSymmetry" />
+                <TextView
+                    android:id="@+id/tvBikeManufact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/white"
+                    android:paddingStart="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    tools:ignore="RtlSymmetry" />
 
-        <TextView
-            android:id="@+id/tvBikeModel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="205dp"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="5dp"
-            android:background="#e6f7ff"
-            android:paddingStart="5dp"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            tools:ignore="RtlSymmetry" />
+                <TextView
+                    android:id="@+id/tvBikePrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/white"
+                    android:paddingStart="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText,RtlSymmetry" />
 
-        <TextView
-            android:id="@+id/tvBikeManufact"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="205dp"
-            android:layout_marginTop="65dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="10dp"
-            android:background="#e6f7ff"
-            android:paddingStart="5dp"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            tools:ignore="RtlSymmetry" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvBikePrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="255dp"
-            android:layout_marginTop="95dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="#e6f7ff"
-            android:paddingStart="10dp"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText,RtlSymmetry" />
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
 </LinearLayout>
