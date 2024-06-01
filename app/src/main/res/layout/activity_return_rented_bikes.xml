@@ -440,7 +440,7 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/btn_blue"
             android:text="@string/btn_returnBike"
-            android:textColor="#FFFF"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold" />
 

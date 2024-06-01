@@ -96,7 +96,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
     //Receive Bike image
     private String img_RentedBike;
 
-    //Receive the Bike Key of rented bike from BikeAdapterRentedBikesCustomer
+    //Receive the Bike Key of rented bike from BikeAdapterCustomerShowBikesRented
     String rentedBike_Key = "";
     String returnBike_Key = "";
 
@@ -258,7 +258,6 @@ public class ReturnRentedBikes extends AppCompatActivity {
     }
 
     public void returnRentedBike() {
-        progressDialog.dismiss();
 
         storeName_ReturnBikes = Objects.requireNonNull(etBikeStoreReturn.getText()).toString().trim();
 
@@ -274,7 +273,7 @@ public class ReturnRentedBikes extends AppCompatActivity {
             storageRefReturnBikes = FirebaseStorage.getInstance().getReference("Bikes");
             databaseRefReturnBikes = FirebaseDatabase.getInstance().getReference("Bikes");
 
-            progressDialog.setTitle("The bike is returning to: " + storeName_ReturnBikes + " store!");
+            progressDialog.setTitle("The bike is returning to: \n" + storeName_ReturnBikes + " store!");
             progressDialog.show();
 
             // Get the data from an ImageView as bytes

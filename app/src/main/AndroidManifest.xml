@@ -65,7 +65,7 @@
         <activity android:name=".BikeStoreImageMainShowStores" />
         <activity android:name=".BikeImageReturnRentedBikesCustomer" />
         <activity android:name=".ReturnRentedBikes" />
-        <activity android:name=".BikeImageShowBikesRentedCustomer" />
+        <activity android:name=".BikeImageCustomerShowBikesRented" />
         <activity android:name=".BikeImageCustomerRentBikes" />
         <activity android:name=".BikeStoreImageCustomerRentBikes" />
         <activity android:name=".BikeStoreImageAdminAddBikes" />

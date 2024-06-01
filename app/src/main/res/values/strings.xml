@@ -76,6 +76,9 @@
     <!--    Bike Image Customer Show Bikes All-->
     <string name="tv_bikesImgCustomShowBikesAll">List of all bikes available</string>
 
+    <!--    Bike Image Customer Show Bikes Rented-->
+    <string name="tv_bikesImgCustomShowBikesRented">List of bikes rented</string>
+
     <!--    Bike Image Main Show Bikes -->
     <string name="tv_bikeImgMainShowBikes">List of Bikes</string>
 
@@ -131,8 +134,7 @@
     <!--    Bike Store List Return Rented Bike-->
     <string name="tv_bikeStoreListReturnBike">Select the Bike Store</string>
 
-    <!--    Bike Image Show Bikes Rented Customer-->
-    <string name="tv_bikesImageShowBikesRentedCustomer">List of Bikes</string>
+
 
 
 

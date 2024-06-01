@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implements BikeAdapterRentedBikesCustomer.OnItemClickListener {
+public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implements BikeAdapterCustomerShowBikesRented.OnItemClickListener {
 
     private DatabaseReference databaseRefReturnBikesRented;
 
@@ -33,7 +33,7 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
     private ValueEventListener returnBikesEventListener;
 
     private RecyclerView bikesListRecyclerView;
-    private BikeAdapterRentedBikesCustomer bikeAdapterRentedBikesCustomer;
+    private BikeAdapterCustomerShowBikesRented bikeAdapterCustomerShowBikesRented;
 
     private TextView tVCustomerReturnBikes;
 
@@ -73,9 +73,9 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
 
         rentedBikesList = new ArrayList<>();
 
-        bikeAdapterRentedBikesCustomer = new BikeAdapterRentedBikesCustomer(BikeImageReturnRentedBikesCustomer.this, rentedBikesList);
-        bikesListRecyclerView.setAdapter(bikeAdapterRentedBikesCustomer);
-        bikeAdapterRentedBikesCustomer.setOnItmClickListener(BikeImageReturnRentedBikesCustomer.this);
+        bikeAdapterCustomerShowBikesRented = new BikeAdapterCustomerShowBikesRented(BikeImageReturnRentedBikesCustomer.this, rentedBikesList);
+        bikesListRecyclerView.setAdapter(bikeAdapterCustomerShowBikesRented);
+        bikeAdapterCustomerShowBikesRented.setOnItmClickListener(BikeImageReturnRentedBikesCustomer.this);
     }
 
     @SuppressLint("SetTextI18n")
@@ -107,7 +107,7 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
                     }
                 }
 
-                bikeAdapterRentedBikesCustomer.notifyDataSetChanged();
+                bikeAdapterCustomerShowBikesRented.notifyDataSetChanged();
 
                 if (rentedBikesList.size() == 1) {
                     tVCustomerReturnBikes.setText("Select the Bike");

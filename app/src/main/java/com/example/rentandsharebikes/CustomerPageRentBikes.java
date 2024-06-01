@@ -148,7 +148,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                         break;
                                     //Show the list of Bikes rented by customer
                                     case R.id.userShow_bikesRented:
-                                        Intent intentRent = new Intent(CustomerPageRentBikes.this, BikeImageShowBikesRentedCustomer.class);
+                                        Intent intentRent = new Intent(CustomerPageRentBikes.this, BikeImageCustomerShowBikesRented.class);
                                         intentRent.putExtra("CFName", custom_Data.getfName_Customer());
                                         intentRent.putExtra("CLName", custom_Data.getlName_Customer());
                                         intentRent.putExtra("CId", user_Db.getUid());
