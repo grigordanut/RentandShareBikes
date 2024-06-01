@@ -97,7 +97,6 @@ public class BikeStoreImageAdminShowStores extends AppCompatActivity implements 
                     if (bikeStoresListAdmin.size() == 1) {
                         tVBikeStoreImgAdminShowStores.setText(bikeStoresListAdmin.size() + " Bike Store available");
                     }
-
                     else {
                         tVBikeStoreImgAdminShowStores.setText(bikeStoresListAdmin.size() + " Bike Stores available");
                     }

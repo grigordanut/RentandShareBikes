@@ -18,7 +18,7 @@
         android:text="@string/tv_bikesImgAdminShowBikesRentedAll"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -99,37 +99,28 @@ public class BikeImageAdminShowBikes extends AppCompatActivity implements BikeAd
 
                 listShowBikes.clear();
 
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Bikes bikes = postSnapshot.getValue(Bikes.class);
-                        assert bikes != null;
-                        bikes.setBike_Key(postSnapshot.getKey());
-                        String storeKey = bikes.getBikeStoreKey();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Bikes bikes = postSnapshot.getValue(Bikes.class);
+                    assert bikes != null;
+                    bikes.setBike_Key(postSnapshot.getKey());
+                    String storeKey = bikes.getBikeStoreKey();
 
-                        if (storeKey.equals(bikeStore_Key)) {
-                            listShowBikes.add(bikes);
-                        }
+                    if (storeKey.equals(bikeStore_Key)) {
+                        listShowBikes.add(bikes);
                     }
-
-                    if (listShowBikes.size() == 1) {
-                        tVBikeImgAdminShowBikes.setText(listShowBikes.size() + " bike available in " + bikeStore_Name + " store");
-                    }
-
-                    else if (listShowBikes.size() > 1) {
-                        tVBikeImgAdminShowBikes.setText(listShowBikes.size() + " bikes available in " + bikeStore_Name + " store");
-                    }
-
-                    else {
-                        tVBikeImgAdminShowBikes.setText("No bikes available in " + bikeStore_Name + " store");
-                    }
-
-                    bikeAdapterAdminBikes.notifyDataSetChanged();
                 }
 
+                if (listShowBikes.size() == 1) {
+                    tVBikeImgAdminShowBikes.setText(listShowBikes.size() + " bike available in " + bikeStore_Name + " store");
+                }
+                else if (listShowBikes.size() > 1) {
+                    tVBikeImgAdminShowBikes.setText(listShowBikes.size() + " bikes available in " + bikeStore_Name + " store");
+                }
                 else {
-                    tVBikeImgAdminShowBikes.setText("There are not Bikes registered!!");
-                    bikeAdapterAdminBikes.notifyDataSetChanged();
+                    tVBikeImgAdminShowBikes.setText("No bikes available in " + bikeStore_Name + " store");
                 }
+
+                bikeAdapterAdminBikes.notifyDataSetChanged();
             }
 
             @Override
@@ -201,13 +192,13 @@ public class BikeImageAdminShowBikes extends AppCompatActivity implements BikeAd
                 .setMessage("Are sure to delete the " + selected_Bike.getBike_Model() + " Bike?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, which) -> {
-                            final String selectedKeyBike = selected_Bike.getBike_Key();
-                            StorageReference imageReference = fbStShowBikes.getReferenceFromUrl(selected_Bike.getBike_Image());
-                            imageReference.delete().addOnSuccessListener(aVoid -> {
-                                dbRefShowBikes.child(selectedKeyBike).removeValue();
-                                Toast.makeText(BikeImageAdminShowBikes.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
-                            });
-                        })
+                    final String selectedKeyBike = selected_Bike.getBike_Key();
+                    StorageReference imageReference = fbStShowBikes.getReferenceFromUrl(selected_Bike.getBike_Image());
+                    imageReference.delete().addOnSuccessListener(aVoid -> {
+                        dbRefShowBikes.child(selectedKeyBike).removeValue();
+                        Toast.makeText(BikeImageAdminShowBikes.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
+                    });
+                })
 
                 .setNegativeButton("CANCEL", (dialog, which) -> dialog.cancel());
 

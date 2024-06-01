@@ -18,7 +18,8 @@
         android:text="@string/tv_bikeImgMainShowBikesAll"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="22sp" />
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rVBikeImgMainShowBikesAll"

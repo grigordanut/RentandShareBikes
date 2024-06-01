@@ -84,9 +84,9 @@ public class BikeStoreImageAdminShowBikesRented extends AppCompatActivity implem
                         assert bikeStores != null;
                         bikeStores.setBikeStore_Key(postSnapshot.getKey());
                         listStoresShowBikesRented.add(bikeStores);
-                        tVBikeStoreImgAdminShowBikesRented.setText("Select the Bike Store");
                     }
 
+                    tVBikeStoreImgAdminShowBikesRented.setText("Select the Bike Store");
                     bikeStoreAdpterAdminShowBikesRented.notifyDataSetChanged();
                 }
 

@@ -85,11 +85,12 @@ public class BikeStoreImageCustomerShowBikes extends AppCompatActivity implement
                         assert bikeStores != null;
                         bikeStores.setBikeStore_Key(postSnapshot.getKey());
                         listStoresShowBikes.add(bikeStores);
-                        tVBikeStoreImgCustomShowBikes.setText("Select the Bike Store");
                     }
 
+                    tVBikeStoreImgCustomShowBikes.setText("Select the Bike Store");
                     bikeStoreAdapterCustomer.notifyDataSetChanged();
                 }
+
                 else {
                     tVBikeStoreImgCustomShowBikes.setText("No Bike Stores available");
                     bikeStoreAdapterCustomer.notifyDataSetChanged();

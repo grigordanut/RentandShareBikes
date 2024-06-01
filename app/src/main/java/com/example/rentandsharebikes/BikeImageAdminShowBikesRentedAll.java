@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BikeImageAdminShowBikesRentedAll extends AppCompatActivity implements BikeAdapterAdminShowBikesRented.OnItemClickListener {
 
@@ -46,6 +47,8 @@ public class BikeImageAdminShowBikesRentedAll extends AppCompatActivity implemen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_image_admin_show_bikes_rented_all);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN All bikes rented");
 
         progressDialog = new ProgressDialog(this);
 
@@ -84,25 +87,29 @@ public class BikeImageAdminShowBikesRentedAll extends AppCompatActivity implemen
 
                 listShowBikesRentedAll.clear();
 
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    RentedBikes rent_Bikes = postSnapshot.getValue(RentedBikes.class);
-                    assert rent_Bikes != null;
-                    rent_Bikes.setBike_RentKey(postSnapshot.getKey());
-                    listShowBikesRentedAll.add(rent_Bikes);
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        RentedBikes rent_Bikes = postSnapshot.getValue(RentedBikes.class);
+                        assert rent_Bikes != null;
+                        rent_Bikes.setBike_RentKey(postSnapshot.getKey());
+                        listShowBikesRentedAll.add(rent_Bikes);
+                    }
+
+                    if (listShowBikesRentedAll.size() == 1) {
+                        tVBikesImgAdminShowBikesRentedAll.setText(listShowBikesRentedAll.size() + " Bike rented by customers");
+
+                    }
+                    else {
+                        tVBikesImgAdminShowBikesRentedAll.setText(listShowBikesRentedAll.size() + " Bikes rented by customers");
+                    }
+
+                    bikeAdapterAdminShowBikesRented.notifyDataSetChanged();
                 }
 
-                if (listShowBikesRentedAll.size() == 1) {
-                    tVBikesImgAdminShowBikesRentedAll.setText(listShowBikesRentedAll.size()+" Bike rented by customers");
-
-                }
-                else if (listShowBikesRentedAll.size() > 1) {
-                    tVBikesImgAdminShowBikesRentedAll.setText(listShowBikesRentedAll.size()+" Bikes rented by customers");
-                }
                 else {
                     tVBikesImgAdminShowBikesRentedAll.setText("No Bikes rented by customers");
+                    bikeAdapterAdminShowBikesRented.notifyDataSetChanged();
                 }
-
-                bikeAdapterAdminShowBikesRented.notifyDataSetChanged();
             }
 
             @Override

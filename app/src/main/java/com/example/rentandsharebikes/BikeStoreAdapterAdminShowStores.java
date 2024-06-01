@@ -84,12 +84,9 @@ public class BikeStoreAdapterAdminShowStores extends RecyclerView.Adapter<BikeSt
                         }
 
                         numberBikesAvailable = bikesList.size();
-                        holder.tvStoreBikesAvailable.setText(String.valueOf(numberBikesAvailable));
                     }
 
-                    if (numberBikesAvailable == 0) {
-                        holder.tvStoreBikesAvailable.setText(String.valueOf(0));
-                    }
+                    holder.tvStoreBikesAvailable.setText(String.valueOf(numberBikesAvailable));
                 }
 
                 else {

@@ -92,10 +92,10 @@ public class BikeImageMainShowBikesAll extends AppCompatActivity implements Bike
                     }
 
                     if (listMainBikesAll.size() == 1) {
-                        tVBikeImgMainShowBikesAll.setText(listMainBikesAll.size() + " Bike available to rent ");
+                        tVBikeImgMainShowBikesAll.setText(listMainBikesAll.size() + " bike available to rent ");
                     }
                     else {
-                        tVBikeImgMainShowBikesAll.setText(listMainBikesAll.size() + " Bikes available to rent ");
+                        tVBikeImgMainShowBikesAll.setText(listMainBikesAll.size() + " bikes available to rent ");
                     }
 
                     bikeAdapterMainShowBikesAll.notifyDataSetChanged();

@@ -84,22 +84,27 @@ public class BikeImageCustomerShowBikesAll extends AppCompatActivity implements 
 
                 listCustomerBikesAll.clear();
 
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    bikes.setBike_Key(postSnapshot.getKey());
-                    listCustomerBikesAll.add(bikes);
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Bikes bikes = postSnapshot.getValue(Bikes.class);
+                        assert bikes != null;
+                        bikes.setBike_Key(postSnapshot.getKey());
+                        listCustomerBikesAll.add(bikes);
+                    }
+
+                    if (listCustomerBikesAll.size() == 1) {
+                        tVBikeImgCustomShowBikesAll.setText(listCustomerBikesAll.size() + " bike available to rent");
+                    } else {
+                        tVBikeImgCustomShowBikesAll.setText(listCustomerBikesAll.size() + " bikes available to rent");
+                    }
+
+                    bikeAdapterBikesCustomer.notifyDataSetChanged();
                 }
 
-                if (listCustomerBikesAll.size() == 1) {
-                    tVBikeImgCustomShowBikesAll.setText(listCustomerBikesAll.size() + " bike available to rent");
-                } else if (listCustomerBikesAll.size() > 1) {
-                    tVBikeImgCustomShowBikesAll.setText(listCustomerBikesAll.size() + " bikes available to rent");
-                } else {
+                else {
                     tVBikeImgCustomShowBikesAll.setText("No bikes available to rent!!");
+                    bikeAdapterBikesCustomer.notifyDataSetChanged();
                 }
-
-                bikeAdapterBikesCustomer.notifyDataSetChanged();
             }
 
             @Override

@@ -41,7 +41,7 @@ public class BikeStoreAdpterAdminShowBikesRented extends RecyclerView.Adapter<Bi
 
     private OnItemClickListener clickListener;
 
-    public BikeStoreAdpterAdminShowBikesRented(Context bikeStore_context, List<BikeStores> bikeStores_uploads){
+    public BikeStoreAdpterAdminShowBikesRented(Context bikeStore_context, List<BikeStores> bikeStores_uploads) {
         bikeStoreContext = bikeStore_context;
         bikeStoresUploads = bikeStores_uploads;
     }
@@ -49,7 +49,7 @@ public class BikeStoreAdpterAdminShowBikesRented extends RecyclerView.Adapter<Bi
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(bikeStoreContext).inflate(R.layout.image_bike_store_show_rented_bikes,parent, false);
+        View view = LayoutInflater.from(bikeStoreContext).inflate(R.layout.image_bike_store_show_rented_bikes, parent, false);
         return new ImageViewHolder(view);
     }
 
@@ -84,12 +84,9 @@ public class BikeStoreAdpterAdminShowBikesRented extends RecyclerView.Adapter<Bi
                         }
 
                         numberBikesAvailable = listBikesAv.size();
-                        holder.tVNrBikesAvailableRent.setText(String.valueOf(numberBikesAvailable));
                     }
 
-                    if (numberBikesAvailable == 0) {
-                        holder.tVNrBikesAvailableRent.setText(String.valueOf(0));
-                    }
+                    holder.tVNrBikesAvailableRent.setText(String.valueOf(numberBikesAvailable));
                 }
 
                 else {
@@ -123,15 +120,12 @@ public class BikeStoreAdpterAdminShowBikesRented extends RecyclerView.Adapter<Bi
 
                         if (rented_bikes.getStoreKey_RentBikes().equals(uploadCurrent.getBikeStore_Key())) {
                             listBikesRented.add(rented_bikes);
-
                         }
-                        numberBikesRented = listBikesRented.size();
-                        holder.tVNrBikesRentedRent.setText(String.valueOf(numberBikesRented));
-                    }
 
-                    if (numberBikesRented == 0) {
-                        holder.tVNrBikesRentedRent.setText(String.valueOf(0));
+                        numberBikesRented = listBikesRented.size();
                     }
+                    holder.tVNrBikesRentedRent.setText(String.valueOf(numberBikesRented));
+
                 }
 
                 else {
@@ -163,8 +157,8 @@ public class BikeStoreAdpterAdminShowBikesRented extends RecyclerView.Adapter<Bi
             tVStoreLocationRent = itemView.findViewById(R.id.tvStoreLocationRent);
             tVStoreAddressRent = itemView.findViewById(R.id.tvStoreAddressRent);
             tVStoreSlotsRent = itemView.findViewById(R.id.tvStoreSlotsRent);
-            tVNrBikesAvailableRent =  itemView.findViewById(R.id.tvNrBikesAvailableRent);
-            tVNrBikesRentedRent =  itemView.findViewById(R.id.tvNrBikesRentedRent);
+            tVNrBikesAvailableRent = itemView.findViewById(R.id.tvNrBikesAvailableRent);
+            tVNrBikesRentedRent = itemView.findViewById(R.id.tvNrBikesRentedRent);
 
             itemView.setOnClickListener(this);
         }

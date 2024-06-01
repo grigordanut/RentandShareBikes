@@ -105,6 +105,7 @@ public class BikeImageCustomerShowBikesRented extends AppCompatActivity implemen
                     RentedBikes rent_Bikes = postSnapshot.getValue(RentedBikes.class);
                     assert rent_Bikes != null;
                     rent_Bikes.setBike_RentKey(postSnapshot.getKey());
+
                     if (rent_Bikes.getCustomerId_RentBikes().equals(customer_Id)) {
                         listCustomerBikesRented.add(rent_Bikes);
                     }

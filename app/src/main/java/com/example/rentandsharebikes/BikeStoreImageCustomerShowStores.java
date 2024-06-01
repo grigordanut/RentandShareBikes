@@ -81,24 +81,28 @@ public class BikeStoreImageCustomerShowStores extends AppCompatActivity implemen
 
                 listBikeStoresCustomer.clear();
 
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
-                    assert bikeStores != null;
-                    bikeStores.setBikeStore_Key(postSnapshot.getKey());
-                    listBikeStoresCustomer.add(bikeStores);
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
+                        assert bikeStores != null;
+                        bikeStores.setBikeStore_Key(postSnapshot.getKey());
+                        listBikeStoresCustomer.add(bikeStores);
+                    }
+
+                    if (listBikeStoresCustomer.size() == 1) {
+                        tVBikeStoreImgCustomShowStores.setText(listBikeStoresCustomer.size() + " Bike Store available ");
+                    }
+                    else {
+                        tVBikeStoreImgCustomShowStores.setText(listBikeStoresCustomer.size() + " Bike Stores available ");
+                    }
+
+                    bikeStoreAdapterCustomer.notifyDataSetChanged();
                 }
 
-                if (listBikeStoresCustomer.size() == 1) {
-                    tVBikeStoreImgCustomShowStores.setText(listBikeStoresCustomer.size() + " Bike Store available ");
-                }
-                else if (listBikeStoresCustomer.size() > 1) {
-                    tVBikeStoreImgCustomShowStores.setText(listBikeStoresCustomer.size() + " Bike Stores available ");
-                }
                 else {
                     tVBikeStoreImgCustomShowStores.setText("No Bike Stores available!!");
+                    bikeStoreAdapterCustomer.notifyDataSetChanged();
                 }
-
-                bikeStoreAdapterCustomer.notifyDataSetChanged();
             }
 
             @Override

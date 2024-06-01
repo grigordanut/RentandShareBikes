@@ -81,14 +81,15 @@ public class BikeStoreImageCustomerRentBikes extends AppCompatActivity implement
                         assert bikeStores != null;
                         bikeStores.setBikeStore_Key(postSnapshot.getKey());
                         listBikeStoresRentBikes.add(bikeStores);
-                        tVBikeStoreImgCustomRentBikes.setText("Select the Bike Store");
                     }
 
+                    tVBikeStoreImgCustomRentBikes.setText("Select the Bike Store");
                     bikeStoreAdapterCustomer.notifyDataSetChanged();
                 }
 
                 else {
                     tVBikeStoreImgCustomRentBikes.setText("No Bike Stores available");
+                    bikeStoreAdapterCustomer.notifyDataSetChanged();
                 }
             }
 

@@ -63,16 +63,27 @@ public class BikeStoreAdapterMain extends RecyclerView.Adapter<BikeStoreAdapterM
         bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 bikesList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Bikes bikes = postSnapshot.getValue(Bikes.class);
-                    assert bikes != null;
-                    if (bikes.getBikeStoreKey().equals(uploadCurrent.getBikeStore_Key())) {
+                if (dataSnapshot.exists()) {
+
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Bikes bikes = postSnapshot.getValue(Bikes.class);
+                        assert bikes != null;
                         bikes.setBike_Key(postSnapshot.getKey());
-                        bikesList.add(bikes);
+
+                        if (bikes.getBikeStoreKey().equals(uploadCurrent.getBikeStore_Key())) {
+                            bikesList.add(bikes);
+                        }
+
                         numberBikesAvailable = bikesList.size();
-                        holder.tvStoreBikesAvailable.setText(String.valueOf(numberBikesAvailable));
                     }
+
+                    holder.tvStoreBikesAvailable.setText(String.valueOf(numberBikesAvailable));
+                }
+
+                else {
+                    holder.tvStoreBikesAvailable.setText(String.valueOf(0));
                 }
             }
 
