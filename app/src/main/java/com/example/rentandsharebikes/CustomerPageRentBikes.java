@@ -156,7 +156,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                         break;
                                     //The activity of returning rented bikes by the customer
                                     case R.id.userReturn_bikes:
-                                        Intent intentReturn = new Intent(CustomerPageRentBikes.this, BikeImageReturnRentedBikesCustomer.class);
+                                        Intent intentReturn = new Intent(CustomerPageRentBikes.this, BikeImageCustomerReturnBikesRented.class);
                                         intentReturn.putExtra("CFName", custom_Data.getfName_Customer());
                                         intentReturn.putExtra("CLName", custom_Data.getlName_Customer());
                                         intentReturn.putExtra("CId", user_Db.getUid());

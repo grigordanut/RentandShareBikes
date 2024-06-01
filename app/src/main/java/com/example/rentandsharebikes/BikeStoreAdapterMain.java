@@ -65,8 +65,8 @@ public class BikeStoreAdapterMain extends RecyclerView.Adapter<BikeStoreAdapterM
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 bikesList.clear();
-                if (dataSnapshot.exists()) {
 
+                if (dataSnapshot.exists()) {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Bikes bikes = postSnapshot.getValue(Bikes.class);
                         assert bikes != null;

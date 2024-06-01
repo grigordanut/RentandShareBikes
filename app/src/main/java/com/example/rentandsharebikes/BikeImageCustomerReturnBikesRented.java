@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implements BikeAdapterCustomerShowBikesRented.OnItemClickListener {
+public class BikeImageCustomerReturnBikesRented extends AppCompatActivity implements BikeAdapterCustomerShowBikesRented.OnItemClickListener {
 
     private DatabaseReference databaseRefReturnBikesRented;
 
@@ -49,7 +49,7 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_image_return_rented_bikes_customer);
+        setContentView(R.layout.activity_bike_image_customer_return_bikes_rented);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
@@ -73,9 +73,9 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
 
         rentedBikesList = new ArrayList<>();
 
-        bikeAdapterCustomerShowBikesRented = new BikeAdapterCustomerShowBikesRented(BikeImageReturnRentedBikesCustomer.this, rentedBikesList);
+        bikeAdapterCustomerShowBikesRented = new BikeAdapterCustomerShowBikesRented(BikeImageCustomerReturnBikesRented.this, rentedBikesList);
         bikesListRecyclerView.setAdapter(bikeAdapterCustomerShowBikesRented);
-        bikeAdapterCustomerShowBikesRented.setOnItmClickListener(BikeImageReturnRentedBikesCustomer.this);
+        bikeAdapterCustomerShowBikesRented.setOnItmClickListener(BikeImageCustomerReturnBikesRented.this);
     }
 
     @SuppressLint("SetTextI18n")
@@ -120,7 +120,7 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeImageReturnRentedBikesCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeImageCustomerReturnBikesRented.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -131,7 +131,7 @@ public class BikeImageReturnRentedBikesCustomer extends AppCompatActivity implem
     public void onItemClick(int position) {
 
         RentedBikes selected_Bike = rentedBikesList.get(position);
-        Intent intent = new Intent(BikeImageReturnRentedBikesCustomer.this, ReturnRentedBikes.class);
+        Intent intent = new Intent(BikeImageCustomerReturnBikesRented.this, ReturnRentedBikes.class);
         intent.putExtra("BikeRentedKey", selected_Bike.getBike_RentKey());
         startActivity(intent);
     }

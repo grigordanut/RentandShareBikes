@@ -70,6 +70,9 @@
     <!--    Bike Image Customer Rent Bikes-->
     <string name="tv_bikesImgCustomRentBikes">List of bikes available to rent</string>
 
+    <!--    Bike Image Customer Return Bikes Rented-->
+    <string name="tv_bikesImgCustomReturnBikesRented">Select the Bike</string>
+
     <!--    Bike Image Customer Show Bikes-->
     <string name="tv_bikeImgCustomShowBikes">List of bikes available</string>
 
@@ -88,55 +91,8 @@
     <!--    Bike Image Main Show Bikes To Share-->
     <string name="tv_bikeImgMainShowBikesToShare">Bikes available to be shared</string>
 
-
-
-
-
-
-
     <!--    Bike Image Remove Shared Bikes Owner-->
     <string name="tv_bikeStoreImgRemoveBikesOwner">Select the Bike to be removed</string>
-
-
-
-
-
-
-
-    <!--    Bike Image Return Rented Bikes Customer-->
-    <string name="tv_bikesImageRentBikesRented">Select the Bike</string>
-
-
-
-
-
-    <!--    Bike Store Image Admin Add Bikes-->
-    <string name="tv_bikeStoreImgAminAddBikes">List of Bike Stores</string>
-
-    <!--    Bike Store Image Admin Show Bike List-->
-    <string name="tv_bikeStoreImgAdminShowBikes">List of Bike Stores</string>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!--    Bike Store List Return Rented Bike-->
-    <string name="tv_bikeStoreListReturnBike">Select the Bike Store</string>
-
-
-
-
 
     <!--    Bike Image Show Bikes Rented No Owner-->
     <string name="tv_bikeStoreImgShowBikesSNoOwner">No Bikes available to be shared</string>
@@ -148,6 +104,12 @@
 
     <!--    Bike Image Show Shared Bikes To Update-->
     <string name="tv_bikesImageShowSBikesToUpdate">Select the bike to be update</string>
+
+    <!--    Bike Store Image Admin Add Bikes-->
+    <string name="tv_bikeStoreImgAminAddBikes">List of Bike Stores</string>
+
+    <!--    Bike Store Image Admin Show Bikes-->
+    <string name="tv_bikeStoreImgAdminShowBikes">List of Bike Stores</string>
 
     <!--    Bike Store Image Admin Show Bikes Rented-->
     <string name="tv_bikeStoreImgAdminShowBikesRented">List of Bike Stores</string>
