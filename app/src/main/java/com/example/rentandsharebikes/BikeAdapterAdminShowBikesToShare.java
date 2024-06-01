@@ -15,14 +15,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class BikeAdapterShowSharedBikesAdmin extends RecyclerView.Adapter<BikeAdapterShowSharedBikesAdmin.ImageViewHolder> {
+public class BikeAdapterAdminShowBikesToShare extends RecyclerView.Adapter<BikeAdapterAdminShowBikesToShare.ImageViewHolder> {
 
     private final Context bikesContext;
     private final List<BikesShare> bikesUploads;
 
     private OnItemClickListener clickListener;
 
-    public BikeAdapterShowSharedBikesAdmin(Context bikes_context, List<BikesShare> bikes_uploads){
+    public BikeAdapterAdminShowBikesToShare(Context bikes_context, List<BikesShare> bikes_uploads){
         bikesContext = bikes_context;
         bikesUploads = bikes_uploads;
     }
@@ -41,7 +41,7 @@ public class BikeAdapterShowSharedBikesAdmin extends RecyclerView.Adapter<BikeAd
         final BikesShare uploadCurrent = bikesUploads.get(position);
         holder.tvSharedBikesUserNameFull.setText(uploadCurrent.getShareCus_FirstName()+" "+uploadCurrent.getShareCus_LastName());
         holder.tvSharedBikesUserPhoneFull.setText(uploadCurrent.getShareCus_PhoneNo());
-        holder.tvSharedBikesUserEmailFull.setText(uploadCurrent.getShareCus_EmailAdd());
+        holder.tvSharedBikesUserEmailFull.setText(uploadCurrent.getShareCus_Email());
         holder.tvSharedBikeCondUserFull.setText(uploadCurrent.getShareBike_Condition());
         holder.tvSharedBikeModelUserFull.setText(uploadCurrent.getShareBike_Model());
         holder.tvSharedBikeManufactUserFull.setText(uploadCurrent.getShareBike_Manufact());

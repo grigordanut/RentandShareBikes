@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikeStoreImageCustomerShowStoresList extends AppCompatActivity implements BikeStoreAdapterCustom.OnItemClickListener {
+public class BikeStoreImageCustomerShowStoresList extends AppCompatActivity implements BikeStoreAdapterCustomer.OnItemClickListener {
 
     private TextView textViewBikeStoresImageShowStoreListCustomer;
 
@@ -32,7 +32,7 @@ public class BikeStoreImageCustomerShowStoresList extends AppCompatActivity impl
     private ValueEventListener bikeStoreEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
-    private BikeStoreAdapterCustom bikeStoreAdapterCustom;
+    private BikeStoreAdapterCustomer bikeStoreAdapterCustomer;
 
     public List<BikeStores> bikeStoresList;
 
@@ -57,9 +57,9 @@ public class BikeStoreImageCustomerShowStoresList extends AppCompatActivity impl
 
         bikeStoresList = new ArrayList<BikeStores>();
 
-        bikeStoreAdapterCustom = new BikeStoreAdapterCustom(BikeStoreImageCustomerShowStoresList.this, bikeStoresList);
-        bikeStoreRecyclerView.setAdapter(bikeStoreAdapterCustom);
-        bikeStoreAdapterCustom.setOnItmClickListener(BikeStoreImageCustomerShowStoresList.this);
+        bikeStoreAdapterCustomer = new BikeStoreAdapterCustomer(BikeStoreImageCustomerShowStoresList.this, bikeStoresList);
+        bikeStoreRecyclerView.setAdapter(bikeStoreAdapterCustomer);
+        bikeStoreAdapterCustomer.setOnItmClickListener(BikeStoreImageCustomerShowStoresList.this);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class BikeStoreImageCustomerShowStoresList extends AppCompatActivity impl
                         bikeStoresList.add(bikeStores);
                     }
 
-                    bikeStoreAdapterCustom.notifyDataSetChanged();
+                    bikeStoreAdapterCustomer.notifyDataSetChanged();
 
                     if (bikeStoresList.size() == 1) {
                         textViewBikeStoresImageShowStoreListCustomer.setText(bikeStoresList.size() + " Bike Store available ");

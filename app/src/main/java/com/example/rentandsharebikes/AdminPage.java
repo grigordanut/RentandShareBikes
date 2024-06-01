@@ -186,7 +186,7 @@ public class AdminPage extends AppCompatActivity {
                                 //Show the full list of rented Bikes
                                 case R.id.adminShow_bikesShared:
                                     Toast.makeText(AdminPage.this, "Shared Bikes", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(AdminPage.this, BikeImageShowSharedBikesAdmin.class));
+                                    startActivity(new Intent(AdminPage.this, BikeImageAdminShowBikesToShare.class));
                                     break;
                                 default:
                                     return true;

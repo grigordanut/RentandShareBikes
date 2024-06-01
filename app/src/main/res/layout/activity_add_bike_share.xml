@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
-    tools:context=".AddBikeShare"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
+    tools:context=".AddBikeShare">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,91 +24,106 @@
             android:textColor="#000000"
             android:textSize="22sp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/fNameWrapperShare"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp"
-            android:textColorHint="#000000">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/linear_round_corners_white"
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etShareBikeFName"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/et_round_corners"
-                android:hint="@string/et_bikeFNameShare"
-                android:inputType="textPersonName|textCapWords"
-                android:paddingStart="10dp"
-                android:textSize="20sp"
-                tools:ignore="RtlSymmetry" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:textColorHint="@color/black">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/lNameWrapperShare"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textColorHint="#000000">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etFNameBikeShare"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:hint="@string/et_bikeFNameShare"
+                    android:inputType="textCapWords"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etShareBikeLName"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/et_round_corners"
-                android:hint="@string/et_bikeLNameShare"
-                android:inputType="textPersonName|textCapWords"
-                android:paddingStart="10dp"
-                android:textSize="20sp"
-                tools:ignore="RtlSymmetry" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:textColorHint="@color/black">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/pNumberWrapperShare"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textColorHint="#000000">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLNameBikeShare"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:hint="@string/et_bikeLNameShare"
+                    android:inputType="textCapWords"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etShareBikePNumber"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/et_round_corners"
-                android:hint="@string/et_bikePNoShare"
-                android:inputType="phone"
-                android:paddingStart="10dp"
-                android:textSize="20sp"
-                tools:ignore="RtlSymmetry" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:textColorHint="@color/black">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailWrapperShare"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textColorHint="#000000">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPNoBikeShare"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:hint="@string/et_bikePNoShare"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etShareBikeEmail"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/et_round_corners"
-                android:hint="@string/et_bikeEmailShare"
-                android:inputType="textEmailAddress"
-                android:paddingStart="10dp"
-                android:textSize="20sp"
-                tools:ignore="RtlSymmetry" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColorHint="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEmailBikeShare"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:hint="@string/et_bikeEmailShare"
+                    android:inputType="textEmailAddress"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
 
         <ImageView
-            android:id="@+id/imgViewShareBikes"
-            android:layout_width="280dp"
-            android:layout_height="240dp"
+            android:id="@+id/imgViewBikeShare"
+            android:layout_width="279dp"
+            android:layout_height="243dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="#f2f2f2"
@@ -118,22 +131,22 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/tvShareBikeOr"
+            android:id="@+id/tvOrBikeShare"
             android:layout_width="100dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="#ffffff"
+            android:background="@color/white"
             android:paddingEnd="10dp"
             android:text="@string/tv_orSelectShare"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textSize="26sp"
             android:textStyle="bold"
             tools:ignore="RtlCompat,RtlSymmetry" />
 
         <ImageButton
-            android:id="@+id/btnShareTakePicture"
+            android:id="@+id/btnTakePictureShare"
             android:layout_width="200dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
@@ -145,144 +158,151 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/linear_round_corners_white"
+            android:orientation="vertical">
 
-            <AutoCompleteTextView
-                android:id="@+id/tvShareBikeCond"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="-40dp"
-                android:layout_weight="1"
-                android:background="@drawable/et_round_corners"
-                android:hint="@string/atc_selectCondShare"
-                android:paddingStart="10dp"
-                android:textColorHint="#000000"
-                android:textSize="20sp"
-                tools:ignore="RtlSymmetry" />
-
-            <ImageView
-                android:id="@+id/imgArrowShareBikeCond"
-                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="30dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/img_arrowCondShare"
-                android:padding="5dp"
-                android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:textColorHint="@color/black">
+
+                <AutoCompleteTextView
+                    android:id="@+id/tvCondBikeShare"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:enabled="false"
+                    android:hint="@string/atc_bikeCondShare"
+                    android:paddingStart="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    tools:ignore="RtlSymmetry" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:textColorHint="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etModelBikeShare"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:hint="@string/et_bikeModelShare"
+                    android:inputType="textCapWords"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:textColorHint="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etManufactBikeShare"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:hint="@string/et_bikeManufactShare"
+                    android:inputType="textCapWords"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColorHint="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPricePerDayBikeShare"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:hint="@string/et_bikePricePerDayShare"
+                    android:inputType="numberDecimal"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/bikeModelWrapperShare"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:textColorHint="#000000">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etShareBikeModel"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/et_round_corners"
-                android:hint="@string/et_bikeModelShare"
-                android:inputType="textPersonName|textCapWords"
-                android:paddingStart="10dp"
-                android:textSize="20sp"
-                tools:ignore="RtlSymmetry" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/bikeManufactWrapperShare"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textColorHint="#000000">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etShareBikeManufact"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/et_round_corners"
-                android:hint="@string/et_bikeManufactShare"
-                android:inputType="text|textCapWords"
-                android:paddingStart="10dp"
-                android:textSize="20sp"
-                tools:ignore="RtlSymmetry" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/bikePriceWrapperShare"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textColorHint="#000000">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etShareBikePriceDay"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/et_round_corners"
-                android:hint="@string/et_bikePricePerDayShare"
-                android:inputType="numberDecimal"
-                android:paddingStart="10dp"
-                android:textSize="20sp"
-                tools:ignore="RtlSymmetry" />
-        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvShareBikeAvDate"
+                android:id="@+id/tvDateAvBikeShare"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="5dp"
+                android:paddingStart="5dp"
                 android:layout_marginTop="5dp"
-                android:text="@string/tv_bikeShareAvDate"
-                android:textColor="#000000"
                 android:layout_weight="1"
+                android:background="@drawable/tv_round_corners"
+                android:text="@string/tv_bikeDateAvShare"
+                android:textColor="@color/white"
                 android:textSize="22sp"
                 tools:ignore="RtlSymmetry" />
 
             <EditText
-                android:id="@+id/etShareBikeAvDate"
+                android:id="@+id/etDateAvBikeShare"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="20dp"
-                android:background="#f2f2f2"
-                android:hint="@string/et_bikeShareAvDate"
-                android:inputType="date"
+                android:layout_marginEnd="15dp"
                 android:layout_weight="1"
+                android:background="#f2f2f2"
+                android:hint="@string/et_bikeDateAvShare"
+                android:inputType="date"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor="@color/black"
                 android:textSize="22sp"
                 tools:ignore="Autofill,RtlSymmetry" />
 
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnShareBike"
+            android:id="@+id/btnSaveBikeShare"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="35dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/btn_blue"
             android:text="@string/btn_saveBike"
             android:textColor="#ffffff"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="20dp"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
+
 </ScrollView>

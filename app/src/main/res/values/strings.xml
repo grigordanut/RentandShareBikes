@@ -20,13 +20,14 @@
     <string name="et_bikePNoShare">Phone Number</string>
     <string name="et_bikeEmailShare">Email Address</string>
     <string name="tv_orSelectShare">Or</string>
-    <string name="atc_selectCondShare">Select Condition</string>
+    <string name="atc_bikeCondShare">Bike Condition</string>
     <string name="img_arrowCondShare">Arrow</string>
     <string name="et_bikeModelShare">Bike Model</string>
     <string name="et_bikeManufactShare">Manufacturer</string>
     <string name="et_bikePricePerDayShare">Price per Day</string>
-    <string name="tv_bikeShareAvDate">Available From</string>
-    <string name="et_bikeShareAvDate">Date avail</string>
+
+    <string name="tv_bikeDateAvShare">Available From</string>
+    <string name="et_bikeDateAvShare">Date available</string>
     <string name="btn_shareBike">Save Bike</string>
 
     <!--    Add Bike Store-->
@@ -62,6 +63,9 @@
 
     <!--    Bike Image Admin Show Rented Bikes All-->
     <string name="tv_bikesImgAdminShowBikesRentedAll">List of all bikes rented</string>
+
+    <!--    Bike Image Admin Show Bikes To Share-->
+    <string name="tv_bikesImgAdminShowBikesToShare">Bikes available to share</string>
 
     <!--    Bike Image Main Show Bikes -->
     <string name="tv_bikeImgMainShowBikes">List of Bikes</string>
@@ -133,8 +137,9 @@
     <!--    Bike Image Show Bikes Rented Customer-->
     <string name="tv_bikesImageShowBikesRentedCustomer">List of Bikes</string>
 
-    <!--    Bike Image Show Shared Bikes Admin-->
-    <string name="tv_bikesImageShowSharedBikesAdmin">No Bikes available to be shared</string>
+
+
+
 
 
 
@@ -210,9 +215,9 @@
     <string name="tv_customPageSharePersonalDetails">Your personal details:</string>
     <string name="tv_customPageSharePersonalAccount">Your personal Account:</string>
     <string name="tv_customPageBikesShared">Bikes added to share</string>
-    <string name="tv_customPageBikesSharedAcc">0</string>
+    <string name="tv_customPageBikesSharedAcc">Null</string>
     <string name="tv_customPageBikesSAv">Bikes available to share</string>
-    <string name="tv_customPageBikesShareAv">0</string>
+    <string name="tv_customPageBikesShareAv">Null</string>
     <string name="tv_customPageShareAccount">Your account</string>
     <string name="open_customPageShare">Open</string>
     <string name="close_customPageShare">Close</string>

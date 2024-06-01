@@ -20,7 +20,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikeStoreAdapterCustom extends RecyclerView.Adapter<BikeStoreAdapterCustom.ImageViewHolder> {
+public class BikeStoreAdapterCustomer extends RecyclerView.Adapter<BikeStoreAdapterCustomer.ImageViewHolder> {
 
     private Context bikeStoreContext;
     private List<BikeStores> bikeStoresUploads;
@@ -35,7 +35,7 @@ public class BikeStoreAdapterCustom extends RecyclerView.Adapter<BikeStoreAdapte
 
     private OnItemClickListener clickListener;
 
-    public BikeStoreAdapterCustom(Context bikeStore_context, List<BikeStores> bikeStores_uploads){
+    public BikeStoreAdapterCustomer(Context bikeStore_context, List<BikeStores> bikeStores_uploads){
         bikeStoreContext = bikeStore_context;
         bikeStoresUploads = bikeStores_uploads;
     }

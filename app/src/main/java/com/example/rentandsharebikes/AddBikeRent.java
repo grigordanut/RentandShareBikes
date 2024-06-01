@@ -202,6 +202,7 @@ public class AddBikeRent extends AppCompatActivity {
 
             progressDialog.setTitle("The Bike is uploading!");
             progressDialog.show();
+
             final StorageReference fileReference = stRefBikeUpload.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             stTaskBikeUpload = fileReference.putFile(imageUri)
                     .addOnSuccessListener(taskSnapshot -> {
@@ -275,7 +276,7 @@ public class AddBikeRent extends AppCompatActivity {
     public void alertDialogBikePicture() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setTitle("No Bike picture")
+                .setTitle("No bike picture?")
                 .setMessage("Please add a picture!")
                 .setCancelable(false)
                 .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
@@ -288,6 +289,7 @@ public class AddBikeRent extends AppCompatActivity {
     public void alertDialogBikeCond() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
+                .setTitle("No bike condition?")
                 .setMessage("Select the Bike condition")
                 .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 

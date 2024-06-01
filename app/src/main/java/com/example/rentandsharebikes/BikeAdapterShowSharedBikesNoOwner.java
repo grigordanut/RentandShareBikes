@@ -41,7 +41,7 @@ public class BikeAdapterShowSharedBikesNoOwner extends RecyclerView.Adapter<Bike
         final BikesShare uploadCurrent = bikesUploads.get(position);
         holder.tvSharedBikesUserNameFull.setText(uploadCurrent.getShareCus_FirstName()+" "+uploadCurrent.getShareCus_LastName());
         holder.tvSharedBikesUserPhoneFull.setText(uploadCurrent.getShareCus_PhoneNo());
-        holder.tvSharedBikesUserEmailFull.setText(uploadCurrent.getShareCus_EmailAdd());
+        holder.tvSharedBikesUserEmailFull.setText(uploadCurrent.getShareCus_Email());
         holder.tvSharedBikeCondUserFull.setText(uploadCurrent.getShareBike_Condition());
         holder.tvSharedBikeModelUserFull.setText(uploadCurrent.getShareBike_Model());
         holder.tvSharedBikeManufactUserFull.setText(uploadCurrent.getShareBike_Manufact());

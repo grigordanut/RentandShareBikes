@@ -59,7 +59,7 @@ public class BikeAdapterShowSharedBikesToUpdate extends RecyclerView.Adapter<Bik
                 intent.putExtra("BFNameUpdate",uploadCurrent.getShareCus_FirstName());
                 intent.putExtra("BLNameUpdate",uploadCurrent.getShareCus_LastName());
                 intent.putExtra("BPhoneUpdate",uploadCurrent.getShareCus_PhoneNo());
-                intent.putExtra("BEmailUpdate",uploadCurrent.getShareCus_EmailAdd());
+                intent.putExtra("BEmailUpdate",uploadCurrent.getShareCus_Email());
 
                 //Shared Bike Details
                 intent.putExtra("BCondUpdate",uploadCurrent.getShareBike_Condition());

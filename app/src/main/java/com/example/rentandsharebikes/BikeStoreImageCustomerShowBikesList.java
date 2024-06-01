@@ -20,13 +20,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikeStoreImageCustomerShowBikesList extends AppCompatActivity implements BikeStoreAdapterCustom.OnItemClickListener{
+public class BikeStoreImageCustomerShowBikesList extends AppCompatActivity implements BikeStoreAdapterCustomer.OnItemClickListener{
 
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreEventListener;
 
     private RecyclerView bikeStoreRecyclerView;
-    private BikeStoreAdapterCustom bikeStoreAdapterCustom;
+    private BikeStoreAdapterCustomer bikeStoreAdapterCustomer;
 
     private List<BikeStores> bikeStoresList;
 
@@ -46,9 +46,9 @@ public class BikeStoreImageCustomerShowBikesList extends AppCompatActivity imple
 
         bikeStoresList = new ArrayList<>();
 
-        bikeStoreAdapterCustom = new BikeStoreAdapterCustom(BikeStoreImageCustomerShowBikesList.this, bikeStoresList);
-        bikeStoreRecyclerView.setAdapter(bikeStoreAdapterCustom);
-        bikeStoreAdapterCustom.setOnItmClickListener(BikeStoreImageCustomerShowBikesList.this);
+        bikeStoreAdapterCustomer = new BikeStoreAdapterCustomer(BikeStoreImageCustomerShowBikesList.this, bikeStoresList);
+        bikeStoreRecyclerView.setAdapter(bikeStoreAdapterCustomer);
+        bikeStoreAdapterCustomer.setOnItmClickListener(BikeStoreImageCustomerShowBikesList.this);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class BikeStoreImageCustomerShowBikesList extends AppCompatActivity imple
                     bikeStoresList.add(bikeStores);
                 }
 
-                bikeStoreAdapterCustom.notifyDataSetChanged();
+                bikeStoreAdapterCustomer.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
