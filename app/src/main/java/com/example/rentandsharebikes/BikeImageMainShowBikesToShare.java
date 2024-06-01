@@ -88,7 +88,13 @@ public class BikeImageMainShowBikesToShare extends AppCompatActivity implements 
                         assert share_Bikes != null;
                         share_Bikes.setShareBike_Key(postSnapshot.getKey());
                         listBikeToShareMain.add(share_Bikes);
-                        tVBikeImgMainShowBikesToShare.setText(listBikeToShareMain.size() + " Bikes available to share");
+                    }
+
+                    if (listBikeToShareMain.size() == 1) {
+                        tVBikeImgMainShowBikesToShare.setText(listBikeToShareMain.size() + " bike available to share");
+                    }
+                    else {
+                        tVBikeImgMainShowBikesToShare.setText(listBikeToShareMain.size() + " bikes available to share");
                     }
 
                     bikeAdapterMainShowBikesToShare.notifyDataSetChanged();

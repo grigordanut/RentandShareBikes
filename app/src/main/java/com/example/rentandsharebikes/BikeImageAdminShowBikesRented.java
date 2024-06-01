@@ -108,10 +108,10 @@ public class BikeImageAdminShowBikesRented extends AppCompatActivity implements 
                 }
 
                 if (listShowBikesRented.size() == 1) {
-                    tVBikesImgAdminShowBikesRented.setText(listShowBikesRented.size() + " Bike rented from: " + bikeStore_Name);
+                    tVBikesImgAdminShowBikesRented.setText(listShowBikesRented.size() + " bike rented from: " + bikeStore_Name);
                 }
                 else if (listShowBikesRented.size() > 1) {
-                    tVBikesImgAdminShowBikesRented.setText(listShowBikesRented.size() + " Bikes rented from: " + bikeStore_Name);
+                    tVBikesImgAdminShowBikesRented.setText(listShowBikesRented.size() + " bikes rented from: " + bikeStore_Name);
                 }
                 else {
                     tVBikesImgAdminShowBikesRented.setText("No bikes rented from: " + bikeStore_Name);

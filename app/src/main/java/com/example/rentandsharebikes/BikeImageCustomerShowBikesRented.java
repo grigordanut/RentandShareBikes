@@ -120,7 +120,7 @@ public class BikeImageCustomerShowBikesRented extends AppCompatActivity implemen
                             + customerFirst_Name + " " +  customerLast_Name);
                 }
                 else {
-                    tVBikesImgCustomShowBikesRented.setText("No Bikes rented by: " + customerFirst_Name + " " + customerLast_Name);
+                    tVBikesImgCustomShowBikesRented.setText("No bikes rented by: " + customerFirst_Name + " " + customerLast_Name);
                 }
 
                 bikeAdapterCustomerShowBikesRented.notifyDataSetChanged();

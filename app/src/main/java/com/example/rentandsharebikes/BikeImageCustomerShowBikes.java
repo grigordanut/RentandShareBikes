@@ -95,35 +95,26 @@ public class BikeImageCustomerShowBikes extends AppCompatActivity implements Bik
 
                 listCustomerBikes.clear();
 
-                //if (dataSnapshot.exists()) {
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Bikes bikes = postSnapshot.getValue(Bikes.class);
-                        assert bikes != null;
-                        bikes.setBike_Key(postSnapshot.getKey());
-                        if (bikes.getBikeStoreKey().equals(bikeStore_KeyRent)) {
-                            listCustomerBikes.add(bikes);
-                        }
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Bikes bikes = postSnapshot.getValue(Bikes.class);
+                    assert bikes != null;
+                    bikes.setBike_Key(postSnapshot.getKey());
+                    if (bikes.getBikeStoreKey().equals(bikeStore_KeyRent)) {
+                        listCustomerBikes.add(bikes);
                     }
+                }
 
-                    if (listCustomerBikes.size() == 1) {
-                        tVBikeImgImgCustomShowBikes.setText(listCustomerBikes.size() + " bike available in " + bikeStore_NameRent + " store");
-                    }
+                if (listCustomerBikes.size() == 1) {
+                    tVBikeImgImgCustomShowBikes.setText(listCustomerBikes.size() + " bike available in " + bikeStore_NameRent + " store");
+                }
+                else if (listCustomerBikes.size() > 1) {
+                    tVBikeImgImgCustomShowBikes.setText(listCustomerBikes.size() + " bikes available in " + bikeStore_NameRent + " store");
+                }
+                else {
+                    tVBikeImgImgCustomShowBikes.setText("No bikes available in " + bikeStore_NameRent + " store");
+                }
 
-                    else if (listCustomerBikes.size() > 1) {
-                        tVBikeImgImgCustomShowBikes.setText(listCustomerBikes.size() + " bikes available in " + bikeStore_NameRent + " store");
-                    }
-
-                    else {
-                        tVBikeImgImgCustomShowBikes.setText("No bikes available in " + bikeStore_NameRent + " store");
-                    }
-
-                    bikeAdapterBikesCustomer.notifyDataSetChanged();
-//                }
-//
-//                else {
-//                    tVBikeImgImgCustomShowBikes.setText("No Bikes bikes available to rent");
-//                    bikeAdapterBikesCustomer.notifyDataSetChanged();
-//                }
+                bikeAdapterBikesCustomer.notifyDataSetChanged();
             }
 
             @Override

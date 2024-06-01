@@ -82,25 +82,28 @@ public class BikeImageAdminShowBikesToShare extends AppCompatActivity implements
 
                 sharedBikesList.clear();
 
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    BikesShare share_Bikes = postSnapshot.getValue(BikesShare.class);
-                    assert share_Bikes != null;
-                    share_Bikes.setShareBike_Key(postSnapshot.getKey());
-                    sharedBikesList.add(share_Bikes);
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        BikesShare share_Bikes = postSnapshot.getValue(BikesShare.class);
+                        assert share_Bikes != null;
+                        share_Bikes.setShareBike_Key(postSnapshot.getKey());
+                        sharedBikesList.add(share_Bikes);
+                    }
 
+                    if (sharedBikesList.size() == 1) {
+                        tVBikesImgAdminShowBikesToShare.setText(sharedBikesList.size() + " bike available to share");
+                    }
+                    else {
+                        tVBikesImgAdminShowBikesToShare.setText(sharedBikesList.size() + " bikes available to share");
+                    }
+
+                    bikeAdapterAdminShowBikesToShare.notifyDataSetChanged();
                 }
 
-                if (sharedBikesList.size() == 1) {
-                    tVBikesImgAdminShowBikesToShare.setText(sharedBikesList.size() + " bike available to share");
-                }
-                else if (sharedBikesList.size() > 1) {
-                    tVBikesImgAdminShowBikesToShare.setText(sharedBikesList.size() + " bikes available to share");
-                }
                 else {
                     tVBikesImgAdminShowBikesToShare.setText("No bike available to share!!");
+                    bikeAdapterAdminShowBikesToShare.notifyDataSetChanged();
                 }
-
-                bikeAdapterAdminShowBikesToShare.notifyDataSetChanged();
             }
 
             @Override

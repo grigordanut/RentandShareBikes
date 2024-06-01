@@ -84,12 +84,12 @@ public class BikeStoreImageAdminAddBikes extends AppCompatActivity implements Bi
                         assert bikeStores != null;
                         bikeStores.setBikeStore_Key(postSnapshot.getKey());
                         listBikeStoresAddBikes.add(bikeStores);
-                        tVBikeStoreImgAdminAddBikes.setText("Select the Bike Store");
                     }
 
+                    tVBikeStoreImgAdminAddBikes.setText("Select the Bike Store");
                     bikeStoreAdapterAdmin.notifyDataSetChanged();
-
                 }
+
                 else {
                     tVBikeStoreImgAdminAddBikes.setText("No Bike Stores available!!");
                     bikeStoreAdapterAdmin.notifyDataSetChanged();
