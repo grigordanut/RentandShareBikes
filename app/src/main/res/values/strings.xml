@@ -67,6 +67,12 @@
     <!--    Bike Image Admin Show Bikes To Share-->
     <string name="tv_bikesImgAdminShowBikesToShare">Bikes available to share</string>
 
+    <!--    Bike Image Customer Show Bikes-->
+    <string name="tv_bikeImgCustomShowBikes">List of bikes available</string>
+
+    <!--    Bike Image Customer Show Bikes All-->
+    <string name="tv_bikesImgCustomShowBikesAll">List of all bikes available</string>
+
     <!--    Bike Image Main Show Bikes -->
     <string name="tv_bikeImgMainShowBikes">List of Bikes</string>
 
@@ -90,18 +96,6 @@
 
     <!--    Bike Image Return Rented Bikes Customer-->
     <string name="tv_bikesImageRentBikesRented">Select the Bike</string>
-
-
-
-
-
-    <!--    Bike Image Show Bikes List Customer-->
-    <string name="tv_bikesImageShowBikesListCustomer">List of Bikes</string>
-
-    <!--    Bike Image Show Bikes List Custom All-->
-    <string name="tv_bikesImageShowBikesListCustomAll">No Bikes available to rent</string>
-
-
 
 
 

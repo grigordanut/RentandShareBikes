@@ -166,13 +166,12 @@ public class BikeStoreImageAdminShowStores extends AppCompatActivity implements 
                             @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
                             TextView text = layout.findViewById(R.id.tvToast);
                             ImageView imageView = layout.findViewById(R.id.imgToast);
-                            text.setText("The Bike Store has been successfully deleted.");
+                            text.setText("The Bike Store " + selected_BikeStores.getBikeStore_Location() + " has been successfully deleted!!");
                             imageView.setImageResource(R.drawable.baseline_delete_forever_24);
                             Toast toast = new Toast(getApplicationContext());
                             toast.setDuration(Toast.LENGTH_SHORT);
                             toast.setView(layout);
                             toast.show();
-                            Toast.makeText(BikeStoreImageAdminShowStores.this, "The Bike Store " + selected_BikeStores.getBikeStore_Location() + " has been successfully deleted.", Toast.LENGTH_SHORT).show();
                         })
 
                 .setNegativeButton("CANCEL", (dialog, id) -> dialog.cancel());

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -74,6 +75,7 @@ public class BikeStoreImageCustomerShowBikes extends AppCompatActivity implement
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 listStoresShowBikes.clear();
+
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                         BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
@@ -104,7 +106,7 @@ public class BikeStoreImageCustomerShowBikes extends AppCompatActivity implement
     public void onItemClick(int position) {
 
         BikeStores selected_Store = listStoresShowBikes.get(position);
-        Intent store_Intent = new Intent(BikeStoreImageCustomerShowBikes.this, BikeImageShowBikesListCustomer.class);
+        Intent store_Intent = new Intent(BikeStoreImageCustomerShowBikes.this, BikeImageCustomerShowBikes.class);
         store_Intent.putExtra("SNameRent", selected_Store.getBikeStore_Location());
         store_Intent.putExtra("SKeyRent", selected_Store.getBikeStore_Key());
         startActivity(store_Intent);

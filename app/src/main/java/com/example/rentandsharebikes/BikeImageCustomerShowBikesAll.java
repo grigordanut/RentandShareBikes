@@ -25,18 +25,18 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BikeImageShowBikesListCustomerAll extends AppCompatActivity implements BikeAdapterBikesCustomer.OnItemClickListener {
+public class BikeImageCustomerShowBikesAll extends AppCompatActivity implements BikeAdapterBikesCustomer.OnItemClickListener {
 
     private FirebaseStorage bikesStorage;
     private DatabaseReference databaseReference;
     private ValueEventListener bikesEventListener;
 
-    private RecyclerView bikesListRecyclerView;
+    private RecyclerView rvBikeImgCustom_ShowBikesAll;
     private BikeAdapterBikesCustomer bikeAdapterBikesCustomer;
 
-    private TextView tVBikeImageShowListCustomAll;
+    private TextView tVBikeImgCustomShowBikesAll;
 
-    private List<Bikes> bikesList;
+    private List<Bikes> listCustomerBikesAll;
 
     private ProgressDialog progressDialog;
 
@@ -44,22 +44,26 @@ public class BikeImageShowBikesListCustomerAll extends AppCompatActivity impleme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_image_show_bikes_list_customer_all);
+        setContentView(R.layout.activity_bike_image_customer_show_bikes_all);
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.show();
 
-        tVBikeImageShowListCustomAll = findViewById(R.id.tvBikeImageShowListCustomAll);
+        //initialize the bike storage database
+        bikesStorage = FirebaseStorage.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
 
-        bikesListRecyclerView = findViewById(R.id.evRecyclerView);
-        bikesListRecyclerView.setHasFixedSize(true);
-        bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        bikesList = new ArrayList<>();
+        tVBikeImgCustomShowBikesAll = findViewById(R.id.tvBikeImgCustomShowBikesAll);
 
-        bikeAdapterBikesCustomer = new BikeAdapterBikesCustomer(BikeImageShowBikesListCustomerAll.this, bikesList);
-        bikesListRecyclerView.setAdapter(bikeAdapterBikesCustomer);
-        bikeAdapterBikesCustomer.setOnItmClickListener(BikeImageShowBikesListCustomerAll.this);
+        rvBikeImgCustom_ShowBikesAll = findViewById(R.id.rvBikeImgCustomShowBikesAll);
+        rvBikeImgCustom_ShowBikesAll.setHasFixedSize(true);
+        rvBikeImgCustom_ShowBikesAll.setLayoutManager(new LinearLayoutManager(this));
+
+        listCustomerBikesAll = new ArrayList<>();
+
+        bikeAdapterBikesCustomer = new BikeAdapterBikesCustomer(BikeImageCustomerShowBikesAll.this, listCustomerBikesAll);
+        rvBikeImgCustom_ShowBikesAll.setAdapter(bikeAdapterBikesCustomer);
+        bikeAdapterBikesCustomer.setOnItmClickListener(BikeImageCustomerShowBikesAll.this);
     }
 
     @SuppressLint("SetTextI18n")
@@ -71,37 +75,40 @@ public class BikeImageShowBikesListCustomerAll extends AppCompatActivity impleme
 
     private void loadBikesListCustomer() {
 
-        //initialize the bike storage database
-        bikesStorage = FirebaseStorage.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
+        progressDialog.show();
 
         bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
+            @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesList.clear();
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Bikes bikes = postSnapshot.getValue(Bikes.class);
-                        assert bikes != null;
-                        bikes.setBike_Key(postSnapshot.getKey());
-                        bikesList.add(bikes);
-                        tVBikeImageShowListCustomAll.setText(bikesList.size() + " bikes available to rent");
-                    }
 
-                    bikeAdapterBikesCustomer.notifyDataSetChanged();
-                } else {
-                    tVBikeImageShowListCustomAll.setText("No Bikes bikes available to rent!!");
+                listCustomerBikesAll.clear();
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Bikes bikes = postSnapshot.getValue(Bikes.class);
+                    assert bikes != null;
+                    bikes.setBike_Key(postSnapshot.getKey());
+                    listCustomerBikesAll.add(bikes);
                 }
 
-                progressDialog.dismiss();
+                if (listCustomerBikesAll.size() == 1) {
+                    tVBikeImgCustomShowBikesAll.setText(listCustomerBikesAll.size() + " bike available to rent");
+                } else if (listCustomerBikesAll.size() > 1) {
+                    tVBikeImgCustomShowBikesAll.setText(listCustomerBikesAll.size() + " bikes available to rent");
+                } else {
+                    tVBikeImgCustomShowBikesAll.setText("No bikes available to rent!!");
+                }
+
+                bikeAdapterBikesCustomer.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeImageShowBikesListCustomerAll.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeImageCustomerShowBikesAll.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     //Action on bikes onClick
@@ -109,7 +116,7 @@ public class BikeImageShowBikesListCustomerAll extends AppCompatActivity impleme
     public void onItemClick(int position) {
         final String[] options = {"Rent this Bike", "Back Main Page"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, options);
-        Bikes selected_Bike = bikesList.get(position);
+        Bikes selected_Bike = listCustomerBikesAll.get(position);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
@@ -120,8 +127,8 @@ public class BikeImageShowBikesListCustomerAll extends AppCompatActivity impleme
                     public void onClick(DialogInterface dialog, int which) {
 
                         if (which == 0) {
-                            Intent intent = new Intent(BikeImageShowBikesListCustomerAll.this, RentBikesCustomer.class);
-                            Bikes selected_Bike = bikesList.get(position);
+                            Intent intent = new Intent(BikeImageCustomerShowBikesAll.this, RentBikesCustomer.class);
+                            Bikes selected_Bike = listCustomerBikesAll.get(position);
                             intent.putExtra("BCondition", selected_Bike.getBike_Condition());
                             intent.putExtra("BModel", selected_Bike.getBike_Model());
                             intent.putExtra("BManufact", selected_Bike.getBike_Manufacturer());
@@ -134,7 +141,7 @@ public class BikeImageShowBikesListCustomerAll extends AppCompatActivity impleme
                         }
 
                         if (which == 1) {
-                            startActivity(new Intent(BikeImageShowBikesListCustomerAll.this, CustomerPageRentBikes.class));
+                            startActivity(new Intent(BikeImageCustomerShowBikesAll.this, CustomerPageRentBikes.class));
 
 
                         }

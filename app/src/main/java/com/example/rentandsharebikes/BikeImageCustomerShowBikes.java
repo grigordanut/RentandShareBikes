@@ -28,19 +28,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikeImageShowBikesListCustomer extends AppCompatActivity implements BikeAdapterBikesCustomer.OnItemClickListener {
+public class BikeImageCustomerShowBikes extends AppCompatActivity implements BikeAdapterBikesCustomer.OnItemClickListener {
 
     private FirebaseStorage bikesStorage;
     private DatabaseReference dbRefBikes;
     private ValueEventListener bikesEventListener;
 
-
-    private RecyclerView bikesListRecyclerView;
+    private RecyclerView rvBikeImgImgCustom_ShowBikes;
     private BikeAdapterBikesCustomer bikeAdapterBikesCustomer;
 
-    private TextView textViewBikesImageList;
+    private TextView tVBikeImgImgCustomShowBikes;
 
-    private List<Bikes> bikesList;
+    private List<Bikes> listCustomerBikes;
 
     String bikeStore_NameRent = "";
     String bikeStore_KeyRent = "";
@@ -51,10 +50,13 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_image_show_bikes_list_customer);
+        setContentView(R.layout.activity_bike_image_customer_show_bikes);
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.show();
+
+        //initialize the bike storage database
+        bikesStorage = FirebaseStorage.getInstance();
+        dbRefBikes = FirebaseDatabase.getInstance().getReference().child("Bikes");
 
         getIntent().hasExtra("SNameRent");
         bikeStore_NameRent = Objects.requireNonNull(getIntent().getExtras()).getString("SNameRent");
@@ -62,17 +64,17 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
         getIntent().hasExtra("SKeyRent");
         bikeStore_KeyRent = Objects.requireNonNull(getIntent().getExtras()).getString("SKeyRent");
 
-        textViewBikesImageList = findViewById(R.id.tvBikeImageList);
+        tVBikeImgImgCustomShowBikes = findViewById(R.id.tvBikeImgImgCustomShowBikes);
 
-        bikesListRecyclerView = findViewById(R.id.evRecyclerView);
-        bikesListRecyclerView.setHasFixedSize(true);
-        bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        rvBikeImgImgCustom_ShowBikes = findViewById(R.id.rvBikeImgCustomShowBikes);
+        rvBikeImgImgCustom_ShowBikes.setHasFixedSize(true);
+        rvBikeImgImgCustom_ShowBikes.setLayoutManager(new LinearLayoutManager(this));
 
-        bikesList = new ArrayList<>();
+        listCustomerBikes = new ArrayList<>();
 
-        bikeAdapterBikesCustomer = new BikeAdapterBikesCustomer(BikeImageShowBikesListCustomer.this, bikesList);
-        bikesListRecyclerView.setAdapter(bikeAdapterBikesCustomer);
-        bikeAdapterBikesCustomer.setOnItmClickListener(BikeImageShowBikesListCustomer.this);
+        bikeAdapterBikesCustomer = new BikeAdapterBikesCustomer(BikeImageCustomerShowBikes.this, listCustomerBikes);
+        rvBikeImgImgCustom_ShowBikes.setAdapter(bikeAdapterBikesCustomer);
+        bikeAdapterBikesCustomer.setOnItmClickListener(BikeImageCustomerShowBikes.this);
     }
 
     @SuppressLint("SetTextI18n")
@@ -84,42 +86,53 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
 
     private void loadBikesListCustomer() {
 
-        //initialize the bike storage database
-        bikesStorage = FirebaseStorage.getInstance();
-        dbRefBikes = FirebaseDatabase.getInstance().getReference().child("Bikes");
+        progressDialog.show();
 
         bikesEventListener = dbRefBikes.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                bikesList.clear();
-                if (dataSnapshot.exists()) {
+                listCustomerBikes.clear();
+
+                //if (dataSnapshot.exists()) {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Bikes bikes = postSnapshot.getValue(Bikes.class);
                         assert bikes != null;
+                        bikes.setBike_Key(postSnapshot.getKey());
                         if (bikes.getBikeStoreKey().equals(bikeStore_KeyRent)) {
-                            bikes.setBike_Key(postSnapshot.getKey());
-                            bikesList.add(bikes);
-                            textViewBikesImageList.setText(bikesList.size() + " bikes available in " + bikeStore_NameRent + " store");
-                        } else {
-                            textViewBikesImageList.setText("No bikes available in " + bikeStore_NameRent + " store");
+                            listCustomerBikes.add(bikes);
                         }
                     }
 
-                    bikeAdapterBikesCustomer.notifyDataSetChanged();
-                } else {
-                    textViewBikesImageList.setText("No Bikes bikes available to rent");
-                }
+                    if (listCustomerBikes.size() == 1) {
+                        tVBikeImgImgCustomShowBikes.setText(listCustomerBikes.size() + " bike available in " + bikeStore_NameRent + " store");
+                    }
 
-                progressDialog.dismiss();
+                    else if (listCustomerBikes.size() > 1) {
+                        tVBikeImgImgCustomShowBikes.setText(listCustomerBikes.size() + " bikes available in " + bikeStore_NameRent + " store");
+                    }
+
+                    else {
+                        tVBikeImgImgCustomShowBikes.setText("No bikes available in " + bikeStore_NameRent + " store");
+                    }
+
+                    bikeAdapterBikesCustomer.notifyDataSetChanged();
+//                }
+//
+//                else {
+//                    tVBikeImgImgCustomShowBikes.setText("No Bikes bikes available to rent");
+//                    bikeAdapterBikesCustomer.notifyDataSetChanged();
+//                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeImageShowBikesListCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeImageCustomerShowBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     //Action on bikes onClick
@@ -127,7 +140,7 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
     public void onItemClick(final int position) {
         final String[] options = {"Rent this Bike", "Back Main Page"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, options);
-        Bikes selected_Bike = bikesList.get(position);
+        Bikes selected_Bike = listCustomerBikes.get(position);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
@@ -136,8 +149,8 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
                 .setAdapter(adapter, (dialog, id) -> {
 
                     if (id == 0) {
-                        Intent intent = new Intent(BikeImageShowBikesListCustomer.this, RentBikesCustomer.class);
-                        Bikes selected_Bike1 = bikesList.get(position);
+                        Intent intent = new Intent(BikeImageCustomerShowBikes.this, RentBikesCustomer.class);
+                        Bikes selected_Bike1 = listCustomerBikes.get(position);
                         intent.putExtra("BCondition", selected_Bike1.getBike_Condition());
                         intent.putExtra("BModel", selected_Bike1.getBike_Model());
                         intent.putExtra("BManufact", selected_Bike1.getBike_Manufacturer());
@@ -150,8 +163,8 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
                     }
 
                     if (id == 1) {
-                        startActivity(new Intent(BikeImageShowBikesListCustomer.this, CustomerPageRentBikes.class));
-                        Toast.makeText(BikeImageShowBikesListCustomer.this, "Back to main page", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(BikeImageCustomerShowBikes.this, CustomerPageRentBikes.class));
+                        Toast.makeText(BikeImageCustomerShowBikes.this, "Back to main page", Toast.LENGTH_SHORT).show();
                     }
                 })
 
@@ -176,7 +189,7 @@ public class BikeImageShowBikesListCustomer extends AppCompatActivity implements
 
     private void goBackBikesCustom() {
         finish();
-        startActivity(new Intent(BikeImageShowBikesListCustomer.this, CustomerPageRentBikes.class));
+        startActivity(new Intent(BikeImageCustomerShowBikes.this, CustomerPageRentBikes.class));
     }
 
     @Override

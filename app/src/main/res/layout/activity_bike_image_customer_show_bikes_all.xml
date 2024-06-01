@@ -6,23 +6,25 @@
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
     android:orientation="vertical"
-    tools:context=".BikeImageShowBikesListCustomer">
+    android:padding="5dp"
+    tools:context=".BikeImageCustomerShowBikesAll">
 
     <TextView
-        android:id="@+id/tvBikeImageList"
+        android:id="@+id/tvBikeImgCustomShowBikesAll"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:text="@string/tv_bikesImageShowBikesListCustomer"
+        android:text="@string/tv_bikesImgCustomShowBikesAll"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:textSize="22sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/evRecyclerView"
+        android:id="@+id/rvBikeImgCustomShowBikesAll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp" />
