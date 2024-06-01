@@ -95,16 +95,17 @@ public class BikeImageAdminShowBikesAll extends AppCompatActivity implements Bik
                         bikes.setBike_Key(postSnapshot.getKey());
                         listShowBikesAll.add(bikes);
                     }
-
-                    bikeAdapterAdminBikes.notifyDataSetChanged();
-
+                    
                     if (listShowBikesAll.size() == 1) {
                         tVBikeListAdminAll.setText(listShowBikesAll.size() + " Bike available");
                     }
                     else {
                         tVBikeListAdminAll.setText(listShowBikesAll.size() + " Bikes available");
                     }
+
+                    bikeAdapterAdminBikes.notifyDataSetChanged();
                 }
+
                 else {
                     tVBikeListAdminAll.setText("No Bikes registered!!");
                     bikeAdapterAdminBikes.notifyDataSetChanged();
