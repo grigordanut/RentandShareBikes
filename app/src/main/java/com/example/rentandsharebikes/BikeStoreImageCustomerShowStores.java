@@ -44,7 +44,7 @@ public class BikeStoreImageCustomerShowStores extends AppCompatActivity implemen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_customer_show_stores);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Bike Stores available Customer");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("CUSTOMER Bike Stores available");
 
         progressDialog = new ProgressDialog(this);
 

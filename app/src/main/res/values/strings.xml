@@ -67,6 +67,9 @@
     <!--    Bike Image Admin Show Bikes To Share-->
     <string name="tv_bikesImgAdminShowBikesToShare">Bikes available to share</string>
 
+    <!--    Bike Image Customer Rent Bikes-->
+    <string name="tv_bikesImgCustomRentBikes">List of bikes available to rent</string>
+
     <!--    Bike Image Customer Show Bikes-->
     <string name="tv_bikeImgCustomShowBikes">List of bikes available</string>
 
@@ -91,8 +94,11 @@
     <!--    Bike Image Remove Shared Bikes Owner-->
     <string name="tv_bikeStoreImgRemoveBikesOwner">Select the Bike to be removed</string>
 
-    <!--    Bike Image Rent Bikes Customer-->
-    <string name="tv_bikesImageRentBikesCustomer">Select the Bike</string>
+
+
+
+
+
 
     <!--    Bike Image Return Rented Bikes Customer-->
     <string name="tv_bikesImageRentBikesRented">Select the Bike</string>
@@ -107,19 +113,15 @@
     <!--    Bike Store Image Admin Show Bike List-->
     <string name="tv_bikeStoreImgAdminShowBikes">List of Bike Stores</string>
 
-    <!--    Bike Store Image Admin Show Bikes Rented-->
-    <string name="tv_bikeStoreImgAdminShowBikesRented">List of Bike Stores</string>
-
-
-
-    <!--    Bike Store Image Rent Bikes Customer-->
-    <string name="tv_bikeStoreImageRentBikesCustomer">Select the Bike Store</string>
 
 
 
 
-    <!--    Bike Store Image Admin Show Stores-->
-    <string name="tv_bikeStoreImgAdminShowStores">List of Bike Stores</string>
+
+
+
+
+
 
 
 
@@ -145,9 +147,16 @@
     <!--    Bike Image Show Shared Bikes To Update-->
     <string name="tv_bikesImageShowSBikesToUpdate">Select the bike to be update</string>
 
+    <!--    Bike Store Image Admin Show Bikes Rented-->
+    <string name="tv_bikeStoreImgAdminShowBikesRented">List of Bike Stores</string>
 
+    <!--    Bike Store Image Admin Show Stores-->
+    <string name="tv_bikeStoreImgAdminShowStores">List of Bike Stores</string>
 
-    <!--    Bike Store Image Customer Show Bike-->
+    <!--    Bike Store Image Customer Rent Bikes-->
+    <string name="tv_bikeStoreImgCustomRentBikes">List of Bike Stores available</string>
+
+    <!--    Bike Store Image Customer Show Bikes-->
     <string name="tv_bikeStoreImgCustomShowBikes">List of Bike Stores</string>
 
     <!--    Bike Store Image Customer Show Stores-->

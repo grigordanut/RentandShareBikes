@@ -10,18 +10,19 @@
     tools:context=".BikeStoreImageCustomerRentBikes">
 
     <TextView
-        android:id="@+id/tvBikeStoresRentBikesCustomer"
+        android:id="@+id/tvBikeStoreImgCustomRentBikes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:text="@string/tv_bikeStoreImageRentBikesCustomer"
+        android:text="@string/tv_bikeStoreImgCustomRentBikes"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/evRecyclerView"
+        android:id="@+id/rvBikeStoreImgCustomRentBikes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp">

@@ -146,7 +146,7 @@ public class AddBikeStore extends AppCompatActivity {
                             etStoreAddress.setText("");
                             etStoreNumberSlots.setText("");
 
-                            startActivity(new Intent(AddBikeStore.this, AdminPage.class));
+                            startActivity(new Intent(AddBikeStore.this, BikeStoreImageAdminShowStores.class));
 
                             Toast.makeText(AddBikeStore.this, "Bike Store Added", Toast.LENGTH_SHORT).show();
                         } else {

@@ -23,18 +23,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BikeImageRentBikesCustomer extends AppCompatActivity implements BikeAdapterBikesCustomer.OnItemClickListener {
+public class BikeImageCustomerRentBikes extends AppCompatActivity implements BikeAdapterBikesCustomer.OnItemClickListener {
 
     private DatabaseReference databaseReference;
     private FirebaseStorage bikesStorage;
     private ValueEventListener bikesEventListener;
 
-    private RecyclerView bikesListRecyclerView;
+    private RecyclerView rvBikesImgCustom_RentBikes;
     private BikeAdapterBikesCustomer bikeAdapterBikesCustomer;
 
-    private TextView tVBikeImageList;
+    private TextView tVBikesImgCustomRentBikes;
 
-    private List<Bikes> bikesList;
+    private List<Bikes> listCustomerRentBikes;
 
     String bikeStore_Name = "";
     String bikeStore_Key = "";
@@ -45,10 +45,13 @@ public class BikeImageRentBikesCustomer extends AppCompatActivity implements Bik
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bike_image_rent_bikes_customer);
+        setContentView(R.layout.activity_bike_image_customer_rent_bikes);
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.show();
+
+        //initialize the bike storage database
+        bikesStorage = FirebaseStorage.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
 
         getIntent().hasExtra("SName");
         bikeStore_Name = Objects.requireNonNull(getIntent().getExtras()).getString("SName");
@@ -56,17 +59,17 @@ public class BikeImageRentBikesCustomer extends AppCompatActivity implements Bik
         getIntent().hasExtra("SKey");
         bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
 
-        tVBikeImageList = findViewById(R.id.tvBikeImageList);
+        tVBikesImgCustomRentBikes = findViewById(R.id.tvBikesImgCustomRentBikes);
 
-        bikesListRecyclerView = findViewById(R.id.evRecyclerView);
-        bikesListRecyclerView.setHasFixedSize(true);
-        bikesListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        rvBikesImgCustom_RentBikes = findViewById(R.id.rvBikesImgCustomRentBikes);
+        rvBikesImgCustom_RentBikes.setHasFixedSize(true);
+        rvBikesImgCustom_RentBikes.setLayoutManager(new LinearLayoutManager(this));
 
-        bikesList = new ArrayList<>();
+        listCustomerRentBikes = new ArrayList<>();
 
-        bikeAdapterBikesCustomer = new BikeAdapterBikesCustomer(BikeImageRentBikesCustomer.this, bikesList);
-        bikesListRecyclerView.setAdapter(bikeAdapterBikesCustomer);
-        bikeAdapterBikesCustomer.setOnItmClickListener(BikeImageRentBikesCustomer.this);
+        bikeAdapterBikesCustomer = new BikeAdapterBikesCustomer(BikeImageCustomerRentBikes.this, listCustomerRentBikes);
+        rvBikesImgCustom_RentBikes.setAdapter(bikeAdapterBikesCustomer);
+        bikeAdapterBikesCustomer.setOnItmClickListener(BikeImageCustomerRentBikes.this);
     }
 
     @SuppressLint("SetTextI18n")
@@ -78,49 +81,52 @@ public class BikeImageRentBikesCustomer extends AppCompatActivity implements Bik
 
     private void loadBikesListCustomer() {
 
-        //initialize the bike storage database
-        bikesStorage = FirebaseStorage.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
+        progressDialog.show();
 
         bikesEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
+            @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bikesList.clear();
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Bikes bikes = postSnapshot.getValue(Bikes.class);
-                        assert bikes != null;
-                        if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
-                            bikes.setBike_Key(postSnapshot.getKey());
-                            bikesList.add(bikes);
-                            tVBikeImageList.setText(bikesList.size() + " bikes available in " + bikeStore_Name + " store");
-                        } else {
-                            tVBikeImageList.setText("No bikes available in " + bikeStore_Name + " store");
-                        }
+
+                listCustomerRentBikes.clear();
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Bikes bikes = postSnapshot.getValue(Bikes.class);
+                    assert bikes != null;
+                    bikes.setBike_Key(postSnapshot.getKey());
+
+                    if (bikes.getBikeStoreKey().equals(bikeStore_Key)) {
+                        listCustomerRentBikes.add(bikes);
                     }
-
-                    bikeAdapterBikesCustomer.notifyDataSetChanged();
-                }
-                else{
-                    tVBikeImageList.setText("No Bikes available to rent!!");
                 }
 
-                progressDialog.dismiss();
+                if (listCustomerRentBikes.size() == 1) {
+                    tVBikesImgCustomRentBikes.setText(listCustomerRentBikes.size() + " bike available in " + bikeStore_Name + " store");
+                }
+                else if (listCustomerRentBikes.size() > 1) {
+                    tVBikesImgCustomRentBikes.setText(listCustomerRentBikes.size() + " bike available in " + bikeStore_Name + " store");
+                }
+                else {
+                    tVBikesImgCustomRentBikes.setText("No bikes available in " + bikeStore_Name + " store");
+                }
+
+                bikeAdapterBikesCustomer.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BikeImageRentBikesCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BikeImageCustomerRentBikes.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     @Override
     public void onItemClick(int position) {
 
-        Bikes selected_Bike = bikesList.get(position);
-        Intent intent = new Intent(BikeImageRentBikesCustomer.this, RentBikesCustomer.class);
+        Bikes selected_Bike = listCustomerRentBikes.get(position);
+        Intent intent = new Intent(BikeImageCustomerRentBikes.this, RentBikesCustomer.class);
         intent.putExtra("BCondition", selected_Bike.getBike_Condition());
         intent.putExtra("BModel", selected_Bike.getBike_Model());
         intent.putExtra("BManufact", selected_Bike.getBike_Manufacturer());
@@ -130,6 +136,5 @@ public class BikeImageRentBikesCustomer extends AppCompatActivity implements Bik
         intent.putExtra("BPrice", String.valueOf(selected_Bike.getBike_Price()));
         intent.putExtra("BKey", selected_Bike.getBike_Key());
         startActivity(intent);
-        bikesList.clear();
     }
 }

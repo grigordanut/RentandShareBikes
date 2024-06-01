@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -25,10 +26,12 @@ public class BikeStoreImageCustomerRentBikes extends AppCompatActivity implement
     private DatabaseReference databaseReference;
     private ValueEventListener bikeStoreEventListener;
 
-    private RecyclerView bikeStoreRecyclerView;
+    private RecyclerView rvBikeStoreImgCustom_RentBikes;
     private BikeStoreAdapterCustomer bikeStoreAdapterCustomer;
 
-    private List<BikeStores> bikeStoresList;
+    private TextView tVBikeStoreImgCustomRentBikes;
+
+    private List<BikeStores> listBikeStoresRentBikes;
 
     private ProgressDialog progressDialog;
 
@@ -38,16 +41,20 @@ public class BikeStoreImageCustomerRentBikes extends AppCompatActivity implement
         setContentView(R.layout.activity_bike_store_image_customer_rent_bikes);
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.show();
 
-        bikeStoreRecyclerView = findViewById(R.id.evRecyclerView);
-        bikeStoreRecyclerView.setHasFixedSize(true);
-        bikeStoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //initialize the bike store database
+        databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
 
-        bikeStoresList = new ArrayList<>();
+        tVBikeStoreImgCustomRentBikes = findViewById(R.id.tvBikeStoreImgCustomRentBikes);
 
-        bikeStoreAdapterCustomer = new BikeStoreAdapterCustomer(BikeStoreImageCustomerRentBikes.this, bikeStoresList);
-        bikeStoreRecyclerView.setAdapter(bikeStoreAdapterCustomer);
+        rvBikeStoreImgCustom_RentBikes = findViewById(R.id.rvBikeStoreImgCustomRentBikes);
+        rvBikeStoreImgCustom_RentBikes.setHasFixedSize(true);
+        rvBikeStoreImgCustom_RentBikes.setLayoutManager(new LinearLayoutManager(this));
+
+        listBikeStoresRentBikes = new ArrayList<>();
+
+        bikeStoreAdapterCustomer = new BikeStoreAdapterCustomer(BikeStoreImageCustomerRentBikes.this, listBikeStoresRentBikes);
+        rvBikeStoreImgCustom_RentBikes.setAdapter(bikeStoreAdapterCustomer);
         bikeStoreAdapterCustomer.setOnItmClickListener(BikeStoreImageCustomerRentBikes.this);
     }
 
@@ -59,28 +66,30 @@ public class BikeStoreImageCustomerRentBikes extends AppCompatActivity implement
 
     private void loadBikeStoresListCustomer(){
 
-        //initialize the bike store database
-        databaseReference = FirebaseDatabase.getInstance().getReference("Bike Stores");
+        progressDialog.show();
 
         bikeStoreEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
+            @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                bikeStoresList.clear();
+                listBikeStoresRentBikes.clear();
 
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                         BikeStores bikeStores = postSnapshot.getValue(BikeStores.class);
                         assert bikeStores != null;
                         bikeStores.setBikeStore_Key(postSnapshot.getKey());
-                        bikeStoresList.add(bikeStores);
+                        listBikeStoresRentBikes.add(bikeStores);
+                        tVBikeStoreImgCustomRentBikes.setText("Select the Bike Store");
                     }
 
                     bikeStoreAdapterCustomer.notifyDataSetChanged();
                 }
 
-
+                else {
+                    tVBikeStoreImgCustomRentBikes.setText("No Bike Stores available");
+                }
             }
 
             @Override
@@ -95,8 +104,8 @@ public class BikeStoreImageCustomerRentBikes extends AppCompatActivity implement
     @Override
     public void onItemClick(int position) {
 
-        BikeStores selected_Store = bikeStoresList.get(position);
-        Intent store_Intent = new Intent(BikeStoreImageCustomerRentBikes.this, BikeImageRentBikesCustomer.class);
+        BikeStores selected_Store = listBikeStoresRentBikes.get(position);
+        Intent store_Intent = new Intent(BikeStoreImageCustomerRentBikes.this, BikeImageCustomerRentBikes.class);
         store_Intent.putExtra("SName", selected_Store.getBikeStore_Location());
         store_Intent.putExtra("SKey", selected_Store.getBikeStore_Key());
         startActivity(store_Intent);
