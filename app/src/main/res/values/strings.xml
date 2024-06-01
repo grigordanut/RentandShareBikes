@@ -121,27 +121,22 @@
     <!--    Bike Store Image Rent Bikes Customer-->
     <string name="tv_bikeStoreImageRentBikesCustomer">Select the Bike Store</string>
 
-    <!--    Bike Store Image Show Bike List Custom-->
-    <string name="tv_bikeStoreImageShowBikesListCustomer">Select the Bike Store</string>
+
 
 
     <!--    Bike Store Image Admin Show Stores-->
     <string name="tv_bikeStoreImgAdminShowStores">List of Bike Stores</string>
 
-    <!--    Bike Store Image Show Stores List Customer-->
-    <string name="tv_bikeStoreImageShowStoresListCustomer">Bike Stores Available</string>
+
+
+
+
 
     <!--    Bike Store List Return Rented Bike-->
     <string name="tv_bikeStoreListReturnBike">Select the Bike Store</string>
 
     <!--    Bike Image Show Bikes Rented Customer-->
     <string name="tv_bikesImageShowBikesRentedCustomer">List of Bikes</string>
-
-
-
-
-
-
 
 
 
@@ -157,6 +152,12 @@
     <string name="tv_bikesImageShowSBikesToUpdate">Select the bike to be update</string>
 
 
+
+    <!--    Bike Store Image Customer Show Bike-->
+    <string name="tv_bikeStoreImgCustomShowBikes">List of Bike Stores</string>
+
+    <!--    Bike Store Image Customer Show Stores-->
+    <string name="tv_bikeStoreImgCustomShowStores">Bike Stores Available</string>
 
     <!--    Bike Store Image Main Show Bikes-->
     <string name="tv_bikeStoreImageMainShowBikes">List of Bike Stores</string>

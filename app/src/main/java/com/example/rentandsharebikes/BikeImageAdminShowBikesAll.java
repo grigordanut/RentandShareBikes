@@ -107,6 +107,7 @@ public class BikeImageAdminShowBikesAll extends AppCompatActivity implements Bik
                 }
                 else {
                     tVBikeListAdminAll.setText("No Bikes registered!!");
+                    bikeAdapterAdminBikes.notifyDataSetChanged();
                 }
             }
 

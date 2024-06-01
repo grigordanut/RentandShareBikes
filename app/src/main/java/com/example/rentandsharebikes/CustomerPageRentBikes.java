@@ -132,11 +132,11 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                                 switch (id) {
                                     //Show the list of Bike Stores available
                                     case R.id.userShow_storesList:
-                                        startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageCustomerShowStoresList.class));
+                                        startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageCustomerShowStores.class));
                                         break;
                                     //Show the list of Bikes available from customer page ordered by Bike Stores
                                     case R.id.userShow_bikesList:
-                                        startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageCustomerShowBikesList.class));
+                                        startActivity(new Intent(CustomerPageRentBikes.this, BikeStoreImageCustomerShowBikes.class));
                                         break;
                                     //Show the list of all Bikes available from customer page
                                     case R.id.userShow_bikesListAll:

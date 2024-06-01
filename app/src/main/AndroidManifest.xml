@@ -71,8 +71,8 @@
         <activity android:name=".BikeStoreImageAdminAddBikes" />
         <activity android:name=".RentBikesCustomer" />
         <activity android:name=".BikeImageShowBikesListCustomer" />
-        <activity android:name=".BikeStoreImageCustomerShowBikesList" />
-        <activity android:name=".BikeStoreImageCustomerShowStoresList" />
+        <activity android:name=".BikeStoreImageCustomerShowBikes" />
+        <activity android:name=".BikeStoreImageCustomerShowStores" />
         <activity android:name=".ChangePassword" />
         <activity android:name=".CustomerPageShareBikes" />
         <activity android:name=".CustomerPageRentBikes" />
