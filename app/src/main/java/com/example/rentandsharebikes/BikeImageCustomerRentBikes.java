@@ -59,6 +59,8 @@ public class BikeImageCustomerRentBikes extends AppCompatActivity implements Bik
         getIntent().hasExtra("SKey");
         bikeStore_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle(bikeStore_Name + " Bike Store");
+
         tVBikesImgCustomRentBikes = findViewById(R.id.tvBikesImgCustomRentBikes);
 
         rvBikesImgCustom_RentBikes = findViewById(R.id.rvBikesImgCustomRentBikes);
@@ -101,13 +103,11 @@ public class BikeImageCustomerRentBikes extends AppCompatActivity implements Bik
                 }
 
                 if (listCustomerRentBikes.size() == 1) {
-                    tVBikesImgCustomRentBikes.setText(listCustomerRentBikes.size() + " bike available in " + bikeStore_Name + " store");
+                    tVBikesImgCustomRentBikes.setText("Select the bike to rent");
                 }
-                else if (listCustomerRentBikes.size() > 1) {
-                    tVBikesImgCustomRentBikes.setText(listCustomerRentBikes.size() + " bike available in " + bikeStore_Name + " store");
-                }
+
                 else {
-                    tVBikesImgCustomRentBikes.setText("No bikes available in " + bikeStore_Name + " store");
+                    tVBikesImgCustomRentBikes.setText("No bikes available to rent");
                 }
 
                 bikeAdapterBikesCustomer.notifyDataSetChanged();
