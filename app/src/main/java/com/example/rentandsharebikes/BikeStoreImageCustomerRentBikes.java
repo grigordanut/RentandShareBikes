@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BikeStoreImageCustomerRentBikes extends AppCompatActivity implements BikeStoreAdapterCustomer.OnItemClickListener{
 
@@ -39,6 +40,8 @@ public class BikeStoreImageCustomerRentBikes extends AppCompatActivity implement
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_store_image_customer_rent_bikes);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("CUSTOMER rent a bike");
 
         progressDialog = new ProgressDialog(this);
 

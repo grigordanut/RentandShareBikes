@@ -31,9 +31,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:textColorHint="#000000">
+            android:textColorHint="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmailLogUser"
@@ -42,9 +42,9 @@
                 android:ems="10"
                 android:hint="@string/et_emailLogCustomer"
                 android:inputType="textEmailAddress"
-                android:paddingStart="15dp"
-                android:textSize="22sp"
-                tools:ignore="RtlSymmetry" />
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Password -->
@@ -53,9 +53,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:textColorHint="#000000"
+            android:layout_marginBottom="10dp"
+            android:textColorHint="@color/black"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -65,9 +66,9 @@
                 android:ems="10"
                 android:hint="@string/et_passLogCustomer"
                 android:inputType="textPassword"
-                android:paddingStart="15dp"
-                android:textSize="20sp"
-                tools:ignore="RtlSymmetry" />
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <CheckBox
@@ -104,7 +105,7 @@
             android:layout_marginEnd="35dp"
             android:background="@drawable/btn_blue"
             android:text="@string/btn_logInCustomer"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold"
             tools:ignore="RtlHardcoded" />

@@ -247,9 +247,9 @@
     <string name="et_firstNameRentBikes">First Name</string>
     <string name="et_lastNameRentBikes">Last Name</string>
     <string name="et_phoneNoRentBikes">Phone Number</string>
-    <string name="et_emailRentBikes">Email</string>
+    <string name="et_emailRentBikes">Email Address</string>
     <string name="tv_rentBikesDetails">Bike Details</string>
-    <string name="tv_rentBikeStore">Bike Store: </string>
+    <string name="tv_rentBikeStore">Bike Store Name: </string>
     <string name="tv_rentBikeCondition">Condition: </string>
     <string name="tv_rentBikeModel">Model: </string>
     <string name="tv_rentBikeManufacturer">Factory: </string>
