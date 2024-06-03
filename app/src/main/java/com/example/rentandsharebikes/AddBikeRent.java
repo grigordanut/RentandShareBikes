@@ -87,7 +87,7 @@ public class AddBikeRent extends AppCompatActivity {
         store_Key = Objects.requireNonNull(getIntent().getExtras()).getString("SKey");
 
         tViewWelcomeAddBikes = findViewById(R.id.tvWelcomeAddBikes);
-        tViewWelcomeAddBikes.setText("Add Bicycles to " + store_Name + " store");
+        tViewWelcomeAddBikes.setText("Add Bicycles to: " + store_Name + " store");
 
         tVBikeCondition = findViewById(R.id.tvBikeCondition);
 
