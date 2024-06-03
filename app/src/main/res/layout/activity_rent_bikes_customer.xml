@@ -200,8 +200,7 @@
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    tools:ignore="RtlSymmetry" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvRentBikesStoreName"
@@ -253,8 +252,7 @@
                             android:text="@string/tv_rentBikeCondition"
                             android:textColor="@color/black"
                             android:textSize="18sp"
-                            android:textStyle="bold"
-                            tools:ignore="RtlSymmetry" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/tvRentBikesCond"
@@ -288,8 +286,7 @@
                             android:text="@string/tv_rentBikeModel"
                             android:textColor="@color/black"
                             android:textSize="18sp"
-                            android:textStyle="bold"
-                            tools:ignore="NotSibling,RtlSymmetry" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/tvRentBikesModel"
@@ -323,8 +320,7 @@
                             android:text="@string/tv_rentBikeManufacturer"
                             android:textColor="#000000"
                             android:textSize="18sp"
-                            android:textStyle="bold"
-                            tools:ignore="RtlSymmetry" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/tvRentBikesManufact"
@@ -358,8 +354,7 @@
                             android:text="@string/tv_rentBikePrice"
                             android:textColor="@color/black"
                             android:textSize="18sp"
-                            android:textStyle="bold"
-                            tools:ignore="RtlSymmetry" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/tvRentBikesPrice"
