@@ -17,7 +17,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
@@ -49,7 +48,7 @@ public class BikeStoreAdapterAdminShowStores extends RecyclerView.Adapter<BikeSt
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(bikeStoreContext).inflate(R.layout.image_bike_store, parent, false);
+        View view = LayoutInflater.from(bikeStoreContext).inflate(R.layout.image_admin_stores, parent, false);
         return new ImageViewHolder(view);
     }
 

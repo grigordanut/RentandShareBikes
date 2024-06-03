@@ -128,7 +128,7 @@ public class BikeImageAdminShowBikesRentedAll extends AppCompatActivity implemen
 
         Context context = BikeImageAdminShowBikesRentedAll.this;
         LayoutInflater li = LayoutInflater.from(context);
-        View promptsView = li.inflate(R.layout.image_bike_full, null);
+        View promptsView = li.inflate(R.layout.image_admin_bikes_rented_full, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
         final ImageView img_full = promptsView.findViewById(R.id.imgImageFull);

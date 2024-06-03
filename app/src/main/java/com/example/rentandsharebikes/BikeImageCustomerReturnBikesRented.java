@@ -108,8 +108,8 @@ public class BikeImageCustomerReturnBikesRented extends AppCompatActivity implem
                     }
                 }
 
-                if (listCustomReturnBikesRented.size() == 1) {
-                    tVBikesImgCustomReturnBikesRented.setText("Select the bike");
+                if (listCustomReturnBikesRented.size() >= 1) {
+                    tVBikesImgCustomReturnBikesRented.setText("Select the bike to return");
 
                 }
                 else {

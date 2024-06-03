@@ -102,7 +102,7 @@ public class BikeImageCustomerRentBikes extends AppCompatActivity implements Bik
                     }
                 }
 
-                if (listCustomerRentBikes.size() == 1) {
+                if (listCustomerRentBikes.size() >= 1) {
                     tVBikesImgCustomRentBikes.setText("Select the bike to rent");
                 }
 

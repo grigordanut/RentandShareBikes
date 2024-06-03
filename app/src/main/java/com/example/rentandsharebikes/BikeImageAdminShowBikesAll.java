@@ -97,10 +97,10 @@ public class BikeImageAdminShowBikesAll extends AppCompatActivity implements Bik
                     }
 
                     if (listShowBikesAll.size() == 1) {
-                        tVBikeListAdminAll.setText(listShowBikesAll.size() + " Bike available");
+                        tVBikeListAdminAll.setText(listShowBikesAll.size() + " bike available to rent");
                     }
                     else {
-                        tVBikeListAdminAll.setText(listShowBikesAll.size() + " Bikes available");
+                        tVBikeListAdminAll.setText(listShowBikesAll.size() + " bikes available to rent");
                     }
 
                     bikeAdapterAdminBikes.notifyDataSetChanged();

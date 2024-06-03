@@ -17,7 +17,8 @@
         android:text="@string/tv_bikesImgCustomReturnBikesRented"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:textSize="22sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvBikesImgCustomReturnBikesRented"
