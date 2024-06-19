@@ -75,7 +75,7 @@ public class AddBikeRent extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle("Add bikes to Bike Store");
 
         //Create to Bikes table into database
-        stRefBikeUpload = FirebaseStorage.getInstance().getReference("Bikes");
+        stRefBikeUpload = FirebaseStorage.getInstance().getReference("Bikes Image");
         dbRefBikeUpload = FirebaseDatabase.getInstance().getReference("Bikes");
 
         progressDialog = new ProgressDialog(AddBikeRent.this);
@@ -174,6 +174,8 @@ public class AddBikeRent extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     imageUri = data.getData();
                     ivAddBike.setImageURI(imageUri);
+
+                    System.out.println("The URI is : " + imageUri);
                 }
                 break;
             case TAKE_PICTURE:

@@ -11,7 +11,10 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -183,20 +186,32 @@ public class BikeImageAdminShowBikes extends AppCompatActivity implements BikeAd
         startActivity(intent);
     }
 
+    @SuppressLint("SetTextI18n")
     public void confirmDeletion(final int position) {
+
         Bikes selected_Bike = listShowBikes.get(position);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BikeImageAdminShowBikes.this);
         alertDialogBuilder
                 .setTitle("Delete bike from Bike Store!!")
-                .setMessage("Are sure to delete the " + selected_Bike.getBike_Model() + " Bike?")
+                .setMessage("Are sure to delete the bike?\n" + selected_Bike.getBike_Model())
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, which) -> {
                     final String selectedKeyBike = selected_Bike.getBike_Key();
                     StorageReference imageReference = fbStShowBikes.getReferenceFromUrl(selected_Bike.getBike_Image());
                     imageReference.delete().addOnSuccessListener(aVoid -> {
                         dbRefShowBikes.child(selectedKeyBike).removeValue();
-                        Toast.makeText(BikeImageAdminShowBikes.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
+
+                        LayoutInflater inflater = getLayoutInflater();
+                        @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                        TextView text = layout.findViewById(R.id.tvToast);
+                        ImageView imageView = layout.findViewById(R.id.imgToast);
+                        text.setText("The bike has been successfully deleted!!");
+                        imageView.setImageResource(R.drawable.baseline_delete_forever_24);
+                        Toast toast = new Toast(getApplicationContext());
+                        toast.setDuration(Toast.LENGTH_SHORT);
+                        toast.setView(layout);
+                        toast.show();
                     });
                 })
 
@@ -211,25 +226,5 @@ public class BikeImageAdminShowBikes extends AppCompatActivity implements BikeAd
     protected void onDestroy() {
         super.onDestroy();
         dbRefShowBikes.removeEventListener(evListenerShowBikes);
-    }
-
-    public void alertDialogNoBikesAvailable() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder
-                .setTitle("There are not Bikes available!!")
-                .setMessage("Would you like to add bikes?")
-                .setPositiveButton("YES", (dialog, id) -> {
-                    finish();
-                    Intent intent = new Intent(BikeImageAdminShowBikes.this, BikeStoreImageAdminAddBikes.class);
-                    startActivity(intent);
-                })
-
-                .setNegativeButton("NO", (dialog, id) -> {
-                    Intent intent = new Intent(BikeImageAdminShowBikes.this, AdminPage.class);
-                    startActivity(intent);
-                });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
     }
 }

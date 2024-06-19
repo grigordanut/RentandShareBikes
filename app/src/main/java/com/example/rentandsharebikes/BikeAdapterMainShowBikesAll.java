@@ -30,7 +30,7 @@ public class BikeAdapterMainShowBikesAll extends RecyclerView.Adapter<BikeAdapte
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(bikesContext).inflate(R.layout.image_bikes_available_main_all,parent, false);
+        View view = LayoutInflater.from(bikesContext).inflate(R.layout.image_main_bikes_all,parent, false);
         return new ImageViewHolder(view);
     }
 

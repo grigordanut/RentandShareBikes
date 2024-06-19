@@ -99,6 +99,7 @@ public class AddBikeStore extends AppCompatActivity {
 
     //Check if the Bike Store name already exist in Bike Store database
     private void checkBikesStoreName() {
+
         final String etStore_LocCheckStore = etStoreLocation.getText().toString().trim();
 
         Query query_StoreName = dbRefStoreCheck.orderByChild("bikeStore_Location").equalTo(etStore_LocCheckStore);
@@ -194,6 +195,7 @@ public class AddBikeStore extends AppCompatActivity {
 
     //Notify if the Bike Store name already exist in database
     public void alertDialogStoreExist() {
+
         final String etStore_LocCheckAlert = etStoreLocation.getText().toString().trim();
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder

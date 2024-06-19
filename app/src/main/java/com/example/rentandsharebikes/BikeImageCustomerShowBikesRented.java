@@ -104,7 +104,7 @@ public class BikeImageCustomerShowBikesRented extends AppCompatActivity implemen
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     RentedBikes rent_Bikes = postSnapshot.getValue(RentedBikes.class);
                     assert rent_Bikes != null;
-                    rent_Bikes.setBike_RentKey(postSnapshot.getKey());
+                    rent_Bikes.setBikeKey_RentBikes(postSnapshot.getKey());
 
                     if (rent_Bikes.getCustomerId_RentBikes().equals(customer_Id)) {
                         listCustomerBikesRented.add(rent_Bikes);
@@ -151,9 +151,7 @@ public class BikeImageCustomerShowBikesRented extends AppCompatActivity implemen
                     if (id == 0) {
                         RentedBikes sel_Bike1 = listCustomerBikesRented.get(position);
                         Intent intent_Ret = new Intent ( BikeImageCustomerShowBikesRented.this, ReturnRentedBikes.class);
-                        //Intent intent_Ret = new Intent ( BikeImageCustomerShowBikesRented.this, ReturnRentedBikesSpinner.class);
-                        //Bike key of rented bike
-                        intent_Ret.putExtra("BikeRentedKey", sel_Bike1.getBike_RentKey());
+                        intent_Ret.putExtra("BikeRentedKey", sel_Bike1.getBikeKey_RentBikes());
                         Toast.makeText(BikeImageCustomerShowBikesRented.this, "Return the rented Bike", Toast.LENGTH_SHORT).show();
                         startActivity(intent_Ret);
                     }

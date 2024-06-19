@@ -82,22 +82,6 @@ public class BikeImageShowSharedBikesOwner extends AppCompatActivity {
 
         bikeAdapterShowSharedBikesOwner = new BikeAdapterShowSharedBikesOwner(BikeImageShowSharedBikesOwner.this, bikesShareList);
         bikesListRecyclerView.setAdapter(bikeAdapterShowSharedBikesOwner);
-
-        Button buttonAddSBikes = findViewById(R.id.btnAddMoreShareBikes);
-        buttonAddSBikes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(BikeImageShowSharedBikesOwner.this, AddBikeShare.class));
-            }
-        });
-
-        Button buttonBackSBikesPage = findViewById(R.id.btnBackShareBikesPage);
-        buttonBackSBikesPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(BikeImageShowSharedBikesOwner.this, CustomerPageShareBikes.class));
-            }
-        });
     }
 
     @SuppressLint("SetTextI18n")

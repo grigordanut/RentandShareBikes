@@ -91,7 +91,7 @@ public class BikeImageAdminShowBikesRentedAll extends AppCompatActivity implemen
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         RentedBikes rent_Bikes = postSnapshot.getValue(RentedBikes.class);
                         assert rent_Bikes != null;
-                        rent_Bikes.setBike_RentKey(postSnapshot.getKey());
+                        rent_Bikes.setBikeKey_RentBikes(postSnapshot.getKey());
                         listShowBikesRentedAll.add(rent_Bikes);
                     }
 

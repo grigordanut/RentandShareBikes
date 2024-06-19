@@ -331,18 +331,29 @@
     <!--    Admin Header-->
     <string name="tv_drawerMenuAdmin">Admin Page\n\nEmail:\nadmin@gmail.com</string>
 
-    <!--    Image Bikes Admin-->
+    <!--    Image Admin Bikes-->
     <string name="tv_bikeCondition">Condition: </string>
     <string name="tv_bikeModel">Model: </string>
     <string name="tv_bikeManufacturer">Factory: </string>
-    <string name="tv_bikePrice">Price €</string>
+    <string name="tv_bikePrice">Price/Hour: € </string>
 
-    <!--    Image Bikes Admin Full-->
+    <!--    Image Admin Bikes All-->
     <string name="tv_bikeStoreFull">Bike Store Name: </string>
     <string name="tv_bikeCondFull">Condition: </string>
     <string name="tv_bikeModelFull">Model: </string>
     <string name="tv_bikeManufactFull">Factory: </string>
     <string name="tv_bikePriceFull">Price/Hour: € </string>
+
+    <!--    Image Admin Bikes Rented-->
+    <string name="tv_rentedBikeConditionAdmin">Condition: </string>
+    <string name="tv_rentedBikeModelAdmin">Model: </string>
+    <string name="tv_rentedBikeManufacturerAdmin">Factory: </string>
+    <string name="tv_rentedBikePriceAdmin">Price/Hour: €</string>
+    <string name="tv_rentedBikeStoreNameAdmin">Bike Store Name: </string>
+    <string name="tv_rentedBikeUserNameAdmin">Customer Name: </string>
+    <string name="tv_rentedBikeUserPhoneAdmin">Phone Number: </string>
+    <string name="tv_rentedBikeUserEmailAdmin">Email: </string>
+    <string name="tv_rentedBikeDateRentAdmin">Date of Rent: </string>
 
     <!--    Image Bikes Available Main-->
     <string name="tv_bikeCondMain">Bike Condition: </string>
@@ -364,16 +375,7 @@
     <string name="tv_bikeManufacturerUser">Bike Factory: </string>
     <string name="tv_bikePriceUser">Price/Hour: € </string>
 
-    <!--    Image Bikes Rented Admin-->
-    <string name="tv_rentedBikeConditionAdmin">Condition: </string>
-    <string name="tv_rentedBikeModelAdmin">Model: </string>
-    <string name="tv_rentedBikeManufacturerAdmin">Factory: </string>
-    <string name="tv_rentedBikePriceAdmin">Price/Hour: €</string>
-    <string name="tv_rentedBikeUserNameAdmin">Customer Name: </string>
-    <string name="tv_rentedBikeUserPhoneAdmin">Phone Number: </string>
-    <string name="tv_rentedBikeUserEmailAdmin">Email: </string>
-    <string name="tv_rentedBikeStoreNameAdmin">Bike Store Name: </string>
-    <string name="tv_rentedBikeDateRentAdmin">Date of Rent: </string>
+
 
     <!--    Image Bikes Rented Customer-->
     <string name="tv_rentedBikeStoreNameUser">Bike Store Name: </string>

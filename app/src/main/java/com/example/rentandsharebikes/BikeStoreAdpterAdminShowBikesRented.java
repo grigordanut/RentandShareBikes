@@ -116,7 +116,7 @@ public class BikeStoreAdpterAdminShowBikesRented extends RecyclerView.Adapter<Bi
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         RentedBikes rented_bikes = postSnapshot.getValue(RentedBikes.class);
                         assert rented_bikes != null;
-                        rented_bikes.setBike_RentKey(postSnapshot.getKey());
+                        rented_bikes.setBikeKey_RentBikes(postSnapshot.getKey());
 
                         if (rented_bikes.getStoreKey_RentBikes().equals(uploadCurrent.getBikeStore_Key())) {
                             listBikesRented.add(rented_bikes);

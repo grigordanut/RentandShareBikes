@@ -1,5 +1,7 @@
 package com.example.rentandsharebikes;
 
+import com.google.firebase.database.Exclude;
+
 public class RentedBikes {
 
     private String date_RentBikes;
@@ -15,17 +17,13 @@ public class RentedBikes {
     private double bikePrice_RentBikes;
     private String bikeImage_RentBike;
     private String customerId_RentBikes;
-    private String bike_RentKey;
+    private String bikeKey_RentBikes;
 
     public RentedBikes(){
 
     }
 
-    public RentedBikes(String date_RentBikes, String fName_RentBikes, String lName_RentBikes, String phoneNo_RentBikes,
-                       String email_RentBikes, String storeLocation_RentBikes, String storeKey_RentBikes,
-                       String bikeCond_RentBikes, String bikeModel_RentBikes, String bikeManufact_RentBikes,
-                       double bikePrice_RentBikes, String bikeImage_RentBike, String customerId_RentBikes,
-                       String bike_RentKey) {
+    public RentedBikes(String date_RentBikes, String fName_RentBikes, String lName_RentBikes, String phoneNo_RentBikes, String email_RentBikes, String storeLocation_RentBikes, String storeKey_RentBikes, String bikeCond_RentBikes, String bikeModel_RentBikes, String bikeManufact_RentBikes, double bikePrice_RentBikes, String bikeImage_RentBike, String customerId_RentBikes) {
         this.date_RentBikes = date_RentBikes;
         this.fName_RentBikes = fName_RentBikes;
         this.lName_RentBikes = lName_RentBikes;
@@ -39,7 +37,6 @@ public class RentedBikes {
         this.bikePrice_RentBikes = bikePrice_RentBikes;
         this.bikeImage_RentBike = bikeImage_RentBike;
         this.customerId_RentBikes = customerId_RentBikes;
-        this.bike_RentKey = bike_RentKey;
     }
 
     public String getDate_RentBikes() {
@@ -146,11 +143,13 @@ public class RentedBikes {
         this.customerId_RentBikes = customerId_RentBikes;
     }
 
-    public String getBike_RentKey() {
-        return bike_RentKey;
+    @Exclude
+    public String getBikeKey_RentBikes() {
+        return bikeKey_RentBikes;
     }
 
-    public void setBike_RentKey(String bike_RentKey) {
-        this.bike_RentKey = bike_RentKey;
+    @Exclude
+    public void setBikeKey_RentBikes(String bikeKey_RentBikes) {
+        this.bikeKey_RentBikes = bikeKey_RentBikes;
     }
 }

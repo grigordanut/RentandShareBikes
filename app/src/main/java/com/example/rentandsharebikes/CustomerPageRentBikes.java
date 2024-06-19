@@ -302,7 +302,7 @@ public class CustomerPageRentBikes extends AppCompatActivity {
                         RentedBikes rented_Bikes = postSnapshot.getValue(RentedBikes.class);
                         assert rented_Bikes != null;
                         if(rented_Bikes.getCustomerId_RentBikes().equals(currentUser.getUid())){
-                            rented_Bikes.setBike_RentKey(postSnapshot.getKey());
+                            rented_Bikes.setBikeKey_RentBikes(postSnapshot.getKey());
                             listBikesRentedCustom.add(rented_Bikes);
                             numberBikesRentedCustom = listBikesRentedCustom.size();
                             tVBikesRentedCustom.setText(String.valueOf(numberBikesRentedCustom));

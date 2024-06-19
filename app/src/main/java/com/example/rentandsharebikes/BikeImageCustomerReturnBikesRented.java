@@ -101,7 +101,7 @@ public class BikeImageCustomerReturnBikesRented extends AppCompatActivity implem
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     RentedBikes rent_Bikes = postSnapshot.getValue(RentedBikes.class);
                     assert rent_Bikes != null;
-                    rent_Bikes.setBike_RentKey(postSnapshot.getKey());
+                    rent_Bikes.setBikeKey_RentBikes(postSnapshot.getKey());
 
                     if (rent_Bikes.getCustomerId_RentBikes().equals(customer_Id)) {
                         listCustomReturnBikesRented.add(rent_Bikes);
@@ -133,7 +133,7 @@ public class BikeImageCustomerReturnBikesRented extends AppCompatActivity implem
 
         RentedBikes selected_Bike = listCustomReturnBikesRented.get(position);
         Intent intent = new Intent(BikeImageCustomerReturnBikesRented.this, ReturnRentedBikes.class);
-        intent.putExtra("BikeRentedKey", selected_Bike.getBike_RentKey());
+        intent.putExtra("BikeRentedKey", selected_Bike.getBikeKey_RentBikes());
         startActivity(intent);
     }
 }

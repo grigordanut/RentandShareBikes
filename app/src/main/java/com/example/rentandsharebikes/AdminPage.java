@@ -332,7 +332,7 @@ public class AdminPage extends AppCompatActivity {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         RentedBikes rented_Bikes = postSnapshot.getValue(RentedBikes.class);
                         assert rented_Bikes != null;
-                        rented_Bikes.setBike_RentKey(postSnapshot.getKey());
+                        rented_Bikes.setBikeKey_RentBikes(postSnapshot.getKey());
                         listBikesRented.add(rented_Bikes);
                         numberBikesRented = listBikesRented.size();
                         tVAdminBikesRented.setText(String.valueOf(numberBikesRented));
